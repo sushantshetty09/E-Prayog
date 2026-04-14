@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { Session, User } from '@supabase/supabase-js';
-import { supabase } from './supabase';
+import { User, onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, db } from './firebase';
 import { UserProfile } from '../types';
 
 interface AuthContextType {
   user: User | null;
-  session: Session | null;
+  session: any | null;
   role: string;
   profileData: UserProfile | null;
   loading: boolean;
@@ -27,26 +28,21 @@ export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
   const [role, setRole] = useState('');
   const [profileData, setProfileData] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
   const fetchProfile = async (userId: string) => {
     try {
-      // Guard against hanging profile requests causing route-level infinite loaders.
-      const profileQuery = supabase
-        .from('users')
-        .select('*')
-        .eq('id', userId)
-        .single();
+      const profilePromise = getDoc(doc(db, 'users', userId));
       const timeout = new Promise<never>((_, reject) => {
         setTimeout(() => reject(new Error('Profile fetch timeout')), 8000);
       });
-      const { data } = await Promise.race([profileQuery, timeout]) as any;
-      
-      if (data) {
-        setProfileData(data as UserProfile);
+      const docSnap = await Promise.race([profilePromise, timeout]) as any;
+
+      if (docSnap.exists()) {
+        const data = { id: docSnap.id, ...docSnap.data() } as UserProfile;
+        setProfileData(data);
         setRole(data.role || 'Student');
       } else {
         setRole('Student');
@@ -63,48 +59,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const refreshProfile = async () => {
     if (user) {
-      await fetchProfile(user.id);
+      await fetchProfile(user.uid);
     }
   };
 
   useEffect(() => {
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session: currentSession } }) => {
-      setSession(currentSession);
-      setUser(currentSession?.user ?? null);
-      if (currentSession?.user) {
-        fetchProfile(currentSession.user.id).catch(() => setLoading(false));
+    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      setUser(firebaseUser);
+      if (firebaseUser) {
+        await fetchProfile(firebaseUser.uid).catch(() => setLoading(false));
       } else {
+        setUser(null);
+        setRole('');
+        setProfileData(null);
         setLoading(false);
       }
-    }).catch(() => setLoading(false));
+    });
 
-    // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, newSession) => {
-        // Keep auth state in sync without forcing full-screen loading on token refresh events.
-        setSession(newSession);
-        setUser(newSession?.user ?? null);
-        if (newSession?.user) {
-          await fetchProfile(newSession.user.id).catch(() => setLoading(false));
-        } else {
-          setUser(null);
-          setRole('');
-          setProfileData(null);
-          setLoading(false);
-        }
-      }
-    );
-
-    return () => subscription.unsubscribe();
+    return () => unsubscribe();
   }, []);
 
   const handleSignOut = async () => {
     try {
-      await supabase.auth.signOut({ scope: 'global' });
+      await firebaseSignOut(auth);
     } finally {
       setUser(null);
-      setSession(null);
       setRole('');
       setProfileData(null);
       setLoading(false);
@@ -112,7 +91,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ user, session, role, profileData, loading, signOut: handleSignOut, refreshProfile }}>
+    <AuthContext.Provider value={{ user, session: null, role, profileData, loading, signOut: handleSignOut, refreshProfile }}>
       {children}
     </AuthContext.Provider>
   );

@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../services/AuthContext';
-import { supabase } from '../services/supabase';
+import { db } from '../services/firebase';
+import { collection, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { UserProfile } from '../types';
 import GlassCard from '../components/GlassCard';
 import { Link } from 'react-router-dom';
-import { Shield, Users, GraduationCap, BookOpen, FlaskConical, Search, MoreVertical, ShieldCheck, Trash2, Settings, TrendingUp, Filter, Check, BarChart3 } from 'lucide-react';
+import { logActivity } from '../services/activityService';
+import { Shield, Users, GraduationCap, BookOpen, FlaskConical, Search, MoreVertical, ShieldCheck, Trash2, Settings, TrendingUp, Filter, Check, BarChart3, Activity, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 type TabType = 'users' | 'analytics' | 'labs' | 'settings';
@@ -33,9 +35,15 @@ const AdminDashboard: React.FC = () => {
   const fetchUsers = async () => {
     setLoadingUsers(true);
     try {
-      const { data, error } = await supabase.from('users').select('*').order('created_at', { ascending: false });
-      if (error) throw error;
-      setUsers(data as UserProfile[]);
+      const snapshot = await getDocs(collection(db, 'users'));
+      const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as UserProfile));
+      // Sort by created_at descending
+      data.sort((a: any, b: any) => {
+        const dateA = a.created_at ? new Date(a.created_at).getTime() : 0;
+        const dateB = b.created_at ? new Date(b.created_at).getTime() : 0;
+        return dateB - dateA;
+      });
+      setUsers(data);
     } catch (e) {
       console.error('Error fetching users:', e);
     } finally {
@@ -46,7 +54,21 @@ const AdminDashboard: React.FC = () => {
   const changeRole = async (uid: string, newRole: string) => {
     if (!window.confirm(`Change this user's role to ${newRole}?`)) return;
     try {
-      await supabase.from('users').update({ role: newRole }).eq('id', uid);
+      await updateDoc(doc(db, 'users', uid), { role: newRole });
+      
+      const targetUser = users.find(u => u.id === uid);
+      await logActivity({
+        type: 'admin_role_change',
+        actorUid: user?.uid || '',
+        actorName: profileData?.full_name || '',
+        actorEmail: user?.email || '',
+        actorRole: 'Admin',
+        targetUid: uid,
+        targetName: targetUser?.full_name || '',
+        metadata: { newRole, oldRole: targetUser?.role },
+        visibility: 'admin',
+      });
+      
       setUsers(users.map(u => u.id === uid ? { ...u, role: newRole } : u));
     } catch (e) {
       console.error(e);
@@ -58,13 +80,11 @@ const AdminDashboard: React.FC = () => {
   const deleteUser = async (uid: string) => {
     if (!window.confirm("WARNING: Are you sure you want to delete this user? This cannot be undone.")) return;
     try {
-      // Typically deletion requires Supabase Admin API, but we'll try to delete from public table
-      // In a real prod environment, you'd call an Edge Function to delete the auth account.
-      await supabase.from('users').delete().eq('id', uid);
+      await deleteDoc(doc(db, 'users', uid));
       setUsers(users.filter(u => u.id !== uid));
     } catch (e) {
       console.error(e);
-      alert("Failed to delete user. You may need to delete them from the Supabase dashboard directly.");
+      alert("Failed to delete user. You may need to delete them from the Firebase console directly.");
     }
     setActiveMenuId(null);
   };
@@ -104,6 +124,31 @@ const AdminDashboard: React.FC = () => {
          <StatsCard icon={<BookOpen />} title="Teachers" value={users.filter(u => u.role === 'Teacher').length || "21"} trend="+2 this week" color="purple" />
          <StatsCard icon={<FlaskConical />} title="Labs Completed" value="1,842" trend="+154 this week" color="amber" />
       </div>
+
+      {/* Activity Monitor Widget */}
+      <GlassCard className="p-6 mb-8 border-red-500/20 bg-red-500/5">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-red-500/20 flex items-center justify-center border border-red-500/30 shrink-0">
+              <Activity className="text-red-400" size={24} />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                Platform Activity Monitor
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Real-time feed of all registered events across the platform.
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/admin-activity"
+            className="px-6 py-3 rounded-xl bg-red-600 hover:bg-red-500 text-white font-bold transition-all flex items-center gap-2 text-sm"
+          >
+            Open Live Monitor
+          </Link>
+        </div>
+      </GlassCard>
 
       {/* TABS */}
       <div className="flex overflow-x-auto gap-2 mb-6 pb-2 no-scrollbar">
@@ -350,7 +395,7 @@ const AdminDashboard: React.FC = () => {
   );
 };
 
-const StatsCard = ({ icon, title, value, trend, color }: { icon: React.ReactNode, title: string, value: string, trend: string, color: 'blue'|'emerald'|'purple'|'amber' }) => {
+const StatsCard = ({ icon, title, value, trend, color }: { icon: React.ReactNode, title: string, value: string | number, trend: string, color: 'blue'|'emerald'|'purple'|'amber' }) => {
   const colorMap = {
     blue: 'text-blue-400 bg-blue-500/10 border-blue-500/20',
     emerald: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/20',

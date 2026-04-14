@@ -3,7 +3,9 @@ import { useParams, Link } from 'react-router-dom';
 import { SUBJECTS } from '../constants';
 import SimulationStage from '../components/SimulationStage';
 import { useAuth } from '../services/AuthContext';
-import { supabase } from '../services/supabase';
+import { db } from '../services/firebase';
+import { doc, setDoc } from 'firebase/firestore';
+import { logActivity } from '../services/activityService';
 import {
   ArrowLeft, ArrowRight, Target, BookOpen, ListChecks, Info, Youtube,
   FlaskConical, ClipboardList, CheckCircle2, Globe, HelpCircle, Brain,
@@ -120,15 +122,32 @@ const LabView: React.FC = () => {
     
     if (user) {
       try {
-        await supabase.from('quiz_scores').upsert({
-          user_id: user.id,
+        await setDoc(doc(db, 'quiz_scores', `${user.uid}_${lab.id}`), {
+          user_id: user.uid,
           lab_id: lab.id,
           score,
           total: quizQuestions.length,
           completed_at: new Date().toISOString()
+        }, { merge: true });
+
+        await logActivity({
+          type: 'quiz_completed',
+          actorUid: user.uid,
+          actorName: user.displayName || '',
+          actorEmail: user.email || '',
+          actorRole: 'Student',
+          metadata: {
+            labId: lab.id,
+            labTitle: lab.title,
+            subjectId: subject.id,
+            score,
+            total: quizQuestions.length,
+            percentage: Math.round((score / quizQuestions.length) * 100),
+          },
+          visibility: 'both',
         });
       } catch (e) {
-         console.warn('Supabase save error:', e);
+         console.warn('Firebase save error:', e);
       }
     }
   };

@@ -22,6 +22,10 @@ const TeacherDashboard = React.lazy(() => import('./pages/TeacherDashboard'));
 const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'));
 const StaffLogin = React.lazy(() => import('./pages/StaffLogin'));
 
+// Phase 3 Pages
+const TeacherActivityFeed = React.lazy(() => import('./pages/TeacherActivityFeed'));
+const AdminActivityFeed = React.lazy(() => import('./pages/AdminActivityFeed'));
+
 // Tools
 const Tools = lazy(() => import('./pages/Tools'));
 const FormulaSheet = lazy(() => import('./pages/tools/FormulaSheet'));
@@ -96,6 +100,9 @@ const App: React.FC = () => {
                 <Route path="/tools/calculator" element={<ProtectedRoute><CalculatorTool /></ProtectedRoute>} />
                 <Route path="/tools/safety-guide" element={<ProtectedRoute><SafetyGuide /></ProtectedRoute>} />
                 <Route path="/tools/bio-diagrams" element={<ProtectedRoute><BioDiagrams /></ProtectedRoute>} />
+
+                <Route path="/teacher-activity" element={<ProtectedRoute allowedRoles={['Teacher', 'Admin']}><TeacherActivityFeed /></ProtectedRoute>} />
+                <Route path="/admin-activity" element={<ProtectedRoute allowedRoles={['Admin']}><AdminActivityFeed /></ProtectedRoute>} />
 
                 <Route
                   path="/dashboard"

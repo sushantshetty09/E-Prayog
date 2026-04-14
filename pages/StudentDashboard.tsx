@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../services/AuthContext';
-import { supabase } from '../services/supabase';
 import { useNavigate, Link } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
 import { Eye, FlaskConical, BookOpen, Shield, GraduationCap, Clock, TrendingUp, ArrowRight, Zap, Dna, Calculator, Monitor, Sigma, Cpu, Table2, Hash, ShieldCheck, Microscope, BarChart3 } from 'lucide-react';

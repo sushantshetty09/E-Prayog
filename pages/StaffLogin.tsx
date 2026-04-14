@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { supabase } from '../services/supabase';
+import { auth } from '../services/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Lock, Mail, ArrowRight, ShieldCheck, Link as LinkIcon, Loader2, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 
@@ -30,30 +31,19 @@ const StaffLogin: React.FC = () => {
     setError('');
 
     try {
-      // First try normal Supabase auth
-      const { data, error: authError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (authError) {
-        // If they provided the exact dev mock credentials, we can bypass strictly for dev UI preview if auth fails
-        if (email.toLowerCase() === 'sushantshetty09@gmail.com' && password === 'Shetty@09') {
-          // This is a dangerous mock catch-all requested for dev
-          // We will mock an auth session if the user doesn't exist in Supabase yet
-          alert("Dev Mock Activated: Simulated login for Admin account.");
-          navigate('/dashboard');
-        } else {
-          throw authError;
-        }
-      } else {
-        if (data.session) {
-          navigate('/dashboard');
-        }
+      const cred = await signInWithEmailAndPassword(auth, email, password);
+      if (cred.user) {
+        navigate('/dashboard');
       }
     } catch (err: any) {
-      console.error(err);
-      setError(err.message || 'Invalid login credentials.');
+      // Dev mock fallback
+      if (email.toLowerCase() === 'sushantshetty09@gmail.com' && password === 'Shetty@09') {
+        alert("Dev Mock Activated: Simulated login for Admin account.");
+        navigate('/dashboard');
+      } else {
+        console.error(err);
+        setError(err.message || 'Invalid login credentials.');
+      }
     } finally {
       setLoading(false);
     }

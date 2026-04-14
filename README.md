@@ -8,13 +8,13 @@ E-Prayog is an interactive, AI-powered virtual science laboratory designed speci
 - **Karnataka PUC Curriculum**: Strictly aligned with 1st and 2nd PUC syllabi.
 - **Role-based Dashboards**: Unified robust views for Students, Teachers, and Administrators.
 - **Comprehensive Tools**: Built-in periodic table, calculator, formula sheet, logic gate simulator, and bio diagrams.
-- **Supabase Backend**: Secure authentication, progress tracking, and class management.
+- **Firebase**: Backend (Authentication & Firestore), progress tracking, and class management.
 
 ## Tech Stack 🛠️
 - **Frontend**: React, TypeScript, Vite
 - **Styling**: Tailwind CSS, Framer Motion
 - **Icons**: Lucide React
-- **Backend & Auth**: Supabase
+- **Backend & Auth**: Firebase
 - **AI Integration**: Google Gemini API
 
 ## Getting Started 🚀

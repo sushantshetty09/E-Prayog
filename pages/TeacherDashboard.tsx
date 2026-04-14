@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../services/AuthContext';
-import { supabase } from '../services/supabase';
+import { db } from '../services/firebase';
+import { doc, updateDoc, getDocs, collection, query, where, orderBy, addDoc } from 'firebase/firestore';
+import { logActivity } from '../services/activityService';
 import { UserProfile } from '../types';
 import GlassCard from '../components/GlassCard';
 import { useNavigate, Link } from 'react-router-dom';
-import { Shield, BookOpen, Users, Plus, Calendar, Search, Loader2, Copy, CheckCircle2, RefreshCw, Link2, Key, BarChart3 } from 'lucide-react';
+import { Shield, BookOpen, Users, Plus, Calendar, Search, Loader2, Copy, CheckCircle2, RefreshCw, Link2, Key, BarChart3, Activity } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const generateClassCode = (): string => {
@@ -41,26 +43,24 @@ const TeacherDashboard: React.FC = () => {
     if (!user) return;
     setLoading(true);
     try {
-      // If teacher has a class code, fetch students linked to it
       const code = profileData?.class_code;
       if (code) {
-        const { data, error } = await supabase
-          .from('users')
-          .select('*')
-          .eq('teacher_code', code)
-          .eq('role', 'Student')
-          .order('created_at', { ascending: false });
-        if (error) throw error;
-        setStudents(data as UserProfile[]);
+        const q = query(
+          collection(db, 'users'),
+          where('teacher_code', '==', code),
+          where('role', '==', 'Student')
+        );
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as UserProfile));
+        setStudents(data);
       } else {
-        // Fallback: show all students (for backward compat)
-        const { data, error } = await supabase
-          .from('users')
-          .select('*')
-          .eq('role', 'Student')
-          .order('created_at', { ascending: false });
-        if (error) throw error;
-        setStudents(data as UserProfile[]);
+        const q = query(
+          collection(db, 'users'),
+          where('role', '==', 'Student')
+        );
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as UserProfile));
+        setStudents(data);
       }
     } catch (e) {
       console.error(e);
@@ -74,16 +74,23 @@ const TeacherDashboard: React.FC = () => {
     setGeneratingCode(true);
     const newCode = generateClassCode();
     try {
-      const { error } = await supabase
-        .from('users')
-        .update({ class_code: newCode })
-        .eq('id', user.id);
-      if (error) throw error;
+      await updateDoc(doc(db, 'users', user.uid), { class_code: newCode });
+      
+      await logActivity({
+        type: 'teacher_code_generated',
+        actorUid: user.uid,
+        actorName: profileData?.full_name || '',
+        actorEmail: user.email || '',
+        actorRole: 'Teacher',
+        metadata: { newCode },
+        visibility: 'admin',
+      });
+      
       setClassCode(newCode);
       await refreshProfile();
     } catch (e) {
       console.error('Failed to generate class code:', e);
-      alert('Failed to save class code. Make sure the class_code column exists in Supabase.');
+      alert('Failed to save class code.');
     } finally {
       setGeneratingCode(false);
     }
@@ -100,13 +107,13 @@ const TeacherDashboard: React.FC = () => {
   const handleCreateAssignment = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await supabase.from('assignments').insert([{
+      await addDoc(collection(db, 'assignments'), {
         title: assignment.title,
         subject: assignment.subject,
         grade: assignment.grade,
         due_date: new Date(assignment.dueDate).toISOString(),
         teacher_id: profileData?.id
-      }]);
+      });
     } catch (e) {
       console.log("Mock saved assignment:", assignment);
     }
@@ -214,6 +221,31 @@ const TeacherDashboard: React.FC = () => {
           />
         </div>
       </div>
+
+      {/* Activity Feed Widget */}
+      <GlassCard className="p-6 mb-8 border-blue-500/20 bg-blue-500/5">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center border border-blue-500/30 shrink-0">
+              <Activity className="text-blue-400" size={24} />
+            </div>
+            <div>
+              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                Live Activity Feed
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Monitor real-time events for your students (quizzes, labs, logins).
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/teacher-activity"
+            className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all flex items-center gap-2 text-sm"
+          >
+            Open Live Feed
+          </Link>
+        </div>
+      </GlassCard>
 
       <div className="space-y-4">
         {loading ? (

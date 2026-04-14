@@ -94,6 +94,17 @@ const Navbar: React.FC = () => {
             )}
           </Link>
         )}
+        {user && (role === 'Teacher' || role === 'Admin') && (
+          <Link 
+            to={role === 'Admin' ? '/admin-activity' : '/teacher-activity'} 
+            className={navLinkClass(role === 'Admin' ? '/admin-activity' : '/teacher-activity')}
+          >
+            Activity
+            {isActive(role === 'Admin' ? '/admin-activity' : '/teacher-activity') && (
+              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-600 dark:bg-emerald-400 rounded-full" />
+            )}
+          </Link>
+        )}
       </div>
 
       <div className="hidden md:flex items-center">
@@ -137,6 +148,9 @@ const Navbar: React.FC = () => {
             <>
               <hr className="border-white/10 my-2" />
               <Link to="/dashboard" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/dashboard') ? 'text-emerald-400' : ''}`}>Dashboard</Link>
+              {(role === 'Teacher' || role === 'Admin') && (
+                <Link to={role === 'Admin' ? '/admin-activity' : '/teacher-activity'} onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive(role === 'Admin' ? '/admin-activity' : '/teacher-activity') ? 'text-emerald-400' : ''}`}>Activity Feed</Link>
+              )}
               <Link to="/profile" onClick={() => setIsOpen(false)} className="text-lg font-medium text-blue-400">My Profile</Link>
             </>
           )}

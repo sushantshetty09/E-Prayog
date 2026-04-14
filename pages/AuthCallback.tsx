@@ -1,84 +1,50 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { supabase } from '../services/supabase';
+import { useNavigate } from 'react-router-dom';
+import { auth, db } from '../services/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc } from 'firebase/firestore';
 import { FlaskConical, AlertCircle } from 'lucide-react';
 
 const AuthCallback: React.FC = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const handleAuthCallback = async () => {
-      try {
-        // PKCE flow: exchange the code from URL for a session
-        const code = searchParams.get('code');
-        
-        if (code) {
-          const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(code);
-          
-          if (exchangeError) {
-            console.error('Code exchange error:', exchangeError);
-            setError(exchangeError.message);
-            setTimeout(() => navigate('/login', { replace: true }), 3000);
-            return;
-          }
-
-          if (data.session) {
-            await upsertUser(data.session.user);
-            await redirectBasedOnRole(data.session.user.id, navigate);
-            return;
-          }
+    // Firebase popup flow doesn't need code exchange.
+    // This page exists as a fallback / redirect handler.
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        try {
+          const userDoc = await getDoc(doc(db, 'users', user.uid));
+          const role = userDoc.exists() ? (userDoc.data().role || 'Student') : 'Student';
+          const routes: Record<string, string> = {
+            'Admin': '/dashboard',
+            'Teacher': '/dashboard',
+            'Student': '/home',
+          };
+          navigate(routes[role] || '/home', { replace: true });
+        } catch {
+          navigate('/home', { replace: true });
         }
-
-        // Check for error in URL params (OAuth errors)
-        const errorParam = searchParams.get('error');
-        const errorDescription = searchParams.get('error_description');
-        if (errorParam) {
-          setError(errorDescription || errorParam);
-          setTimeout(() => navigate('/login', { replace: true }), 3000);
-          return;
-        }
-
-        // Fallback: check if session was already established (implicit flow / auto-detect)
-        const { data: sessionData } = await supabase.auth.getSession();
-        if (sessionData.session) {
-          await upsertUser(sessionData.session.user);
-          await redirectBasedOnRole(sessionData.session.user.id, navigate);
-          return;
-        }
-
-        // Last resort: wait for auth state change
-        const { data: { subscription } } = supabase.auth.onAuthStateChange(
-          async (event, session) => {
-            if ((event === 'SIGNED_IN' || event === 'INITIAL_SESSION') && session) {
-              await upsertUser(session.user);
-              subscription.unsubscribe();
-              await redirectBasedOnRole(session.user.id, navigate);
-            }
-          }
-        );
-
-        // Timeout fallback
-        const timeout = setTimeout(() => {
-          subscription.unsubscribe();
-          setError('Authentication timed out. Please try again.');
-          setTimeout(() => navigate('/login', { replace: true }), 2000);
-        }, 15000);
-
-        return () => {
-          clearTimeout(timeout);
-          subscription.unsubscribe();
-        };
-      } catch (err: any) {
-        console.error('Auth callback exception:', err);
-        setError('Authentication failed. Redirecting...');
-        setTimeout(() => navigate('/login', { replace: true }), 3000);
+      } else {
+        // Wait a bit, then redirect to login if no user detected
+        setTimeout(() => {
+          navigate('/login', { replace: true });
+        }, 3000);
       }
-    };
+    });
 
-    handleAuthCallback();
-  }, [navigate, searchParams]);
+    // Timeout fallback
+    const timeout = setTimeout(() => {
+      setError('Authentication timed out. Please try again.');
+      setTimeout(() => navigate('/login', { replace: true }), 2000);
+    }, 15000);
+
+    return () => {
+      unsubscribe();
+      clearTimeout(timeout);
+    };
+  }, [navigate]);
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6 pt-20">
@@ -104,38 +70,5 @@ const AuthCallback: React.FC = () => {
     </div>
   );
 };
-
-async function redirectBasedOnRole(userId: string, navigate: any) {
-  try {
-    const roleQuery = supabase.from('users').select('role').eq('id', userId).single();
-    const timeout = new Promise<never>((_, reject) => {
-      setTimeout(() => reject(new Error('Role lookup timeout')), 6000);
-    });
-    const { data: userData } = await Promise.race([roleQuery, timeout]) as any;
-    const role = userData?.role || 'Student';
-    const routes: Record<string, string> = {
-      'Admin': '/dashboard',
-      'Teacher': '/dashboard',
-      'Student': '/home',
-    };
-    navigate(routes[role] || '/home', { replace: true });
-  } catch (e) {
-    navigate('/home', { replace: true });
-  }
-}
-
-async function upsertUser(user: any) {
-  try {
-    await supabase.from('users').upsert({
-      id: user.id,
-      full_name: user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || '',
-      email: user.email || '',
-      role: 'Student',
-      created_at: new Date().toISOString(),
-    }, { onConflict: 'id' });
-  } catch {
-    console.warn('User upsert failed, continuing...');
-  }
-}
 
 export default AuthCallback;

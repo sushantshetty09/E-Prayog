@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../services/AuthContext';
-import { supabase } from '../services/supabase';
+import { db } from '../services/firebase';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { logActivity } from '../services/activityService';
 import { useNavigate } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
 import { Loader2, CheckCircle2, User, Mail, Shield, ShieldCheck, GraduationCap, Calendar, Save, X, Edit3, Settings, BookOpen, Link2, Key } from 'lucide-react';
@@ -49,7 +51,7 @@ const Profile: React.FC = () => {
       navigate('/login');
     } else if (profileData) {
       setFormData({
-        full_name: profileData.full_name || authUser?.user_metadata?.full_name || '',
+        full_name: profileData.full_name || authUser?.displayName || '',
         grade: profileData.grade || 'Not Specified',
         syllabus: profileData.syllabus || 'Not Specified',
         institution: profileData.institution || '',
@@ -65,13 +67,14 @@ const Profile: React.FC = () => {
 
   const resolveTeacherName = async (code: string) => {
     try {
-      const { data } = await supabase
-        .from('users')
-        .select('name, full_name')
-        .eq('class_code', code)
-        .eq('role', 'Teacher')
-        .single();
-      if (data) setLinkedTeacherName(data.name || data.full_name);
+      // Look up teacher by class_code - search through users collection
+      const { getDocs, collection, query, where } = await import('firebase/firestore');
+      const q = query(collection(db, 'users'), where('class_code', '==', code), where('role', '==', 'Teacher'));
+      const snapshot = await getDocs(q);
+      if (!snapshot.empty) {
+        const data = snapshot.docs[0].data();
+        setLinkedTeacherName(data.name || data.full_name);
+      }
     } catch { /* ignore */ }
   };
 
@@ -83,25 +86,32 @@ const Profile: React.FC = () => {
     const code = teacherCodeInput.trim().toUpperCase();
     try {
       // Verify the code belongs to a real teacher
-      const { data: teacher, error: lookupErr } = await supabase
-        .from('users')
-        .select('full_name')
-        .eq('class_code', code)
-        .eq('role', 'Teacher')
-        .single();
-      if (lookupErr || !teacher) {
+      const { getDocs, collection, query, where } = await import('firebase/firestore');
+      const q = query(collection(db, 'users'), where('class_code', '==', code), where('role', '==', 'Teacher'));
+      const snapshot = await getDocs(q);
+      if (snapshot.empty) {
         setLinkError('Invalid class code. No teacher found with that code.');
         return;
       }
+      const teacher = snapshot.docs[0].data();
+      
       // Save the teacher_code to the student's profile
-      const { error } = await supabase
-        .from('users')
-        .update({ teacher_code: code })
-        .eq('id', authUser.id);
-      if (error) throw error;
+      await updateDoc(doc(db, 'users', authUser.uid), { teacher_code: code });
       setLinkedTeacherName(teacher.full_name);
       setLinkSuccess(true);
       setTeacherCodeInput('');
+      
+      await logActivity({
+        type: 'student_joined_class',
+        actorUid: authUser.uid,
+        actorName: profileData?.full_name || authUser.displayName || '',
+        actorEmail: authUser.email || '',
+        actorRole: 'Student',
+        targetUid: undefined,
+        metadata: { teacherCode: code },
+        visibility: 'both',
+      });
+      
       await refreshProfile();
       setTimeout(() => setLinkSuccess(false), 3000);
     } catch (e) {
@@ -115,7 +125,7 @@ const Profile: React.FC = () => {
   const handleUnlinkTeacher = async () => {
     if (!authUser) return;
     try {
-      await supabase.from('users').update({ teacher_code: null }).eq('id', authUser.id);
+      await updateDoc(doc(db, 'users', authUser.uid), { teacher_code: null });
       setLinkedTeacherName(null);
       await refreshProfile();
     } catch (e) {
@@ -127,27 +137,22 @@ const Profile: React.FC = () => {
     if (!authUser) return;
     setIsSaving(true);
     try {
-      const { error } = await supabase
-        .from('users')
-        .update({
-          full_name: formData.full_name,
-          grade: formData.grade,
-          syllabus: formData.syllabus,
-          institution: formData.institution,
-          language: formData.language,
-          avatar: formData.avatar,
-        })
-        .eq('id', authUser.id);
+      await updateDoc(doc(db, 'users', authUser.uid), {
+        full_name: formData.full_name,
+        grade: formData.grade,
+        syllabus: formData.syllabus,
+        institution: formData.institution,
+        language: formData.language,
+        avatar: formData.avatar,
+      });
         
-      if (error) throw error;
-      
       await refreshProfile();
       setSaveSuccess(true);
       setIsEditing(false);
       setTimeout(() => setSaveSuccess(false), 2500);
     } catch (e) {
       console.error(e);
-      alert('Failed to save profile. Please make sure the database schema is updated.');
+      alert('Failed to save profile.');
     } finally {
       setIsSaving(false);
     }
@@ -161,8 +166,8 @@ const Profile: React.FC = () => {
     );
   }
 
-  const avatarUrl = profileData.avatar?.startsWith('http') ? profileData.avatar : (authUser?.user_metadata?.avatar_url);
-  const createdDate = authUser?.created_at ? new Date(authUser.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown';
+  const avatarUrl = profileData.avatar?.startsWith('http') ? profileData.avatar : (authUser?.photoURL);
+  const createdDate = authUser?.metadata?.creationTime ? new Date(authUser.metadata.creationTime).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown';
 
   const progress = profileData.progress || { physics: 0, chemistry: 0, biology: 0, math: 0, cs: 0 };
 
@@ -223,11 +228,11 @@ const Profile: React.FC = () => {
             <div className="w-full space-y-3 text-sm z-10">
               <div className="flex items-center justify-between text-slate-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
                 <div className="flex items-center gap-2"><Mail size={16} /> Email</div>
-                <span className="text-white truncate max-w-[150px]" title={authUser?.email}>{authUser?.email}</span>
+                <span className="text-white truncate max-w-[150px]" title={authUser?.email || ''}>{authUser?.email}</span>
               </div>
               <div className="flex items-center justify-between text-slate-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
                 <div className="flex items-center gap-2"><Shield size={16} /> User ID</div>
-                <span className="text-white font-mono">{authUser?.id?.substring(0,8)}...</span>
+                <span className="text-white font-mono">{authUser?.uid?.substring(0,8)}...</span>
               </div>
               <div className="flex items-center justify-between text-slate-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
                 <div className="flex items-center gap-2"><Calendar size={16} /> Joined</div>
@@ -270,7 +275,6 @@ const Profile: React.FC = () => {
                 <div className="flex items-center gap-3">
                   <button onClick={() => {
                     setIsEditing(false);
-                    // Revert changes
                     setFormData({
                       full_name: profileData.full_name || '',
                       grade: profileData.grade || 'Not Specified',

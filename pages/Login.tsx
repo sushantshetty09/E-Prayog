@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '../services/supabase';
+import { auth, db } from '../services/firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
+import { logActivity } from '../services/activityService';
 import { FlaskConical, Mail, Lock, User, Eye, EyeOff, LogIn } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const MotionDiv = motion.div as any;
 
 function friendlyError(err: any): string {
-  const msg = err?.message || '';
-  if (msg.includes('Invalid login')) return 'Invalid email or password.';
-  if (msg.includes('already registered')) return 'An account with this email already exists.';
-  if (msg.includes('Password should be')) return 'Password must be at least 6 characters.';
-  if (msg.includes('valid email')) return 'Please enter a valid email address.';
-  if (msg.includes('Email not confirmed')) return 'Please check your email to confirm your account.';
-  if (msg.includes('rate limit')) return 'Too many attempts. Please wait a moment.';
-  if (msg.includes('popup_closed')) return 'Sign-in popup was closed. Please try again.';
-  if (msg.includes('access_denied')) return 'Google sign-in was declined.';
-  if (msg.includes('not enabled')) return 'Google sign-in is not enabled. Please configure it in Supabase.';
-  if (msg.includes('OAuth')) return 'OAuth configuration error. Please check Supabase Google provider settings.';
+  const msg = err?.message || err?.code || '';
+  if (msg.includes('invalid-credential') || msg.includes('wrong-password') || msg.includes('user-not-found')) return 'Invalid email or password.';
+  if (msg.includes('email-already-in-use')) return 'An account with this email already exists.';
+  if (msg.includes('weak-password')) return 'Password must be at least 6 characters.';
+  if (msg.includes('invalid-email')) return 'Please enter a valid email address.';
+  if (msg.includes('too-many-requests')) return 'Too many attempts. Please wait a moment.';
+  if (msg.includes('popup-closed')) return 'Sign-in popup was closed. Please try again.';
+  if (msg.includes('popup-blocked')) return 'Popup was blocked. Please allow popups for this site.';
+  if (msg.includes('account-exists-with-different-credential')) return 'An account with this email exists using a different sign-in method.';
   return msg || 'Something went wrong. Please try again.';
 }
 
@@ -39,63 +40,60 @@ const Login: React.FC = () => {
     setLoading(true);
     try {
       if (isRegister) {
-        const { data, error: signUpErr } = await supabase.auth.signUp({
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(cred.user, { displayName: name });
+
+        // Insert into users collection
+        await setDoc(doc(db, 'users', cred.user.uid), {
+          id: cred.user.uid,
+          full_name: name,
           email,
-          password,
-          options: {
-            data: { full_name: name },
-          },
+          role: 'Student',
+          created_at: new Date().toISOString(),
         });
-        if (signUpErr) throw signUpErr;
 
-        // Insert into users table
-        if (data.user) {
-          await supabase.from('users').upsert({
-            id: data.user.id,
-            full_name: name,
-            email,
-            role: 'Student',
-            created_at: new Date().toISOString(),
-          });
-        }
+        // Fetch role to redirect
+        const userDoc = await getDoc(doc(db, 'users', cred.user.uid));
+        const userRole = userDoc.exists() ? (userDoc.data().role || 'Student') : 'Student';
 
-        // Check if email confirmation is required
-        if (data.user && !data.session) {
-          setSuccess('Account created! Please check your email to confirm your account.');
-          return;
-        }
-        // Fetch role to redirect to correct dashboard
-        if (data.user) {
-          const { data: userData } = await supabase.from('users').select('role').eq('id', data.user.id).single();
-          const userRole = userData?.role || 'Student';
-          const roleRoutes: Record<string, string> = {
-            'Admin': '/dashboard',
-            'Teacher': '/dashboard',
-            'Student': '/home',
-          };
-          navigate(roleRoutes[userRole] || '/home');
-        } else {
-          navigate('/home');
-        }
+        await logActivity({
+          type: 'user_signup',
+          actorUid: cred.user.uid,
+          actorName: name,
+          actorEmail: email,
+          actorRole: userRole,
+          metadata: { method: 'email' },
+          visibility: 'admin',
+        });
+
+        const roleRoutes: Record<string, string> = {
+          'Admin': '/dashboard',
+          'Teacher': '/dashboard',
+          'Student': '/home',
+        };
+        navigate(roleRoutes[userRole] || '/home');
       } else {
-        const { data, error: signInErr } = await supabase.auth.signInWithPassword({
-          email,
-          password,
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+
+        const userDoc = await getDoc(doc(db, 'users', cred.user.uid));
+        const userRole = userDoc.exists() ? (userDoc.data().role || 'Student') : 'Student';
+
+        await logActivity({
+          type: 'user_login',
+          actorUid: cred.user.uid,
+          actorName: cred.user.displayName || '',
+          actorEmail: email,
+          actorRole: userRole,
+          metadata: { method: 'email' },
+          visibility: 'admin',
         });
-        if (signInErr) throw signInErr;
-        
-        if (data.user) {
-          const { data: userData } = await supabase.from('users').select('role').eq('id', data.user.id).single();
-          const userRole = userData?.role || 'Student';
-          const roleRoutes: Record<string, string> = {
-            'Admin': '/dashboard',
-            'Teacher': '/dashboard',
-            'Student': '/home',
-          };
-          navigate(roleRoutes[userRole] || '/home');
-        } else {
-           navigate('/home');
-        }
+
+        const roleRoutes: Record<string, string> = {
+          'Admin': '/dashboard',
+          'Teacher': '/dashboard',
+          'Student': '/home',
+        };
+        navigate(roleRoutes[userRole] || '/home');
       }
     } catch (err: any) {
       setError(friendlyError(err));
@@ -104,34 +102,36 @@ const Login: React.FC = () => {
     }
   };
 
-  const [showGoogleHelp, setShowGoogleHelp] = useState(false);
-
   const handleGoogle = async () => {
     setError('');
     setLoading(true);
     try {
-      const { data, error: oauthErr } = await supabase.auth.signInWithOAuth({
-        provider: 'google',
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-          queryParams: {
-            prompt: 'select_account',
-          },
-        },
-      });
-      if (oauthErr) {
-        if (oauthErr.message?.includes('not enabled') || oauthErr.message?.includes('OAuth secret')) {
-          setShowGoogleHelp(true);
-          setLoading(false);
-          return;
-        }
-        throw oauthErr;
+      const provider = new GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Upsert user in Firestore
+      const userDoc = await getDoc(doc(db, 'users', user.uid));
+      if (!userDoc.exists()) {
+        await setDoc(doc(db, 'users', user.uid), {
+          id: user.uid,
+          full_name: user.displayName || user.email?.split('@')[0] || '',
+          email: user.email || '',
+          role: 'Student',
+          created_at: new Date().toISOString(),
+        });
       }
-      // signInWithOAuth will redirect the browser automatically (default behavior)
-      // If for some reason it doesn't, fallback to manual redirect
-      if (data?.url) {
-        window.location.href = data.url;
-      }
+
+      const updatedDoc = await getDoc(doc(db, 'users', user.uid));
+      const userRole = updatedDoc.exists() ? (updatedDoc.data().role || 'Student') : 'Student';
+
+      const roleRoutes: Record<string, string> = {
+        'Admin': '/dashboard',
+        'Teacher': '/dashboard',
+        'Student': '/home',
+      };
+      navigate(roleRoutes[userRole] || '/home');
     } catch (err: any) {
       setError(friendlyError(err));
       setLoading(false);
@@ -242,37 +242,6 @@ const Login: React.FC = () => {
             </button>
           </div>
         </div>
-
-        {/* Google OAuth Setup Help Modal */}
-        {showGoogleHelp && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4" onClick={() => setShowGoogleHelp(false)}>
-            <div className="bg-slate-900 border border-white/10 rounded-2xl p-6 max-w-md w-full shadow-2xl" onClick={e => e.stopPropagation()}>
-              <h3 className="text-lg font-bold text-white mb-3">⚙️ Google Sign-In Setup Required</h3>
-              <p className="text-sm text-slate-400 mb-4">
-                Google OAuth needs to be configured in your Supabase project:
-              </p>
-              <ol className="text-sm text-slate-300 space-y-2 mb-4">
-                <li><span className="font-bold text-emerald-400">1.</span> Go to <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline">Google Cloud Console → Credentials</a></li>
-                <li><span className="font-bold text-emerald-400">2.</span> Create OAuth Client ID (Web app type)</li>
-                <li><span className="font-bold text-emerald-400">3.</span> Add <strong>Authorized JavaScript Origins</strong>: <code className="text-xs bg-white/5 rounded px-1 py-0.5 break-all">{window.location.origin}</code></li>
-                <li><span className="font-bold text-emerald-400">4.</span> Add <strong>Authorized redirect URI</strong>: <code className="text-xs bg-white/5 rounded px-1 py-0.5 break-all">https://piyvipaepmbanatqegav.supabase.co/auth/v1/callback</code></li>
-                <li><span className="font-bold text-emerald-400">5.</span> Copy <strong>Client ID</strong> + <strong>Client Secret</strong></li>
-                <li><span className="font-bold text-emerald-400">6.</span> Paste both into <a href="https://supabase.com/dashboard/project/piyvipaepmbanatqegav/auth/providers" target="_blank" rel="noopener noreferrer" className="text-blue-400 underline">Supabase → Auth → Providers → Google</a></li>
-                <li><span className="font-bold text-emerald-400">7.</span> In Supabase → Auth → URL Configuration, add your site URL: <code className="text-xs bg-white/5 rounded px-1 py-0.5 break-all">{window.location.origin}</code></li>
-                <li><span className="font-bold text-emerald-400">8.</span> Add <code className="text-xs bg-white/5 rounded px-1 py-0.5 break-all">{window.location.origin}/auth/callback</code> to Redirect URLs</li>
-              </ol>
-              <div className="flex gap-2">
-                <button onClick={() => setShowGoogleHelp(false)} className="flex-1 py-2 rounded-xl bg-white/5 text-slate-400 text-sm font-bold border border-white/10">
-                  Use Email Instead
-                </button>
-                <a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener noreferrer"
-                  className="flex-1 py-2 rounded-xl bg-emerald-600 text-white text-sm font-bold text-center">
-                  Open Google Console
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
       </MotionDiv>
     </div>
   );
