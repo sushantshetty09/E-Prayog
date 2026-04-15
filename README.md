@@ -22,7 +22,7 @@ npm run preview
 
 ## 2) Required environment variables
 
-Create `/home/runner/work/E-Prayog/E-Prayog/.env`:
+Create a `.env` file in the project root:
 
 ```env
 VITE_FIREBASE_API_KEY=...
