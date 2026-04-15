@@ -8,9 +8,7 @@ import { csData } from './data/cs_data';
 
 export const NAV_ITEMS: NavItem[] = [
   { label: 'Home', path: '/home' },
-  { label: 'Experiments', path: '/subjects' },
   { label: 'Tools', path: '/tools' },
-  { label: 'AI Tutor', path: '/tutor' },
   { label: 'About', path: '/about' },
 ];
 
@@ -21,3 +19,32 @@ export const SUBJECTS: SubjectData[] = [
   mathData,
   csData
 ];
+
+export const SUBJECT_LAB_COUNTS: Record<string, number> = {
+  physics: physicsData.labs.length,
+  chemistry: chemistryData.labs.length,
+  biology: biologyData.labs.length,
+  math: mathData.labs.length,
+  cs: csData.labs.length,
+};
+
+/**
+ * Find a lab experiment by its id across all subjects.
+ * Returns { subject, lab } or null.
+ */
+export const findLabById = (labId: string | undefined) => {
+  if (!labId) return null;
+  for (const subject of SUBJECTS) {
+    const lab = subject.labs.find(l => l.id === labId);
+    if (lab) return { subject, lab };
+  }
+  return null;
+};
+
+/**
+ * Get all lab IDs for a given subject.
+ */
+export const getSubjectLabIds = (subjectId: string): string[] => {
+  const subject = SUBJECTS.find(s => s.id === subjectId);
+  return subject ? subject.labs.map(l => l.id) : [];
+};

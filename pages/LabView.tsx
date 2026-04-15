@@ -1,11 +1,12 @@
-import React, { useState, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { SUBJECTS } from '../constants';
 import SimulationStage from '../components/SimulationStage';
 import { useAuth } from '../services/AuthContext';
 import { db } from '../services/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import { logActivity } from '../services/activityService';
+import { trackLabVisit, trackTabCompleted, trackQuizScore } from '../services/labProgressService';
 import {
   ArrowLeft, ArrowRight, Target, BookOpen, ListChecks, Info, Youtube,
   FlaskConical, ClipboardList, CheckCircle2, Globe, HelpCircle, Brain,
@@ -31,13 +32,13 @@ const TABS: { id: Tab; label: string; icon: React.ReactNode; shortLabel: string 
 
 const LabView: React.FC = () => {
   const { subjectId, labId } = useParams<{ subjectId: string; labId: string }>();
+  const navigate = useNavigate();
   const [tabIdx, setTabIdx] = useState(0);
   const [quizAnswers, setQuizAnswers] = useState<Record<string, number>>({});
   const [quizSubmitted, setQuizSubmitted] = useState(false);
   const [quizScore, setQuizScore] = useState(0);
-
-  // Scroll to top when tab changes to prevent layout shift jumping to the bottom
-  React.useEffect(() => {
+  // Track tab completion + scroll to top on tab change
+  useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [tabIdx]);
   
@@ -51,6 +52,20 @@ const LabView: React.FC = () => {
   const subject = SUBJECTS.find(s => s.id === subjectId);
   const lab = subject?.labs.find(l => l.id === labId);
 
+  // Track lab visit on mount (after lab is resolved)
+  useEffect(() => {
+    if (subjectId && labId && lab) {
+      trackLabVisit(labId, subjectId, lab.title);
+    }
+  }, [subjectId, labId, lab?.title]);
+
+  // Track tab completion on tab change
+  useEffect(() => {
+    if (subjectId && labId && lab) {
+      trackTabCompleted(labId, subjectId, TABS[tabIdx]?.id || '');
+    }
+  }, [tabIdx, subjectId, labId, lab?.id]);
+
   if (!subject || !lab) {
     return (
       <div className="min-h-screen pt-24 flex items-center justify-center text-white text-xl">
@@ -62,7 +77,13 @@ const LabView: React.FC = () => {
   const content = lab.content;
   const activeTab = TABS[tabIdx];
 
-  const goNext = () => { if (tabIdx < TABS.length - 1) setTabIdx(tabIdx + 1); };
+  const goNext = () => {
+    if (tabIdx < TABS.length - 1) {
+      setTabIdx(tabIdx + 1);
+    } else {
+      navigate(`/subjects/${subjectId}`);
+    }
+  };
   const goPrev = () => { if (tabIdx > 0) setTabIdx(tabIdx - 1); };
 
   const handlePrint = () => {
@@ -119,6 +140,11 @@ const LabView: React.FC = () => {
     });
     setQuizScore(score);
     setQuizSubmitted(true);
+
+    // Track quiz score in lab progress
+    if (subjectId && labId) {
+      trackQuizScore(labId, subjectId, score, quizQuestions.length);
+    }
     
     if (user) {
       try {
@@ -687,7 +713,6 @@ const LabView: React.FC = () => {
           <button
             type="button"
             onClick={goNext}
-            disabled={tabIdx === TABS.length - 1}
             className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all hover:scale-105 disabled:opacity-20 disabled:cursor-not-allowed"
             style={{ background: `${subject.hex}20`, color: subject.hex, borderColor: `${subject.hex}30`, borderWidth: 1 }}
           >

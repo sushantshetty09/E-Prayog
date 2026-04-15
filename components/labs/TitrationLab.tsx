@@ -27,6 +27,9 @@ const TitrationLab: React.FC = () => {
     }
     // Stopcock
     ctx.fillStyle = '#475569'; ctx.fillRect(bx - 3, by + bh, 6, 15);
+    // Conical flask variables
+    const fx = W / 2, fy = H - 40;
+
     // Drop
     if (buretteVol > 0 && buretteVol < 50) {
       // Simulate falling drops
@@ -39,8 +42,7 @@ const TitrationLab: React.FC = () => {
         ctx.fill();
       }
     }
-    // Conical flask
-    const fx = W / 2, fy = H - 40;
+    // Conical flask drawing
     ctx.beginPath();
     ctx.moveTo(fx - 50, fy); ctx.lineTo(fx - 15, fy - 80); ctx.lineTo(fx + 15, fy - 80); ctx.lineTo(fx + 50, fy);
     ctx.closePath();

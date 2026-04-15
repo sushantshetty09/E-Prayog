@@ -1,7 +1,6 @@
 import React from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../services/AuthContext';
-import { Loader2, ShieldAlert } from 'lucide-react';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -10,42 +9,27 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles }) => {
   const { user, role, loading } = useAuth();
-  const navigate = useNavigate();
-  const roleHomePath: Record<string, string> = {
-    Student: '/student-dashboard',
-    Teacher: '/teacher-dashboard',
-    Admin: '/admin-dashboard',
-  };
+  const location = useLocation();
 
-  if (loading || (user && allowedRoles && !role)) {
+  // Show loading spinner while auth state is resolving
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#020617]">
-        <Loader2 className="animate-spin text-emerald-600" size={40} />
+        <div className="w-10 h-10 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
+  // Not logged in → redirect to login, preserving intended destination
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
+  // Wrong role → redirect to correct dashboard (not blocking page)
   if (allowedRoles && role && !allowedRoles.includes(role as any)) {
-    const fallbackPath = roleHomePath[role] || '/login';
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-[#020617] gap-4 text-center px-6">
-        <ShieldAlert className="text-red-500" size={64} />
-        <h1 className="text-4xl font-display font-bold text-white">Access Denied</h1>
-        <p className="text-gray-400 max-w-md">
-          You do not have permission for this page. Redirecting you to your dashboard.
-        </p>
-        <button
-          onClick={() => navigate(fallbackPath, { replace: true })}
-          className="mt-6 px-8 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-colors"
-        >
-          Go to My Dashboard
-        </button>
-      </div>
-    );
+    if (role === 'Admin') return <Navigate to="/admin-dashboard" replace />;
+    if (role === 'Teacher') return <Navigate to="/teacher-dashboard" replace />;
+    return <Navigate to="/dashboard" replace />;
   }
 
   return <>{children}</>;

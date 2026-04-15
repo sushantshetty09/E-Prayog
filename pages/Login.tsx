@@ -1,21 +1,32 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { auth, db } from '../services/firebase';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { doc, setDoc, getDoc } from 'firebase/firestore';
-import { logActivity } from '../services/activityService';
-import { FlaskConical, Mail, Lock, User, Eye, EyeOff, LogIn } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../services/AuthContext';
+import {
+  auth, db, googleProvider,
+  normalizeTeacherEmail, isTeacherLoginId, isAdminLoginId,
+  generateStudentId, updateStreak, logActivity,
+} from '../services/firebase';
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  signOut,
+  updateProfile,
+} from 'firebase/auth';
+import { doc, setDoc, getDoc, getDocs, collection, query, where, updateDoc, addDoc } from 'firebase/firestore';
+import { FlaskConical, Mail, Lock, User, Eye, EyeOff, LogIn, ArrowRight, ArrowLeft, GraduationCap, Building } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const MotionDiv = motion.div as any;
 
 function friendlyError(err: any): string {
   const msg = err?.message || err?.code || '';
-  if (msg.includes('invalid-credential') || msg.includes('wrong-password') || msg.includes('user-not-found')) return 'Invalid email or password.';
+  if (msg.includes('invalid-credential') || msg.includes('wrong-password') || msg.includes('user-not-found')) return 'Invalid ID or password. Please try again.';
   if (msg.includes('email-already-in-use')) return 'An account with this email already exists.';
   if (msg.includes('weak-password')) return 'Password must be at least 6 characters.';
   if (msg.includes('invalid-email')) return 'Please enter a valid email address.';
   if (msg.includes('too-many-requests')) return 'Too many attempts. Please wait a moment.';
+  if (msg.includes('operation-not-allowed')) return 'Email/Password sign-in is not enabled. Please enable it in Firebase Console → Authentication → Sign-in method.';
   if (msg.includes('popup-closed')) return 'Sign-in popup was closed. Please try again.';
   if (msg.includes('popup-blocked')) return 'Popup was blocked. Please allow popups for this site.';
   if (msg.includes('account-exists-with-different-credential')) return 'An account with this email exists using a different sign-in method.';
@@ -23,77 +34,55 @@ function friendlyError(err: any): string {
 }
 
 const Login: React.FC = () => {
-  const [isRegister, setIsRegister] = useState(false);
-  const [email, setEmail] = useState('');
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { user: authUser, role: authRole, loading: authLoading } = useAuth();
+
+  const [loginId, setLoginId] = useState('');
   const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
   const [showPw, setShowPw] = useState(false);
   const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const [isSignup, setIsSignup] = useState(false);
+
+  // Signup state (2-step)
+  const [signupStep, setSignupStep] = useState(1);
+  const [signupData, setSignupData] = useState({
+    name: '', grade: '2nd PUC / Class 12', institution: '', language: 'English',
+  });
+
+  // Auto-detect login type from ID
+  const loginType = isTeacherLoginId(loginId) ? 'teacher'
+    : isAdminLoginId(loginId) ? 'admin'
+    : 'student';
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (!authLoading && authUser && authRole) {
+      const from = (location.state as any)?.from;
+      if (from) {
+        navigate(from, { replace: true });
+      } else {
+        redirectByRole(authRole);
+      }
+    }
+  }, [authUser, authRole, authLoading]);
+
+  const redirectByRole = (role: string) => {
+    if (role === 'Admin') navigate('/admin-dashboard', { replace: true });
+    else if (role === 'Teacher') navigate('/teacher-dashboard', { replace: true });
+    else navigate('/dashboard', { replace: true });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
-    setSuccess('');
     setLoading(true);
     try {
-      if (isRegister) {
-        const cred = await createUserWithEmailAndPassword(auth, email, password);
-        await updateProfile(cred.user, { displayName: name });
-
-        // Insert into users collection
-        await setDoc(doc(db, 'users', cred.user.uid), {
-          id: cred.user.uid,
-          full_name: name,
-          email,
-          role: 'Student',
-          created_at: new Date().toISOString(),
-        });
-
-        // Fetch role to redirect
-        const userDoc = await getDoc(doc(db, 'users', cred.user.uid));
-        const userRole = userDoc.exists() ? (userDoc.data().role || 'Student') : 'Student';
-
-        await logActivity({
-          type: 'user_signup',
-          actorUid: cred.user.uid,
-          actorName: name,
-          actorEmail: email,
-          actorRole: userRole,
-          metadata: { method: 'email' },
-          visibility: 'admin',
-        });
-
-        const roleRoutes: Record<string, string> = {
-          'Admin': '/dashboard',
-          'Teacher': '/dashboard',
-          'Student': '/home',
-        };
-        navigate(roleRoutes[userRole] || '/home');
+      if (isSignup) {
+        await handleStudentSignup();
       } else {
-        const cred = await signInWithEmailAndPassword(auth, email, password);
-
-        const userDoc = await getDoc(doc(db, 'users', cred.user.uid));
-        const userRole = userDoc.exists() ? (userDoc.data().role || 'Student') : 'Student';
-
-        await logActivity({
-          type: 'user_login',
-          actorUid: cred.user.uid,
-          actorName: cred.user.displayName || '',
-          actorEmail: email,
-          actorRole: userRole,
-          metadata: { method: 'email' },
-          visibility: 'admin',
-        });
-
-        const roleRoutes: Record<string, string> = {
-          'Admin': '/dashboard',
-          'Teacher': '/dashboard',
-          'Student': '/home',
-        };
-        navigate(roleRoutes[userRole] || '/home');
+        await handleLogin();
       }
     } catch (err: any) {
       setError(friendlyError(err));
@@ -102,41 +91,124 @@ const Login: React.FC = () => {
     }
   };
 
-  const handleGoogle = async () => {
-    setError('');
+  const handleLogin = async () => {
+    // Determine the actual Firebase email to use
+    let firebaseEmail = loginId;
+    if (isTeacherLoginId(loginId) || isAdminLoginId(loginId)) {
+      firebaseEmail = normalizeTeacherEmail(loginId);
+    }
+
+    const cred = await signInWithEmailAndPassword(auth, firebaseEmail, password);
+
+    // Read role from Firestore
+    const snap = await getDoc(doc(db, 'users', cred.user.uid));
+    const role = snap.exists() ? snap.data().role : 'Student';
+
+    await updateStreak(cred.user.uid);
+    await logActivity({
+      type: 'user_login', actorUid: cred.user.uid,
+      actorName: snap.exists() ? (snap.data().name || '') : '',
+      actorEmail: loginId, actorRole: role,
+      metadata: { method: 'email' }, visibility: 'admin',
+    });
+
+    const from = (location.state as any)?.from;
+    if (from) {
+      navigate(from, { replace: true });
+    } else {
+      redirectByRole(role);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    if (loginType !== 'student') {
+      setError('Google login is not available for Teacher/Admin accounts.');
+      return;
+    }
     setLoading(true);
+    setError('');
     try {
-      const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: 'select_account' });
-      const result = await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      const docRef = doc(db, 'users', user.uid);
+      const docSnap = await getDoc(docRef);
 
-      // Upsert user in Firestore
-      const userDoc = await getDoc(doc(db, 'users', user.uid));
-      if (!userDoc.exists()) {
-        await setDoc(doc(db, 'users', user.uid), {
-          id: user.uid,
-          full_name: user.displayName || user.email?.split('@')[0] || '',
-          email: user.email || '',
-          role: 'Student',
-          created_at: new Date().toISOString(),
+      if (!docSnap.exists()) {
+        const studentId = generateStudentId(user.displayName || 'user');
+        await setDoc(docRef, {
+          uid: user.uid, name: user.displayName || 'Student', full_name: user.displayName || 'Student',
+          email: user.email, role: 'Student', photoURL: user.photoURL || '',
+          studentId, grade: '', syllabus: '', institution: '', language: 'English',
+          teacherUid: '', teacherCode: '',
+          progress: { physics: 0, chemistry: 0, biology: 0, math: 0, cs: 0 },
+          completedLabs: [], visitedLabs: [],
+          streak: 1, lastActiveDate: new Date().toISOString().split('T')[0], totalTimeSpent: 0,
+          createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
         });
+        await logActivity({
+          type: 'user_signup', actorUid: user.uid,
+          actorName: user.displayName || '', actorEmail: user.email || '',
+          actorRole: 'Student', metadata: { method: 'google' }, visibility: 'admin',
+        });
+      } else {
+        const data = docSnap.data();
+        if (data.role === 'Teacher' || data.role === 'Admin') {
+          await signOut(auth);
+          throw new Error('Teacher and Admin accounts cannot use Google login.');
+        }
+        // Update name/photo from Google if not customized
+        const updates: any = { updatedAt: new Date().toISOString() };
+        if (!data.name || data.name === 'Student' || data.name === 'User') {
+          updates.name = user.displayName || data.name;
+          updates.full_name = user.displayName || data.full_name;
+        }
+        if (!data.photoURL && user.photoURL) updates.photoURL = user.photoURL;
+        await updateDoc(docRef, updates);
+        await updateStreak(user.uid);
       }
-
-      const updatedDoc = await getDoc(doc(db, 'users', user.uid));
-      const userRole = updatedDoc.exists() ? (updatedDoc.data().role || 'Student') : 'Student';
-
-      const roleRoutes: Record<string, string> = {
-        'Admin': '/dashboard',
-        'Teacher': '/dashboard',
-        'Student': '/home',
-      };
-      navigate(roleRoutes[userRole] || '/home');
+      const from = (location.state as any)?.from;
+      navigate(from || '/dashboard', { replace: true });
     } catch (err: any) {
-      setError(friendlyError(err));
+      setError(err.message || 'Google Sign-In failed');
+    } finally {
       setLoading(false);
     }
   };
+
+  const handleStudentSignup = async () => {
+    if (signupStep === 1) {
+      if (!signupData.name || !loginId || !password) throw new Error('Please fill all fields');
+      if (password.length < 6) throw new Error('Password must be at least 6 characters');
+      setSignupStep(2);
+      setLoading(false);
+      return;
+    }
+    const cred = await createUserWithEmailAndPassword(auth, loginId, password);
+    await updateProfile(cred.user, { displayName: signupData.name });
+    const studentId = generateStudentId(signupData.name);
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      uid: cred.user.uid, name: signupData.name, full_name: signupData.name,
+      email: loginId, role: 'Student', photoURL: '', studentId,
+      grade: signupData.grade, syllabus: 'Karnataka PUC', institution: signupData.institution,
+      language: signupData.language, teacherUid: '', teacherCode: '',
+      progress: { physics: 0, chemistry: 0, biology: 0, math: 0, cs: 0 },
+      completedLabs: [], visitedLabs: [],
+      streak: 1, lastActiveDate: new Date().toISOString().split('T')[0], totalTimeSpent: 0,
+      createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
+    });
+    await logActivity({
+      type: 'user_signup', actorUid: cred.user.uid,
+      actorName: signupData.name, actorEmail: loginId,
+      actorRole: 'Student', metadata: { method: 'email' }, visibility: 'admin',
+    });
+    navigate('/dashboard', { replace: true });
+  };
+
+  // Login type labels
+  const idLabel = loginType === 'teacher' ? 'Teacher ID' : loginType === 'admin' ? 'Admin ID' : 'Email Address';
+  const badgeColor = loginType === 'teacher' ? 'bg-orange-500/20 text-orange-400 border-orange-500/30'
+    : loginType === 'admin' ? 'bg-red-500/20 text-red-400 border-red-500/30' : '';
+  const badgeText = loginType === 'teacher' ? '🏫 Teacher Login' : loginType === 'admin' ? '🛡️ Admin Login' : '';
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6 pt-20 pb-12">
@@ -149,99 +221,146 @@ const Login: React.FC = () => {
         <div className="text-center mb-8">
           <FlaskConical className="mx-auto w-12 h-12 text-emerald-400 mb-4" />
           <h1 className="text-2xl font-display font-bold text-white">
-            {isRegister ? 'Create Account' : 'Welcome Back'}
+            {isSignup ? (signupStep === 2 ? 'Complete Your Profile' : 'Create Account') : 'Welcome Back'}
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            {isRegister ? 'Join E-Prayog today' : 'Log in to your E-Prayog account'}
+            {isSignup ? (signupStep === 2 ? 'Just a few more details' : 'Join E-Prayog today') : 'Log in to your E-Prayog account'}
           </p>
         </div>
 
+        {/* Login type badge */}
+        {badgeText && !isSignup && (
+          <div className={`mb-4 px-4 py-2 rounded-xl border text-center text-sm font-bold ${badgeColor}`}>
+            {badgeText}
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-4">
-          {isRegister && (
-            <div className="relative">
-              <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-              <input
-                type="text" value={name} onChange={(e) => setName(e.target.value)}
-                placeholder="Full Name" required
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
-              />
-            </div>
+          {/* Signup Step 2 — profile details */}
+          {isSignup && signupStep === 2 ? (
+            <>
+              <button type="button" onClick={() => setSignupStep(1)}
+                className="flex items-center gap-1 text-sm text-slate-400 hover:text-white mb-2">
+                <ArrowLeft size={14} /> Back
+              </button>
+              <div className="relative">
+                <GraduationCap size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                <select value={signupData.grade} onChange={e => setSignupData({...signupData, grade: e.target.value})}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
+                  <option value="2nd PUC / Class 12">2nd PUC / Class 12</option>
+                  <option value="1st PUC / Class 11">1st PUC / Class 11</option>
+                </select>
+              </div>
+              <div className="relative">
+                <Building size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                <input type="text" value={signupData.institution}
+                  onChange={e => setSignupData({...signupData, institution: e.target.value})}
+                  placeholder="School / College name (optional)"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50" />
+              </div>
+              <select value={signupData.language} onChange={e => setSignupData({...signupData, language: e.target.value})}
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
+                <option value="English">🌐 English</option>
+                <option value="Kannada">🏛️ Kannada</option>
+                <option value="Hindi">🇮🇳 Hindi</option>
+              </select>
+            </>
+          ) : (
+            <>
+              {/* Signup Step 1: Name field */}
+              {isSignup && (
+                <div className="relative">
+                  <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <input type="text" value={signupData.name}
+                    onChange={e => setSignupData({...signupData, name: e.target.value})}
+                    placeholder="Full Name" required
+                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50" />
+                </div>
+              )}
+              {/* ID field */}
+              <div className="relative">
+                <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                <input
+                  type={loginType === 'student' ? 'email' : 'text'}
+                  value={loginId}
+                  onChange={e => setLoginId(e.target.value)}
+                  placeholder={idLabel}
+                  required
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
+                />
+              </div>
+              {/* Password field */}
+              <div className="relative">
+                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                <input
+                  type={showPw ? 'text' : 'password'} value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  placeholder="Password" required minLength={6}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-11 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
+                />
+                <button type="button" onClick={() => setShowPw(!showPw)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white">
+                  {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+            </>
           )}
-          <div className="relative">
-            <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-            <input
-              type="email" value={email} onChange={(e) => setEmail(e.target.value)}
-              placeholder="Email address" required
-              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
-            />
-          </div>
-          <div className="relative">
-            <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
-            <input
-              type={showPw ? 'text' : 'password'} value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password" required minLength={6}
-              className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-11 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
-            />
-            <button type="button" onClick={() => setShowPw(!showPw)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white">
-              {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
-            </button>
-          </div>
+
           {error && <p className="text-sm text-red-400 bg-red-500/10 rounded-xl px-4 py-2">{error}</p>}
-          {success && <p className="text-sm text-emerald-400 bg-emerald-500/10 rounded-xl px-4 py-2">{success}</p>}
-          <button
-            type="submit" disabled={loading}
-            className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-          >
+
+          <button type="submit" disabled={loading}
+            className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50">
             {loading ? (
               <span className="animate-spin w-4 h-4 border-2 border-white/30 border-t-white rounded-full" />
+            ) : isSignup && signupStep === 2 ? (
+              <ArrowRight size={16} />
             ) : (
               <LogIn size={16} />
             )}
-            {isRegister ? 'Create Account' : 'Log In'}
+            {isSignup ? (signupStep === 2 ? 'Create Account' : 'Next') : 'Log In'}
           </button>
         </form>
 
-        <div className="flex items-center my-6">
-          <div className="flex-1 h-px bg-white/10" />
-          <span className="px-4 text-xs text-slate-500">OR</span>
-          <div className="flex-1 h-px bg-white/10" />
-        </div>
-
-        <button
-          onClick={handleGoogle} disabled={loading}
-          className="w-full py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-        >
-          <svg width="18" height="18" viewBox="0 0 48 48">
-            <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C34 32.7 29.5 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.2-2.7-.4-3.9z" />
-            <path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.2 16.2 18.8 13 24 13c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
-            <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.5 0-10-3.3-11.3-8.1l-6.5 5C9.5 39.6 16.2 44 24 44z" />
-            <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.2-2.7-.4-3.9z" />
-          </svg>
-          Continue with Google
-        </button>
-
-        <p className="text-center text-sm text-slate-400 mt-6">
-          {isRegister ? 'Already have an account?' : "Don't have an account?"}
-          <button
-            onClick={() => { setIsRegister(!isRegister); setError(''); setSuccess(''); }}
-            className="text-emerald-400 font-bold ml-2 hover:underline"
-          >
-            {isRegister ? 'Log In' : 'Sign Up'}
-          </button>
-        </p>
-
-        <div className="mt-8 pt-6 border-t border-white/5 text-center">
-          <p className="text-xs text-slate-500 mb-3">Staff access to the platform</p>
-          <div className="flex items-center justify-center gap-4">
-            <button onClick={() => navigate('/staff-login?type=teacher')} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-purple-500/10 text-purple-400 hover:bg-purple-500/20 text-xs font-bold transition-colors border border-purple-500/20">
-              Teacher Login
+        {/* Google login (students only) */}
+        {loginType === 'student' && !isSignup && (
+          <>
+            <div className="flex items-center my-6">
+              <div className="flex-1 h-px bg-white/10" />
+              <span className="px-4 text-xs text-slate-500">OR</span>
+              <div className="flex-1 h-px bg-white/10" />
+            </div>
+            <button onClick={handleGoogleLogin} disabled={loading}
+              className="w-full py-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50">
+              <svg width="18" height="18" viewBox="0 0 48 48">
+                <path fill="#FFC107" d="M43.6 20.1H42V20H24v8h11.3C34 32.7 29.5 36 24 36c-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.2-2.7-.4-3.9z" />
+                <path fill="#FF3D00" d="m6.3 14.7 6.6 4.8C14.2 16.2 18.8 13 24 13c3.1 0 5.8 1.2 8 3l5.7-5.7C34 6 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
+                <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.5 0-10-3.3-11.3-8.1l-6.5 5C9.5 39.6 16.2 44 24 44z" />
+                <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.2-2.7-.4-3.9z" />
+              </svg>
+              Continue with Google
             </button>
-            <button onClick={() => navigate('/staff-login?type=admin')} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 text-xs font-bold transition-colors border border-red-500/20">
-              Admin Login
+          </>
+        )}
+
+        {/* Toggle Sign Up (students only) */}
+        {loginType === 'student' && (
+          <p className="text-center text-sm text-slate-400 mt-6">
+            {isSignup ? 'Already have an account?' : "Don't have an account?"}
+            <button
+              onClick={() => { setIsSignup(!isSignup); setError(''); setSignupStep(1); }}
+              className="text-emerald-400 font-bold ml-2 hover:underline"
+            >
+              {isSignup ? 'Log In' : 'Sign Up'}
             </button>
-          </div>
-        </div>
+          </p>
+        )}
+
+        {/* Hint for teacher/admin */}
+        {loginType !== 'student' && !isSignup && (
+          <p className="text-center text-xs text-slate-500 mt-6">
+            {loginType === 'teacher' ? 'Teacher accounts are created by the Admin.' : 'Admin credentials are set during platform setup.'}
+          </p>
+        )}
       </MotionDiv>
     </div>
   );

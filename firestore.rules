@@ -19,35 +19,88 @@ service cloud.firestore {
 
     // --- Users Collection ---
     match /users/{userId} {
-      // Anyone authenticated can view their own profile, or if they are a teacher/admin they can read other profiles.
-      // (Teachers might need to read student profiles to show their name/status)
       allow read: if isAuthenticated();
-      // Users can only create/update their own profile, unless they are admin.
-      allow create, update: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow create: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      // Users can update own profile but NOT change their role, unless Admin
+      allow update: if isAuthenticated() && (
+        isAdmin() || 
+        (request.auth.uid == userId && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']))
+      );
+      allow delete: if isAdmin();
+    }
+
+    // --- Lab Progress Sub-collection ---
+    match /labProgress/{uid}/labs/{labId} {
+      // Only the student themselves can write their lab progress
+      allow read: if isAuthenticated();
+      allow create, update: if isAuthenticated() && request.auth.uid == uid;
+      allow delete: if isAdmin();
+    }
+
+    // --- Teachers Collection ---
+    match /teachers/{teacherUid} {
+      allow read: if isAuthenticated();
+      allow create, update: if isAuthenticated() && (request.auth.uid == teacherUid || isAdmin());
+      allow delete: if isAdmin();
+
+      // Sub-collection: students under a teacher
+      match /students/{studentUid} {
+        allow read: if isAuthenticated();
+        allow create, update, delete: if isAuthenticated() && (
+          request.auth.uid == studentUid || 
+          request.auth.uid == teacherUid || 
+          isAdmin()
+        );
+      }
+    }
+
+    // --- Teacher Codes (O(1) lookup) ---
+    match /teacherCodes/{code} {
+      allow read: if isAuthenticated();
+      allow create, update: if isAuthenticated() && (isTeacher() || isAdmin());
       allow delete: if isAdmin();
     }
 
     // --- Quiz Scores Collection ---
     match /quiz_scores/{scoreId} {
-      // Admins/Teachers can read all scores. Students can read their own.
       allow read: if isAuthenticated() && (
         request.auth.uid == resource.data.user_id || 
         isTeacher() || 
         isAdmin()
       );
-      // Only the user themselves can submit/update their score
       allow create, update: if isAuthenticated() && request.auth.uid == request.resource.data.user_id;
       allow delete: if isAdmin();
     }
 
-    // --- Activity Feed Collection ---
+    // --- Activity Feed (legacy name) ---
     match /activity_feed/{activityId} {
-      // Teachers and Admins can view activity feeds
       allow read: if isAuthenticated();
-      // Any authenticated user can create an activity log (we trust the client payload for standard operations here)
       allow create: if isAuthenticated() && request.resource.data.actorUid == request.auth.uid;
-      // Activity logs should be immutable
       allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    // --- Activity Feed (new name) ---
+    match /activityFeed/{activityId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && request.resource.data.actorUid == request.auth.uid;
+      allow update: if false;
+      allow delete: if isAdmin();
+    }
+
+    // --- Feedbacks Collection ---
+    match /feedbacks/{feedbackId} {
+      allow read: if isAuthenticated() && (isAdmin() || isTeacher());
+      allow create: if isAuthenticated() && request.resource.data.uid == request.auth.uid;
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // --- Password Reset Requests ---
+    match /passwordResetRequests/{requestId} {
+      allow read: if isAuthenticated() && (isAdmin() || isTeacher());
+      allow create: if isAuthenticated();
+      allow update: if isAdmin();
       allow delete: if isAdmin();
     }
 

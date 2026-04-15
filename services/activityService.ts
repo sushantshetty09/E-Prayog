@@ -30,9 +30,26 @@ export interface ActivityEvent {
   visibility: 'admin' | 'teacher' | 'both';
 }
 
+// Local rate limiter to prevent spamming
+const activityLogCache: number[] = [];
+
 export const logActivity = async (event: Omit<ActivityEvent, 'id' | 'timestamp' | 'read'>) => {
   try {
-    await addDoc(collection(db, 'activity_feed'), {
+    const now = Date.now();
+    // Clean up cache (keep only last 60 seconds)
+    while (activityLogCache.length > 0 && now - activityLogCache[0] > 60000) {
+      activityLogCache.shift();
+    }
+    
+    // Prevent more than 10 logs per minute from a single client session
+    if (activityLogCache.length >= 10) {
+      console.warn('Activity log rate limit exceeded. Ignoring.');
+      return;
+    }
+    
+    activityLogCache.push(now);
+
+    const payload = {
       type: event.type,
       actorUid: event.actorUid,
       actorName: event.actorName,
@@ -44,7 +61,13 @@ export const logActivity = async (event: Omit<ActivityEvent, 'id' | 'timestamp' 
       timestamp: new Date().toISOString(),
       read: false,
       visibility: event.visibility
-    });
+    };
+
+    // Write to both legacy and new collection names
+    await Promise.all([
+      addDoc(collection(db, 'activity_feed'), payload),
+      addDoc(collection(db, 'activityFeed'), payload),
+    ]);
   } catch (e) {
     console.warn('Activity log failed silently:', e);
   }

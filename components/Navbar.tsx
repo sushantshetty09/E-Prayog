@@ -12,6 +12,12 @@ const TITLES = [
   { text: "ಇ-ಪ್ರಯೋಗ", lang: "kn" },
 ];
 
+// Auth-dependent nav items (shown only when logged in)
+const AUTH_NAV_ITEMS = [
+  { label: 'Experiments', path: '/subjects' },
+  { label: 'AI Tutor', path: '/tutor' },
+];
+
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [titleIndex, setTitleIndex] = useState(0);
@@ -19,13 +25,13 @@ const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const { user, profileData, role, signOut } = useAuth();
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => location.pathname === path || location.pathname.startsWith(path + '/');
 
-  const navLinkClass = (path: string, customActiveColor = 'bg-emerald-600 dark:bg-emerald-400') => `relative text-sm font-medium transition-colors duration-300 ${
+  const navLinkClass = (path: string) => `relative text-sm font-medium transition-colors duration-300 ${
     isActive(path)
-      ? 'text-slate-900 dark:text-white'
-      : 'text-slate-500 dark:text-gray-400 hover:text-emerald-600 dark:hover:text-emerald-300'
-  } ${isActive(path) ? 'nav-active' : ''}`;
+      ? 'text-white'
+      : 'text-gray-400 hover:text-emerald-300'
+  }`;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -38,24 +44,27 @@ const Navbar: React.FC = () => {
     try {
       setIsOpen(false);
       await signOut();
-      navigate('/login', { replace: true });
+      navigate('/home', { replace: true });
     } catch (error) {
       console.error("Logout Error:", error);
-      navigate('/login', { replace: true });
+      navigate('/home', { replace: true });
     }
   };
 
-  // Get user display info from Profile Data first, fallback to metadata
-  const displayName = profileData?.full_name || profileData?.email?.split('@')[0] || user?.user_metadata?.full_name || user?.user_metadata?.name || user?.email?.split('@')[0] || '';
+  // Display info — prefer name, fallback to full_name, then Firebase displayName
+  const displayName = profileData?.name || profileData?.full_name || user?.displayName || user?.email?.split('@')[0] || '';
+  const avatarUrl = profileData?.photoURL || user?.photoURL || '';
   const avatarClass = profileData?.avatar && profileData.avatar.startsWith('bg-') ? profileData.avatar : 'bg-emerald-500';
-  const avatarUrl = profileData?.avatar && profileData.avatar.startsWith('http') ? profileData.avatar : user?.user_metadata?.avatar_url || user?.user_metadata?.picture || '';
+
+  // Dashboard link — role-aware
+  const dashboardPath = role === 'Admin' ? '/admin-dashboard' : role === 'Teacher' ? '/teacher-dashboard' : '/dashboard';
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-40 glass-nav h-20 px-6 md:px-12 flex items-center justify-between transition-colors duration-300 border-b border-white/5">
       <Link to="/home" className="flex items-center gap-3 group min-w-[200px]">
         <div className="relative">
           <div className="absolute inset-0 bg-emerald-500 blur-lg opacity-30 group-hover:opacity-60 transition-opacity"></div>
-          <FlaskConical className="w-10 h-10 text-emerald-600 dark:text-emerald-400 relative z-10 transition-colors group-hover:rotate-12 duration-500 ease-in-out" />
+          <FlaskConical className="w-10 h-10 text-emerald-400 relative z-10 transition-colors group-hover:rotate-12 duration-500 ease-in-out" />
         </div>
         <div className="flex flex-col justify-center">
           <AnimatePresence mode="wait">
@@ -65,52 +74,53 @@ const Navbar: React.FC = () => {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -10, opacity: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-xl md:text-2xl font-display font-bold text-slate-900 dark:text-white tracking-tight leading-none"
+              className="text-xl md:text-2xl font-display font-bold text-white tracking-tight leading-none"
             >
               {TITLES[titleIndex].lang === 'en' ? (
-                <>E-<span className="text-emerald-600 dark:text-emerald-400">Prayog</span></>
+                <>E-<span className="text-emerald-400">Prayog</span></>
               ) : (
-                <>ಇ-<span className="text-emerald-600 dark:text-emerald-400">ಪ್ರಯೋಗ</span></>
+                <>ಇ-<span className="text-emerald-400">ಪ್ರಯೋಗ</span></>
               )}
             </MotionSpan>
           </AnimatePresence>
         </div>
       </Link>
 
+      {/* Desktop Nav */}
       <div className="hidden md:flex items-center gap-6">
+        {/* Always-visible public tabs */}
         {NAV_ITEMS.map((item) => (
           <Link key={item.path} to={item.path} className={navLinkClass(item.path)}>
             {item.label}
             {isActive(item.path) && (
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-600 dark:bg-emerald-400 rounded-full" />
+              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />
+            )}
+          </Link>
+        ))}
+        {/* Auth-only tabs */}
+        {user && AUTH_NAV_ITEMS.map((item) => (
+          <Link key={item.path} to={item.path} className={navLinkClass(item.path)}>
+            {item.label}
+            {isActive(item.path) && (
+              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />
             )}
           </Link>
         ))}
         {user && (
-          <Link to="/dashboard" className={navLinkClass('/dashboard')}>
+          <Link to={dashboardPath} className={navLinkClass(dashboardPath)}>
             Dashboard
-            {isActive('/dashboard') && (
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-600 dark:bg-emerald-400 rounded-full" />
-            )}
-          </Link>
-        )}
-        {user && (role === 'Teacher' || role === 'Admin') && (
-          <Link 
-            to={role === 'Admin' ? '/admin-activity' : '/teacher-activity'} 
-            className={navLinkClass(role === 'Admin' ? '/admin-activity' : '/teacher-activity')}
-          >
-            Activity
-            {isActive(role === 'Admin' ? '/admin-activity' : '/teacher-activity') && (
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-600 dark:bg-emerald-400 rounded-full" />
+            {isActive(dashboardPath) && (
+              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />
             )}
           </Link>
         )}
       </div>
 
+      {/* Right side — avatar or login */}
       <div className="hidden md:flex items-center">
         {user ? (
           <div className="flex items-center gap-3">
-            <Link to="/profile" aria-label="View Profile" className="group flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-black/5 dark:hover:bg-white/5 transition-all">
+            <Link to="/profile" aria-label="View Profile" className="group flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/5 transition-all">
               {avatarUrl ? (
                 <img src={avatarUrl} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
               ) : (
@@ -118,11 +128,11 @@ const Navbar: React.FC = () => {
                   {displayName?.charAt(0)?.toUpperCase() || <User size={14} />}
                 </div>
               )}
-              <span className="text-sm text-slate-600 dark:text-gray-400 hidden lg:inline font-medium">
+              <span className="text-sm text-gray-400 hidden lg:inline font-medium">
                 {displayName?.split(' ')[0] || 'Profile'}
               </span>
             </Link>
-            <button onClick={handleLogout} aria-label="Logout" className="p-2 rounded-full bg-black/5 dark:bg-white/5 hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-all flex items-center gap-2">
+            <button onClick={handleLogout} aria-label="Logout" className="p-2 rounded-full bg-white/5 hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-all">
               <LogOut size={16} />
             </button>
           </div>
@@ -135,22 +145,27 @@ const Navbar: React.FC = () => {
         )}
       </div>
 
-      <button className="md:hidden p-2 -mr-2 text-slate-600 dark:text-gray-400" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? "Close menu" : "Open menu"}>
+      {/* Mobile hamburger */}
+      <button className="md:hidden p-2 -mr-2 text-gray-400" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? "Close menu" : "Open menu"}>
         {isOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
 
+      {/* Mobile menu */}
       {isOpen && (
         <div className="absolute top-20 left-0 w-full glass-nav flex flex-col p-6 gap-4 md:hidden border-b border-white/5 shadow-2xl">
           {NAV_ITEMS.map((item) => (
-            <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive(item.path) ? 'text-emerald-400' : ''}`}>{item.label}</Link>
+            <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)}
+              className={`text-lg font-medium ${isActive(item.path) ? 'text-emerald-400' : ''}`}>{item.label}</Link>
           ))}
           {user && (
             <>
               <hr className="border-white/10 my-2" />
-              <Link to="/dashboard" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/dashboard') ? 'text-emerald-400' : ''}`}>Dashboard</Link>
-              {(role === 'Teacher' || role === 'Admin') && (
-                <Link to={role === 'Admin' ? '/admin-activity' : '/teacher-activity'} onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive(role === 'Admin' ? '/admin-activity' : '/teacher-activity') ? 'text-emerald-400' : ''}`}>Activity Feed</Link>
-              )}
+              {AUTH_NAV_ITEMS.map((item) => (
+                <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)}
+                  className={`text-lg font-medium ${isActive(item.path) ? 'text-emerald-400' : ''}`}>{item.label}</Link>
+              ))}
+              <Link to={dashboardPath} onClick={() => setIsOpen(false)}
+                className={`text-lg font-medium ${isActive(dashboardPath) ? 'text-emerald-400' : ''}`}>Dashboard</Link>
               <Link to="/profile" onClick={() => setIsOpen(false)} className="text-lg font-medium text-blue-400">My Profile</Link>
             </>
           )}
