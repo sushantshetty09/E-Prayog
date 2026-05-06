@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
+import { useLang } from '../../services/LanguageContext';
 
 const CATEGORY_COLORS: Record<string, string> = {
   'alkali-metal':        '#ffcccc',
@@ -111,13 +112,14 @@ const UNIQUE_ELEMENTS = Array.from(new Map(ELEMENTS.map(e => [e.number, e])).val
 
 
 const PeriodicTableTool: React.FC = () => {
+  const { t } = useLang();
   const [selectedElement, setSelectedElement] = useState<any>(null);
 
   return (
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-[1400px] mx-auto min-h-screen">
       <div className="mb-10 text-center">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Periodic Table of Elements</h1>
-        <p className="text-slate-400 max-w-2xl mx-auto">Interactive table. Click any element to view detailed chemical properties.</p>
+        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolPeriodicTableTitle}</h1>
+        <p className="text-slate-400 max-w-2xl mx-auto">{t.toolPeriodicTableSubtitle}</p>
       </div>
 
       <div className="overflow-x-auto pb-8">

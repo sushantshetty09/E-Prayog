@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Delete } from 'lucide-react';
+import { useLang } from '../../services/LanguageContext';
 
 // Custom evaluator to avoid eval()
 function evaluate(expr: string): string {
@@ -41,6 +42,7 @@ function evaluate(expr: string): string {
 }
 
 const CalculatorTool: React.FC = () => {
+  const { t } = useLang();
   const [display, setDisplay] = useState('0');
   const [mode, setMode] = useState<'standard'|'scientific'>('standard');
   const [hasError, setHasError] = useState(false);
@@ -94,7 +96,7 @@ const CalculatorTool: React.FC = () => {
   return (
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Calculator</h1>
+        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolCalculatorTitle}</h1>
       </div>
 
       <div className="max-w-md mx-auto glass-panel p-6 rounded-3xl border border-white/10 bg-slate-900/80 shadow-2xl">
@@ -105,13 +107,13 @@ const CalculatorTool: React.FC = () => {
             onClick={() => setMode('standard')}
             className={`flex-1 py-2 rounded-lg text-sm font-bold transition-colors ${mode === 'standard' ? 'bg-pink-600 text-white' : 'text-slate-400 hover:text-white'}`}
           >
-            Standard
+            {t.toolCalcStandard}
           </button>
           <button 
             onClick={() => setMode('scientific')}
             className={`flex-1 py-2 rounded-lg text-sm font-bold transition-colors ${mode === 'scientific' ? 'bg-pink-600 text-white' : 'text-slate-400 hover:text-white'}`}
           >
-            Scientific
+            {t.toolCalcScientific}
           </button>
         </div>
 

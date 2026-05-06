@@ -32,6 +32,57 @@ export interface Translations {
   aiGreeting: string; aiGreetingLab: string; aiGeneral: string;
   aiAskPlaceholder: string; aiAskLabPlaceholder: string;
   aiDisclaimer: string; aiError: string; aiRateLimit: string;
+  // About page extras
+  aboutOpenSource: string;
+  aboutMissionTitle: string; aboutMissionP1: string; aboutMissionP2: string;
+  aboutFeat1Title: string; aboutFeat1Desc: string;
+  aboutFeat2Title: string; aboutFeat2Desc: string;
+  aboutFeat3Title: string; aboutFeat3Desc: string;
+  aboutFeat4Title: string; aboutFeat4Desc: string;
+  aboutFeat5Title: string; aboutFeat5Desc: string;
+  aboutFeat6Title: string; aboutFeat6Desc: string;
+  aboutFeaturesSubheading: string;
+  aboutSubjectsHeading: string; aboutSubjectsSubheading: string;
+  aboutBuiltWith: string; aboutBuiltFor: string;
+  aboutCtaSubheading: string;
+  // Profile page extras
+  profileEmailLabel: string; profileIdLabel: string; profileJoinedLabel: string;
+  profileDisplayName: string; profileInstitution: string;
+  profileGradeClass: string; profileBoardSyllabus: string;
+  profileLanguageLabel: string; profileThemeColor: string;
+  profileNotSet: string;
+  // LabView tab labels & section headings
+  tabAim: string; tabProcedure: string; tabInstructions: string; tabSimulation: string;
+  tabObservation: string; tabResult: string; tabRealWorld: string; tabViva: string; tabQuiz: string;
+  labAimHeading: string; labRequirements: string; labTheory: string; labObjectives: string;
+  labSafetyPrecautions: string; labProcedureHeading: string; labInstructionsHeading: string;
+  labVideoDemo: string; labVideoComingSoon: string; labSearchYouTube: string;
+  labObservationTable: string; labResultConclusion: string; labExpectedResultFormat: string;
+  labYourResult: string; labWriteResult: string; labExperimentalValue: string; labPercentageError: string;
+  labRealWorldApps: string; labRealWorldDefault: string;
+  labInteractiveViva: string; labRevealed: string; labShuffleQuestions: string;
+  labRevealAnswer: string; labHowDidYouDo: string; labKnew: string; labUnsure: string; labMissed: string;
+  labPracticeSummary: string; labSelfAssessmentQuiz: string; labAnswered: string; labExplanation: string;
+  // Tools pages
+  toolFormulaTitle: string; toolFormulaSubtitle: string; toolFormulaSearchPlaceholder: string; toolFormulaNoResults: string;
+  toolSafetyTitle: string; toolSafetySubtitle: string; toolSafetySearchPlaceholder: string; toolSafetyNoResults: string;
+  toolConstantsTitle: string; toolConstantsSubtitle: string; toolConstantsSearchPlaceholder: string; toolConstantsNoResults: string;
+  toolCalculatorTitle: string; toolCalcStandard: string; toolCalcScientific: string;
+  toolBioDiagramsTitle: string; toolBioDiagramsSubtitle: string;
+  toolLogicGatesTitle: string; toolLogicGatesSubtitle: string;
+  toolPeriodicTableTitle: string; toolPeriodicTableSubtitle: string;
+  toolSearchAll: string; toolCopied: string;
+  // Subjects list page
+  subjectsTitle: string; subjectsDesc: string;
+  subjectsExperiments: string; subjectsMore: string; subjectsExplore: string;
+  // SubjectView (experiment list) page
+  subjectNotFound: string; subjectBack: string; subjectKarnatakaPuc: string;
+  subjectDifficulty: string; subjectStandard: string; subjectAll: string;
+  subjectOpenLab: string; subjectNoExperiments: string;
+  // Tools hub page
+  toolsTitle: string; toolsDesc: string;
+  toolsFormulaSheet: string; toolsLogicGates: string; toolsPeriodicTable: string;
+  toolsConstants: string; toolsCalculator: string; toolsSafetyGuide: string; toolsBioDiagrams: string;
 }
 
 const T: Record<Lang, Translations> = {
@@ -165,6 +216,59 @@ const T: Record<Lang, Translations> = {
     labRetakeQuiz: 'Retake Quiz',
     labPrevious: 'Previous',
     labFinish: 'Finish',
+    aboutOpenSource: 'Open Source Science Lab',
+    aboutMissionTitle: 'Our Mission',
+    aboutMissionP1: 'E-Prayog aims to democratize practical science education for Karnataka PUC students. We believe every student — regardless of whether their school has a physical lab — deserves hands-on experimental learning.',
+    aboutMissionP2: 'Our 2D interactive simulations recreate real experiments faithfully, complete with observations, viva voce, quizzes, and AI-powered doubt solving. All running entirely in the browser — free, forever.',
+    aboutFeat1Title: '2D Interactive Simulations', aboutFeat1Desc: 'All experiments run in the browser — no WebGL, no downloads.',
+    aboutFeat2Title: 'AI Science Tutor', aboutFeat2Desc: 'Ask doubts in English, Kannada, or Hindi — powered by Gemini.',
+    aboutFeat3Title: 'Karnataka PUC Aligned', aboutFeat3Desc: 'Covers both 1st and 2nd PUC syllabus for all 5 science subjects.',
+    aboutFeat4Title: 'Safe & Accessible', aboutFeat4Desc: 'No chemicals, no risk — experiment anytime, anywhere.',
+    aboutFeat5Title: 'Multilingual Support', aboutFeat5Desc: 'Full English, Kannada, and Hindi support throughout.',
+    aboutFeat6Title: 'Gamified Learning', aboutFeat6Desc: 'Quizzes, viva voce, assignments, and completion tracking.',
+    aboutFeaturesSubheading: 'Everything you need for practical science education, built for the Indian classroom.',
+    aboutSubjectsHeading: 'Subjects Covered', aboutSubjectsSubheading: 'Comprehensive coverage across all 5 PUC science streams.',
+    aboutBuiltWith: 'Built with', aboutBuiltFor: 'for Karnataka Students',
+    aboutCtaSubheading: 'Join thousands of Karnataka students already learning through interactive simulations.',
+    profileEmailLabel: 'Email', profileIdLabel: 'ID', profileJoinedLabel: 'Joined',
+    profileDisplayName: 'Display Name', profileInstitution: 'Institution',
+    profileGradeClass: 'Grade / Class', profileBoardSyllabus: 'Board / Syllabus',
+    profileLanguageLabel: 'Language', profileThemeColor: 'Theme Color',
+    profileNotSet: 'Not set',
+    tabAim: 'Aim & Theory', tabProcedure: 'Procedure', tabInstructions: 'Instructions & Video', tabSimulation: 'Simulation',
+    tabObservation: 'Observation', tabResult: 'Result', tabRealWorld: 'Real World', tabViva: 'Viva Questions', tabQuiz: 'Quiz',
+    labAimHeading: 'Aim', labRequirements: 'Requirements', labTheory: 'Theory', labObjectives: 'Objectives',
+    labSafetyPrecautions: 'Safety Precautions', labProcedureHeading: 'Procedure', labInstructionsHeading: 'Lab Instructions',
+    labVideoDemo: 'Video Demonstration', labVideoComingSoon: 'Video demonstration coming soon', labSearchYouTube: 'Search on YouTube',
+    labObservationTable: 'Observation Table', labResultConclusion: 'Result & Conclusion', labExpectedResultFormat: 'Expected result format:',
+    labYourResult: 'Your Result', labWriteResult: 'Write your result and conclusion here...', labExperimentalValue: 'Experimental Value', labPercentageError: 'Percentage Error',
+    labRealWorldApps: 'Real-World Applications', labRealWorldDefault: 'Real-world applications for this experiment include:',
+    labInteractiveViva: 'Interactive Viva Voce', labRevealed: 'revealed', labShuffleQuestions: 'Shuffle Questions',
+    labRevealAnswer: 'Reveal Answer', labHowDidYouDo: 'How did you do?', labKnew: 'Knew', labUnsure: 'Unsure', labMissed: 'Missed',
+    labPracticeSummary: 'Practice Summary', labSelfAssessmentQuiz: 'Self-Assessment Quiz', labAnswered: 'answered', labExplanation: 'Explanation:',
+    toolFormulaTitle: 'Formula Sheet', toolFormulaSubtitle: 'Standard formulas and equations for quick reference.',
+    toolFormulaSearchPlaceholder: 'Search formulas...', toolFormulaNoResults: 'No formulas matched your search.',
+    toolSafetyTitle: 'Laboratory Safety Guide', toolSafetySubtitle: 'Essential safety protocols and emergency procedures for all laboratory experiments.',
+    toolSafetySearchPlaceholder: 'Search guidelines...', toolSafetyNoResults: 'No safety rules matched your search.',
+    toolConstantsTitle: 'Physical Constants', toolConstantsSubtitle: 'Reference values for universal and fundamental physical constants.',
+    toolConstantsSearchPlaceholder: 'Search constants...', toolConstantsNoResults: 'No constants matched your search.',
+    toolCalculatorTitle: 'Calculator', toolCalcStandard: 'Standard', toolCalcScientific: 'Scientific',
+    toolBioDiagramsTitle: 'Biology Diagrams', toolBioDiagramsSubtitle: 'Interactive labelled diagrams for Biology.',
+    toolLogicGatesTitle: 'Logic Gates Simulator', toolLogicGatesSubtitle: 'Explore boolean logic with interactive gate simulations.',
+    toolPeriodicTableTitle: 'Periodic Table', toolPeriodicTableSubtitle: 'Interactive periodic table of elements.',
+    toolSearchAll: 'All', toolCopied: 'Copied!',
+    subjectsTitle: 'Virtual Laboratories',
+    subjectsDesc: 'Choose a subject to explore interactive experiments aligned to the Karnataka PUC curriculum.',
+    subjectsExperiments: 'Experiments', subjectsMore: 'more', subjectsExplore: 'Explore',
+    subjectNotFound: 'Subject not found.',
+    subjectBack: 'Back to Subjects',
+    subjectKarnatakaPuc: 'Karnataka PUC',
+    subjectDifficulty: 'Difficulty', subjectStandard: 'Standard', subjectAll: 'All',
+    subjectOpenLab: 'Open Lab', subjectNoExperiments: 'No experiments found for the selected filters.',
+    toolsTitle: 'Scientific Tools',
+    toolsDesc: 'Quick access to references, calculators, and interactive study aids for all your science experiments.',
+    toolsFormulaSheet: 'Formula Sheet', toolsLogicGates: 'Logic Gates', toolsPeriodicTable: 'Periodic Table',
+    toolsConstants: 'Constants', toolsCalculator: 'Calculator', toolsSafetyGuide: 'Safety Guide', toolsBioDiagrams: 'Bio Diagrams',
   },
 
   kn: {
@@ -297,6 +401,47 @@ const T: Record<Lang, Translations> = {
     labRetakeQuiz: 'ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ',
     labPrevious: 'ಹಿಂದಿನದು',
     labFinish: 'ಮುಗಿಸಿ',
+    aboutOpenSource: 'ಓಪನ್ ಸೋರ್ಸ್ ವಿಜ್ಞಾನ ಪ್ರಯೋಗಾಲಯ',
+    aboutMissionTitle: 'ನಮ್ಮ ಮಿಷನ್',
+    aboutMissionP1: 'ಇ-ಪ್ರಯೋಗ ಕರ್ನಾಟಕ PUC ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ಪ್ರಾಯೋಗಿಕ ವಿಜ್ಞಾನ ಶಿಕ್ಷಣವನ್ನು ಪ್ರಜಾಸತ್ತಾತ್ಮಕಗೊಳಿಸಲು ಗುರಿ ಹೊಂದಿದೆ. ಶಾಲೆಯಲ್ಲಿ ಭೌತಿಕ ಲ್ಯಾಬ್ ಇರಲಿ ಅಥವಾ ಇಲ್ಲದಿರಲಿ, ಪ್ರತಿ ವಿದ್ಯಾರ್ಥಿಗೂ ಪ್ರಾಯೋಗಿಕ ಕಲಿಕೆ ದೊರಕಬೇಕು ಎಂದು ನಾವು ನಂಬುತ್ತೇವೆ.',
+    aboutMissionP2: 'ನಮ್ಮ 2D ಸಂವಾದಾತ್ಮಕ ಸಿಮ್ಯುಲೇಷನ್‌ಗಳು ಆಬ್ಸರ್ವೇಶನ್, ವಿವಾ ವೋಸ್, ಕ್ವಿಜ್ ಮತ್ತು AI ಸಂದೇಹ ನಿವಾರಣೆ ಸಹಿತ ನಿಜ ಪ್ರಯೋಗಗಳನ್ನು ಪ್ರತಿಬಿಂಬಿಸುತ್ತವೆ. ಎಲ್ಲವೂ ಬ್ರೌಸರ್‌ನಲ್ಲಿ ಉಚಿತ ಮತ್ತು ಶಾಶ್ವತ.',
+    aboutFeat1Title: '2D ಸಂವಾದಾತ್ಮಕ ಸಿಮ್ಯುಲೇಷನ್', aboutFeat1Desc: 'ಎಲ್ಲ ಪ್ರಯೋಗಗಳು ಬ್ರೌಸರ್‌ನಲ್ಲಿ — WebGL ಅಥವಾ ಡೌನ್‌ಲೋಡ್ ಅಗತ್ಯವಿಲ್ಲ.',
+    aboutFeat2Title: 'AI ವಿಜ್ಞಾನ ಶಿಕ್ಷಕ', aboutFeat2Desc: 'ಕನ್ನಡ, ಹಿಂದಿ ಅಥವಾ ಇಂಗ್ಲಿಷ್‌ನಲ್ಲಿ ಸಂದೇಹ ಕೇಳಿ — Gemini ಚಾಲಿತ.',
+    aboutFeat3Title: 'ಕರ್ನಾಟಕ PUC ಹೊಂದಿಕೆ', aboutFeat3Desc: '1ನೇ ಮತ್ತು 2ನೇ PUC ಎಲ್ಲ 5 ವಿಷಯಗಳ ಪಠ್ಯಕ್ರಮ ಒಳಗೊಂಡಿದೆ.',
+    aboutFeat4Title: 'ಸುರಕ್ಷಿತ ಮತ್ತು ಸುಲಭ', aboutFeat4Desc: 'ರಾಸಾಯನಿಕ ಇಲ್ಲ, ಅಪಾಯ ಇಲ್ಲ — ಎಲ್ಲಿ ಬೇಕಾದರೂ ಪ್ರಯೋಗ ಮಾಡಿ.',
+    aboutFeat5Title: 'ಬಹುಭಾಷಾ ಬೆಂಬಲ', aboutFeat5Desc: 'ಇಂಗ್ಲಿಷ್, ಕನ್ನಡ ಮತ್ತು ಹಿಂದಿ ಸಂಪೂರ್ಣ ಬೆಂಬಲ.',
+    aboutFeat6Title: 'ಗೇಮಿಫೈಡ್ ಕಲಿಕೆ', aboutFeat6Desc: 'ಕ್ವಿಜ್, ವಿವಾ ವೋಸ್, ಅಸೈನ್‌ಮೆಂಟ್ ಮತ್ತು ಪ್ರಗತಿ ಟ್ರ್ಯಾಕಿಂಗ್.',
+    aboutFeaturesSubheading: 'ಭಾರತೀಯ ತರಗತಿಗಾಗಿ ರಚಿಸಲಾದ ಪ್ರಾಯೋಗಿಕ ವಿಜ್ಞಾನ ಶಿಕ್ಷಣದ ಎಲ್ಲ ಅಗತ್ಯಗಳು.',
+    aboutSubjectsHeading: 'ಒಳಗೊಂಡ ವಿಷಯಗಳು', aboutSubjectsSubheading: '5 PUC ವಿಜ್ಞಾನ ವಿಭಾಗಗಳ ಸಮಗ್ರ ವ್ಯಾಪ್ತಿ.',
+    aboutBuiltWith: 'ನಿರ್ಮಿಸಲಾಗಿದೆ', aboutBuiltFor: 'ಕರ್ನಾಟಕ ವಿದ್ಯಾರ್ಥಿಗಳಿಗಾಗಿ',
+    aboutCtaSubheading: 'ಸಂವಾದಾತ್ಮಕ ಸಿಮ್ಯುಲೇಷನ್‌ಗಳ ಮೂಲಕ ಕಲಿಯುತ್ತಿರುವ ಸಾವಿರಾರು ಕರ್ನಾಟಕ ವಿದ್ಯಾರ್ಥಿಗಳೊಂದಿಗೆ ಸೇರಿ.',
+    profileEmailLabel: 'ಇಮೇಲ್', profileIdLabel: 'ID', profileJoinedLabel: 'ಸೇರಿದ ದಿನಾಂಕ',
+    profileDisplayName: 'ಹೆಸರು', profileInstitution: 'ಸಂಸ್ಥೆ',
+    profileGradeClass: 'ತರಗತಿ', profileBoardSyllabus: 'ಬೋರ್ಡ್ / ಪಠ್ಯಕ್ರಮ',
+    profileLanguageLabel: 'ಭಾಷೆ', profileThemeColor: 'ಥೀಮ್ ಬಣ್ಣ',
+    profileNotSet: 'ಹೊಂದಿಸಿಲ್ಲ',
+    tabAim: 'ಉದ್ದೇಶ & ಸಿದ್ಧಾಂತ', tabProcedure: 'ವಿಧಾನ', tabInstructions: 'ಸೂಚನೆಗಳು & ವೀಡಿಯೊ', tabSimulation: 'ಸಿಮ್ಯುಲೇಷನ್',
+    tabObservation: 'ಅವಲೋಕನ', tabResult: 'ಫಲಿತಾಂಶ', tabRealWorld: 'ನಿಜ ಜಗತ್ತು', tabViva: 'ವಿವಾ ಪ್ರಶ್ನೆಗಳು', tabQuiz: 'ಕ್ವಿಜ್',
+    labAimHeading: 'ಉದ್ದೇಶ', labRequirements: 'ಅಗತ್ಯಗಳು', labTheory: 'ಸಿದ್ಧಾಂತ', labObjectives: 'ಗುರಿಗಳು',
+    labSafetyPrecautions: 'ಸುರಕ್ಷತಾ ಮುನ್ನೆಚ್ಚರಿಕೆಗಳು', labProcedureHeading: 'ವಿಧಾನ', labInstructionsHeading: 'ಲ್ಯಾಬ್ ಸೂಚನೆಗಳು',
+    labVideoDemo: 'ವೀಡಿಯೊ ಪ್ರದರ್ಶನ', labVideoComingSoon: 'ವೀಡಿಯೊ ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ', labSearchYouTube: 'YouTube ನಲ್ಲಿ ಹುಡುಕಿ',
+    labObservationTable: 'ಅವಲೋಕನ ಕೋಷ್ಟಕ', labResultConclusion: 'ಫಲಿತಾಂಶ & ತೀರ್ಮಾನ', labExpectedResultFormat: 'ನಿರೀಕ್ಷಿತ ಫಲಿತಾಂಶ ಸ್ವರೂಪ:',
+    labYourResult: 'ನಿಮ್ಮ ಫಲಿತಾಂಶ', labWriteResult: 'ನಿಮ್ಮ ಫಲಿತಾಂಶ ಮತ್ತು ತೀರ್ಮಾನ ಬರೆಯಿರಿ...', labExperimentalValue: 'ಪ್ರಾಯೋಗಿಕ ಮೌಲ್ಯ', labPercentageError: 'ಶೇಕಡಾ ದೋಷ',
+    labRealWorldApps: 'ನಿಜ ಜಗತ್ತಿನ ಅನ್ವಯಗಳು', labRealWorldDefault: 'ಈ ಪ್ರಯೋಗದ ನಿಜ ಜಗತ್ತಿನ ಅನ್ವಯಗಳು:',
+    labInteractiveViva: 'ಸಂವಾದಾತ್ಮಕ ವಿವಾ ವೋಸ್', labRevealed: 'ಬಹಿರಂಗಗೊಂಡಿದೆ', labShuffleQuestions: 'ಪ್ರಶ್ನೆಗಳನ್ನು ಮರುಜೋಡಿಸಿ',
+    labRevealAnswer: 'ಉತ್ತರ ತೋರಿಸಿ', labHowDidYouDo: 'ನೀವು ಹೇಗೆ ಮಾಡಿದಿರಿ?', labKnew: 'ತಿಳಿದಿತ್ತು', labUnsure: 'ಖಚಿತವಿಲ್ಲ', labMissed: 'ತಪ್ಪಿತು',
+    labPracticeSummary: 'ಅಭ್ಯಾಸ ಸಾರಾಂಶ', labSelfAssessmentQuiz: 'ಸ್ವ-ಮೌಲ್ಯಮಾಪನ ಕ್ವಿಜ್', labAnswered: 'ಉತ್ತರಿಸಲಾಗಿದೆ', labExplanation: 'ವಿವರಣೆ:',
+    toolFormulaTitle: 'ಸೂತ್ರ ಹಾಳೆ', toolFormulaSubtitle: 'ಶೀಘ್ರ ಉಲ್ಲೇಖಕ್ಕಾಗಿ ಪ್ರಮಾಣಿತ ಸೂತ್ರಗಳು ಮತ್ತು ಸಮೀಕರಣಗಳು.',
+    toolFormulaSearchPlaceholder: 'ಸೂತ್ರ ಹುಡುಕಿ...', toolFormulaNoResults: 'ನಿಮ್ಮ ಹುಡುಕಾಟಕ್ಕೆ ಯಾವುದೇ ಸೂತ್ರ ಹೊಂದಿಕೆಯಾಗಲಿಲ್ಲ.',
+    toolSafetyTitle: 'ಪ್ರಯೋಗಾಲಯ ಸುರಕ್ಷತಾ ಮಾರ್ಗದರ್ಶಿ', toolSafetySubtitle: 'ಎಲ್ಲ ಪ್ರಯೋಗಗಳಿಗೆ ಅಗತ್ಯ ಸುರಕ್ಷತಾ ಪ್ರೋಟೋಕಾಲ್ ಮತ್ತು ತುರ್ತು ಕಾರ್ಯವಿಧಾನಗಳು.',
+    toolSafetySearchPlaceholder: 'ಮಾರ್ಗದರ್ಶನ ಹುಡುಕಿ...', toolSafetyNoResults: 'ಯಾವುದೇ ಸುರಕ್ಷತಾ ನಿಯಮ ಹೊಂದಿಕೆಯಾಗಲಿಲ್ಲ.',
+    toolConstantsTitle: 'ಭೌತಿಕ ಸ್ಥಿರಾಂಕಗಳು', toolConstantsSubtitle: 'ಸಾರ್ವತ್ರಿಕ ಮತ್ತು ಮೂಲಭೂತ ಭೌತಿಕ ಸ್ಥಿರಾಂಕಗಳ ಆರ್ಥಿಕ ಮೌಲ್ಯಗಳು.',
+    toolConstantsSearchPlaceholder: 'ಸ್ಥಿರಾಂಕ ಹುಡುಕಿ...', toolConstantsNoResults: 'ಯಾವುದೇ ಸ್ಥಿರಾಂಕ ಹೊಂದಿಕೆಯಾಗಲಿಲ್ಲ.',
+    toolCalculatorTitle: 'ಕ್ಯಾಲ್ಕುಲೇಟರ್', toolCalcStandard: 'ಸಾಮಾನ್ಯ', toolCalcScientific: 'ವೈಜ್ಞಾನಿಕ',
+    toolBioDiagramsTitle: 'ಜೀವಶಾಸ್ತ್ರ ರೇಖಾಚಿತ್ರಗಳು', toolBioDiagramsSubtitle: 'ಜೀವಶಾಸ್ತ್ರಕ್ಕಾಗಿ ಸಂವಾದಾತ್ಮಕ ಲೇಬಲ್ ರೇಖಾಚಿತ್ರಗಳು.',
+    toolLogicGatesTitle: 'ಲಾಜಿಕ್ ಗೇಟ್ಸ್ ಸಿಮ್ಯುಲೇಟರ್', toolLogicGatesSubtitle: 'ಸಂವಾದಾತ್ಮಕ ಗೇಟ್ ಸಿಮ್ಯುಲೇಷನ್‌ಗಳ ಮೂಲಕ ಬೂಲಿಯನ್ ತರ್ಕ ಅನ್ವೇಷಿಸಿ.',
+    toolPeriodicTableTitle: 'ಆವರ್ತ ಕೋಷ್ಟಕ', toolPeriodicTableSubtitle: 'ಅಂಶಗಳ ಸಂವಾದಾತ್ಮಕ ಆವರ್ತ ಕೋಷ್ಟಕ.',
+    toolSearchAll: 'ಎಲ್ಲ', toolCopied: 'ನಕಲಿಸಲಾಗಿದೆ!',
   },
 
   hi: {
@@ -429,6 +574,47 @@ const T: Record<Lang, Translations> = {
     labRetakeQuiz: 'क्विज़ फिर दें',
     labPrevious: 'पिछला',
     labFinish: 'समाप्त',
+    aboutOpenSource: 'ओपन सोर्स साइंस लैब',
+    aboutMissionTitle: 'हमारा मिशन',
+    aboutMissionP1: 'E-Prayog का लक्ष्य कर्नाटक PUC छात्रों के लिए प्रायोगिक विज्ञान शिक्षा को सुलभ बनाना है। हम मानते हैं कि हर छात्र — चाहे उनके स्कूल में लैब हो या न हो — को hands-on प्रयोगात्मक शिक्षा मिलनी चाहिए।',
+    aboutMissionP2: 'हमारे 2D इंटरेक्टिव सिमुलेशन ऑब्ज़र्वेशन, वाइवा वोसे, क्विज़ और AI-आधारित समाधान सहित वास्तविक प्रयोगों को दोबारा प्रस्तुत करते हैं। सब कुछ ब्राउज़र में — मुफ़्त, हमेशा के लिए।',
+    aboutFeat1Title: '2D इंटरेक्टिव सिमुलेशन', aboutFeat1Desc: 'सभी प्रयोग ब्राउज़र में चलते हैं — कोई WebGL नहीं, कोई डाउनलोड नहीं।',
+    aboutFeat2Title: 'AI विज्ञान शिक्षक', aboutFeat2Desc: 'अंग्रेजी, कन्नड़ या हिंदी में संदेह पूछें — Gemini द्वारा संचालित।',
+    aboutFeat3Title: 'कर्नाटक PUC अनुरूप', aboutFeat3Desc: '1st और 2nd PUC के सभी 5 विज्ञान विषयों का पाठ्यक्रम शामिल है।',
+    aboutFeat4Title: 'सुरक्षित और सुलभ', aboutFeat4Desc: 'कोई रसायन नहीं, कोई जोखिम नहीं — कहीं भी, कभी भी प्रयोग करें।',
+    aboutFeat5Title: 'बहुभाषी समर्थन', aboutFeat5Desc: 'पूर्ण अंग्रेजी, कन्नड़ और हिंदी समर्थन।',
+    aboutFeat6Title: 'गेमिफाइड लर्निंग', aboutFeat6Desc: 'क्विज़, वाइवा वोसे, असाइनमेंट और प्रगति ट्रैकिंग।',
+    aboutFeaturesSubheading: 'भारतीय कक्षा के लिए बनाई गई प्रायोगिक विज्ञान शिक्षा की सभी आवश्यकताएं।',
+    aboutSubjectsHeading: 'कवर किए गए विषय', aboutSubjectsSubheading: '5 PUC विज्ञान धाराओं का व्यापक कवरेज।',
+    aboutBuiltWith: 'बनाया गया', aboutBuiltFor: 'कर्नाटक छात्रों के लिए',
+    aboutCtaSubheading: 'इंटरेक्टिव सिमुलेशन के माध्यम से सीख रहे हजारों कर्नाटक छात्रों के साथ जुड़ें।',
+    profileEmailLabel: 'ईमेल', profileIdLabel: 'ID', profileJoinedLabel: 'शामिल हुए',
+    profileDisplayName: 'नाम', profileInstitution: 'संस्थान',
+    profileGradeClass: 'कक्षा', profileBoardSyllabus: 'बोर्ड / पाठ्यक्रम',
+    profileLanguageLabel: 'भाषा', profileThemeColor: 'थीम रंग',
+    profileNotSet: 'सेट नहीं',
+    tabAim: 'उद्देश्य & सिद्धांत', tabProcedure: 'प्रक्रिया', tabInstructions: 'निर्देश & वीडियो', tabSimulation: 'सिमुलेशन',
+    tabObservation: 'अवलोकन', tabResult: 'परिणाम', tabRealWorld: 'वास्तविक दुनिया', tabViva: 'वाइवा प्रश्न', tabQuiz: 'क्विज़',
+    labAimHeading: 'उद्देश्य', labRequirements: 'आवश्यकताएं', labTheory: 'सिद्धांत', labObjectives: 'लक्ष्य',
+    labSafetyPrecautions: 'सुरक्षा सावधानियां', labProcedureHeading: 'प्रक्रिया', labInstructionsHeading: 'लैब निर्देश',
+    labVideoDemo: 'वीडियो प्रदर्शन', labVideoComingSoon: 'वीडियो प्रदर्शन जल्द आ रहा है', labSearchYouTube: 'YouTube पर खोजें',
+    labObservationTable: 'अवलोकन तालिका', labResultConclusion: 'परिणाम & निष्कर्ष', labExpectedResultFormat: 'अपेक्षित परिणाम प्रारूप:',
+    labYourResult: 'आपका परिणाम', labWriteResult: 'यहाँ अपना परिणाम और निष्कर्ष लिखें...', labExperimentalValue: 'प्रयोगात्मक मान', labPercentageError: 'प्रतिशत त्रुटि',
+    labRealWorldApps: 'वास्तविक दुनिया के अनुप्रयोग', labRealWorldDefault: 'इस प्रयोग के वास्तविक दुनिया के अनुप्रयोगों में शामिल हैं:',
+    labInteractiveViva: 'इंटरेक्टिव वाइवा वोसे', labRevealed: 'प्रकट', labShuffleQuestions: 'प्रश्न फेरबदल करें',
+    labRevealAnswer: 'उत्तर दिखाएं', labHowDidYouDo: 'आपने कैसा किया?', labKnew: 'जानता था', labUnsure: 'अनिश्चित', labMissed: 'चूक गया',
+    labPracticeSummary: 'अभ्यास सारांश', labSelfAssessmentQuiz: 'स्व-मूल्यांकन क्विज़', labAnswered: 'उत्तर दिया', labExplanation: 'व्याख्या:',
+    toolFormulaTitle: 'सूत्र पत्र', toolFormulaSubtitle: 'त्वरित संदर्भ के लिए मानक सूत्र और समीकरण।',
+    toolFormulaSearchPlaceholder: 'सूत्र खोजें...', toolFormulaNoResults: 'कोई सूत्र आपकी खोज से मेल नहीं खाया।',
+    toolSafetyTitle: 'प्रयोगशाला सुरक्षा गाइड', toolSafetySubtitle: 'सभी प्रयोगशाला प्रयोगों के लिए आवश्यक सुरक्षा प्रोटोकॉल और आपातकालीन प्रक्रियाएं।',
+    toolSafetySearchPlaceholder: 'दिशानिर्देश खोजें...', toolSafetyNoResults: 'कोई सुरक्षा नियम मेल नहीं खाया।',
+    toolConstantsTitle: 'भौतिक स्थिरांक', toolConstantsSubtitle: 'सार्वभौमिक और मौलिक भौतिक स्थिरांकों के संदर्भ मान।',
+    toolConstantsSearchPlaceholder: 'स्थिरांक खोजें...', toolConstantsNoResults: 'कोई स्थिरांक मेल नहीं खाया।',
+    toolCalculatorTitle: 'कैलकुलेटर', toolCalcStandard: 'मानक', toolCalcScientific: 'वैज्ञानिक',
+    toolBioDiagramsTitle: 'जीव विज्ञान आरेख', toolBioDiagramsSubtitle: 'जीव विज्ञान के लिए इंटरेक्टिव लेबल आरेख।',
+    toolLogicGatesTitle: 'लॉजिक गेट्स सिमुलेटर', toolLogicGatesSubtitle: 'इंटरेक्टिव गेट सिमुलेशन के साथ बूलियन तर्क का अन्वेषण करें।',
+    toolPeriodicTableTitle: 'आवर्त सारणी', toolPeriodicTableSubtitle: 'तत्वों की इंटरेक्टिव आवर्त सारणी।',
+    toolSearchAll: 'सभी', toolCopied: 'कॉपी किया!',
   },
 };
 

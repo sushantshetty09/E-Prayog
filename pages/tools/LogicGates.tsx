@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useLang } from '../../services/LanguageContext';
 
 const GATES = {
   AND:  { fn: (a: boolean, b: boolean) => a && b, expr: 'Y = A · B', inputs: 2 },
@@ -14,6 +15,7 @@ const GATES = {
 type GateType = keyof typeof GATES;
 
 const LogicGates: React.FC = () => {
+  const { t } = useLang();
   const [activeGate, setActiveGate] = useState<GateType>('AND');
   const [inputA, setInputA] = useState(false);
   const [inputB, setInputB] = useState(false);
@@ -159,8 +161,8 @@ const LogicGates: React.FC = () => {
   return (
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-5xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Logic Gates Sandbox</h1>
-        <p className="text-slate-400 max-w-2xl mx-auto">Interactive simulation of fundamental digital logic gates.</p>
+        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolLogicGatesTitle}</h1>
+        <p className="text-slate-400 max-w-2xl mx-auto">{t.toolLogicGatesSubtitle}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

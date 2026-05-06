@@ -187,7 +187,7 @@ const Profile: React.FC = () => {
 
           {isEditing && !avatarUrl && (
             <div className="w-full mb-4 z-10">
-              <p className="text-xs text-slate-400 font-bold mb-2 uppercase">Theme Color</p>
+              <p className="text-xs text-slate-400 font-bold mb-2 uppercase">{t.profileThemeColor}</p>
               <div className="flex flex-wrap justify-center gap-2">
                 {AVATAR_COLORS.map(color => (
                   <button key={color} onClick={() => setFormData({...formData, avatar: color})}
@@ -209,15 +209,15 @@ const Profile: React.FC = () => {
 
           <div className="w-full space-y-3 text-sm z-10">
             <div className="flex items-center justify-between text-slate-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
-              <div className="flex items-center gap-2"><Mail size={16} /> Email</div>
+              <div className="flex items-center gap-2"><Mail size={16} /> {t.profileEmailLabel}</div>
               <span className="text-white truncate max-w-[150px]">{authUser?.email}</span>
             </div>
             <div className="flex items-center justify-between text-slate-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
-              <div className="flex items-center gap-2"><Shield size={16} /> ID</div>
+              <div className="flex items-center gap-2"><Shield size={16} /> {t.profileIdLabel}</div>
               <span className="text-white font-mono">{authUser?.uid?.substring(0,8)}...</span>
             </div>
             <div className="flex items-center justify-between text-slate-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
-              <div className="flex items-center gap-2"><Calendar size={16} /> Joined</div>
+              <div className="flex items-center gap-2"><Calendar size={16} /> {t.profileJoinedLabel}</div>
               <span className="text-white">{createdDate}</span>
             </div>
           </div>
@@ -245,8 +245,8 @@ const Profile: React.FC = () => {
           </div>
           <div className="space-y-5">
             {[
-              { label: 'Display Name', key: 'name', type: 'text', placeholder: 'Your name' },
-              { label: 'Institution', key: 'institution', type: 'text', placeholder: 'School/College' },
+              { label: t.profileDisplayName, key: 'name', type: 'text', placeholder: t.profileDisplayName },
+              { label: t.profileInstitution, key: 'institution', type: 'text', placeholder: 'School/College' },
             ].map(field => (
               <div key={field.key}>
                 <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{field.label}</label>
@@ -255,12 +255,12 @@ const Profile: React.FC = () => {
                     placeholder={field.placeholder}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50" />
                 ) : (
-                  <div className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{(formData as any)[field.key] || 'Not set'}</div>
+                  <div className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{(formData as any)[field.key] || t.profileNotSet}</div>
                 )}
               </div>
             ))}
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Grade / Class</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{t.profileGradeClass}</label>
               {isEditing ? (
                 <select value={formData.grade} onChange={e => setFormData({...formData, grade: e.target.value})}
                   className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
@@ -269,7 +269,7 @@ const Profile: React.FC = () => {
               ) : <div className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{formData.grade}</div>}
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Board / Syllabus</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{t.profileBoardSyllabus}</label>
               {isEditing ? (
                 <select value={formData.syllabus} onChange={e => setFormData({...formData, syllabus: e.target.value})}
                   className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
@@ -278,7 +278,7 @@ const Profile: React.FC = () => {
               ) : <div className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{formData.syllabus}</div>}
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Language</label>
+              <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{t.profileLanguageLabel}</label>
               {isEditing ? (
                 <select value={formData.language} onChange={e => setFormData({...formData, language: e.target.value})}
                   className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">

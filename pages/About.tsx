@@ -15,14 +15,7 @@ const fadeIn = {
   transition: { duration: 0.6 },
 };
 
-const FEATURES = [
-  { icon: <FlaskConical size={28} />, title: '2D Interactive Simulations', desc: 'All experiments run in the browser — no WebGL, no downloads.', color: 'emerald' },
-  { icon: <Bot size={28} />, title: 'AI Science Tutor', desc: 'Ask doubts in English, Kannada, or Hindi — powered by Gemini.', color: 'amber' },
-  { icon: <GraduationCap size={28} />, title: 'Karnataka PUC Aligned', desc: 'Covers both 1st and 2nd PUC syllabus for all 5 science subjects.', color: 'blue' },
-  { icon: <ShieldCheck size={28} />, title: 'Safe & Accessible', desc: 'No chemicals, no risk — experiment anytime, anywhere.', color: 'purple' },
-  { icon: <Languages size={28} />, title: 'Multilingual Support', desc: 'Full English, Kannada, and Hindi support throughout.', color: 'cyan' },
-  { icon: <Trophy size={28} />, title: 'Gamified Learning', desc: 'Quizzes, viva voce, assignments, and completion tracking.', color: 'rose' },
-];
+// Features are now built inside the component using translations
 
 const SUBJECT_ICON_MAP: Record<string, React.ReactNode> = {
   Physics: <Zap size={28} />,
@@ -50,6 +43,14 @@ const SUBJECT_DESCRIPTIONS: Record<string, string> = {
 
 const About: React.FC = () => {
   const { t } = useLang();
+  const FEATURES = [
+    { icon: <FlaskConical size={28} />, title: t.aboutFeat1Title, desc: t.aboutFeat1Desc, color: 'emerald' },
+    { icon: <Bot size={28} />, title: t.aboutFeat2Title, desc: t.aboutFeat2Desc, color: 'amber' },
+    { icon: <GraduationCap size={28} />, title: t.aboutFeat3Title, desc: t.aboutFeat3Desc, color: 'blue' },
+    { icon: <ShieldCheck size={28} />, title: t.aboutFeat4Title, desc: t.aboutFeat4Desc, color: 'purple' },
+    { icon: <Languages size={28} />, title: t.aboutFeat5Title, desc: t.aboutFeat5Desc, color: 'cyan' },
+    { icon: <Trophy size={28} />, title: t.aboutFeat6Title, desc: t.aboutFeat6Desc, color: 'rose' },
+  ];
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Floating Background Decorations */}
@@ -63,7 +64,7 @@ const About: React.FC = () => {
       <section className="pt-32 pb-24 px-6 lg:px-12 max-w-6xl mx-auto text-center relative">
         <MotionDiv {...fadeIn}>
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-bold mb-8">
-            <Atom size={16} className="animate-spin" style={{ animationDuration: '8s' }} /> Open Source Science Lab
+            <Atom size={16} className="animate-spin" style={{ animationDuration: '8s' }} /> {t.aboutOpenSource}
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-white leading-tight mb-6">{t.aboutTitle}</h1>
           <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed mb-10">
@@ -102,17 +103,9 @@ const About: React.FC = () => {
         <MotionDiv {...fadeIn}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-6">Our Mission</h2>
-              <p className="text-slate-400 leading-relaxed mb-6">
-                E-Prayog aims to democratize practical science education for Karnataka PUC students. 
-                We believe every student — regardless of whether their school has a physical lab — 
-                deserves hands-on experimental learning.
-              </p>
-              <p className="text-slate-400 leading-relaxed">
-                Our 2D interactive simulations recreate real experiments faithfully, complete with 
-                observations, viva voce, quizzes, and AI-powered doubt solving. All running entirely 
-                in the browser — free, forever.
-              </p>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-6">{t.aboutMissionTitle}</h2>
+              <p className="text-slate-400 leading-relaxed mb-6">{t.aboutMissionP1}</p>
+              <p className="text-slate-400 leading-relaxed">{t.aboutMissionP2}</p>
             </div>
             <GlassCard hoverEffect={false} className="p-8 bg-emerald-500/5 border-emerald-500/20">
               <div className="grid grid-cols-2 gap-6">
@@ -136,8 +129,8 @@ const About: React.FC = () => {
       {/* ========== SECTION 4: FEATURES GRID ========== */}
       <section className="py-24 px-6 lg:px-12 max-w-6xl mx-auto">
         <MotionDiv {...fadeIn} className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">Why E-Prayog?</h2>
-          <p className="text-slate-400 max-w-xl mx-auto">Everything you need for practical science education, built for the Indian classroom.</p>
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">{t.featuresHeading}</h2>
+          <p className="text-slate-400 max-w-xl mx-auto">{t.aboutFeaturesSubheading}</p>
         </MotionDiv>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {FEATURES.map((feature, i) => (
@@ -157,8 +150,8 @@ const About: React.FC = () => {
       {/* ========== SECTION 5: SUBJECTS ========== */}
       <section className="py-24 px-6 lg:px-12 max-w-6xl mx-auto">
         <MotionDiv {...fadeIn} className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">Subjects Covered</h2>
-          <p className="text-slate-400">Comprehensive coverage across all 5 PUC science streams.</p>
+          <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">{t.aboutSubjectsHeading}</h2>
+          <p className="text-slate-400">{t.aboutSubjectsSubheading}</p>
         </MotionDiv>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {SUBJECTS.map((subject) => {
@@ -185,7 +178,7 @@ const About: React.FC = () => {
       <section className="py-24 px-6 lg:px-12 max-w-4xl mx-auto">
         <MotionDiv {...fadeIn} className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-2 flex items-center justify-center gap-2">
-            Built with <Heart size={28} className="text-red-400 fill-red-400" /> for Karnataka Students
+            {t.aboutBuiltWith} <Heart size={28} className="text-red-400 fill-red-400" /> {t.aboutBuiltFor}
           </h2>
         </MotionDiv>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -213,17 +206,17 @@ const About: React.FC = () => {
       <section className="py-24 px-6 lg:px-12 max-w-4xl mx-auto text-center">
         <MotionDiv {...fadeIn}>
           <h2 className="text-3xl sm:text-5xl font-display font-bold text-white mb-6">
-            Ready to Start Experimenting?
+            {t.ctaHeading}
           </h2>
           <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto">
-            Join thousands of Karnataka students already learning through interactive simulations.
+            {t.aboutCtaSubheading}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/subjects" className="px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-lg transition-all shadow-lg shadow-emerald-600/20 flex items-center gap-2">
-              Explore Labs <ArrowRight size={20} />
+              {t.aboutExploreLabs} <ArrowRight size={20} />
             </Link>
             <Link to="/tutor" className="px-8 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-lg transition-all flex items-center gap-2">
-              <Bot size={20} /> Try AI Tutor
+              <Bot size={20} /> {t.aboutTryTutor}
             </Link>
           </div>
         </MotionDiv>

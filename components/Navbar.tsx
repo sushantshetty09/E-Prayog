@@ -6,10 +6,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from '../services/AuthContext';
 import { useLang, Lang } from '../services/LanguageContext';
 
-const LANG_OPTIONS: { code: Lang; label: string }[] = [
-  { code: 'en', label: 'EN' },
-  { code: 'kn', label: 'ಕನ್ನಡ' },
-  { code: 'hi', label: 'हिं' },
+const LANG_OPTIONS: { code: Lang; label: string; fullLabel: string }[] = [
+  { code: 'en', label: 'English', fullLabel: 'English' },
+  { code: 'kn', label: 'ಕನ್ನಡ', fullLabel: 'ಕನ್ನಡ' },
+  { code: 'hi', label: 'हिंदी', fullLabel: 'हिंदी' },
 ];
 
 const MotionSpan = motion.span as any;
@@ -120,13 +120,14 @@ const Navbar: React.FC = () => {
         )}
 
         {/* ── Language Switcher ── */}
-        <div className="flex items-center gap-0.5 bg-white/5 rounded-full px-1 py-1 border border-white/10">
+        <div className="flex items-center gap-0.5 bg-white/5 rounded-full px-1 py-1 border border-white/10" title="Change Language">
           <Languages size={13} className="text-gray-500 mx-1" />
           {LANG_OPTIONS.map(opt => (
             <button
               key={opt.code}
               onClick={() => setLang(opt.code)}
-              className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 ${
+              title={opt.fullLabel}
+              className={`px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200 ${
                 lang === opt.code
                   ? 'bg-gradient-to-r from-violet-600 to-sky-500 text-white shadow-sm'
                   : 'text-gray-400 hover:text-white'
@@ -178,22 +179,22 @@ const Navbar: React.FC = () => {
           {/* Mobile Language Switcher */}
           <div className="flex items-center gap-2">
             <Languages size={14} className="text-gray-500" />
-            <span className="text-xs text-gray-500">Language:</span>
-            <div className="flex gap-1">
-              {LANG_OPTIONS.map(opt => (
-                <button
-                  key={opt.code}
-                  onClick={() => setLang(opt.code)}
-                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
-                    lang === opt.code
-                      ? 'bg-gradient-to-r from-violet-600 to-sky-500 text-white'
-                      : 'bg-white/5 text-gray-400 hover:text-white'
-                  }`}
-                >
-                  {opt.label}
-                </button>
-              ))}
-            </div>
+            <span className="text-xs text-gray-500 font-semibold">Language / ಭಾಷೆ / भाषा:</span>
+          </div>
+          <div className="flex gap-2">
+            {LANG_OPTIONS.map(opt => (
+              <button
+                key={opt.code}
+                onClick={() => setLang(opt.code)}
+                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
+                  lang === opt.code
+                    ? 'bg-gradient-to-r from-violet-600 to-sky-500 text-white shadow-sm'
+                    : 'bg-white/5 text-gray-400 hover:text-white border border-white/10'
+                }`}
+              >
+                {opt.fullLabel}
+              </button>
+            ))}
           </div>
           <hr className="border-white/10" />
           <Link to="/home" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/home') ? 'text-emerald-400' : ''}`}>{t.navHome}</Link>

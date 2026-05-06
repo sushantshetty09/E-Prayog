@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Search, X, Maximize2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLang } from '../../services/LanguageContext';
 
 // Mock SVG diagrams for the biology tool section.
 // In a full production app, these would be detailed assets.
@@ -94,6 +95,7 @@ const DIAGRAMS = [
 ];
 
 const BioDiagrams: React.FC = () => {
+  const { t } = useLang();
   const [search, setSearch] = useState('');
   const [selectedDiagram, setSelectedDiagram] = useState<any>(null);
 
@@ -105,15 +107,15 @@ const BioDiagrams: React.FC = () => {
   return (
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">Biological Diagrams</h1>
-        <p className="text-slate-400 max-w-2xl mx-auto">Reference illustrations for biological structures and pathways.</p>
+        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolBioDiagramsTitle}</h1>
+        <p className="text-slate-400 max-w-2xl mx-auto">{t.toolBioDiagramsSubtitle}</p>
       </div>
 
       <div className="mb-8 relative max-w-md mx-auto">
          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
          <input
            type="text"
-           placeholder="Search diagrams..."
+           placeholder={t.toolBioDiagramsSubtitle}
            value={search}
            onChange={(e) => setSearch(e.target.value)}
            className="w-full pl-9 pr-4 py-3 bg-slate-900/60 border border-white/10 rounded-xl text-white focus:outline-none focus:border-green-500/50"
