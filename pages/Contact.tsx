@@ -4,15 +4,17 @@ import { submitFeedback } from '../services/firebase';
 import GlassCard from '../components/GlassCard';
 import { MessageSquare, Star, Send, CheckCircle2, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLang } from '../services/LanguageContext';
 
 const CATEGORIES = [
-  { value: 'general', label: '💬 General' },
-  { value: 'bug', label: '🐛 Bug Report' },
-  { value: 'content', label: '📚 Content Issue' },
-  { value: 'suggestion', label: '💡 Suggestion' },
+  { value: 'general', label: 'General Feedback' },
+  { value: 'bug', label: 'Bug Report' },
+  { value: 'content', label: 'Content Issue' },
+  { value: 'suggestion', label: 'Suggestion' },
 ];
 
 const Contact: React.FC = () => {
+  const { t } = useLang();
   const { user, profileData, role } = useAuth();
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -25,8 +27,8 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
-    if (rating === 0) { setError('Please select a rating.'); return; }
-    if (message.trim().length < 20) { setError('Message must be at least 20 characters.'); return; }
+    if (rating === 0) { setError(t.contactRatingRequired); return; }
+    if (message.trim().length < 20) { setError(t.contactMessageMin); return; }
     setError(''); setSubmitting(true);
     try {
       await submitFeedback(user.uid, {
@@ -38,7 +40,7 @@ const Contact: React.FC = () => {
       setSubmitted(true);
       setMessage(''); setRating(0); setCategory('general');
     } catch (e) {
-      setError('Failed to submit. Please try again.');
+      setError(t.contactFailed);
     } finally {
       setSubmitting(false);
     }
@@ -52,10 +54,10 @@ const Contact: React.FC = () => {
           <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
             <CheckCircle2 size={40} className="text-emerald-400" />
           </div>
-          <h2 className="text-3xl font-display font-bold text-white mb-3">Thank You!</h2>
-          <p className="text-slate-400 mb-6">Your feedback has been submitted successfully.</p>
+          <h2 className="text-3xl font-display font-bold text-white mb-3">{t.contactThankYou}</h2>
+          <p className="text-slate-400 mb-6">{t.contactSubmitted}</p>
           <button onClick={() => setSubmitted(false)} className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-colors">
-            Submit Another
+            {t.contactSubmitAnother}
           </button>
         </motion.div>
       </div>
@@ -66,15 +68,15 @@ const Contact: React.FC = () => {
     <div className="pt-24 min-h-screen pb-12 px-6 lg:px-12 max-w-2xl mx-auto">
       <div className="mb-8 text-center">
         <MessageSquare size={40} className="text-emerald-400 mx-auto mb-4" />
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-2">Send Us Feedback</h1>
-        <p className="text-slate-400">Help us improve E-Prayog. Your feedback matters!</p>
+        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-2">{t.contactTitle}</h1>
+        <p className="text-slate-400">{t.contactDesc}</p>
       </div>
 
       <GlassCard className="p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Star Rating */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase mb-3">How would you rate E-Prayog?</label>
+            <label className="block text-xs font-bold text-slate-400 uppercase mb-3">{t.contactRatingPrompt}</label>
             <div className="flex gap-2 justify-center">
               {[1, 2, 3, 4, 5].map(star => (
                 <button key={star} type="button"
@@ -96,7 +98,7 @@ const Contact: React.FC = () => {
 
           {/* Category */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Category</label>
+            <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{t.contactCategory}</label>
             <div className="grid grid-cols-2 gap-3">
               {CATEGORIES.map(cat => (
                 <button key={cat.value} type="button" onClick={() => setCategory(cat.value)}
@@ -113,9 +115,9 @@ const Contact: React.FC = () => {
 
           {/* Message */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Your Message</label>
+            <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{t.contactMessage}</label>
             <textarea value={message} onChange={e => setMessage(e.target.value)}
-              placeholder="Tell us what you think... (minimum 20 characters)"
+              placeholder={t.contactPlaceholder}
               rows={5} required minLength={20}
               className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 resize-none" />
             <p className="text-xs text-slate-500 mt-1 text-right">{message.length}/20 min</p>
@@ -125,7 +127,7 @@ const Contact: React.FC = () => {
 
           <button type="submit" disabled={submitting}
             className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all flex items-center justify-center gap-2 disabled:opacity-50">
-            {submitting ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />} Submit Feedback
+            {submitting ? <Loader2 className="animate-spin" size={18} /> : <Send size={18} />} {t.contactSubmit}
           </button>
         </form>
       </GlassCard>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FlaskConical, Twitter, Github, Linkedin, Instagram, Send, Mail, Heart } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { useLang } from '../services/LanguageContext';
 
 const MotionSpan = motion.span as any;
 
@@ -11,6 +12,7 @@ const TITLES = [
 ];
 
 const Footer: React.FC = () => {
+  const { t } = useLang();
   const [feedback, setFeedback] = useState('');
   const [sent, setSent] = useState(false);
   const [titleIndex, setTitleIndex] = useState(0);
@@ -59,7 +61,7 @@ const Footer: React.FC = () => {
               </div>
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed max-w-xs">
-              Empowering Karnataka PUC students with immersive virtual science simulations and AI-driven mentorship. Learn by doing — digitally.
+              {t.footerDesc}
             </p>
             <div className="flex gap-4 pt-2">
               <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-emerald-400 transition-colors"><Twitter size={20} /></a>
@@ -70,34 +72,34 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-6 tracking-wide">Platform</h3>
+            <h3 className="text-white font-bold mb-6 tracking-wide">{t.footerPlatform}</h3>
             <ul className="space-y-3 text-sm text-gray-400">
-              <li><Link to="/" className="hover:text-emerald-400 transition-colors">Home</Link></li>
-              <li><Link to="/subjects" className="hover:text-emerald-400 transition-colors">Virtual Labs</Link></li>
-              <li><Link to="/tutor" className="hover:text-emerald-400 transition-colors">AI Tutor</Link></li>
-              <li><Link to="/dashboard" className="hover:text-emerald-400 transition-colors">Dashboard</Link></li>
+              <li><Link to="/" className="hover:text-emerald-400 transition-colors">{t.navHome}</Link></li>
+              <li><Link to="/subjects" className="hover:text-emerald-400 transition-colors">{t.footerVirtualLabs}</Link></li>
+              <li><Link to="/tutor" className="hover:text-emerald-400 transition-colors">{t.navTutor}</Link></li>
+              <li><Link to="/dashboard" className="hover:text-emerald-400 transition-colors">{t.navDashboard}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-6 tracking-wide">Support</h3>
+            <h3 className="text-white font-bold mb-6 tracking-wide">{t.footerSupport}</h3>
             <ul className="space-y-3 text-sm text-gray-400">
-              <li><Link to="/contact" className="hover:text-emerald-400 transition-colors">Contact Us</Link></li>
-              <li><Link to="/about" className="hover:text-emerald-400 transition-colors">About Us</Link></li>
-              <li><a href="#" className="hover:text-emerald-400 transition-colors">Privacy Policy</a></li>
-              <li><a href="#" className="hover:text-emerald-400 transition-colors">Terms & Conditions</a></li>
+              <li><Link to="/contact" className="hover:text-emerald-400 transition-colors">{t.footerContactUs}</Link></li>
+              <li><Link to="/about" className="hover:text-emerald-400 transition-colors">{t.footerAboutUs}</Link></li>
+              <li><a href="#" className="hover:text-emerald-400 transition-colors">{t.footerPrivacy}</a></li>
+              <li><a href="#" className="hover:text-emerald-400 transition-colors">{t.footerTerms}</a></li>
             </ul>
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-6 tracking-wide">Feedback</h3>
-            <p className="text-xs text-gray-400 mb-4">Help us improve your learning experience.</p>
+            <h3 className="text-white font-bold mb-6 tracking-wide">{t.footerFeedback}</h3>
+            <p className="text-xs text-gray-400 mb-4">{t.footerFeedbackDesc}</p>
             <form onSubmit={handleFeedback} className="space-y-4">
               <div className="relative group">
                 <textarea
                   value={feedback}
                   onChange={(e) => setFeedback(e.target.value)}
-                  placeholder="Your suggestions..."
+                  placeholder={t.footerFeedbackPlaceholder}
                   aria-label="Send feedback"
                   className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-sm text-white focus:outline-none focus:border-emerald-500/50 focus:bg-white/10 transition-all resize-none h-28 placeholder-gray-600 shadow-inner"
                 />
@@ -105,13 +107,13 @@ const Footer: React.FC = () => {
                   {sent ? <Heart size={18} fill="currentColor" /> : <Send size={18} />}
                 </button>
               </div>
-              {sent && <motion.p initial={{opacity:0, y: 5}} animate={{opacity:1, y:0}} className="text-xs text-emerald-400 font-medium">ಧನ್ಯವಾದಗಳು! Thank you for your feedback!</motion.p>}
+              {sent && <motion.p initial={{opacity:0, y: 5}} animate={{opacity:1, y:0}} className="text-xs text-emerald-400 font-medium">{t.footerFeedbackThanks}</motion.p>}
             </form>
           </div>
         </div>
 
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-gray-500">© {new Date().getFullYear()} E-Prayog. All rights reserved.</p>
+          <p className="text-xs text-gray-500">© {new Date().getFullYear()} E-Prayog. {t.footerRights}</p>
           <div className="flex items-center gap-2 text-xs text-gray-500">
             <Mail size={14} />
             <span>support@eprayog.in</span>
@@ -120,7 +122,7 @@ const Footer: React.FC = () => {
 
         <div className="w-full text-center mt-6 pt-4 border-t border-white/5 pb-4">
           <p className="text-sm text-gray-500 flex items-center justify-center gap-1">
-            Built for <span className="text-emerald-400 font-bold tracking-wide">Karnataka PUC Students</span>
+            {t.footerBuiltFor} <span className="text-emerald-400 font-bold tracking-wide">{t.footerKarnatakaStudents}</span>
           </p>
         </div>
       </div>

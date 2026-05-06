@@ -4,6 +4,7 @@ import GlassCard from '../components/GlassCard';
 import { FlaskConical, Bot, GraduationCap, ShieldCheck, Languages, Trophy, Heart, ArrowRight, Atom, Zap, Dna, Calculator, Monitor } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { SUBJECTS } from '../constants';
+import { useLang } from '../services/LanguageContext';
 
 const MotionDiv = motion.div as any;
 
@@ -48,6 +49,7 @@ const SUBJECT_DESCRIPTIONS: Record<string, string> = {
 };
 
 const About: React.FC = () => {
+  const { t } = useLang();
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Floating Background Decorations */}
@@ -63,22 +65,16 @@ const About: React.FC = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-bold mb-8">
             <Atom size={16} className="animate-spin" style={{ animationDuration: '8s' }} /> Open Source Science Lab
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-white leading-tight mb-6">
-            Redefining Science<br />
-            <span className="bg-gradient-to-r from-emerald-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent">
-              Education in Karnataka
-            </span>
-          </h1>
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-white leading-tight mb-6">{t.aboutTitle}</h1>
           <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed mb-10">
-            E-Prayog brings every PUC experiment to life through interactive 2D simulations, 
-            AI tutoring, and a curriculum built specifically for Karnataka students.
+            {t.aboutDesc}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to="/subjects" className="px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-lg transition-all shadow-lg shadow-emerald-600/20 flex items-center gap-2">
-              Explore Labs <ArrowRight size={20} />
+              {t.aboutExploreLabs} <ArrowRight size={20} />
             </Link>
             <Link to="/tutor" className="px-8 py-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-bold text-lg transition-all flex items-center gap-2">
-              <Bot size={20} /> Try AI Tutor
+              <Bot size={20} /> {t.aboutTryTutor}
             </Link>
           </div>
         </MotionDiv>

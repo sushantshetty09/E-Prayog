@@ -13,6 +13,7 @@ import {
   Printer, ChevronLeft, ChevronRight,
 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLang } from '../services/LanguageContext';
 
 const MotionDiv = motion.div as any;
 
@@ -31,6 +32,7 @@ const TABS: { id: Tab; label: string; icon: React.ReactNode; shortLabel: string 
 ];
 
 const LabView: React.FC = () => {
+  const { t } = useLang();
   const { subjectId, labId } = useParams<{ subjectId: string; labId: string }>();
   const navigate = useNavigate();
   const [tabIdx, setTabIdx] = useState(0);
@@ -69,7 +71,7 @@ const LabView: React.FC = () => {
   if (!subject || !lab) {
     return (
       <div className="min-h-screen pt-24 flex items-center justify-center text-white text-xl">
-        Experiment not found.
+        {t.labExperimentNotFound}
       </div>
     );
   }
@@ -91,7 +93,7 @@ const LabView: React.FC = () => {
     const printWindow = window.open('', '_blank');
     if (!printWindow) return;
     printWindow.document.write(`
-      <html><head><title>${lab.title} — Observation | E-Prayog</title>
+      <html><head><title>${lab.title} - Observation | E-Prayog</title>
       <style>
         body { font-family: 'Inter', Arial, sans-serif; padding: 40px; color: #0f172a; }
         h1 { font-size: 22px; margin-bottom: 4px; }
@@ -104,7 +106,7 @@ const LabView: React.FC = () => {
         .result-box h3 { font-size: 14px; margin-bottom: 8px; }
         input { width: 100%; border: none; border-bottom: 1px dotted #94a3b8; padding: 4px 0; font-size: 13px; }
       </style></head><body>
-      <h1>🔬 ${lab.title}</h1>
+      <h1>${lab.title}</h1>
       <h2>${subject.name} — Karnataka PUC | E-Prayog Virtual Lab</h2>
       ${printRef.current.innerHTML}
       <div class="result-box">
@@ -114,7 +116,7 @@ const LabView: React.FC = () => {
         <input placeholder="" />
       </div>
       <div class="footer">
-        Printed from E-Prayog (ಇ-ಪ್ರಯೋಗ) — Virtual Science Lab for Karnataka PUC<br/>
+        Printed from E-Prayog (ಇ-ಪ್ರಯೋಗ) - Virtual Science Lab for Karnataka PUC<br/>
         Student Name: __________________ | Date: __________________ | Section: __________________
       </div>
       </body></html>
@@ -190,7 +192,7 @@ const LabView: React.FC = () => {
         {/* Header */}
         <div className="mb-6">
           <Link to={`/subjects/${subject.id}`} className="text-sm text-slate-500 hover:text-emerald-400 transition-colors flex items-center gap-1 mb-3">
-            <ArrowLeft size={14} /> Back to {subject.name}
+            <ArrowLeft size={14} /> {t.labBackTo} {subject.name}
           </Link>
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${subject.hex}15` }}>
@@ -242,7 +244,7 @@ const LabView: React.FC = () => {
                 <p className="text-slate-300">{content.aim}</p>
               </div>
               <div>
-                <h3 className="text-lg font-bold text-white mb-2">📋 Requirements</h3>
+                <h3 className="text-lg font-bold text-white mb-2">Requirements</h3>
                 <ul className="list-disc list-inside text-slate-400 space-y-1">
                   {content.requirements.map((r, i) => <li key={i}>{r}</li>)}
                 </ul>
@@ -255,7 +257,7 @@ const LabView: React.FC = () => {
               </div>
               {content.objectives?.length > 0 && (
                 <div>
-                  <h3 className="text-lg font-bold text-white mb-2">🎯 Objectives</h3>
+                  <h3 className="text-lg font-bold text-white mb-2">Objectives</h3>
                   <ul className="list-disc list-inside text-slate-400 space-y-1">
                     {content.objectives.map((o, i) => <li key={i}>{o}</li>)}
                   </ul>
@@ -263,7 +265,7 @@ const LabView: React.FC = () => {
               )}
               {content.safety && content.safety.length > 0 && (
                 <div className="bg-red-500/10 border border-red-500/20 rounded-xl p-4">
-                  <h3 className="text-sm font-bold text-red-400 mb-2">⚠️ Safety Precautions</h3>
+                  <h3 className="text-sm font-bold text-red-400 mb-2">Safety Precautions</h3>
                   <ul className="list-disc list-inside text-red-300/80 text-sm space-y-1">
                     {content.safety.map((s, i) => <li key={i}>{s}</li>)}
                   </ul>
@@ -365,7 +367,7 @@ const LabView: React.FC = () => {
                   <ClipboardList size={18} style={{ color: subject.hex }} /> Observation Table
                 </h3>
                 <button onClick={handlePrint} className="flex items-center gap-2 px-4 py-2 rounded-xl bg-amber-500/15 text-amber-400 border border-amber-500/20 text-sm font-bold hover:bg-amber-500/25 transition-all">
-                  <Printer size={14} /> Print Observation
+                  <Printer size={14} /> {t.labPrintObservation}
                 </button>
               </div>
               <div ref={printRef} className="glass-panel rounded-2xl p-6 overflow-x-auto">
@@ -398,7 +400,7 @@ const LabView: React.FC = () => {
           {activeTab.id === 'observation' && (!content || !content.observationTable) && (
             <div className="glass-panel rounded-2xl p-8 max-w-4xl text-center">
               <ClipboardList size={48} className="text-slate-700 mx-auto mb-4" />
-              <p className="text-slate-400">No observation table defined for this experiment.</p>
+              <p className="text-slate-400">{t.labNoObservation}</p>
             </div>
           )}
 
@@ -422,7 +424,7 @@ const LabView: React.FC = () => {
                 </div>
               )}
               <div>
-                <h4 className="text-sm font-bold text-white mb-2">📝 Your Result</h4>
+                <h4 className="text-sm font-bold text-white mb-2">Your Result</h4>
                 <textarea
                   rows={4}
                   placeholder="Write your result and conclusion here..."
@@ -453,7 +455,7 @@ const LabView: React.FC = () => {
                   {content.realWorldApplications.map((app, i) => (
                     <li key={i} className="flex gap-3 items-start">
                       <span className="w-8 h-8 rounded-xl flex items-center justify-center text-lg flex-shrink-0 bg-white/5">
-                        {['🏗️', '🏥', '🚀', '💡', '🔋', '📡', '🌍', '🧬'][i % 8]}
+                        {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'][i % 8]}
                       </span>
                       <p className="text-slate-300 text-sm leading-relaxed pt-1">{app}</p>
                     </li>
@@ -472,7 +474,7 @@ const LabView: React.FC = () => {
                       'Everyday technology and practical uses',
                     ].map((app, i) => (
                       <div key={i} className="bg-white/5 rounded-xl p-3 flex items-center gap-2">
-                        <span className="text-lg">{['🏗️', '🔬', '🏥', '💡'][i]}</span>
+                        <span className="text-lg">{['1', '2', '3', '4'][i]}</span>
                         <span className="text-sm text-slate-400">{app}</span>
                       </div>
                     ))}
@@ -535,9 +537,9 @@ const LabView: React.FC = () => {
                         </div>
                         <div className="flex flex-wrap items-center gap-3">
                           <span className="text-xs text-slate-500 font-bold uppercase mr-2">How did you do?</span>
-                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'knew'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'knew' ? 'bg-green-500/20 text-green-400 border-green-500/50' : 'border-white/10 text-slate-400 hover:bg-white/5 hover:text-white'}`}>✅ I knew this</button>
-                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'unsure'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'unsure' ? 'bg-amber-500/20 text-amber-400 border-amber-500/50' : 'border-white/10 text-slate-400 hover:bg-white/5 hover:text-white'}`}>🤔 Unsure</button>
-                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'missed'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'missed' ? 'bg-red-500/20 text-red-400 border-red-500/50' : 'border-white/10 text-slate-400 hover:bg-white/5 hover:text-white'}`}>❌ Missed it</button>
+                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'knew'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'knew' ? 'bg-green-500/20 text-green-400 border-green-500/50' : 'border-white/10 text-slate-400 hover:bg-white/5 hover:text-white'}`}>Knew</button>
+                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'unsure'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'unsure' ? 'bg-amber-500/20 text-amber-400 border-amber-500/50' : 'border-white/10 text-slate-400 hover:bg-white/5 hover:text-white'}`}>Unsure</button>
+                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'missed'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'missed' ? 'bg-red-500/20 text-red-400 border-red-500/50' : 'border-white/10 text-slate-400 hover:bg-white/5 hover:text-white'}`}>Missed</button>
                         </div>
                       </motion.div>
                     )}
@@ -569,7 +571,7 @@ const LabView: React.FC = () => {
           {activeTab.id === 'viva' && (!content?.vivaQuestions || content.vivaQuestions.length === 0) && (
             <div className="glass-panel rounded-2xl p-8 max-w-4xl text-center">
               <HelpCircle size={48} className="text-slate-700 mx-auto mb-4" />
-              <p className="text-slate-400">Viva questions for this experiment will be added soon.</p>
+              <p className="text-slate-400">{t.labNoViva}</p>
             </div>
           )}
 
@@ -583,7 +585,7 @@ const LabView: React.FC = () => {
                   quizScore >= quizQuestions.length * 0.4 ? 'bg-amber-500/10 border-amber-500/30' :
                   'bg-red-500/10 border-red-500/30'
                 }`}>
-                  <h2 className="text-lg font-bold text-white mb-2">Quiz Completed!</h2>
+                  <h2 className="text-lg font-bold text-white mb-2">{t.labQuizCompleted}</h2>
                   <div className={`text-5xl font-black ${
                     quizScore >= quizQuestions.length * 0.7 ? 'text-green-400' :
                     quizScore >= quizQuestions.length * 0.4 ? 'text-amber-400' :
@@ -673,14 +675,14 @@ const LabView: React.FC = () => {
                         disabled={Object.keys(quizAnswers).length < quizQuestions.length}
                         className="px-8 py-4 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all disabled:opacity-30 disabled:scale-100 hover:scale-105"
                       >
-                        Submit Quiz
+                        {t.labSubmitQuiz}
                       </button>
                     ) : (
                       <button
                         onClick={() => { setQuizAnswers({}); setQuizSubmitted(false); setQuizScore(0); }}
                         className="px-8 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-all"
                       >
-                        Retake Quiz
+                        {t.labRetakeQuiz}
                       </button>
                     )}
                   </div>
@@ -688,7 +690,7 @@ const LabView: React.FC = () => {
               ) : (
                 <div className="glass-panel p-12 text-center rounded-2xl flex flex-col items-center justify-center border border-white/5">
                   <Brain size={48} className="text-slate-700 mb-4" />
-                  <p className="text-slate-400 font-medium">Quiz questions for this experiment will be added soon.</p>
+                  <p className="text-slate-400 font-medium">{t.labNoQuiz}</p>
                 </div>
               )}
             </div>
@@ -703,7 +705,7 @@ const LabView: React.FC = () => {
             disabled={tabIdx === 0}
             className="flex items-center gap-2 px-5 py-3 rounded-xl bg-white/5 border border-white/10 text-sm font-bold transition-all hover:bg-white/10 disabled:opacity-20 disabled:cursor-not-allowed"
           >
-            <ChevronLeft size={16} /> {tabIdx > 0 ? TABS[tabIdx - 1].label : 'Previous'}
+            <ChevronLeft size={16} /> {tabIdx > 0 ? TABS[tabIdx - 1].label : t.labPrevious}
           </button>
 
           <span className="text-xs text-slate-500 font-mono">
@@ -716,7 +718,7 @@ const LabView: React.FC = () => {
             className="flex items-center gap-2 px-5 py-3 rounded-xl text-sm font-bold transition-all hover:scale-105 disabled:opacity-20 disabled:cursor-not-allowed"
             style={{ background: `${subject.hex}20`, color: subject.hex, borderColor: `${subject.hex}30`, borderWidth: 1 }}
           >
-            {tabIdx < TABS.length - 1 ? TABS[tabIdx + 1].label : 'Finish'} <ChevronRight size={16} />
+            {tabIdx < TABS.length - 1 ? TABS[tabIdx + 1].label : t.labFinish} <ChevronRight size={16} />
           </button>
         </div>
       </div>

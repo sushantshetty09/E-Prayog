@@ -4,20 +4,22 @@ import { Zap, FlaskConical, Dna, Calculator, Monitor, ArrowRight } from 'lucide-
 import GlassCard from '../components/GlassCard';
 import { SUBJECTS } from '../constants';
 import { motion } from 'framer-motion';
+import { useLang } from '../services/LanguageContext';
 
 const MotionDiv = motion.div as any;
 const icons = [Zap, FlaskConical, Dna, Calculator, Monitor];
 
 const Subjects: React.FC = () => {
+  const { t } = useLang();
   return (
     <div className="min-h-screen pt-24 pb-20 px-6 md:px-12 lg:px-20">
       <div className="max-w-6xl mx-auto">
         <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
           <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">
-            Virtual <span className="text-emerald-400">Laboratories</span>
+            {t.subjectsTitle}
           </h1>
           <p className="text-slate-400 max-w-2xl mx-auto">
-            Choose a subject to explore interactive experiments aligned with the Karnataka PUC syllabus.
+            {t.subjectsDesc}
           </p>
         </MotionDiv>
 
@@ -34,7 +36,7 @@ const Subjects: React.FC = () => {
                     <div>
                       <h2 className="text-xl font-bold text-white">{subject.name}</h2>
                       <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: `${subject.hex}15`, color: subject.hex }}>
-                        {subject.labs.length} Experiments
+                        {subject.labs.length} {t.subjectsExperiments}
                       </span>
                     </div>
                   </div>
@@ -43,10 +45,10 @@ const Subjects: React.FC = () => {
                     {subject.labs.slice(0, 4).map(lab => (
                       <span key={lab.id} className="text-xs text-slate-500 bg-white/5 rounded-full px-2 py-0.5">{lab.title}</span>
                     ))}
-                    {subject.labs.length > 4 && <span className="text-xs text-slate-600">+{subject.labs.length - 4} more</span>}
+                    {subject.labs.length > 4 && <span className="text-xs text-slate-600">+{subject.labs.length - 4} {t.subjectsMore}</span>}
                   </div>
                   <div className="flex items-center gap-2 text-sm font-bold" style={{ color: subject.hex }}>
-                    Explore <ArrowRight size={16} />
+                    {t.subjectsExplore} <ArrowRight size={16} />
                   </div>
                 </GlassCard>
               </Link>

@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
 import { Loader2, CheckCircle2, User, Mail, Shield, ShieldCheck, GraduationCap, Calendar, Save, Edit3, Settings, BookOpen, Link2, Key, Camera, Flame, FlaskConical, TrendingUp, X } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLang } from '../services/LanguageContext';
 
 const AVATAR_COLORS = [
   'bg-slate-500', 'bg-red-500', 'bg-orange-500', 'bg-amber-500',
@@ -20,6 +21,7 @@ const SUBJECT_COLORS: Record<string, string> = {
 };
 
 const Profile: React.FC = () => {
+  const { t } = useLang();
   const { user: authUser, loading: authLoading, profileData, role, refreshProfile } = useAuth();
   const navigate = useNavigate();
 
@@ -159,11 +161,11 @@ const Profile: React.FC = () => {
   return (
     <div className="pt-24 min-h-screen pb-12 px-6 lg:px-12 max-w-7xl mx-auto">
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white">Your Profile</h1>
+        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white">{t.profileTitle}</h1>
         {saveSuccess && (
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-2 text-emerald-400 bg-emerald-400/10 px-4 py-2 rounded-full border border-emerald-400/20">
-            <CheckCircle2 size={18} /><span className="text-sm font-bold">Profile Saved!</span>
+            <CheckCircle2 size={18} /><span className="text-sm font-bold">{t.profileSaved}</span>
           </motion.div>
         )}
       </div>
@@ -223,7 +225,7 @@ const Profile: React.FC = () => {
           {!isEditing && (
             <button onClick={() => setIsEditing(true)}
               className="mt-6 w-full py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-all flex items-center justify-center gap-2 z-10">
-              <Edit3 size={18} /> Edit Profile
+              <Edit3 size={18} /> {t.profileEdit}
             </button>
           )}
         </GlassCard>
@@ -231,12 +233,12 @@ const Profile: React.FC = () => {
         {/* Column 2: Editable Details */}
         <GlassCard className="p-8">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2"><Settings size={20} className="text-emerald-400" /> Account Settings</h2>
+            <h2 className="text-xl font-bold text-white flex items-center gap-2"><Settings size={20} className="text-emerald-400" /> {t.profileAccountSettings}</h2>
             {isEditing && (
               <div className="flex items-center gap-3">
-                <button onClick={() => { setIsEditing(false); }} className="px-4 py-2 rounded-xl text-slate-400 hover:text-white font-bold transition-colors">Cancel</button>
+                <button onClick={() => { setIsEditing(false); }} className="px-4 py-2 rounded-xl text-slate-400 hover:text-white font-bold transition-colors">{t.profileCancel}</button>
                 <button onClick={handleSave} disabled={isSaving} className="px-6 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all flex items-center gap-2 disabled:opacity-50">
-                  {isSaving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />} Save
+                  {isSaving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />} {t.profileSave}
                 </button>
               </div>
             )}
@@ -291,19 +293,19 @@ const Profile: React.FC = () => {
         <div className="flex flex-col gap-6">
           {/* Stats */}
           <GlassCard className="p-6">
-            <h3 className="text-lg font-bold text-white mb-4">Your Stats</h3>
+            <h3 className="text-lg font-bold text-white mb-4">{t.profileStats}</h3>
             <div className="space-y-4">
               <div className="flex items-center gap-4 p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
                 <Flame size={24} className="text-orange-400" />
-                <div><p className="text-lg font-bold text-white">{streak} day{streak !== 1 ? 's' : ''}</p><p className="text-xs text-orange-400/70">Current Streak</p></div>
+                <div><p className="text-lg font-bold text-white">{streak} day{streak !== 1 ? 's' : ''}</p><p className="text-xs text-orange-400/70">{t.profileCurrentStreak}</p></div>
               </div>
               <div className="flex items-center gap-4 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
                 <FlaskConical size={24} className="text-emerald-400" />
-                <div><p className="text-lg font-bold text-white">{completedLabs.length}</p><p className="text-xs text-emerald-400/70">Labs Completed</p></div>
+                <div><p className="text-lg font-bold text-white">{completedLabs.length}</p><p className="text-xs text-emerald-400/70">{t.profileLabsCompleted}</p></div>
               </div>
               <div className="flex items-center gap-4 p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
                 <TrendingUp size={24} className="text-blue-400" />
-                <div><p className="text-lg font-bold text-white">{overallProgress}%</p><p className="text-xs text-blue-400/70">Overall Progress</p></div>
+                <div><p className="text-lg font-bold text-white">{overallProgress}%</p><p className="text-xs text-blue-400/70">{t.profileOverallProgress}</p></div>
               </div>
             </div>
           </GlassCard>
@@ -311,7 +313,7 @@ const Profile: React.FC = () => {
           {/* Teacher Section (Students only) */}
           {role === 'Student' && (
             <GlassCard className="p-6 border-amber-500/20 bg-amber-500/5">
-              <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2"><Link2 size={18} className="text-amber-400" /> Your Teacher</h3>
+              <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2"><Link2 size={18} className="text-amber-400" /> {t.profileYourTeacher}</h3>
               {profileData?.teacherUid && linkedTeacherName ? (
                 <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
                   <div className="flex items-center justify-between">
@@ -323,12 +325,12 @@ const Profile: React.FC = () => {
                       </div>
                     </div>
                     <button onClick={handleLeaveClass}
-                      className="px-3 py-1.5 rounded-lg bg-white/5 text-slate-400 border border-white/10 hover:bg-red-500/10 hover:text-red-400 text-xs font-bold transition-all">Leave</button>
+                      className="px-3 py-1.5 rounded-lg bg-white/5 text-slate-400 border border-white/10 hover:bg-red-500/10 hover:text-red-400 text-xs font-bold transition-all">{t.profileLeave}</button>
                   </div>
                 </div>
               ) : (
                 <div>
-                  <p className="text-xs text-slate-400 mb-3">Enter your teacher's 6-character class code.</p>
+                  <p className="text-xs text-slate-400 mb-3">{t.profileJoinClassHelp}</p>
                   <div className="flex gap-2">
                     <div className="relative flex-1">
                       <Key className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
@@ -343,7 +345,7 @@ const Profile: React.FC = () => {
                     </button>
                   </div>
                   {linkError && <p className="mt-2 text-sm text-red-400 font-bold">{linkError}</p>}
-                  {linkSuccess && <p className="mt-2 text-sm text-green-400 font-bold flex items-center gap-1"><CheckCircle2 size={14} /> Linked!</p>}
+                  {linkSuccess && <p className="mt-2 text-sm text-green-400 font-bold flex items-center gap-1"><CheckCircle2 size={14} /> {t.profileLinked}</p>}
                 </div>
               )}
             </GlassCard>
@@ -351,7 +353,7 @@ const Profile: React.FC = () => {
 
           {/* Subject Progress */}
           <GlassCard className="p-6">
-            <h3 className="text-lg font-bold text-white mb-4">Subject Progress</h3>
+            <h3 className="text-lg font-bold text-white mb-4">{t.profileSubjectProgress}</h3>
             <div className="space-y-4">
               {Object.entries(progress).map(([subject, val]: [string, any]) => {
                 const colorClass = SUBJECT_COLORS[subject.toLowerCase()] || 'bg-emerald-500';

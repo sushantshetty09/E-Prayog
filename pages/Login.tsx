@@ -16,6 +16,7 @@ import {
 import { doc, setDoc, getDoc, getDocs, collection, query, where, updateDoc, addDoc } from 'firebase/firestore';
 import { FlaskConical, Mail, Lock, User, Eye, EyeOff, LogIn, ArrowRight, ArrowLeft, GraduationCap, Building } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useLang } from '../services/LanguageContext';
 
 const MotionDiv = motion.div as any;
 
@@ -34,6 +35,7 @@ function friendlyError(err: any): string {
 }
 
 const Login: React.FC = () => {
+  const { t } = useLang();
   const navigate = useNavigate();
   const location = useLocation();
   const { user: authUser, role: authRole, loading: authLoading } = useAuth();
@@ -208,7 +210,7 @@ const Login: React.FC = () => {
   const idLabel = loginType === 'teacher' ? 'Teacher ID' : loginType === 'admin' ? 'Admin ID' : 'Email Address';
   const badgeColor = loginType === 'teacher' ? 'bg-orange-500/20 text-orange-400 border-orange-500/30'
     : loginType === 'admin' ? 'bg-red-500/20 text-red-400 border-red-500/30' : '';
-  const badgeText = loginType === 'teacher' ? '🏫 Teacher Login' : loginType === 'admin' ? '🛡️ Admin Login' : '';
+  const badgeText = loginType === 'teacher' ? t.loginTeacherBadge : loginType === 'admin' ? t.loginAdminBadge : '';
 
   return (
     <div className="min-h-screen flex items-center justify-center px-6 pt-20 pb-12">
@@ -221,10 +223,10 @@ const Login: React.FC = () => {
         <div className="text-center mb-8">
           <FlaskConical className="mx-auto w-12 h-12 text-emerald-400 mb-4" />
           <h1 className="text-2xl font-display font-bold text-white">
-            {isSignup ? (signupStep === 2 ? 'Complete Your Profile' : 'Create Account') : 'Welcome Back'}
+            {isSignup ? (signupStep === 2 ? t.loginCompleteProfile : t.loginCreateAccount) : t.loginWelcome}
           </h1>
           <p className="text-sm text-slate-400 mt-1">
-            {isSignup ? (signupStep === 2 ? 'Just a few more details' : 'Join E-Prayog today') : 'Log in to your E-Prayog account'}
+            {isSignup ? (signupStep === 2 ? t.loginFewDetails : t.loginJoinToday) : t.loginToAccount}
           </p>
         </div>
 
@@ -241,7 +243,7 @@ const Login: React.FC = () => {
             <>
               <button type="button" onClick={() => setSignupStep(1)}
                 className="flex items-center gap-1 text-sm text-slate-400 hover:text-white mb-2">
-                <ArrowLeft size={14} /> Back
+                <ArrowLeft size={14} /> {t.loginBack}
               </button>
               <div className="relative">
                 <GraduationCap size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
@@ -273,7 +275,7 @@ const Login: React.FC = () => {
                   <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
                   <input type="text" value={signupData.name}
                     onChange={e => setSignupData({...signupData, name: e.target.value})}
-                    placeholder="Full Name" required
+                    placeholder={t.loginFullName} required
                     className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50" />
                 </div>
               )}
@@ -295,7 +297,7 @@ const Login: React.FC = () => {
                 <input
                   type={showPw ? 'text' : 'password'} value={password}
                   onChange={e => setPassword(e.target.value)}
-                  placeholder="Password" required minLength={6}
+                  placeholder={t.loginPassword} required minLength={6}
                   className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-11 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
                 />
                 <button type="button" onClick={() => setShowPw(!showPw)}
@@ -317,7 +319,7 @@ const Login: React.FC = () => {
             ) : (
               <LogIn size={16} />
             )}
-            {isSignup ? (signupStep === 2 ? 'Create Account' : 'Next') : 'Log In'}
+            {isSignup ? (signupStep === 2 ? t.loginCreateAccount : t.loginNext) : t.navLogin}
           </button>
         </form>
 
@@ -326,7 +328,7 @@ const Login: React.FC = () => {
           <>
             <div className="flex items-center my-6">
               <div className="flex-1 h-px bg-white/10" />
-              <span className="px-4 text-xs text-slate-500">OR</span>
+              <span className="px-4 text-xs text-slate-500">{t.loginOr}</span>
               <div className="flex-1 h-px bg-white/10" />
             </div>
             <button onClick={handleGoogleLogin} disabled={loading}
@@ -337,7 +339,7 @@ const Login: React.FC = () => {
                 <path fill="#4CAF50" d="M24 44c5.2 0 9.9-2 13.4-5.2l-6.2-5.2C29.2 35.1 26.7 36 24 36c-5.5 0-10-3.3-11.3-8.1l-6.5 5C9.5 39.6 16.2 44 24 44z" />
                 <path fill="#1976D2" d="M43.6 20.1H42V20H24v8h11.3c-.8 2.2-2.2 4.2-4.1 5.6l6.2 5.2C37 39.2 44 34 44 24c0-1.3-.2-2.7-.4-3.9z" />
               </svg>
-              Continue with Google
+              {t.loginContinueGoogle}
             </button>
           </>
         )}
@@ -345,12 +347,12 @@ const Login: React.FC = () => {
         {/* Toggle Sign Up (students only) */}
         {loginType === 'student' && (
           <p className="text-center text-sm text-slate-400 mt-6">
-            {isSignup ? 'Already have an account?' : "Don't have an account?"}
+            {isSignup ? t.loginHaveAccount : t.loginNoAccount}
             <button
               onClick={() => { setIsSignup(!isSignup); setError(''); setSignupStep(1); }}
               className="text-emerald-400 font-bold ml-2 hover:underline"
             >
-              {isSignup ? 'Log In' : 'Sign Up'}
+              {isSignup ? t.navLogin : t.loginSignUp}
             </button>
           </p>
         )}
@@ -358,7 +360,7 @@ const Login: React.FC = () => {
         {/* Hint for teacher/admin */}
         {loginType !== 'student' && !isSignup && (
           <p className="text-center text-xs text-slate-500 mt-6">
-            {loginType === 'teacher' ? 'Teacher accounts are created by the Admin.' : 'Admin credentials are set during platform setup.'}
+            {loginType === 'teacher' ? t.loginTeacherHint : t.loginAdminHint}
           </p>
         )}
       </MotionDiv>

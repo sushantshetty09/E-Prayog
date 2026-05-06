@@ -52,7 +52,7 @@ const TutorPage: React.FC = () => {
       const reply = await askTutor(input, 'General');
       setMessages(prev => [...prev, { id: `m-${Date.now()}`, role: 'model', text: reply, timestamp: Date.now() }]);
     } catch {
-      setMessages(prev => [...prev, { id: `e-${Date.now()}`, role: 'model', text: '⚠️ Sorry, I could not get a response. Check your API key or internet connection.', timestamp: Date.now() }]);
+      setMessages(prev => [...prev, { id: `e-${Date.now()}`, role: 'model', text: t.aiError, timestamp: Date.now() }]);
     } finally {
       setLoading(false);
     }
@@ -254,7 +254,7 @@ const TutorPage: React.FC = () => {
               onKeyDown={e => e.key === 'Enter' && handleSend()}
               onFocus={() => setInputFocused(true)}
               onBlur={() => setInputFocused(false)}
-              placeholder="Ask anything about Karnataka PUC Science..."
+              placeholder={t.tutorPlaceholder}
               disabled={loading}
               className="flex-1 bg-transparent px-5 py-3.5 text-sm text-white placeholder-slate-500 focus:outline-none disabled:opacity-50"
             />
@@ -274,7 +274,7 @@ const TutorPage: React.FC = () => {
         </div>
 
         <p className="text-center mt-3 text-xs" style={{ color: 'rgba(139,92,246,0.4)' }}>
-          ✦ Powered by Gemini AI — always verify important information
+          {t.tutorDisclaimer}
         </p>
       </div>
     </div>
