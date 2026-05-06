@@ -1,6 +1,7 @@
 import React, { lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './services/AuthContext';
+import { LanguageProvider } from './services/LanguageContext';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AIFloatingTutor from './components/AIFloatingTutor';
@@ -54,6 +55,7 @@ const App: React.FC = () => {
   }, []);
 
   return (
+    <LanguageProvider>
     <AuthProvider>
       <BrowserRouter>
         <div className="min-h-screen flex flex-col bg-slate-950 text-white">
@@ -112,6 +114,7 @@ const App: React.FC = () => {
         </div>
       </BrowserRouter>
     </AuthProvider>
+    </LanguageProvider>
   );
 };
 

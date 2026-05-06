@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, FlaskConical, LogIn, LogOut, User } from 'lucide-react';
+import { Menu, X, FlaskConical, LogIn, LogOut, User, Languages } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from '../services/AuthContext';
+import { useLang, Lang } from '../services/LanguageContext';
+
+const LANG_OPTIONS: { code: Lang; label: string }[] = [
+  { code: 'en', label: 'EN' },
+  { code: 'kn', label: 'ಕನ್ನಡ' },
+  { code: 'hi', label: 'हिं' },
+];
 
 const MotionSpan = motion.span as any;
 
@@ -24,6 +31,7 @@ const Navbar: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { user, profileData, role, signOut } = useAuth();
+  const { lang, setLang, t } = useLang();
 
   const isActive = (path: string) => location.pathname === path || location.pathname.startsWith(path + '/');
 
@@ -88,32 +96,46 @@ const Navbar: React.FC = () => {
 
       {/* Desktop Nav */}
       <div className="hidden md:flex items-center gap-6">
-        {/* Always-visible public tabs */}
-        {NAV_ITEMS.map((item) => (
-          <Link key={item.path} to={item.path} className={navLinkClass(item.path)}>
-            {item.label}
-            {isActive(item.path) && (
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />
-            )}
-          </Link>
-        ))}
-        {/* Auth-only tabs */}
-        {user && AUTH_NAV_ITEMS.map((item) => (
-          <Link key={item.path} to={item.path} className={navLinkClass(item.path)}>
-            {item.label}
-            {isActive(item.path) && (
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />
-            )}
-          </Link>
-        ))}
+        <Link to="/home" className={navLinkClass('/home')}>
+          {t.navHome}{isActive('/home') && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+        </Link>
+        <Link to="/tools" className={navLinkClass('/tools')}>
+          {t.navTools}{isActive('/tools') && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+        </Link>
+        <Link to="/about" className={navLinkClass('/about')}>
+          {t.navAbout}{isActive('/about') && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+        </Link>
         {user && (
-          <Link to={dashboardPath} className={navLinkClass(dashboardPath)}>
-            Dashboard
-            {isActive(dashboardPath) && (
-              <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />
-            )}
-          </Link>
+          <>
+            <Link to="/subjects" className={navLinkClass('/subjects')}>
+              {t.navExperiments}{isActive('/subjects') && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+            </Link>
+            <Link to="/tutor" className={navLinkClass('/tutor')}>
+              {t.navTutor}{isActive('/tutor') && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+            </Link>
+            <Link to={dashboardPath} className={navLinkClass(dashboardPath)}>
+              {t.navDashboard}{isActive(dashboardPath) && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+            </Link>
+          </>
         )}
+
+        {/* ── Language Switcher ── */}
+        <div className="flex items-center gap-0.5 bg-white/5 rounded-full px-1 py-1 border border-white/10">
+          <Languages size={13} className="text-gray-500 mx-1" />
+          {LANG_OPTIONS.map(opt => (
+            <button
+              key={opt.code}
+              onClick={() => setLang(opt.code)}
+              className={`px-2.5 py-1 rounded-full text-xs font-semibold transition-all duration-200 ${
+                lang === opt.code
+                  ? 'bg-gradient-to-r from-violet-600 to-sky-500 text-white shadow-sm'
+                  : 'text-gray-400 hover:text-white'
+              }`}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Right side — avatar or login */}
@@ -129,7 +151,7 @@ const Navbar: React.FC = () => {
                 </div>
               )}
               <span className="text-sm text-gray-400 hidden lg:inline font-medium">
-                {displayName?.split(' ')[0] || 'Profile'}
+                {displayName?.split(' ')[0] || t.navProfile}
               </span>
             </Link>
             <button onClick={handleLogout} aria-label="Logout" className="p-2 rounded-full bg-white/5 hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-all">
@@ -139,7 +161,7 @@ const Navbar: React.FC = () => {
         ) : (
           <Link to="/login">
             <button className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-sm font-bold text-white transition-colors">
-              <LogIn size={16} /> Log In
+              <LogIn size={16} /> {t.navLogin}
             </button>
           </Link>
         )}
@@ -153,30 +175,47 @@ const Navbar: React.FC = () => {
       {/* Mobile menu */}
       {isOpen && (
         <div className="absolute top-20 left-0 w-full glass-nav flex flex-col p-6 gap-4 md:hidden border-b border-white/5 shadow-2xl">
-          {NAV_ITEMS.map((item) => (
-            <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)}
-              className={`text-lg font-medium ${isActive(item.path) ? 'text-emerald-400' : ''}`}>{item.label}</Link>
-          ))}
+          {/* Mobile Language Switcher */}
+          <div className="flex items-center gap-2">
+            <Languages size={14} className="text-gray-500" />
+            <span className="text-xs text-gray-500">Language:</span>
+            <div className="flex gap-1">
+              {LANG_OPTIONS.map(opt => (
+                <button
+                  key={opt.code}
+                  onClick={() => setLang(opt.code)}
+                  className={`px-3 py-1 rounded-full text-xs font-semibold transition-all ${
+                    lang === opt.code
+                      ? 'bg-gradient-to-r from-violet-600 to-sky-500 text-white'
+                      : 'bg-white/5 text-gray-400 hover:text-white'
+                  }`}
+                >
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+          </div>
+          <hr className="border-white/10" />
+          <Link to="/home" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/home') ? 'text-emerald-400' : ''}`}>{t.navHome}</Link>
+          <Link to="/tools" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/tools') ? 'text-emerald-400' : ''}`}>{t.navTools}</Link>
+          <Link to="/about" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/about') ? 'text-emerald-400' : ''}`}>{t.navAbout}</Link>
           {user && (
             <>
-              <hr className="border-white/10 my-2" />
-              {AUTH_NAV_ITEMS.map((item) => (
-                <Link key={item.path} to={item.path} onClick={() => setIsOpen(false)}
-                  className={`text-lg font-medium ${isActive(item.path) ? 'text-emerald-400' : ''}`}>{item.label}</Link>
-              ))}
-              <Link to={dashboardPath} onClick={() => setIsOpen(false)}
-                className={`text-lg font-medium ${isActive(dashboardPath) ? 'text-emerald-400' : ''}`}>Dashboard</Link>
-              <Link to="/profile" onClick={() => setIsOpen(false)} className="text-lg font-medium text-blue-400">My Profile</Link>
+              <hr className="border-white/10" />
+              <Link to="/subjects" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/subjects') ? 'text-emerald-400' : ''}`}>{t.navExperiments}</Link>
+              <Link to="/tutor" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/tutor') ? 'text-emerald-400' : ''}`}>{t.navTutor}</Link>
+              <Link to={dashboardPath} onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive(dashboardPath) ? 'text-emerald-400' : ''}`}>{t.navDashboard}</Link>
+              <Link to="/profile" onClick={() => setIsOpen(false)} className="text-lg font-medium text-blue-400">{t.navProfile}</Link>
             </>
           )}
           <hr className="border-white/10 mt-2" />
           {user ? (
             <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-red-500/10 text-red-400 font-bold hover:bg-red-500/20">
-              <LogOut size={18} /> Log Out
+              <LogOut size={18} /> {t.navLogout}
             </button>
           ) : (
             <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold">
-              <LogIn size={18} /> Log In
+              <LogIn size={18} /> {t.navLogin}
             </Link>
           )}
         </div>

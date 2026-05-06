@@ -6,6 +6,7 @@ import { SUBJECTS } from '../constants';
 import { createChatSession, sendMessageToGemini } from '../services/geminiService';
 import { Chat, GenerateContentResponse } from '@google/genai';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useLang } from '../services/LanguageContext';
 
 const MotionDiv = motion.div as any;
 const MotionButton = motion.button as any;
@@ -39,18 +40,65 @@ function useLabContext() {
   }, [pathname]);
 }
 
+/* ─────────────── Inline Styles ─────────────── */
+const styles = {
+  fab: {
+    background: 'linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 45%, #ec4899 100%)',
+    boxShadow: '0 8px 32px rgba(139,92,246,0.45), 0 0 0 1px rgba(255,255,255,0.08)',
+  } as React.CSSProperties,
+  fabHoverRing: {
+    background: 'conic-gradient(from 0deg, #0ea5e9, #8b5cf6, #ec4899, #0ea5e9)',
+  } as React.CSSProperties,
+  panel: {
+    background: 'linear-gradient(160deg, rgba(8,8,24,0.97) 0%, rgba(15,10,30,0.97) 100%)',
+    boxShadow: '0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,92,246,0.18)',
+  } as React.CSSProperties,
+  header: {
+    background: 'linear-gradient(135deg, rgba(14,165,233,0.15) 0%, rgba(139,92,246,0.2) 50%, rgba(236,72,153,0.12) 100%)',
+    borderBottom: '1px solid rgba(139,92,246,0.2)',
+  } as React.CSSProperties,
+  botAvatar: {
+    background: 'linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 50%, #ec4899 100%)',
+    boxShadow: '0 4px 16px rgba(139,92,246,0.4)',
+  } as React.CSSProperties,
+  msgBotAvatar: {
+    background: 'linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%)',
+  } as React.CSSProperties,
+  msgUserBubble: {
+    background: 'linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%)',
+    boxShadow: '0 4px 16px rgba(14,165,233,0.25)',
+  } as React.CSSProperties,
+  msgAiBubble: {
+    background: 'rgba(139,92,246,0.08)',
+    border: '1px solid rgba(139,92,246,0.15)',
+  } as React.CSSProperties,
+  sendBtn: {
+    background: 'linear-gradient(135deg, #0ea5e9 0%, #8b5cf6 100%)',
+    boxShadow: '0 4px 14px rgba(139,92,246,0.35)',
+  } as React.CSSProperties,
+  inputFocusRing: {
+    border: '1px solid rgba(139,92,246,0.4)',
+  } as React.CSSProperties,
+  footerBar: {
+    background: 'rgba(0,0,0,0.3)',
+    borderTop: '1px solid rgba(139,92,246,0.1)',
+  } as React.CSSProperties,
+};
+
 const AIFloatingTutor: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [inputFocused, setInputFocused] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const chatSessionRef = useRef<Chat | null>(null);
   const activeContextRef = useRef<string | null>('__UNINITIALIZED__');
   const labContext = useLabContext();
   const location = useLocation();
+  const { t } = useLang();
   const isOnTutorPage = location.pathname === '/tutor';
   const isOnLoginPage = location.pathname === '/login';
 
@@ -61,14 +109,14 @@ const AIFloatingTutor: React.FC = () => {
     try { chatSessionRef.current = createChatSession(newCtx ?? undefined); } catch { chatSessionRef.current = null; }
     let welcomeText: string;
     if (!chatSessionRef.current) {
-      welcomeText = '⚠️ AI Tutor could not connect. Please check your Gemini API key.';
+      welcomeText = t.aiError;
     } else if (labContext) {
-      welcomeText = `👋 ನಮಸ್ಕಾರ! I see you're working on **${labContext.labTitle}** (${labContext.subjectName}). Ask me anything about this experiment!`;
+      welcomeText = t.aiGreetingLab.replace('{lab}', labContext.labTitle).replace('{subject}', labContext.subjectName);
     } else {
-      welcomeText = `👋 ನಮಸ್ಕಾರ! I'm your E-Prayog AI Tutor. Ask me about any Karnataka PUC experiment!`;
+      welcomeText = t.aiGreeting;
     }
     setMessages([{ id: 'welcome', role: 'model', text: welcomeText, timestamp: Date.now() }]);
-  }, [labContext]);
+  }, [labContext, t.aiGreeting, t.aiGreetingLab, t.aiError]);
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -96,8 +144,8 @@ const AIFloatingTutor: React.FC = () => {
         }
       }
     } catch (error: any) {
-      let errorMessage = "⚠️ Connection issue. Please try again.";
-      if (error?.message?.includes("429")) errorMessage = "⚠️ Rate limit exceeded. Please wait a minute.";
+      let errorMessage = t.aiError;
+      if (error?.message?.includes("429")) errorMessage = t.aiRateLimit;
       setMessages(prev => [...prev, { id: Date.now().toString(), role: 'model', text: errorMessage, timestamp: Date.now() }]);
     } finally {
       setIsLoading(false);
@@ -111,19 +159,70 @@ const AIFloatingTutor: React.FC = () => {
 
   return (
     <>
+      {/* Gradient shimmer keyframe */}
+      <style>{`
+        @keyframes ai-shimmer {
+          0%   { background-position: 0% 50%; }
+          50%  { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes ai-orbit {
+          from { transform: rotate(0deg); }
+          to   { transform: rotate(360deg); }
+        }
+        .ai-fab-ring {
+          background: conic-gradient(from 0deg, #0ea5e9, #8b5cf6, #ec4899, #f59e0b, #0ea5e9);
+          animation: ai-orbit 3s linear infinite;
+        }
+        .ai-gradient-text {
+          background: linear-gradient(90deg, #0ea5e9, #8b5cf6, #ec4899);
+          background-size: 200% auto;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          animation: ai-shimmer 3s ease infinite;
+        }
+        .ai-scrollbar::-webkit-scrollbar { width: 4px; }
+        .ai-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .ai-scrollbar::-webkit-scrollbar-thumb {
+          background: linear-gradient(180deg, #0ea5e9, #8b5cf6);
+          border-radius: 4px;
+        }
+        .ai-dot-bounce-1 { animation: bounce 1s infinite 0ms; }
+        .ai-dot-bounce-2 { animation: bounce 1s infinite 150ms; }
+        .ai-dot-bounce-3 { animation: bounce 1s infinite 300ms; }
+      `}</style>
+
+      {/* FAB Button */}
       <AnimatePresence>
         {!isOpen && (
           <MotionButton
-            initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0, opacity: 0 }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            exit={{ scale: 0, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full bg-gradient-to-tr from-purple-600 to-blue-500 text-white shadow-lg shadow-purple-600/40 flex items-center justify-center hover:shadow-purple-500/60 hover:scale-105 active:scale-95 transition-all cursor-pointer group"
-            aria-label="Open AI Tutor" id="ai-tutor-fab"
+            className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full flex items-center justify-center cursor-pointer group"
+            style={styles.fab}
+            aria-label="Open AI Tutor"
+            id="ai-tutor-fab"
           >
-            <Bot size={24} className="group-hover:rotate-12 transition-transform" />
-            <span className="absolute inset-0 rounded-full border-2 border-purple-400 animate-ping opacity-20" />
+            <Bot size={24} className="text-white group-hover:rotate-12 transition-transform duration-200 relative z-10" />
+
+            {/* Rotating conic ring */}
+            <span
+              className="absolute inset-[-3px] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 ai-fab-ring"
+              style={{ zIndex: 0, padding: '2px' }}
+            />
+            <span className="absolute inset-0 rounded-full opacity-60" style={styles.fab} />
+
+            {/* Pulse rings */}
+            <span className="absolute inset-0 rounded-full border-2 border-sky-400 animate-ping opacity-20" />
+
+            {/* Lab context indicator */}
             {labContext && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-green-500 border-2 border-white flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-[#08081a] flex items-center justify-center"
+                style={{ background: 'linear-gradient(135deg,#10b981,#0ea5e9)' }}>
                 <Sparkles size={8} className="text-white" />
               </span>
             )}
@@ -131,51 +230,91 @@ const AIFloatingTutor: React.FC = () => {
         )}
       </AnimatePresence>
 
+      {/* Chat Panel */}
       <AnimatePresence>
         {isOpen && (
           <MotionDiv
-            initial={{ opacity: 0, y: 40, scale: 0.92 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 40, scale: 0.92 }}
+            initial={{ opacity: 0, y: 40, scale: 0.92 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 40, scale: 0.92 }}
             transition={{ type: 'spring', stiffness: 300, damping: 28 }}
-            className={`fixed bottom-6 right-6 z-40 ${panelWidth} ${panelHeight} flex flex-col rounded-2xl overflow-hidden shadow-2xl shadow-black/40 border border-white/10 backdrop-blur-xl bg-slate-950/95`}
+            className={`fixed bottom-6 right-6 z-40 ${panelWidth} ${panelHeight} flex flex-col rounded-2xl overflow-hidden backdrop-blur-xl`}
+            style={styles.panel}
           >
-            <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-purple-900/60 to-blue-900/60 border-b border-white/10">
+            {/* ── Header ── */}
+            <div className="flex items-center justify-between px-4 py-3" style={styles.header}>
               <div className="flex items-center gap-3 min-w-0">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 flex items-center justify-center shadow-lg flex-shrink-0">
-                  <Bot size={18} className="text-white" />
+                {/* Bot avatar with animated gradient ring */}
+                <div className="relative w-9 h-9 flex-shrink-0">
+                  <div className="absolute inset-[-2px] rounded-full ai-fab-ring opacity-70" />
+                  <div className="relative w-full h-full rounded-full flex items-center justify-center" style={styles.botAvatar}>
+                    <Bot size={17} className="text-white" />
+                  </div>
                 </div>
+
                 <div className="min-w-0">
-                  <h2 className="text-sm font-bold text-white flex items-center gap-1.5 truncate">
-                    AI Lab Tutor <Sparkles size={12} className="text-yellow-400 animate-pulse flex-shrink-0" />
+                  <h2 className="text-sm font-bold flex items-center gap-1.5 truncate">
+                    <span className="ai-gradient-text">AI Lab Tutor</span>
+                    <Sparkles size={12} className="text-amber-400 animate-pulse flex-shrink-0" />
                   </h2>
                   {labContext ? (
-                    <p className="text-[10px] text-purple-300 font-mono truncate">📍 {labContext.labTitle}</p>
+                    <p className="text-[10px] font-mono truncate" style={{ color: '#a78bfa' }}>📍 {labContext.labTitle}</p>
                   ) : (
-                    <p className="text-[10px] text-purple-300/60 font-mono">Gemini AI • General mode</p>
+                    <p className="text-[10px] font-mono" style={{ color: 'rgba(167,139,250,0.6)' }}>{t.aiGeneral}</p>
                   )}
                 </div>
               </div>
+
               <div className="flex items-center gap-1 flex-shrink-0">
-                <button onClick={() => setIsExpanded(e => !e)} className="p-1.5 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
+                <button
+                  onClick={() => setIsExpanded(e => !e)}
+                  className="p-1.5 rounded-lg text-gray-400 hover:text-white transition-colors"
+                  style={{ background: 'transparent' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(139,92,246,0.15)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                >
                   {isExpanded ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
                 </button>
-                <button onClick={() => setIsOpen(false)} className="p-1.5 rounded-lg hover:bg-white/10 text-gray-400 hover:text-white transition-colors">
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="p-1.5 rounded-lg text-gray-400 hover:text-white transition-colors"
+                  style={{ background: 'transparent' }}
+                  onMouseEnter={e => (e.currentTarget.style.background = 'rgba(236,72,153,0.15)')}
+                  onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
+                >
                   <X size={14} />
                 </button>
               </div>
             </div>
 
-            <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-4 py-4 space-y-4 bg-black/20">
+            {/* ── Messages ── */}
+            <div
+              ref={chatContainerRef}
+              className="flex-1 overflow-y-auto px-4 py-4 space-y-4 ai-scrollbar"
+              style={{ background: 'rgba(0,0,0,0.25)' }}
+            >
               {messages.map(msg => (
                 <div key={msg.id} className={`flex items-start gap-2.5 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-white ${msg.role === 'model' ? 'bg-gradient-to-br from-purple-600 to-blue-600' : 'bg-blue-600'}`}>
+                  {/* Avatar */}
+                  <div
+                    className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-white"
+                    style={msg.role === 'model' ? styles.msgBotAvatar : { background: 'linear-gradient(135deg,#0ea5e9,#38bdf8)' }}
+                  >
                     {msg.role === 'model' ? <Bot size={13} /> : <User size={13} />}
                   </div>
-                  <div className={`max-w-[82%] px-3.5 py-2.5 rounded-2xl text-[13px] leading-relaxed ${msg.role === 'user' ? 'bg-blue-600 text-white rounded-tr-sm shadow-lg shadow-blue-600/20' : 'bg-white/[0.07] text-gray-200 rounded-tl-sm border border-white/5'}`}>
+
+                  {/* Bubble */}
+                  <div
+                    className="max-w-[82%] px-3.5 py-2.5 rounded-2xl text-[13px] leading-relaxed text-white"
+                    style={msg.role === 'user'
+                      ? { ...styles.msgUserBubble, borderRadius: '16px 4px 16px 16px' }
+                      : { ...styles.msgAiBubble, color: '#e2e8f0', borderRadius: '4px 16px 16px 16px' }}
+                  >
                     {msg.isThinking && msg.text === '' ? (
-                      <div className="flex gap-1 h-5 items-center py-1">
-                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" />
-                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:75ms]" />
-                        <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce [animation-delay:150ms]" />
+                      <div className="flex gap-1.5 h-5 items-center py-1">
+                        <span className="w-1.5 h-1.5 rounded-full ai-dot-bounce-1" style={{ background: 'linear-gradient(135deg,#0ea5e9,#8b5cf6)' }} />
+                        <span className="w-1.5 h-1.5 rounded-full ai-dot-bounce-2" style={{ background: 'linear-gradient(135deg,#8b5cf6,#ec4899)' }} />
+                        <span className="w-1.5 h-1.5 rounded-full ai-dot-bounce-3" style={{ background: 'linear-gradient(135deg,#ec4899,#f59e0b)' }} />
                       </div>
                     ) : (
                       <span className="whitespace-pre-wrap break-words">{msg.text}</span>
@@ -185,21 +324,42 @@ const AIFloatingTutor: React.FC = () => {
               ))}
             </div>
 
-            <div className="px-3 py-3 bg-black/30 border-t border-white/10">
-              <div className="relative flex items-center">
+            {/* ── Input Footer ── */}
+            <div className="px-3 py-3" style={styles.footerBar}>
+              <div
+                className="relative flex items-center rounded-full transition-all duration-200"
+                style={{
+                  background: 'rgba(255,255,255,0.05)',
+                  border: inputFocused
+                    ? '1px solid rgba(139,92,246,0.5)'
+                    : '1px solid rgba(255,255,255,0.08)',
+                  boxShadow: inputFocused ? '0 0 0 3px rgba(139,92,246,0.12)' : 'none',
+                }}
+              >
                 <input
-                  ref={inputRef} type="text"
-                  className="w-full bg-white/5 border border-white/10 rounded-full py-3 pl-4 pr-12 text-sm text-white placeholder-gray-500 focus:outline-none focus:border-purple-500/50 focus:bg-white/[0.08] transition-all"
-                  placeholder={labContext ? `Ask about ${labContext.labTitle}…` : 'Ask about any experiment…'}
-                  value={input} onChange={e => setInput(e.target.value)}
+                  ref={inputRef}
+                  type="text"
+                  className="w-full bg-transparent py-3 pl-4 pr-12 text-sm text-white placeholder-gray-500 focus:outline-none"
+                  placeholder={labContext ? t.aiAskLabPlaceholder.replace('{lab}', labContext.labTitle) : t.aiAskPlaceholder}
+                  value={input}
+                  onChange={e => setInput(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && !isLoading && handleSend()}
+                  onFocus={() => setInputFocused(true)}
+                  onBlur={() => setInputFocused(false)}
                   disabled={isLoading}
                 />
-                <button onClick={handleSend} disabled={isLoading || !input.trim()} className="absolute right-1.5 w-8 h-8 bg-purple-600 hover:bg-purple-500 rounded-full flex items-center justify-center text-white transition-colors disabled:opacity-40 shadow-lg shadow-purple-600/30">
-                  <Send size={14} />
+                <button
+                  onClick={handleSend}
+                  disabled={isLoading || !input.trim()}
+                  className="absolute right-1.5 w-8 h-8 rounded-full flex items-center justify-center text-white transition-all disabled:opacity-40 active:scale-95"
+                  style={styles.sendBtn}
+                >
+                  <Send size={13} />
                 </button>
               </div>
-              <p className="text-center text-[9px] text-gray-600 mt-1.5">AI can make mistakes. Verify important info.</p>
+              <p className="text-center mt-1.5" style={{ fontSize: '9px', color: 'rgba(139,92,246,0.4)' }}>
+                {t.aiDisclaimer}
+              </p>
             </div>
           </MotionDiv>
         )}
