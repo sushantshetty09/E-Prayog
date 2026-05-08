@@ -56,7 +56,7 @@ const UnitCircleLab: React.FC = () => {
     ctx.beginPath(); ctx.moveTo(cx, cy); ctx.arc(cx, cy, r, 0, -rad, rad < 0);
     ctx.closePath(); ctx.fill();
     // Circle
-    const circleGrad = ctx.createConicalGradient ? ctx.createLinearGradient(cx - r, cy, cx + r, cy) : ctx.createLinearGradient(cx - r, cy, cx + r, cy);
+    const circleGrad = ctx.createLinearGradient(cx - r, cy, cx + r, cy);
     ctx.shadowBlur = 6; ctx.shadowColor = '#3b82f6';
     ctx.strokeStyle = '#1d4ed8'; ctx.lineWidth = 2;
     ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();

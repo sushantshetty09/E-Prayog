@@ -1,4 +1,4 @@
-import { GoogleGenAI, Chat } from '@google/genai';
+import { GoogleGenAI } from '@google/genai';
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY || '';
 
@@ -24,37 +24,72 @@ Your role:
 
 Always respond in markdown format.`;
 
-export function createChatSession(labContext?: string): Chat | null {
-  if (!ai) return null;
+// ---------- Chat session type ----------
+export interface ChatSession {
+  history: { role: string; text: string }[];
+  contextString: string | null;
+}
 
-  let contextPrompt = SYSTEM_PROMPT;
-  if (labContext) {
-    contextPrompt += `\n\n--- CURRENT EXPERIMENT CONTEXT ---\n${labContext}\n--- END CONTEXT ---\n\nUse the above experiment context to give targeted, specific help. If the student asks about this experiment, refer to the exact aim, theory, procedure, and formulas provided.`;
+export function createChatSession(labContext?: string): ChatSession {
+  return { history: [], contextString: labContext ?? null };
+}
+
+// ---------- Streaming send ----------
+export async function sendMessageToGemini(
+  session: ChatSession,
+  message: string,
+  onChunk: (chunk: string) => void
+): Promise<void> {
+  if (!ai) throw new Error('AI not configured');
+
+  let systemPrompt = SYSTEM_PROMPT;
+  if (session.contextString) {
+    systemPrompt += `\n\n--- CURRENT EXPERIMENT CONTEXT ---\n${session.contextString}\n--- END CONTEXT ---\n\nUse the above experiment context to give targeted, specific help.`;
   }
 
+  // Build conversation history as plain text context
+  const historyText = session.history
+    .map(h => `${h.role === 'user' ? 'Student' : 'Tutor'}: ${h.text}`)
+    .join('\n');
+
+  const fullPrompt = historyText
+    ? `${historyText}\nStudent: ${message}`
+    : message;
+
+  // Add user message to history
+  session.history.push({ role: 'user', text: message });
+
   try {
-    const chat = ai.chats.create({
-      model: 'gemini-2.0-flash',
+    const result = await ai.models.generateContentStream({
+      model: 'gemini-2.5-flash',
+      contents: fullPrompt,
       config: {
-        systemInstruction: contextPrompt,
+        systemInstruction: systemPrompt,
         temperature: 0.7,
         maxOutputTokens: 2048,
       },
     });
-    return chat;
-  } catch (e) {
-    console.error('Failed to create chat session:', e);
-    return null;
+
+    let fullText = '';
+    for await (const chunk of result) {
+      const chunkText = chunk.text ?? '';
+      if (chunkText) {
+        fullText += chunkText;
+        onChunk(chunkText);
+      }
+    }
+
+    // Add assistant response to history
+    session.history.push({ role: 'model', text: fullText });
+  } catch (e: any) {
+    console.error('Gemini stream error:', e);
+    throw e;
   }
 }
 
-export async function sendMessageToGemini(chat: Chat, message: string) {
-  const result = await chat.sendMessageStream({ message });
-  return result;
-}
-
+// ---------- One-shot (Tutor page) ----------
 export async function askTutor(question: string, labContext?: string): Promise<string> {
-  if (!ai) return 'AI Tutor is not configured. Please set the VITE_GEMINI_API_KEY environment variable.';
+  if (!ai) return 'AI Tutor is not configured. Please check the API key.';
 
   let prompt = SYSTEM_PROMPT;
   if (labContext && labContext !== 'General') {
@@ -74,6 +109,8 @@ export async function askTutor(question: string, labContext?: string): Promise<s
     return response.text || 'I could not generate a response. Please try again.';
   } catch (e: any) {
     console.error('Gemini askTutor error:', e);
+    if (e?.message?.includes('429')) return 'Rate limit exceeded. Please wait a moment and try again.';
+    if (e?.message?.includes('API_KEY')) return 'Invalid API key. Please check configuration.';
     return `Error: ${e.message || 'Failed to get response from AI.'}`;
   }
 }

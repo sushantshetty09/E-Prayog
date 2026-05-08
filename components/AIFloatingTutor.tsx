@@ -3,8 +3,7 @@ import { useLocation } from 'react-router-dom';
 import { Send, Bot, X, Sparkles, User, Maximize2, Minimize2 } from 'lucide-react';
 import { ChatMessage } from '../types';
 import { SUBJECTS } from '../constants';
-import { createChatSession, sendMessageToGemini } from '../services/geminiService';
-import { Chat, GenerateContentResponse } from '@google/genai';
+import { createChatSession, sendMessageToGemini, ChatSession } from '../services/geminiService';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
 
@@ -94,7 +93,7 @@ const AIFloatingTutor: React.FC = () => {
   const [inputFocused, setInputFocused] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const chatSessionRef = useRef<Chat | null>(null);
+  const chatSessionRef = useRef<ChatSession | null>(null);
   const activeContextRef = useRef<string | null>('__UNINITIALIZED__');
   const labContext = useLabContext();
   const location = useLocation();
@@ -131,26 +130,30 @@ const AIFloatingTutor: React.FC = () => {
     setMessages(prev => [...prev, userMsg]);
     setInput('');
     setIsLoading(true);
+    const tempId = 'temp-' + Date.now();
+    setMessages(prev => [...prev, { id: tempId, role: 'model', text: '', timestamp: Date.now(), isThinking: true }]);
     try {
-      const tempId = 'temp-' + Date.now();
-      setMessages(prev => [...prev, { id: tempId, role: 'model', text: '', timestamp: Date.now(), isThinking: true }]);
-      const result = await sendMessageToGemini(chatSessionRef.current, userMsg.text);
-      let fullText = '';
-      for await (const chunk of result) {
-        const c = chunk as GenerateContentResponse;
-        if (c.text) {
-          fullText += c.text;
-          setMessages(prev => prev.map(msg => msg.id === tempId ? { ...msg, text: fullText, isThinking: false } : msg));
+      await sendMessageToGemini(
+        chatSessionRef.current,
+        userMsg.text,
+        (chunk: string) => {
+          setMessages(prev => prev.map(msg =>
+            msg.id === tempId
+              ? { ...msg, text: msg.text + chunk, isThinking: false }
+              : msg
+          ));
         }
-      }
+      );
     } catch (error: any) {
       let errorMessage = t.aiError;
-      if (error?.message?.includes("429")) errorMessage = t.aiRateLimit;
-      setMessages(prev => [...prev, { id: Date.now().toString(), role: 'model', text: errorMessage, timestamp: Date.now() }]);
+      if (error?.message?.includes('429')) errorMessage = t.aiRateLimit;
+      setMessages(prev => prev.map(msg =>
+        msg.id === tempId ? { ...msg, text: errorMessage, isThinking: false } : msg
+      ));
     } finally {
       setIsLoading(false);
     }
-  }, [input]);
+  }, [input, t.aiError, t.aiRateLimit]);
 
   if (isOnTutorPage || isOnLoginPage) return null;
 

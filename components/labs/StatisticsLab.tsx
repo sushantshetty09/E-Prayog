@@ -208,10 +208,9 @@ const StatisticsLab: React.FC = () => {
     }
 
     rafRef.current = requestAnimationFrame(draw);
-  }, [data, freq, uniqueVals, mean, median, modes, stdDev, q1, q3, minVal, maxVal2, range2, n, showCurve, showBoxPlot, maxFreq2]);
+  }, [data, freq, mean, median, modes, stdDev, q1, q3, minVal, maxVal2, range2, n, showCurve, showBoxPlot, maxFreq2]);
 
-  // Need to extract uniqueVals inside draw; remove from closure issue
-  const uniqueVals = Object.keys(freq).map(Number).sort((a, b) => a - b);
+  // uniqueVals declared above draw to avoid 'used before declaration' error
 
   useEffect(() => {
     rafRef.current = requestAnimationFrame(draw);
