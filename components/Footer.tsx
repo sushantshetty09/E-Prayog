@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Twitter, Github, Linkedin, Instagram, Send, Mail, Heart } from 'lucide-react';
+import { Twitter, Github, Linkedin, Send, Mail, Heart } from 'lucide-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
 
@@ -192,7 +192,6 @@ const Footer: React.FC = () => {
               <a href="#" aria-label="Twitter" className="text-gray-400 hover:text-emerald-400 transition-colors"><Twitter size={20} /></a>
               <a href="#" aria-label="Github" className="text-gray-400 hover:text-white transition-colors"><Github size={20} /></a>
               <a href="#" aria-label="LinkedIn" className="text-gray-400 hover:text-indigo-400 transition-colors"><Linkedin size={20} /></a>
-              <a href="#" aria-label="Instagram" className="text-gray-400 hover:text-pink-500 transition-colors"><Instagram size={20} /></a>
             </div>
           </div>
 
@@ -239,10 +238,10 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-xs text-gray-500">© {new Date().getFullYear()} E-Prayog. {t.footerRights}</p>
-          <div className="flex items-center gap-2 text-xs text-gray-500">
+          <a href="mailto:sushantshetty09@gmail.com" className="flex items-center gap-2 text-xs text-gray-500 hover:text-emerald-400 transition-colors">
             <Mail size={14} />
-            <span>support@eprayog.in</span>
-          </div>
+            <span>sushantshetty09@gmail.com</span>
+          </a>
         </div>
 
         <div className="w-full text-center mt-6 pt-4 border-t border-white/5 pb-4">
