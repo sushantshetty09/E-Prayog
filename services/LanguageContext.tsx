@@ -79,6 +79,12 @@ export interface Translations {
   subjectNotFound: string; subjectBack: string; subjectKarnatakaPuc: string;
   subjectDifficulty: string; subjectStandard: string; subjectAll: string;
   subjectOpenLab: string; subjectNoExperiments: string;
+  // Difficulty badge labels
+  diffEasy: string; diffMedium: string; diffHard: string;
+  // Standard filter
+  std1stPuc: string; std2ndPuc: string;
+  // Translated subject names
+  namePhysics: string; nameChemistry: string; nameBiology: string; nameMath: string; nameCS: string;
   // Tools hub page
   toolsTitle: string; toolsDesc: string;
   toolsFormulaSheet: string; toolsLogicGates: string; toolsPeriodicTable: string;
@@ -143,6 +149,9 @@ const T: Record<Lang, Translations> = {
     subjectAll: 'All',
     subjectOpenLab: 'Open Lab',
     subjectNoExperiments: 'No experiments match the selected filters.',
+    diffEasy: 'Easy', diffMedium: 'Medium', diffHard: 'Hard',
+    std1stPuc: '1st PUC', std2ndPuc: '2nd PUC',
+    namePhysics: 'Physics', nameChemistry: 'Chemistry', nameBiology: 'Biology', nameMath: 'Math', nameCS: 'CS',
     contactTitle: 'Send Us Feedback',
     contactDesc: 'Help us improve E-Prayog. Your feedback matters!',
     contactThankYou: 'Thank You!',
@@ -316,6 +325,9 @@ const T: Record<Lang, Translations> = {
     subjectAll: 'ಎಲ್ಲಾ',
     subjectOpenLab: 'ಲ್ಯಾಬ್ ತೆರೆಯಿರಿ',
     subjectNoExperiments: 'ಆಯ್ಕೆ ಮಾಡಿದ ಫಿಲ್ಟರ್‌ಗಳಿಗೆ ಪ್ರಯೋಗಗಳು ದೊರಕಲಿಲ್ಲ.',
+    diffEasy: 'ಸುಲಭ', diffMedium: 'ಮಧ್ಯಮ', diffHard: 'ಕಷ್ಟ',
+    std1stPuc: '1ನೇ PUC', std2ndPuc: '2ನೇ PUC',
+    namePhysics: 'ಭೌತಶಾಸ್ತ್ರ', nameChemistry: 'ರಸಾಯನಶಾಸ್ತ್ರ', nameBiology: 'ಜೀವಶಾಸ್ತ್ರ', nameMath: 'ಗಣಿತ', nameCS: 'ಕಂಪ್ಯೂಟರ್ ವಿಜ್ಞಾನ',
     contactTitle: 'ನಮಗೆ ಪ್ರತಿಕ್ರಿಯೆ ಕಳುಹಿಸಿ',
     contactDesc: 'ಇ-ಪ್ರಯೋಗವನ್ನು ಸುಧಾರಿಸಲು ಸಹಾಯ ಮಾಡಿ. ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ ಅಮೂಲ್ಯ!',
     contactThankYou: 'ಧನ್ಯವಾದಗಳು!',
