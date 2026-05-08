@@ -85,6 +85,8 @@ export interface Translations {
   std1stPuc: string; std2ndPuc: string;
   // Translated subject names
   namePhysics: string; nameChemistry: string; nameBiology: string; nameMath: string; nameCS: string;
+  // Translated subject descriptions
+  descPhysics: string; descChemistry: string; descBiology: string; descMath: string; descCS: string;
   // Tools hub page
   toolsTitle: string; toolsDesc: string;
   toolsFormulaSheet: string; toolsLogicGates: string; toolsPeriodicTable: string;
@@ -152,6 +154,11 @@ const T: Record<Lang, Translations> = {
     diffEasy: 'Easy', diffMedium: 'Medium', diffHard: 'Hard',
     std1stPuc: '1st PUC', std2ndPuc: '2nd PUC',
     namePhysics: 'Physics', nameChemistry: 'Chemistry', nameBiology: 'Biology', nameMath: 'Math', nameCS: 'CS',
+    descPhysics: 'Explore mechanics, optics, electricity & magnetism through interactive 2D simulations aligned with Karnataka PUC syllabus.',
+    descChemistry: 'Perform titrations, salt analysis, chromatography, and reaction kinetics through vivid 2D simulations for Karnataka PUC.',
+    descBiology: 'Explore cell biology, genetics, plant physiology, and biochemistry through vivid 2D simulations for Karnataka PUC.',
+    descMath: 'Visualise trigonometry, algebra, statistics, and probability concepts with interactive 2D explorations for Karnataka PUC.',
+    descCS: 'Visualise sorting algorithms, data structures, and logic gates through animated 2D simulations for Karnataka PUC.',
     contactTitle: 'Send Us Feedback',
     contactDesc: 'Help us improve E-Prayog. Your feedback matters!',
     contactThankYou: 'Thank You!',
@@ -328,6 +335,11 @@ const T: Record<Lang, Translations> = {
     diffEasy: 'ಸುಲಭ', diffMedium: 'ಮಧ್ಯಮ', diffHard: 'ಕಷ್ಟ',
     std1stPuc: '1ನೇ PUC', std2ndPuc: '2ನೇ PUC',
     namePhysics: 'ಭೌತಶಾಸ್ತ್ರ', nameChemistry: 'ರಸಾಯನಶಾಸ್ತ್ರ', nameBiology: 'ಜೀವಶಾಸ್ತ್ರ', nameMath: 'ಗಣಿತ', nameCS: 'ಕಂಪ್ಯೂಟರ್ ವಿಜ್ಞಾನ',
+    descPhysics: 'ಕರ್ನಾಟಕ PUC ಪಠ್ಯಕ್ರಮಕ್ಕೆ ಹೊಂದಿಕೊಂಡ ಸಂವಾದಾತ್ಮಕ 2D ಸಿಮ್ಯುಲೇಷನ್‌ಗಳ ಮೂಲಕ ಯಂತ್ರಶಾಸ್ತ್ರ, ದ್ಯುತಿಶಾಸ್ತ್ರ, ವಿದ್ಯುಚ್ಛಕ್ತಿ ಮತ್ತು ಕಾಂತವಿದ್ಯೆ ಅನ್ವೇಷಿಸಿ.',
+    descChemistry: 'ಕರ್ನಾಟಕ PUC ಗಾಗಿ ಅನುಮಾಪನ, ಲವಣ ವಿಶ್ಲೇಷಣೆ, ವರ್ಣ ಲೇಪನ ಮತ್ತು ಕ್ರಿಯಾ ಚಲನಶಾಸ್ತ್ರ ಸಂವಾದಾತ್ಮಕ 2D ಸಿಮ್ಯುಲೇಷನ್‌ಗಳ ಮೂಲಕ ನಿರ್ವಹಿಸಿ.',
+    descBiology: 'ಕರ್ನಾಟಕ PUC ಗಾಗಿ ಕೋಶ ಜೀವಶಾಸ್ತ್ರ, ಆನುವಂಶಿಕತೆ, ಸಸ್ಯ ಶರೀರ ಕ್ರಿಯಾಶಾಸ್ತ್ರ ಮತ್ತು ಜೀವರಸಾಯನಶಾಸ್ತ್ರ 2D ಸಿಮ್ಯುಲೇಷನ್‌ಗಳ ಮೂಲಕ ಅನ್ವೇಷಿಸಿ.',
+    descMath: 'ಕರ್ನಾಟಕ PUC ಗಾಗಿ ತ್ರಿಕೋಣಮಿತಿ, ಬೀಜಗಣಿತ, ಸಾಂಖ್ಯಿಕ ಮತ್ತು ಸಂಭಾವ್ಯತೆ ಪರಿಕಲ್ಪನೆಗಳನ್ನು ಸಂವಾದಾತ್ಮಕ 2D ಅನ್ವೇಷಣೆಗಳ ಮೂಲಕ ದೃಶ್ಯೀಕರಿಸಿ.',
+    descCS: 'ಕರ್ನಾಟಕ PUC ಗಾಗಿ ವಿಂಗಡಣಾ ಅಲ್ಗಾರಿದಮ್‌ಗಳು, ಡೇಟಾ ರಚನೆಗಳು ಮತ್ತು ಲಾಜಿಕ್ ಗೇಟ್‌ಗಳನ್ನು ಅನಿಮೇಟೆಡ್ 2D ಸಿಮ್ಯುಲೇಷನ್‌ಗಳ ಮೂಲಕ ದೃಶ್ಯೀಕರಿಸಿ.',
     contactTitle: 'ನಮಗೆ ಪ್ರತಿಕ್ರಿಯೆ ಕಳುಹಿಸಿ',
     contactDesc: 'ಇ-ಪ್ರಯೋಗವನ್ನು ಸುಧಾರಿಸಲು ಸಹಾಯ ಮಾಡಿ. ನಿಮ್ಮ ಪ್ರತಿಕ್ರಿಯೆ ಅಮೂಲ್ಯ!',
     contactThankYou: 'ಧನ್ಯವಾದಗಳು!',
@@ -501,6 +513,14 @@ const T: Record<Lang, Translations> = {
     subjectAll: 'सभी',
     subjectOpenLab: 'लैब खोलें',
     subjectNoExperiments: 'चयनित फ़िल्टर से कोई प्रयोग नहीं मिला।',
+    diffEasy: 'आसान', diffMedium: 'मध्यम', diffHard: 'कठिन',
+    std1stPuc: '1st PUC', std2ndPuc: '2nd PUC',
+    namePhysics: 'भौतिकी', nameChemistry: 'रसायन', nameBiology: 'जीव विज्ञान', nameMath: 'गणित', nameCS: 'CS',
+    descPhysics: 'कर्नाटक PUC पाठ्यक्रम के अनुसार इंटरैक्टिव 2D सिमुलेशन के माध्यम से यांत्रिकी, प्रकाशिकी, विद्युत और चुंबकत्व का अन्वेषण करें।',
+    descChemistry: 'कर्नाटक PUC के लिए 2D सिमुलेशन के माध्यम से अनुमापन, नमक विश्लेषण, क्रोमैटोग्राफी और अभिक्रिया गतिकी करें।',
+    descBiology: 'कर्नाटक PUC के लिए कोशिका जीव विज्ञान, आनुवंशिकी, पादप क्रियाविज्ञान और जैव रसायन को 2D सिमुलेशन से अन्वेषित करें।',
+    descMath: 'कर्नाटक PUC के लिए त्रिकोणमिति, बीजगणित, सांख्यिकी और प्रायिकता को इंटरैक्टिव 2D अन्वेषण से समझें।',
+    descCS: 'कर्नाटक PUC के लिए सॉर्टिंग एल्गोरिदम, डेटा संरचनाएं और लॉजिक गेट्स को एनिमेटेड 2D सिमुलेशन से देखें।',
     contactTitle: 'हमें प्रतिक्रिया भेजें',
     contactDesc: 'E-Prayog को बेहतर बनाने में मदद करें। आपकी प्रतिक्रिया महत्वपूर्ण है!',
     contactThankYou: 'धन्यवाद!',

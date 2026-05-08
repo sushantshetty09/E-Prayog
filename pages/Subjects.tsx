@@ -11,6 +11,23 @@ const icons = [Zap, FlaskConical, Dna, Calculator, Monitor];
 
 const Subjects: React.FC = () => {
   const { t } = useLang();
+
+  // Map subject IDs → translated names and descriptions
+  const subjectNameMap: Record<string, string> = {
+    physics: t.namePhysics,
+    chemistry: t.nameChemistry,
+    biology: t.nameBiology,
+    math: t.nameMath,
+    cs: t.nameCS,
+  };
+  const subjectDescMap: Record<string, string> = {
+    physics: t.descPhysics,
+    chemistry: t.descChemistry,
+    biology: t.descBiology,
+    math: t.descMath,
+    cs: t.descCS,
+  };
+
   return (
     <div className="min-h-screen pt-24 pb-20 px-6 md:px-12 lg:px-20">
       <div className="max-w-6xl mx-auto">
@@ -26,6 +43,8 @@ const Subjects: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {SUBJECTS.map((subject, idx) => {
             const Icon = icons[idx] || Zap;
+            const translatedName = subjectNameMap[subject.id] || subject.name;
+            const translatedDesc = subjectDescMap[subject.id] || subject.description;
             return (
               <Link key={subject.id} to={`/subjects/${subject.id}`}>
                 <GlassCard color={subject.color} className="h-full">
@@ -34,13 +53,13 @@ const Subjects: React.FC = () => {
                       <Icon size={28} style={{ color: subject.hex }} />
                     </div>
                     <div>
-                      <h2 className="text-xl font-bold text-white">{subject.name}</h2>
+                      <h2 className="text-xl font-bold text-white">{translatedName}</h2>
                       <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: `${subject.hex}15`, color: subject.hex }}>
                         {subject.labs.length} {t.subjectsExperiments}
                       </span>
                     </div>
                   </div>
-                  <p className="text-sm text-slate-400 mb-4 leading-relaxed">{subject.description}</p>
+                  <p className="text-sm text-slate-400 mb-4 leading-relaxed">{translatedDesc}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {subject.labs.slice(0, 4).map(lab => (
                       <span key={lab.id} className="text-xs text-slate-500 bg-white/5 rounded-full px-2 py-0.5">{lab.title}</span>
