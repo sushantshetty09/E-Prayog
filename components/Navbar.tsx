@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, FlaskConical, LogIn, LogOut, User, Languages } from 'lucide-react';
+import { Menu, X, LogIn, LogOut, User, Languages } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useAuth } from '../services/AuthContext';
@@ -69,25 +69,151 @@ const Navbar: React.FC = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-40 glass-nav h-20 px-6 md:px-12 flex items-center justify-between transition-colors duration-300 border-b border-white/5">
-      <Link to="/home" className="flex items-center gap-3 group min-w-[200px]">
-        <div className="relative">
-          <div className="absolute inset-0 bg-emerald-500 blur-lg opacity-30 group-hover:opacity-60 transition-opacity"></div>
-          <FlaskConical className="w-10 h-10 text-emerald-400 relative z-10 transition-colors group-hover:rotate-12 duration-500 ease-in-out" />
-        </div>
+      <Link to="/home" className="ep-logo-link flex items-center gap-2 group min-w-[180px]" style={{textDecoration:'none'}}>
+        {/* ── Animated Orbital Logo Mark ── */}
+        <svg
+          className="ep-nav-svg"
+          viewBox="0 0 80 80"
+          width="68"
+          height="68"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlnsXlink="http://www.w3.org/1999/xlink"
+          aria-hidden="true"
+          style={{overflow:'visible',flexShrink:0}}
+        >
+          <defs>
+            <linearGradient id="nav-outerG" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#1A73E8" stopOpacity="0.9"/>
+              <stop offset="100%" stopColor="#00C896" stopOpacity="0.9"/>
+            </linearGradient>
+            <linearGradient id="nav-innerG" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#00C896" stopOpacity="0.9"/>
+              <stop offset="100%" stopColor="#FF8C00" stopOpacity="0.9"/>
+            </linearGradient>
+            <linearGradient id="nav-eG" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#60AAFF"/>
+              <stop offset="100%" stopColor="#1A73E8"/>
+            </linearGradient>
+            <radialGradient id="nav-eGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#1A73E8" stopOpacity="0.85"/>
+              <stop offset="100%" stopColor="#1A73E8" stopOpacity="0"/>
+            </radialGradient>
+            <filter id="nav-outerElecGlow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="1.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="nav-innerElecGlow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="1.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="nav-ringGlow" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="0.7" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="nav-eGlowF" x="-80%" y="-80%" width="260%" height="260%">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <path id="nav-outerPath" d="M 67.2,40 A 27.2,11.2 0 1 1 67.19,39.97" fill="none"/>
+            <path id="nav-innerPath" d="M 57.6,40 A 17.6,7.2 0 1 1 57.59,39.97" fill="none"/>
+          </defs>
+
+          {/* Outer ring */}
+          <g className="ep-outer-ring" style={{transformOrigin:'40px 40px'}}>
+            <ellipse cx="40" cy="40" rx="27.2" ry="11.2"
+              fill="none" stroke="url(#nav-outerG)" strokeWidth="1.6" strokeOpacity="1"
+              filter="url(#nav-ringGlow)"
+              transform="rotate(-20,40,40)"
+            />
+          </g>
+
+          {/* Inner ring */}
+          <g className="ep-inner-ring" style={{transformOrigin:'40px 40px'}}>
+            <ellipse cx="40" cy="40" rx="17.6" ry="7.2"
+              fill="none" stroke="url(#nav-innerG)" strokeWidth="1.6" strokeOpacity="1"
+              filter="url(#nav-ringGlow)"
+              transform="rotate(55,40,40)"
+            />
+          </g>
+
+          {/* Outer electrons — 2 dots 180° apart */}
+          <g className="ep-outer-ring" style={{transformOrigin:'40px 40px'}}>
+            <g filter="url(#nav-outerElecGlow)">
+              <circle r="2.2" fill="#1A73E8">
+                <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear">
+                  <mpath xlinkHref="#nav-outerPath"/>
+                </animateMotion>
+              </circle>
+              <circle r="1.5" fill="#1A73E8" opacity="0.45">
+                <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear" begin="-0.17s">
+                  <mpath xlinkHref="#nav-outerPath"/>
+                </animateMotion>
+              </circle>
+            </g>
+            <g filter="url(#nav-outerElecGlow)">
+              <circle r="2.2" fill="#00C896">
+                <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear" begin="-3s">
+                  <mpath xlinkHref="#nav-outerPath"/>
+                </animateMotion>
+              </circle>
+              <circle r="1.5" fill="#00C896" opacity="0.45">
+                <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear" begin="-3.17s">
+                  <mpath xlinkHref="#nav-outerPath"/>
+                </animateMotion>
+              </circle>
+            </g>
+          </g>
+
+          {/* Inner electron */}
+          <g className="ep-inner-ring" style={{transformOrigin:'40px 40px'}}>
+            <g filter="url(#nav-innerElecGlow)">
+              <circle r="2" fill="#FF8C00">
+                <animateMotion dur="4s" repeatCount="indefinite" calcMode="linear">
+                  <mpath xlinkHref="#nav-innerPath"/>
+                </animateMotion>
+              </circle>
+              <circle r="1.3" fill="#FF8C00" opacity="0.4">
+                <animateMotion dur="4s" repeatCount="indefinite" calcMode="linear" begin="-0.14s">
+                  <mpath xlinkHref="#nav-innerPath"/>
+                </animateMotion>
+              </circle>
+            </g>
+          </g>
+
+          {/* E glow */}
+          <ellipse cx="40" cy="40" rx="9" ry="9" fill="url(#nav-eGlow)" className="ep-eglow"/>
+
+          {/* Central E */}
+          <g className="ep-eletter" style={{transformOrigin:'40px 40px'}}>
+            <text x="40" y="44" textAnchor="middle" dominantBaseline="middle"
+              fontFamily="'Space Grotesk', sans-serif" fontWeight="700" fontSize="20"
+              fill="url(#nav-eG)" filter="url(#nav-eGlowF)"
+              style={{userSelect:'none'}}
+            >E</text>
+          </g>
+
+          {/* Sparks */}
+          <circle cx="62" cy="22" r="1"   fill="#60AAFF" className="ep-spark ep-s1"/>
+          <circle cx="18" cy="26" r="0.8" fill="#00C896" className="ep-spark ep-s2"/>
+          <circle cx="64" cy="57" r="0.9" fill="#FF8C00" className="ep-spark ep-s3"/>
+          <circle cx="16" cy="54" r="1"   fill="#60AAFF" className="ep-spark ep-s4"/>
+        </svg>
+
+        {/* ── Wordmark ── */}
         <div className="flex flex-col justify-center">
           <AnimatePresence mode="wait">
             <MotionSpan
               key={titleIndex}
-              initial={{ y: 10, opacity: 0 }}
+              initial={{ y: 8, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              exit={{ y: -10, opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              className="text-xl md:text-2xl font-display font-bold text-white tracking-tight leading-none"
+              exit={{ y: -8, opacity: 0 }}
+              transition={{ duration: 0.45 }}
+              className="text-lg md:text-xl font-display font-bold text-white tracking-tight leading-none"
             >
               {TITLES[titleIndex].lang === 'en' ? (
-                <>E-<span className="text-emerald-400">Prayog</span></>
+                <>E-<span style={{color:'#00C896'}}>Prayog</span></>
               ) : (
-                <>ಇ-<span className="text-emerald-400">ಪ್ರಯೋಗ</span></>
+                <>ಇ-<span style={{color:'#00C896'}}>ಪ್ರಯೋಗ</span></>
               )}
             </MotionSpan>
           </AnimatePresence>

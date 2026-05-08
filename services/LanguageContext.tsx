@@ -256,19 +256,7 @@ const T: Record<Lang, Translations> = {
     toolBioDiagramsTitle: 'Biology Diagrams', toolBioDiagramsSubtitle: 'Interactive labelled diagrams for Biology.',
     toolLogicGatesTitle: 'Logic Gates Simulator', toolLogicGatesSubtitle: 'Explore boolean logic with interactive gate simulations.',
     toolPeriodicTableTitle: 'Periodic Table', toolPeriodicTableSubtitle: 'Interactive periodic table of elements.',
-    toolSearchAll: 'All', toolCopied: 'Copied!',
-    subjectsTitle: 'Virtual Laboratories',
-    subjectsDesc: 'Choose a subject to explore interactive experiments aligned to the Karnataka PUC curriculum.',
-    subjectsExperiments: 'Experiments', subjectsMore: 'more', subjectsExplore: 'Explore',
-    subjectNotFound: 'Subject not found.',
-    subjectBack: 'Back to Subjects',
-    subjectKarnatakaPuc: 'Karnataka PUC',
-    subjectDifficulty: 'Difficulty', subjectStandard: 'Standard', subjectAll: 'All',
-    subjectOpenLab: 'Open Lab', subjectNoExperiments: 'No experiments found for the selected filters.',
-    toolsTitle: 'Scientific Tools',
-    toolsDesc: 'Quick access to references, calculators, and interactive study aids for all your science experiments.',
-    toolsFormulaSheet: 'Formula Sheet', toolsLogicGates: 'Logic Gates', toolsPeriodicTable: 'Periodic Table',
-    toolsConstants: 'Constants', toolsCalculator: 'Calculator', toolsSafetyGuide: 'Safety Guide', toolsBioDiagrams: 'Bio Diagrams',
+    toolSearchAll: 'All', toolCopied: 'Copied!'
   },
 
   kn: {
