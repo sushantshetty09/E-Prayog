@@ -38,6 +38,18 @@ export const biologyData: SubjectData = {
           { question: 'How many chromosomes does an onion cell have?', answer: '2n = 16 chromosomes.' },
         ],
         observationTable: { columns: ['Stage', 'Drawing', 'Key features observed'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'During which stage of mitosis do chromosomes align at the equatorial plate?', options: ['Prophase', 'Metaphase', 'Anaphase', 'Telophase'], correctIndex: 1, explanation: 'In metaphase, chromosomes line up along the metaphase plate (equatorial plane) of the cell.' },
+          { id: 2, question: 'The number of chromosomes in an onion cell is:', options: ['2n = 8', '2n = 16', '2n = 46', '2n = 24'], correctIndex: 1, explanation: 'Onion (Allium cepa) has 2n = 16 chromosomes.' },
+          { id: 3, question: 'Acetocarmine stain is used to stain:', options: ['Cytoplasm', 'Cell wall', 'Chromosomes', 'Chloroplasts'], correctIndex: 2, explanation: 'Acetocarmine is a DNA-binding dye that stains chromosomes deep red/pink.' },
+          { id: 4, question: 'Separation of sister chromatids occurs in:', options: ['Prophase', 'Metaphase', 'Anaphase', 'Telophase'], correctIndex: 2, explanation: 'In anaphase, the centromeres split and sister chromatids are pulled to opposite poles.' },
+          { id: 5, question: 'Dilute HCl is used in the preparation because:', options: ['It stains the chromosomes', 'It softens the tissue by dissolving middle lamella', 'It kills bacteria', 'It adds colour'], correctIndex: 1, explanation: 'HCl maceration softens the tissue by dissolving the middle lamella (pectin), helping cells separate.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Draw neat labelled diagrams of all four stages of mitosis (Prophase, Metaphase, Anaphase, Telophase) as observed under the microscope.', marks: 5 },
+          { id: 2, question: 'Compare mitosis with meiosis in a tabular form with at least 5 differences.', marks: 4 },
+          { id: 3, question: 'Why is mitosis called equational division? What is its significance in growth and repair?', marks: 3 },
+        ],
       }
     },
     {
@@ -64,6 +76,18 @@ export const biologyData: SubjectData = {
         ],
         objectives: ['Observe stomatal structure', 'Compare stomatal density', 'Understand transpiration regulation'],
         observationTable: { columns: ['Surface', 'Stomata count (Field 1)', 'Count (Field 2)', 'Count (Field 3)', 'Average'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'Guard cells in dicot leaves are:', options: ['Dumbbell-shaped', 'Kidney-shaped', 'Circular', 'Rectangular'], correctIndex: 1, explanation: 'Dicot guard cells are kidney/bean-shaped; monocot guard cells are dumbbell-shaped.' },
+          { id: 2, question: 'More stomata are found on the _____ surface of a dorsiventral (dicot) leaf.', options: ['Upper (adaxial)', 'Lower (abaxial)', 'Both equally', 'Margins only'], correctIndex: 1, explanation: 'Dicot leaves are hypostomatic — more stomata on the lower epidermis to reduce water loss.' },
+          { id: 3, question: 'Stomata regulate:', options: ['Photosynthesis only', 'Gas exchange and transpiration', 'Absorption of water', 'Cell division'], correctIndex: 1, explanation: 'Stomata control the exchange of CO₂ and O₂, and the loss of water vapour (transpiration).' },
+          { id: 4, question: 'Stomata open when guard cells become:', options: ['Flaccid', 'Turgid', 'Dead', 'Plasmolysed'], correctIndex: 1, explanation: 'When guard cells absorb water and become turgid, the stomatal pore opens.' },
+          { id: 5, question: 'Which type of plant has equal number of stomata on both surfaces?', options: ['Hydrophytes', 'Monocots (amphistomatic leaves)', 'Xerophytes', 'Parasites'], correctIndex: 1, explanation: 'Monocot leaves (like grass) are amphistomatic — roughly equal stomata on both surfaces.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Count stomata in 5 fields of view on both surfaces of a dicot and monocot leaf. Present your data in a table and calculate the stomatal index.', marks: 5 },
+          { id: 2, question: 'Explain the mechanism of stomatal opening and closing with the help of a diagram.', marks: 4 },
+          { id: 3, question: 'How are stomata adapted in xerophytic plants to reduce water loss? Give two examples.', marks: 3 },
+        ],
       }
     },
     {
@@ -94,6 +118,18 @@ export const biologyData: SubjectData = {
           { question: 'Why does the sugar solution level rise?', answer: 'Water from the petri dish enters the potato cavity by osmosis due to the concentration gradient.' },
         ],
         observationTable: { columns: ['Setup', 'Initial level', 'Final level (after 1hr)', 'Change', 'Inference'], rows: 3 },
+        quizQuestions: [
+          { id: 1, question: 'Osmosis is the movement of:', options: ['Solute from low to high concentration', 'Solvent from higher water potential to lower water potential through a semipermeable membrane', 'Gas molecules', 'Ions through a membrane'], correctIndex: 1, explanation: 'Osmosis is the net movement of water/solvent through a semipermeable membrane from high to low water potential.' },
+          { id: 2, question: 'In the potato osmometer, the sugar solution level rises because:', options: ['Sugar evaporates', 'Water enters the cavity by osmosis', 'Potato produces water', 'Air pushes the liquid up'], correctIndex: 1, explanation: 'Water moves from the petri dish (high water potential) into the sugar solution (low water potential) through the potato membrane.' },
+          { id: 3, question: 'If distilled water is placed in both the cavity and the petri dish, the level will:', options: ['Rise', 'Fall', 'Remain the same', 'Fluctuate'], correctIndex: 2, explanation: 'No concentration gradient means no net osmosis — this is the control experiment.' },
+          { id: 4, question: 'Plasmolysis occurs when a plant cell is placed in:', options: ['Hypotonic solution', 'Hypertonic solution', 'Isotonic solution', 'Distilled water'], correctIndex: 1, explanation: 'In hypertonic solution, water leaves the cell, causing the protoplasm to shrink away from the cell wall.' },
+          { id: 5, question: 'The semipermeable membrane in the potato osmometer is:', options: ['The outer skin', 'The cell membranes of potato cells', 'The starch granules', 'The sugar solution'], correctIndex: 1, explanation: 'The cell membranes of the potato cells collectively act as a semipermeable membrane.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Design an experiment to determine the water potential of potato tissue using sucrose solutions of different concentrations. Describe the procedure.', marks: 5 },
+          { id: 2, question: 'Differentiate between osmosis, diffusion, and active transport with examples from plant life.', marks: 4 },
+          { id: 3, question: 'What would happen if a red blood cell is placed in distilled water? Explain with the term \'haemolysis\'.', marks: 3 },
+        ],
       }
     },
     {
@@ -119,6 +155,18 @@ export const biologyData: SubjectData = {
         ],
         objectives: ['Demonstrate O₂ evolution', 'Understand photosynthesis products', 'Test for oxygen gas'],
         observationTable: { columns: ['Time (min)', 'Bubble count', 'Light intensity', 'Observations'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'The gas collected in the test tube during photosynthesis is:', options: ['Carbon dioxide', 'Nitrogen', 'Oxygen', 'Hydrogen'], correctIndex: 2, explanation: 'Photosynthesis produces oxygen as a byproduct: 6CO₂ + 6H₂O → C₆H₁₂O₆ + 6O₂.' },
+          { id: 2, question: 'NaHCO₃ is added to the water to:', options: ['Kill bacteria', 'Provide dissolved CO₂ for photosynthesis', 'Increase pH', 'Colour the water'], correctIndex: 1, explanation: 'NaHCO₃ releases CO₂ in water, ensuring the plant has enough carbon dioxide for photosynthesis.' },
+          { id: 3, question: 'A glowing splint relights in the collected gas, confirming it is:', options: ['CO₂', 'N₂', 'O₂', 'H₂'], correctIndex: 2, explanation: 'Oxygen supports combustion, so a glowing splint relights in O₂.' },
+          { id: 4, question: 'Increasing light intensity initially _____ the rate of photosynthesis.', options: ['Decreases', 'Increases', 'Does not affect', 'Stops'], correctIndex: 1, explanation: 'Light is a limiting factor; increasing it increases the rate until another factor (CO₂, temperature) becomes limiting.' },
+          { id: 5, question: 'Hydrilla is used in this experiment because:', options: ['It is colourful', 'It is an aquatic plant that releases visible oxygen bubbles', 'It does not photosynthesize', 'It absorbs oxygen'], correctIndex: 1, explanation: 'Being submerged, Hydrilla releases O₂ as visible bubbles, making it easy to observe and count.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Plot a graph of bubble count per minute vs light intensity (distance from lamp). Explain the shape of the graph in terms of limiting factors.', marks: 5 },
+          { id: 2, question: 'Write the balanced equation for photosynthesis. Where do the light reactions and dark reactions occur?', marks: 3 },
+          { id: 3, question: 'Explain how you would modify this experiment to study the effect of temperature on the rate of photosynthesis.', marks: 4 },
+        ],
       }
     },
     {
@@ -144,6 +192,18 @@ export const biologyData: SubjectData = {
         ],
         objectives: ['Extract DNA from living tissue', 'Understand cell lysis', 'Observe DNA precipitation'],
         observationTable: { columns: ['Step', 'Observation', 'Inference'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'Detergent is used in DNA extraction to:', options: ['Stain the DNA', 'Dissolve cell and nuclear membranes', 'Precipitate DNA', 'Kill enzymes'], correctIndex: 1, explanation: 'Detergent dissolves the phospholipid bilayer of cell and nuclear membranes, releasing DNA.' },
+          { id: 2, question: 'DNA precipitates in cold ethanol because:', options: ['DNA is soluble in ethanol', 'DNA is insoluble in cold ethanol', 'Ethanol heats the DNA', 'Ethanol stains the DNA'], correctIndex: 1, explanation: 'DNA is insoluble in cold ethanol and precipitates as visible white threads.' },
+          { id: 3, question: 'Salt (NaCl) is added during extraction to:', options: ['Flavour the solution', 'Neutralise charges and precipitate proteins', 'Dissolve DNA', 'Act as indicator'], correctIndex: 1, explanation: 'Salt neutralises the negative charges on DNA and causes proteins to clump and separate.' },
+          { id: 4, question: 'The extracted DNA appears as:', options: ['A coloured solution', 'White stringy/fibrous threads', 'Green crystals', 'Gas bubbles'], correctIndex: 1, explanation: 'Spooled DNA appears as white, stringy, thread-like material at the ethanol-water interface.' },
+          { id: 5, question: 'The sample is heated at 60°C to:', options: ['Melt the DNA', 'Denature DNase enzymes and aid membrane dissolution', 'Evaporate the water', 'Change the pH'], correctIndex: 1, explanation: 'Heating at 60°C denatures enzymes (DNases) that would degrade DNA, and helps dissolve membranes.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Perform DNA extraction from banana and onion. Compare the yield from each. Which gives more visible DNA and why?', marks: 5 },
+          { id: 2, question: 'Draw a labelled diagram of a DNA double helix showing the sugar-phosphate backbone and base pairing.', marks: 4 },
+          { id: 3, question: 'Explain why strawberries are often considered the best source for classroom DNA extraction (hint: ploidy level).', marks: 3 },
+        ],
       }
     },
     {
@@ -169,6 +229,18 @@ export const biologyData: SubjectData = {
         ],
         objectives: ['Detect reducing sugars', "Interpret Benedict's test results", 'Classify sugars'],
         observationTable: { columns: ['Sample', 'Initial colour', 'Final colour', 'Reducing sugar (Yes/No)', 'Concentration'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'Benedict\'s reagent contains:', options: ['Silver nitrate', 'Copper sulphate (Cu²⁺) in alkaline citrate', 'Iodine solution', 'Barium chloride'], correctIndex: 1, explanation: 'Benedict\'s reagent contains copper(II) sulphate, sodium citrate, and sodium carbonate.' },
+          { id: 2, question: 'A brick-red precipitate in Benedict\'s test indicates:', options: ['No sugar', 'Trace amount', 'High concentration of reducing sugar', 'Protein'], correctIndex: 2, explanation: 'Colour gradient: Green (trace) → Yellow → Orange → Brick red (high concentration).' },
+          { id: 3, question: 'Sucrose gives a negative Benedict\'s test because:', options: ['It is too sweet', 'It is a non-reducing sugar (no free aldehyde/ketone group)', 'It does not dissolve', 'It is a protein'], correctIndex: 1, explanation: 'Sucrose has its anomeric carbons involved in the glycosidic bond, so no free reducing group.' },
+          { id: 4, question: 'Which of the following is a reducing sugar?', options: ['Sucrose', 'Glucose', 'Starch', 'Cellulose'], correctIndex: 1, explanation: 'Glucose has a free aldehyde group that can reduce Cu²⁺ to Cu₂O.' },
+          { id: 5, question: 'The test requires heating in a water bath for:', options: ['1 minute', '3–5 minutes', '30 minutes', 'No heating needed'], correctIndex: 1, explanation: 'The sample must be heated for 3-5 minutes to allow the reduction reaction to occur.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Test 5 different food samples (milk, fruit juice, honey, table sugar, potato water) with Benedict\'s reagent. Record results in a table.', marks: 5 },
+          { id: 2, question: 'Explain why sucrose gives a positive test after boiling with dilute HCl. What is hydrolysis?', marks: 3 },
+          { id: 3, question: 'Compare Benedict\'s test with Fehling\'s test. Which is preferred and why?', marks: 4 },
+        ],
       }
     },
     {
@@ -193,6 +265,18 @@ export const biologyData: SubjectData = {
         ],
         objectives: ['Determine ABO blood group', 'Observe agglutination', 'Understand antigen-antibody reactions'],
         observationTable: { columns: ['Serum', 'Agglutination (Yes/No)', 'Blood Group'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'A person with blood group AB has:', options: ['Only antigen A', 'Only antigen B', 'Both antigens A and B, no antibodies', 'No antigens'], correctIndex: 2, explanation: 'AB blood has both A and B antigens on RBCs and no anti-A or anti-B antibodies in plasma.' },
+          { id: 2, question: 'Agglutination is:', options: ['Dissolution of RBCs', 'Clumping of RBCs due to antigen-antibody reaction', 'Increase in WBCs', 'Blood clotting'], correctIndex: 1, explanation: 'Agglutination is the clumping of red blood cells when antibodies bind to their surface antigens.' },
+          { id: 3, question: 'The universal donor blood group is:', options: ['A', 'B', 'AB', 'O'], correctIndex: 3, explanation: 'Blood group O has no antigens on RBCs, so it can be donated to any group (in emergencies).' },
+          { id: 4, question: 'If a blood sample agglutinates with anti-A but not anti-B, the blood group is:', options: ['A', 'B', 'AB', 'O'], correctIndex: 0, explanation: 'Agglutination with anti-A only means antigen A is present → Blood group A.' },
+          { id: 5, question: 'The Rh factor is determined using:', options: ['Anti-A serum', 'Anti-B serum', 'Anti-D serum', 'Saline'], correctIndex: 2, explanation: 'Anti-D serum detects the Rh (D) antigen. Agglutination = Rh+, No agglutination = Rh−.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Create a blood group compatibility chart showing which groups can donate to and receive from which. Include Rh factor.', marks: 5 },
+          { id: 2, question: 'Explain erythroblastosis foetalis (Rh incompatibility). How can it be prevented?', marks: 4 },
+          { id: 3, question: 'Why is blood group O called the universal donor and AB the universal recipient? Are there any risks?', marks: 3 },
+        ],
       }
     },
     {
@@ -218,6 +302,18 @@ export const biologyData: SubjectData = {
         ],
         objectives: ['Identify essential conditions for germination', 'Design controlled experiments', 'Understand imbibition and respiration'],
         observationTable: { columns: ['Setup', 'Condition tested', 'Day 1', 'Day 3', 'Day 5', 'Germination (Yes/No)'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'The three essential conditions for seed germination are:', options: ['Light, soil, fertiliser', 'Water, air (oxygen), suitable temperature', 'Wind, insects, gravity', 'Minerals, sunlight, CO₂'], correctIndex: 1, explanation: 'Seeds need water (imbibition), oxygen (respiration), and suitable temperature for germination.' },
+          { id: 2, question: 'Water is needed for germination because:', options: ['Seeds need to float', 'It activates enzymes and softens the seed coat (imbibition)', 'It provides minerals', 'It provides light'], correctIndex: 1, explanation: 'Water absorption (imbibition) activates hydrolytic enzymes and softens the seed coat.' },
+          { id: 3, question: 'Seeds submerged in boiled water with an oil layer do not germinate because:', options: ['Water is too hot', 'There is no dissolved oxygen available', 'Oil poisons the seeds', 'They receive too much water'], correctIndex: 1, explanation: 'Boiling removes dissolved O₂ and the oil layer prevents re-dissolution of oxygen.' },
+          { id: 4, question: 'Seeds kept in a refrigerator fail to germinate because:', options: ['It is too dark', 'Enzymes are inactive at low temperature', 'There is no water', 'There is too much oxygen'], correctIndex: 1, explanation: 'Low temperature inhibits enzyme activity required for mobilisation of food reserves.' },
+          { id: 5, question: 'The control setup in this experiment is:', options: ['Dry seeds', 'Seeds in boiled water', 'Seeds on moist cotton at room temperature', 'Seeds in refrigerator'], correctIndex: 2, explanation: 'The control provides all three conditions (water + air + warmth) to serve as a baseline.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Design and execute the four experimental setups. Record observations for 5 days with photographs/drawings. Present results in a table.', marks: 5 },
+          { id: 2, question: 'Explain the role of gibberellins in seed germination. What is the α-amylase cascade?', marks: 4 },
+          { id: 3, question: 'Some seeds require light to germinate (photoblastic seeds). Give two examples and explain why.', marks: 3 },
+        ],
       }
     },
   ]

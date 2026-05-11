@@ -40,6 +40,18 @@ export const chemistryData: SubjectData = {
           { question: 'What is a concordant reading?', answer: 'Two consecutive readings that agree within 0.1 mL.' },
         ],
         observationTable: { columns: ['S.No.', 'Initial Burette (mL)', 'Final Burette (mL)', 'Volume NaOH (mL)'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'The indicator used in HCl vs NaOH titration is:', options: ['Methyl orange', 'Phenolphthalein', 'Litmus', 'Universal indicator'], correctIndex: 1, explanation: 'Phenolphthalein is ideal for strong acid–strong base titrations (pH range 8.2–10).' },
+          { id: 2, question: 'At the equivalence point of HCl + NaOH titration, the solution is:', options: ['Acidic', 'Basic', 'Neutral (pH ≈ 7)', 'Strongly basic'], correctIndex: 2, explanation: 'Strong acid + strong base produces a neutral salt (NaCl) and water.' },
+          { id: 3, question: 'Concordant readings in titration mean:', options: ['All readings are different', 'Two consecutive readings agree within 0.1 mL', 'The burette is empty', 'The indicator has changed colour'], correctIndex: 1, explanation: 'Concordant readings are two or more titre values that agree within 0.1 mL.' },
+          { id: 4, question: 'In the equation M₁V₁ = M₂V₂, M stands for:', options: ['Mass', 'Molarity', 'Molality', 'Moles'], correctIndex: 1, explanation: 'For acid-base titrations with 1:1 stoichiometry, M₁V₁ = M₂V₂ where M is molarity.' },
+          { id: 5, question: 'The burette is rinsed with the solution to be filled because:', options: ['To clean it', 'To avoid dilution of the solution', 'To check for leaks', 'To change its colour'], correctIndex: 1, explanation: 'Rinsing with the same solution prevents dilution by residual water.' },
+        ],
+        assignments: [
+          { id: 1, question: 'If 20 mL of HCl requires 18.5 mL of 0.1 M NaOH for neutralisation, calculate the molarity and strength (g/L) of HCl.', marks: 5 },
+          { id: 2, question: 'Why is phenolphthalein preferred over methyl orange for this titration? Explain with pH ranges.', marks: 3 },
+          { id: 3, question: 'List three precautions to be observed during titration and explain why each is important.', marks: 4 },
+        ],
       }
     },
     {
@@ -66,6 +78,18 @@ export const chemistryData: SubjectData = {
         objectives: ['Understand redox titration', 'Observe self-indicating property', 'Apply stoichiometric calculations'],
         safety: ['KMnO₄ stains skin — wear gloves.', 'Warm the solution carefully.'],
         observationTable: { columns: ['S.No.', 'Initial (mL)', 'Final (mL)', 'Volume KMnO₄ (mL)'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'KMnO₄ acts as its own indicator because:', options: ['It is colourless', 'Its purple colour disappears on reaction and reappears at end point', 'It turns blue', 'It produces a precipitate'], correctIndex: 1, explanation: 'KMnO₄ is decolourised by oxalic acid; the endpoint is when a faint pink persists.' },
+          { id: 2, question: 'The solution is heated to ~60°C because:', options: ['To evaporate water', 'The reaction is too slow at room temperature', 'To decompose KMnO₄', 'To change the indicator'], correctIndex: 1, explanation: 'Warming speeds up the reaction between KMnO₄ and oxalic acid in acidic medium.' },
+          { id: 3, question: 'In this titration, KMnO₄ is the:', options: ['Reducing agent', 'Oxidising agent', 'Catalyst', 'Indicator only'], correctIndex: 1, explanation: 'KMnO₄ (Mn⁷⁺ → Mn²⁺) is the oxidising agent; oxalic acid is the reducing agent.' },
+          { id: 4, question: 'Dilute H₂SO₄ is added to provide:', options: ['Neutral medium', 'Acidic medium', 'Basic medium', 'Buffered medium'], correctIndex: 1, explanation: 'The reaction requires acidic medium. HCl or HNO₃ are not used as they interfere.' },
+          { id: 5, question: 'The molar ratio of KMnO₄ to oxalic acid in this reaction is:', options: ['1:1', '2:5', '1:5', '5:2'], correctIndex: 1, explanation: '2KMnO₄ + 5H₂C₂O₄ + 3H₂SO₄ → products. Ratio = 2:5.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Balance the redox equation: KMnO₄ + H₂C₂O₄ + H₂SO₄ → MnSO₄ + CO₂ + H₂O. Identify the oxidation and reduction half-reactions.', marks: 5 },
+          { id: 2, question: 'Why is HCl not used instead of H₂SO₄ in permanganometry? What would happen?', marks: 3 },
+          { id: 3, question: 'From your concordant titre value, calculate the strength of the given oxalic acid solution in g/L.', marks: 4 },
+        ],
       }
     },
     {
@@ -90,6 +114,18 @@ export const chemistryData: SubjectData = {
         ],
         objectives: ['Understand pH scale', 'Use pH paper correctly', 'Classify solutions as acidic/basic/neutral'],
         observationTable: { columns: ['S.No.', 'Solution', 'Colour on pH paper', 'pH Value', 'Nature (Acid/Base/Neutral)'], rows: 6 },
+        quizQuestions: [
+          { id: 1, question: 'The pH of pure water at 25°C is:', options: ['0', '7', '14', '1'], correctIndex: 1, explanation: 'Pure water is neutral with [H⁺] = 10⁻⁷ M, so pH = 7.' },
+          { id: 2, question: 'A solution with pH = 3 is:', options: ['Neutral', 'Weakly basic', 'Strongly acidic', 'Weakly acidic'], correctIndex: 2, explanation: 'pH 3 means [H⁺] = 10⁻³ M, which is strongly acidic.' },
+          { id: 3, question: 'pH is defined as:', options: ['log[H⁺]', '−log[H⁺]', 'log[OH⁻]', '[H⁺]/[OH⁻]'], correctIndex: 1, explanation: 'pH = −log₁₀[H⁺].' },
+          { id: 4, question: 'If the pH of a solution is increased from 5 to 7, the [H⁺] concentration:', options: ['Increases 100 times', 'Decreases 100 times', 'Remains same', 'Doubles'], correctIndex: 1, explanation: 'Each pH unit = 10× change. From 5 to 7 = 2 units = 10² = 100 times decrease.' },
+          { id: 5, question: 'Which of the following has the highest pH?', options: ['Lemon juice', 'Vinegar', 'NaOH solution', 'Gastric acid'], correctIndex: 2, explanation: 'NaOH is a strong base with pH ~13-14, which is the highest among the options.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Arrange the following in increasing order of pH: gastric juice, blood, NaOH, pure water, lemon juice. Justify your arrangement.', marks: 4 },
+          { id: 2, question: 'Explain the concept of buffer solutions with an example. Why does blood maintain a nearly constant pH?', marks: 4 },
+          { id: 3, question: 'Calculate the pH of 0.01 M HCl and 0.001 M NaOH solutions. What is the pH when they are mixed in equal volumes?', marks: 4 },
+        ],
       }
     },
     {
@@ -114,6 +150,18 @@ export const chemistryData: SubjectData = {
         ],
         objectives: ['Systematic qualitative analysis', 'Perform flame tests', 'Identify cation and anion'],
         observationTable: { columns: ['Test', 'Observation', 'Inference'], rows: 8 },
+        quizQuestions: [
+          { id: 1, question: 'A salt gives a golden yellow flame. The cation is likely:', options: ['K⁺', 'Na⁺', 'Ca²⁺', 'Cu²⁺'], correctIndex: 1, explanation: 'Sodium (Na) imparts a persistent golden yellow colour to the flame.' },
+          { id: 2, question: 'Effervescence with dilute HCl indicates the presence of:', options: ['Sulphate', 'Chloride', 'Carbonate', 'Nitrate'], correctIndex: 2, explanation: 'Carbonates react with dilute HCl: CO₃²⁻ + 2HCl → CO₂↑ + H₂O + salt.' },
+          { id: 3, question: 'A white precipitate with BaCl₂ solution (insoluble in HCl) confirms:', options: ['Chloride', 'Carbonate', 'Sulphate', 'Nitrate'], correctIndex: 2, explanation: 'BaCl₂ + SO₄²⁻ → BaSO₄↓ (white, insoluble in HCl).' },
+          { id: 4, question: 'Group II cations in qualitative analysis are precipitated by:', options: ['Dilute HCl', 'H₂S in acidic medium', 'NH₄OH', '(NH₄)₂CO₃'], correctIndex: 1, explanation: 'Group II cations (Cu²⁺, Pb²⁺, etc.) are precipitated as sulphides by H₂S in acidic medium.' },
+          { id: 5, question: 'A rotten egg smell on adding dilute HCl to a salt indicates:', options: ['CO₃²⁻', 'SO₄²⁻', 'S²⁻', 'NO₃⁻'], correctIndex: 2, explanation: 'Sulphide ion (S²⁻) + HCl → H₂S↑ (rotten egg smell).' },
+        ],
+        assignments: [
+          { id: 1, question: 'Given an unknown salt, describe the complete systematic procedure to identify both the cation and anion. Include all group reagents.', marks: 5 },
+          { id: 2, question: 'Create a flowchart showing the separation of cations from Group I to Group V using group reagents.', marks: 4 },
+          { id: 3, question: 'Why are preliminary tests (colour, smell, solubility, flame test) performed before systematic analysis?', marks: 3 },
+        ],
       }
     },
     {
@@ -139,6 +187,18 @@ export const chemistryData: SubjectData = {
         ],
         objectives: ['Understand chromatographic separation', 'Calculate Rf values', 'Identify components'],
         observationTable: { columns: ['Spot', 'Colour', 'Distance by solute (cm)', 'Distance by solvent (cm)', 'Rf value'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'The Rf value in chromatography is:', options: ['Always greater than 1', 'Always between 0 and 1', 'Always negative', 'Always equal to 1'], correctIndex: 1, explanation: 'Rf = distance by solute / distance by solvent. The solute can never travel further than the solvent, so Rf is between 0 and 1.' },
+          { id: 2, question: 'In paper chromatography, the stationary phase is:', options: ['The solvent', 'The chromatography paper (water adsorbed on it)', 'The ink', 'The jar'], correctIndex: 1, explanation: 'The water adsorbed on the cellulose fibres of the paper acts as the stationary phase.' },
+          { id: 3, question: 'A component with a higher Rf value:', options: ['Is less soluble in the mobile phase', 'Is more soluble in the mobile phase', 'Stays at the origin', 'Has a higher molecular weight always'], correctIndex: 1, explanation: 'Higher Rf means the component travels further, indicating greater affinity for the mobile phase.' },
+          { id: 4, question: 'The baseline in chromatography is drawn with pencil (not pen) because:', options: ['Pencil is cheaper', 'Pencil graphite does not dissolve in the solvent', 'Pen ink moves with the solvent and interferes', 'Pencil lines are thinner'], correctIndex: 2, explanation: 'Pen ink would dissolve and travel with the solvent, contaminating the results.' },
+          { id: 5, question: 'Chromatography separates components based on their:', options: ['Colour only', 'Different rates of migration through stationary and mobile phases', 'Boiling points', 'Electrical charge only'], correctIndex: 1, explanation: 'Separation is based on differential partitioning between the stationary and mobile phases.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Separate the pigments in a green leaf extract using paper chromatography. Calculate Rf values for each spot and identify the pigments.', marks: 5 },
+          { id: 2, question: 'Compare paper chromatography with thin-layer chromatography (TLC). List two advantages of each.', marks: 3 },
+          { id: 3, question: 'Two food dyes have Rf values of 0.45 and 0.82. Which one has greater affinity for the mobile phase? Explain.', marks: 4 },
+        ],
       }
     },
     {
@@ -164,6 +224,18 @@ export const chemistryData: SubjectData = {
         ],
         objectives: ['Measure enthalpy changes', 'Use calorimetry', 'Compare with theoretical value'],
         observationTable: { columns: ['S.No.', 'T_acid (°C)', 'T_base (°C)', 'T_mix (°C)', 'ΔT (°C)', 'Q (J)'], rows: 3 },
+        quizQuestions: [
+          { id: 1, question: 'The enthalpy of neutralisation of a strong acid and strong base is approximately:', options: ['−57.1 kJ/mol', '+57.1 kJ/mol', '−100 kJ/mol', '0 kJ/mol'], correctIndex: 0, explanation: 'For strong acid + strong base, ΔH ≈ −57.1 kJ/mol (exothermic).' },
+          { id: 2, question: 'The formula Q = mcΔT is used to calculate:', options: ['Pressure', 'Volume', 'Heat evolved', 'Enthalpy of formation'], correctIndex: 2, explanation: 'Q = mass × specific heat capacity × temperature change gives the heat evolved or absorbed.' },
+          { id: 3, question: 'The neutralisation reaction is:', options: ['Endothermic', 'Exothermic', 'Neither', 'Sometimes endothermic'], correctIndex: 1, explanation: 'Neutralisation releases heat (exothermic), so the temperature of the mixture rises.' },
+          { id: 4, question: 'For weak acid + strong base, the enthalpy of neutralisation is:', options: ['Exactly −57.1 kJ/mol', 'Less than 57.1 kJ/mol (in magnitude)', 'Greater than 57.1 kJ/mol', 'Zero'], correctIndex: 1, explanation: 'Part of the energy is used to dissociate the weak acid, so the net heat evolved is less.' },
+          { id: 5, question: 'A plastic cup is used as a calorimeter because:', options: ['It is transparent', 'It has low heat capacity and acts as a good insulator', 'It is cheap', 'It reacts with the chemicals'], correctIndex: 1, explanation: 'Plastic (polystyrene) is a poor conductor, minimising heat loss to the surroundings.' },
+        ],
+        assignments: [
+          { id: 1, question: 'From your data, calculate the enthalpy of neutralisation per mole. Compare with the theoretical value (−57.1 kJ/mol) and calculate percentage error.', marks: 5 },
+          { id: 2, question: 'Why is the enthalpy of neutralisation of CH₃COOH + NaOH less than that of HCl + NaOH? Explain with energy diagram.', marks: 4 },
+          { id: 3, question: 'List three sources of error in this experiment and suggest how each can be minimised.', marks: 3 },
+        ],
       }
     },
     {
@@ -188,6 +260,18 @@ export const chemistryData: SubjectData = {
         ],
         objectives: ['Study effect of concentration on rate', 'Plot rate vs concentration graph', 'Understand reaction kinetics'],
         observationTable: { columns: ['S.No.', 'Vol Na₂S₂O₃ (mL)', 'Vol H₂O (mL)', 'Time t (s)', '1/t (s⁻¹)'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'The rate of a reaction is defined as:', options: ['Change in colour per unit time', 'Change in concentration of reactant or product per unit time', 'Volume of gas evolved', 'Temperature change'], correctIndex: 1, explanation: 'Rate = Δ[concentration]/Δt.' },
+          { id: 2, question: 'In this experiment, 1/t is a measure of:', options: ['Concentration', 'Rate of reaction', 'Volume', 'Temperature'], correctIndex: 1, explanation: 'Since time is inversely related to rate, 1/t represents the relative rate.' },
+          { id: 3, question: 'The turbidity in Na₂S₂O₃ + HCl reaction is due to:', options: ['NaCl precipitate', 'Sulphur precipitate', 'SO₂ gas', 'H₂O'], correctIndex: 1, explanation: 'The reaction produces colloidal sulphur which makes the solution turbid.' },
+          { id: 4, question: 'As the concentration of Na₂S₂O₃ increases, the time to obscure the cross:', options: ['Increases', 'Decreases', 'Remains same', 'First increases then decreases'], correctIndex: 1, explanation: 'Higher concentration means faster reaction, so less time for the cross to disappear.' },
+          { id: 5, question: 'According to collision theory, increasing concentration increases rate because:', options: ['Molecules become heavier', 'Frequency of effective collisions increases', 'Activation energy decreases', 'Temperature rises'], correctIndex: 1, explanation: 'More molecules per unit volume means more frequent collisions, increasing the rate.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Plot the graph of concentration vs 1/t from your data. What does the shape of the graph tell you about the order of the reaction?', marks: 5 },
+          { id: 2, question: 'Explain how temperature affects the rate of this reaction. What is the Arrhenius equation?', marks: 4 },
+          { id: 3, question: 'What is the role of activation energy? How does a catalyst affect the rate of reaction?', marks: 3 },
+        ],
       }
     },
     {
@@ -212,6 +296,18 @@ export const chemistryData: SubjectData = {
         ],
         objectives: ['Identify elements by flame colour', 'Understand electron transitions', 'Correlate with emission spectra'],
         observationTable: { columns: ['S.No.', 'Salt solution', 'Flame colour', 'Cation identified'], rows: 6 },
+        quizQuestions: [
+          { id: 1, question: 'Potassium (K) imparts which colour to the flame?', options: ['Golden yellow', 'Brick red', 'Violet/Lilac', 'Apple green'], correctIndex: 2, explanation: 'Potassium gives a violet/lilac flame (best seen through blue cobalt glass).' },
+          { id: 2, question: 'Flame colours are produced due to:', options: ['Chemical reaction with oxygen', 'Electron transitions from excited to ground state', 'Melting of the salt', 'Decomposition of the salt'], correctIndex: 1, explanation: 'Electrons absorb energy, get excited, and emit light of specific wavelength when returning to ground state.' },
+          { id: 3, question: 'Cobalt blue glass is used while testing for potassium because:', options: ['It magnifies the flame', 'It filters out the yellow sodium flame', 'It changes the colour', 'It protects the eyes'], correctIndex: 1, explanation: 'Na contamination gives intense yellow that masks K\'s violet. Cobalt glass absorbs yellow light.' },
+          { id: 4, question: 'Calcium gives a _____ coloured flame.', options: ['Green', 'Brick red', 'Blue', 'No colour'], correctIndex: 1, explanation: 'Calcium produces a characteristic brick red flame.' },
+          { id: 5, question: 'The wire loop is cleaned with conc. HCl before each test to:', options: ['Make it red hot', 'Remove previous salt residue', 'Increase sensitivity', 'Change the flame colour'], correctIndex: 1, explanation: 'Cleaning ensures no contamination from previously tested salts.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Prepare a chart of flame colours for Na, K, Ca, Ba, Sr, and Cu with their corresponding wavelengths and electron transitions.', marks: 5 },
+          { id: 2, question: 'Explain the principle of flame photometry and its application in analytical chemistry.', marks: 3 },
+          { id: 3, question: 'Why does sodium always interfere in flame tests? How can this be overcome?', marks: 4 },
+        ],
       }
     },
     {
@@ -236,6 +332,18 @@ export const chemistryData: SubjectData = {
         ],
         objectives: ['Systematic anion analysis', 'Identify gases evolved', 'Confirm anion with specific tests'],
         observationTable: { columns: ['Reagent', 'Observation', 'Inference'], rows: 6 },
+        quizQuestions: [
+          { id: 1, question: 'A gas that turns lime water milky is:', options: ['H₂S', 'CO₂', 'SO₂', 'NH₃'], correctIndex: 1, explanation: 'CO₂ + Ca(OH)₂ → CaCO₃↓ (white, turns lime water milky).' },
+          { id: 2, question: 'A white curdy precipitate with AgNO₃ solution indicates:', options: ['Sulphate', 'Carbonate', 'Chloride', 'Nitrate'], correctIndex: 2, explanation: 'Ag⁺ + Cl⁻ → AgCl↓ (white curdy precipitate, soluble in NH₄OH).' },
+          { id: 3, question: 'Conc. H₂SO₄ is used cautiously in anion analysis because:', options: ['It is expensive', 'It can cause violent reactions and produce toxic gases', 'It changes colour', 'It evaporates quickly'], correctIndex: 1, explanation: 'Conc. H₂SO₄ is a powerful dehydrating and oxidising agent that can cause dangerous reactions.' },
+          { id: 4, question: 'A gas with a pungent smell that turns moist lead acetate paper black indicates:', options: ['CO₂', 'H₂S', 'NH₃', 'Cl₂'], correctIndex: 1, explanation: 'H₂S turns lead acetate paper black due to PbS formation.' },
+          { id: 5, question: 'Nitrate ion is confirmed by the:', options: ['Flame test', 'Brown ring test', 'BaCl₂ test', 'AgNO₃ test'], correctIndex: 1, explanation: 'The brown ring test (FeSO₄ + conc. H₂SO₄) gives a brown ring at the junction, confirming NO₃⁻.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Describe the systematic procedure to test for carbonate, sulphate, and chloride anions with equations for each confirmatory test.', marks: 5 },
+          { id: 2, question: 'Explain the brown ring test for nitrate with a balanced chemical equation and diagram.', marks: 4 },
+          { id: 3, question: 'Why is dilute HCl used first before conc. H₂SO₄ in anion analysis? What information does each provide?', marks: 3 },
+        ],
       }
     },
     {
@@ -262,6 +370,18 @@ export const chemistryData: SubjectData = {
         ],
         objectives: ['Understand crystallisation technique', 'Prepare pure crystals', 'Understand solubility and cooling curves'],
         observationTable: { columns: ['Property', 'Impure sample', 'Pure crystals'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'Crystallisation is used to:', options: ['Increase impurities', 'Purify a solid from its solution', 'Convert liquid to gas', 'Separate immiscible liquids'], correctIndex: 1, explanation: 'Crystallisation separates a pure solid from its impurities by dissolving, filtering, and cooling.' },
+          { id: 2, question: 'The solution from which crystals separate is called:', options: ['Filtrate', 'Mother liquor', 'Residue', 'Distillate'], correctIndex: 1, explanation: 'The remaining solution after crystallisation is called the mother liquor.' },
+          { id: 3, question: 'Slow cooling produces:', options: ['Smaller crystals', 'Larger, well-formed crystals', 'No crystals', 'Amorphous powder'], correctIndex: 1, explanation: 'Slow cooling allows orderly arrangement of molecules, forming larger and purer crystals.' },
+          { id: 4, question: 'Potash alum has the chemical formula:', options: ['KAl(SO₄)₂·12H₂O', 'K₂SO₄·Al₂(SO₄)₃·24H₂O', 'AlCl₃·6H₂O', 'NaAlO₂'], correctIndex: 1, explanation: 'Potash alum is a double salt: K₂SO₄·Al₂(SO₄)₃·24H₂O.' },
+          { id: 5, question: 'Hot filtration is done to:', options: ['Cool the solution faster', 'Remove insoluble impurities before crystallisation', 'Evaporate the solvent', 'Add more solute'], correctIndex: 1, explanation: 'Filtering the hot saturated solution removes any insoluble impurities.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Describe the complete procedure for preparing pure crystals of copper sulphate from its impure sample. Include a labelled diagram.', marks: 5 },
+          { id: 2, question: 'Why is the solution not stirred or disturbed during the cooling process? What happens if it is cooled rapidly?', marks: 3 },
+          { id: 3, question: 'Compare crystallisation with distillation and filtration as purification techniques. When is each preferred?', marks: 4 },
+        ],
       }
     },
   ]

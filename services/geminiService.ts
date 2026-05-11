@@ -98,7 +98,7 @@ export async function askTutor(question: string, labContext?: string): Promise<s
 
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.5-flash',
       contents: question,
       config: {
         systemInstruction: prompt,

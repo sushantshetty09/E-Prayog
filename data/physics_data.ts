@@ -39,6 +39,18 @@ export const physicsData: SubjectData = {
           { question: 'How do you correct for positive zero error?', answer: 'Subtract the zero error from the observed reading.' },
         ],
         observationTable: { columns: ['S.No.', 'MSR (cm)', 'VSD', 'Total Reading (cm)', 'Corrected Reading (cm)'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'The least count of a standard Vernier Caliper with 50 divisions on the Vernier scale is:', options: ['0.1 cm', '0.01 cm', '0.001 cm', '0.5 cm'], correctIndex: 1, explanation: 'LC = 1 MSD − 1 VSD = 1 mm − 0.9 mm = 0.1 mm = 0.01 cm.' },
+          { id: 2, question: 'If the zero of the Vernier scale lies to the right of the zero of the main scale when jaws are closed, the zero error is:', options: ['Positive', 'Negative', 'No error', 'Cannot be determined'], correctIndex: 0, explanation: 'When the Vernier zero is to the right, the error is positive and must be subtracted from the reading.' },
+          { id: 3, question: 'A Vernier Caliper reads MSR = 3.2 cm and 6th VSD coincides. If LC = 0.01 cm, the total reading is:', options: ['3.26 cm', '3.206 cm', '3.6 cm', '3.02 cm'], correctIndex: 0, explanation: 'Total = MSR + (VSD × LC) = 3.2 + (6 × 0.01) = 3.26 cm.' },
+          { id: 4, question: 'Which part of the Vernier Caliper is used to measure the internal diameter of a hollow cylinder?', options: ['External jaws', 'Internal jaws (upper jaws)', 'Depth probe', 'Main scale'], correctIndex: 1, explanation: 'The smaller upper jaws are designed to measure internal dimensions.' },
+          { id: 5, question: 'If the zero error is −0.03 cm, the corrected reading for an observed reading of 2.45 cm is:', options: ['2.42 cm', '2.48 cm', '2.45 cm', '2.50 cm'], correctIndex: 1, explanation: 'Corrected = Observed − (−0.03) = 2.45 + 0.03 = 2.48 cm.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Measure the length, breadth, and height of a rectangular block using Vernier Calipers and calculate its volume. Show all readings with zero error correction.', marks: 5 },
+          { id: 2, question: 'Explain the difference between positive and negative zero error with diagrams. How is each corrected?', marks: 3 },
+          { id: 3, question: 'Why is the Vernier Caliper more precise than an ordinary ruler? Calculate the maximum percentage error when measuring a diameter of 1.25 cm.', marks: 4 },
+        ],
       }
     },
     {
@@ -70,6 +82,18 @@ export const physicsData: SubjectData = {
           { question: 'What is the value of g in Bangalore?', answer: 'Approximately 9.78 m/s².' },
         ],
         observationTable: { columns: ['S.No.', 'L (cm)', 'Time for 20 osc. (s)', 'T (s)', 'T² (s²)'], rows: 6 },
+        quizQuestions: [
+          { id: 1, question: 'The time period of a simple pendulum depends on:', options: ['Mass of the bob', 'Length and acceleration due to gravity', 'Amplitude of oscillation', 'Material of the string'], correctIndex: 1, explanation: 'T = 2π√(L/g). Time period depends only on length L and g, not on mass or amplitude (for small angles).' },
+          { id: 2, question: 'If the length of a simple pendulum is quadrupled, the time period becomes:', options: ['Doubled', 'Halved', 'Quadrupled', 'Remains same'], correctIndex: 0, explanation: 'T ∝ √L. If L becomes 4L, T becomes 2T.' },
+          { id: 3, question: 'The graph of L versus T² for a simple pendulum is:', options: ['A parabola', 'A straight line through the origin', 'A hyperbola', 'An exponential curve'], correctIndex: 1, explanation: 'T² = (4π²/g)L, which is of the form y = mx, a straight line through the origin.' },
+          { id: 4, question: 'Why are 20 oscillations timed instead of just one?', options: ['To increase the amplitude', 'To reduce the percentage error in time measurement', 'To change the frequency', 'To account for air resistance'], correctIndex: 1, explanation: 'Timing many oscillations and dividing reduces the human reaction time error significantly.' },
+          { id: 5, question: 'A pendulum has T = 2 s on Earth. On the Moon (g_moon = g/6), its time period will be approximately:', options: ['2 s', '2√6 s ≈ 4.9 s', '12 s', '2/6 s'], correctIndex: 1, explanation: 'T_moon = 2π√(L/g_moon) = T_earth × √6 ≈ 2 × 2.449 ≈ 4.9 s.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Using your experimental data, plot the L vs T² graph on graph paper. Calculate the value of g from the slope and find the percentage error compared to the standard value (9.8 m/s²).', marks: 5 },
+          { id: 2, question: 'Explain why a simple pendulum is not suitable for measuring time in a moving vehicle. What is a seconds pendulum?', marks: 3 },
+          { id: 3, question: 'Derive the expression T = 2π√(L/g) for a simple pendulum using the restoring force approach.', marks: 4 },
+        ],
       }
     },
     {
@@ -96,6 +120,18 @@ export const physicsData: SubjectData = {
         ],
         objectives: ['Understand micrometer principle', 'Apply zero error correction', 'Calculate cross-sectional area'],
         observationTable: { columns: ['S.No.', 'PSR (mm)', 'CSR', 'Total Reading (mm)', 'Corrected (mm)'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'A screw gauge has a pitch of 1 mm and 100 divisions on the circular scale. Its least count is:', options: ['0.1 mm', '0.01 mm', '0.001 mm', '1 mm'], correctIndex: 1, explanation: 'LC = Pitch / No. of divisions = 1/100 = 0.01 mm.' },
+          { id: 2, question: 'The ratchet in a screw gauge is used to:', options: ['Measure the zero error', 'Avoid undue pressure on the object', 'Rotate the thimble faster', 'Lock the spindle'], correctIndex: 1, explanation: 'The ratchet slips when appropriate pressure is applied, preventing excessive force.' },
+          { id: 3, question: 'PSR = 3 mm, CSR = 42, LC = 0.01 mm. The diameter of the wire is:', options: ['3.42 mm', '3.042 mm', '3.0042 mm', '0.342 mm'], correctIndex: 0, explanation: 'Diameter = PSR + (CSR × LC) = 3 + (42 × 0.01) = 3.42 mm.' },
+          { id: 4, question: 'Which instrument has a smaller least count?', options: ['Metre scale', 'Vernier Calipers', 'Screw Gauge', 'All are equal'], correctIndex: 2, explanation: 'Screw Gauge (0.01 mm) < Vernier Calipers (0.1 mm) < Metre scale (1 mm).' },
+          { id: 5, question: 'The pitch of a screw gauge is defined as:', options: ['Distance moved by the spindle per revolution', 'Number of divisions on the circular scale', 'Diameter of the screw', 'Total length of the main scale'], correctIndex: 0, explanation: 'Pitch is the linear distance moved by the spindle for one complete rotation of the thimble.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Measure the diameter of a wire at 5 different points using a screw gauge. Calculate the mean diameter and the cross-sectional area (A = πd²/4).', marks: 5 },
+          { id: 2, question: 'Draw a neat labelled diagram of a screw gauge and explain the function of each part.', marks: 3 },
+          { id: 3, question: 'A wire has a measured diameter of 0.52 mm and length 50 cm. If its resistance is 2.5 Ω, calculate the resistivity of the material.', marks: 4 },
+        ],
       }
     },
     {
@@ -126,6 +162,18 @@ export const physicsData: SubjectData = {
           { question: 'What is the SI unit of resistance?', answer: 'Ohm (Ω).' },
         ],
         observationTable: { columns: ['S.No.', 'Voltmeter (V)', 'Ammeter (A)', 'R = V/I (Ω)'], rows: 6 },
+        quizQuestions: [
+          { id: 1, question: 'According to Ohm\'s Law, the V-I graph for a metallic conductor is:', options: ['A curve', 'A straight line through the origin', 'A parabola', 'A horizontal line'], correctIndex: 1, explanation: 'V = IR gives a linear relationship, so the graph is a straight line passing through the origin.' },
+          { id: 2, question: 'The ammeter is connected in _____ and the voltmeter in _____ with the resistor.', options: ['Parallel, Series', 'Series, Parallel', 'Series, Series', 'Parallel, Parallel'], correctIndex: 1, explanation: 'Ammeter must carry the same current (series), voltmeter must sense the same potential (parallel).' },
+          { id: 3, question: 'If V = 6 V and I = 0.3 A, the resistance is:', options: ['2 Ω', '20 Ω', '0.05 Ω', '1.8 Ω'], correctIndex: 1, explanation: 'R = V/I = 6/0.3 = 20 Ω.' },
+          { id: 4, question: 'The slope of a V vs I graph gives:', options: ['Current', 'Conductance', 'Resistance', 'Power'], correctIndex: 2, explanation: 'V = IR → slope of V vs I graph = ΔV/ΔI = R.' },
+          { id: 5, question: 'Ohm\'s Law fails for:', options: ['Metallic conductors at constant temperature', 'Semiconductor diodes', 'Copper wire', 'Carbon resistors'], correctIndex: 1, explanation: 'Semiconductor diodes are non-ohmic — their V-I characteristic is not linear.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Draw the circuit diagram for verifying Ohm\'s Law. Plot the V-I graph from your readings and determine R from the slope.', marks: 5 },
+          { id: 2, question: 'Explain with examples two devices that do NOT obey Ohm\'s Law. Sketch their V-I characteristics.', marks: 3 },
+          { id: 3, question: 'Three resistors of 4 Ω, 6 Ω, and 12 Ω are connected in parallel. Find the equivalent resistance and verify using Ohm\'s Law if 12 V is applied.', marks: 4 },
+        ],
       }
     },
     {
@@ -152,6 +200,18 @@ export const physicsData: SubjectData = {
         ],
         objectives: ['Understand image formation by concave mirror', 'Verify mirror formula', 'Classify image nature'],
         observationTable: { columns: ['S.No.', 'u (cm)', 'v (cm)', '1/u', '1/v', 'f = uv/(u+v) (cm)'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'When an object is placed at the centre of curvature of a concave mirror, the image is formed:', options: ['At the focus', 'At the centre of curvature', 'At infinity', 'Between F and C'], correctIndex: 1, explanation: 'Object at C produces a real, inverted, same-size image at C.' },
+          { id: 2, question: 'The mirror formula is:', options: ['1/v + 1/u = 1/f', '1/v − 1/u = 1/f', 'v + u = f', 'v − u = f'], correctIndex: 0, explanation: 'The mirror equation relating object distance u, image distance v, and focal length f is 1/v + 1/u = 1/f.' },
+          { id: 3, question: 'A concave mirror always produces a virtual image when the object is placed:', options: ['Beyond C', 'At C', 'Between F and C', 'Between the pole and F'], correctIndex: 3, explanation: 'When the object is between the pole and focus, the concave mirror produces a virtual, erect, magnified image.' },
+          { id: 4, question: 'The focal length of a concave mirror of radius of curvature 30 cm is:', options: ['30 cm', '60 cm', '15 cm', '10 cm'], correctIndex: 2, explanation: 'f = R/2 = 30/2 = 15 cm.' },
+          { id: 5, question: 'In the new Cartesian sign convention, the focal length of a concave mirror is:', options: ['Positive', 'Negative', 'Zero', 'Can be either'], correctIndex: 1, explanation: 'The focus of a concave mirror is in front (left side), so f is negative in new Cartesian convention.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Tabulate your readings of u, v and calculate f for each. Find the mean focal length and compare with the rough focal length obtained from a distant object.', marks: 5 },
+          { id: 2, question: 'Draw ray diagrams for all five positions of the object relative to a concave mirror (at infinity, beyond C, at C, between F and C, at F, between P and F).', marks: 4 },
+          { id: 3, question: 'Explain why a concave mirror is used as a shaving mirror and in solar cookers. What type of image is formed in each case?', marks: 3 },
+        ],
       }
     },
     {
@@ -176,6 +236,18 @@ export const physicsData: SubjectData = {
         ],
         objectives: ['Understand lens equation', 'Plot 1/v vs 1/u graph', 'Find focal length'],
         observationTable: { columns: ['S.No.', 'u (cm)', 'v (cm)', '1/u', '1/v', 'f (cm)'], rows: 6 },
+        quizQuestions: [
+          { id: 1, question: 'The thin lens formula is:', options: ['1/v + 1/u = 1/f', '1/v − 1/u = 1/f', 'v/u = f', 'u − v = f'], correctIndex: 1, explanation: 'For a thin lens: 1/v − 1/u = 1/f (with sign convention).' },
+          { id: 2, question: 'A convex lens is also called a:', options: ['Diverging lens', 'Converging lens', 'Plano lens', 'Cylindrical lens'], correctIndex: 1, explanation: 'A convex lens converges parallel rays to a point (the focus).' },
+          { id: 3, question: 'If the object is placed at 2f of a convex lens, the image is formed:', options: ['At f', 'At 2f on the other side', 'At infinity', 'Between f and 2f'], correctIndex: 1, explanation: 'Object at 2f → image at 2f, real, inverted, same size.' },
+          { id: 4, question: 'The power of a lens with focal length 20 cm is:', options: ['5 D', '0.2 D', '20 D', '0.05 D'], correctIndex: 0, explanation: 'P = 1/f(in metres) = 1/0.20 = 5 D.' },
+          { id: 5, question: 'When a convex lens is immersed in a liquid of the same refractive index, it behaves as:', options: ['A diverging lens', 'A plane glass', 'A more powerful converging lens', 'A concave mirror'], correctIndex: 1, explanation: 'When the refractive indices are equal, there is no refraction and the lens acts as a plain glass slab.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Plot the graph of 1/v vs 1/u from your data. Find the focal length from the intercepts. Compare it with the value obtained from the lens formula for each reading.', marks: 5 },
+          { id: 2, question: 'Distinguish between a real image and a virtual image with examples. When does a convex lens form a virtual image?', marks: 3 },
+          { id: 3, question: 'Two thin lenses of focal lengths +15 cm and −20 cm are placed in contact. Find the combined focal length and power.', marks: 4 },
+        ],
       }
     },
     {
@@ -201,6 +273,18 @@ export const physicsData: SubjectData = {
         ],
         objectives: ['Understand prism refraction', 'Find minimum deviation', 'Calculate refractive index'],
         observationTable: { columns: ['S.No.', 'Angle of incidence i (°)', 'Angle of emergence e (°)', 'Angle of deviation δ (°)'], rows: 7 },
+        quizQuestions: [
+          { id: 1, question: 'At minimum deviation, the refracted ray inside the prism is:', options: ['Perpendicular to the base', 'Parallel to the base', 'Along the base', 'Reflected back'], correctIndex: 1, explanation: 'At minimum deviation δₘ, the ray inside the prism travels parallel to the base, and i₁ = i₂.' },
+          { id: 2, question: 'The refractive index of a prism is given by:', options: ['μ = sin(A)/sin(δₘ)', 'μ = sin((A+δₘ)/2) / sin(A/2)', 'μ = A/δₘ', 'μ = δₘ/A'], correctIndex: 1, explanation: 'The prism formula: μ = sin((A + δₘ)/2) / sin(A/2).' },
+          { id: 3, question: 'The graph of angle of incidence (i) vs angle of deviation (δ) is:', options: ['A straight line', 'A U-shaped curve', 'A parabola opening upward', 'A circle'], correctIndex: 1, explanation: 'The i-δ curve is a U-shaped (concave upward) curve with a minimum at δₘ.' },
+          { id: 4, question: 'A glass prism disperses white light because:', options: ['Different colours have different speeds in glass', 'Glass absorbs some colours', 'Prism reflects some colours', 'All colours travel at the same speed'], correctIndex: 0, explanation: 'Different wavelengths have different refractive indices in glass, causing dispersion.' },
+          { id: 5, question: 'For a prism with angle A = 60° and δₘ = 38°, the refractive index is approximately:', options: ['1.5', '1.33', '1.52', '2.0'], correctIndex: 2, explanation: 'μ = sin((60+38)/2)/sin(60/2) = sin(49°)/sin(30°) = 0.7547/0.5 ≈ 1.51.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Plot the i vs δ graph from your experimental data. Identify δₘ from the graph and calculate the refractive index of the prism material.', marks: 5 },
+          { id: 2, question: 'Explain the phenomenon of dispersion of light through a prism. Why does violet light deviate more than red?', marks: 3 },
+          { id: 3, question: 'A prism has angle A = 60° and refractive index 1.5. Calculate the angle of minimum deviation using the prism formula.', marks: 4 },
+        ],
       }
     },
     {
@@ -226,6 +310,18 @@ export const physicsData: SubjectData = {
         ],
         objectives: ['Verify first law of vibrating strings', 'Achieve resonance', 'Plot f vs 1/L graph'],
         observationTable: { columns: ['S.No.', 'Frequency f (Hz)', 'Resonating length L (cm)', 'f × L'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'The first law of vibrating strings states that frequency is:', options: ['Directly proportional to length', 'Inversely proportional to length', 'Independent of length', 'Proportional to square of length'], correctIndex: 1, explanation: 'f = (1/2L)√(T/μ), so f ∝ 1/L at constant T and μ.' },
+          { id: 2, question: 'Resonance in a sonometer is detected when:', options: ['The string breaks', 'The paper rider flies off the string', 'The tuning fork stops vibrating', 'The bridge moves'], correctIndex: 1, explanation: 'At resonance, the string vibrates with maximum amplitude and the paper rider placed on it gets thrown off.' },
+          { id: 3, question: 'If the tension in the string is quadrupled, the frequency becomes:', options: ['Doubled', 'Halved', 'Quadrupled', 'Remains same'], correctIndex: 0, explanation: 'f ∝ √T. If T becomes 4T, f becomes 2f.' },
+          { id: 4, question: 'The product f × L for different tuning forks should be:', options: ['Increasing', 'Decreasing', 'Constant', 'Zero'], correctIndex: 2, explanation: 'From f ∝ 1/L, we get f × L = constant (at constant tension and linear density).' },
+          { id: 5, question: 'A sonometer wire resonates with a tuning fork of 256 Hz at length 25 cm. The resonating length for 512 Hz is:', options: ['50 cm', '12.5 cm', '25 cm', '6.25 cm'], correctIndex: 1, explanation: 'f × L = constant → 256 × 25 = 512 × L → L = 12.5 cm.' },
+        ],
+        assignments: [
+          { id: 1, question: 'From your data, verify that f × L = constant. Plot the graph of f vs 1/L and show it is a straight line through the origin.', marks: 5 },
+          { id: 2, question: 'State and explain the three laws of vibrating strings. Which law does this experiment verify?', marks: 3 },
+          { id: 3, question: 'A sonometer wire of length 1 m has a fundamental frequency of 300 Hz under a tension of 36 N. Calculate the mass per unit length of the wire.', marks: 4 },
+        ],
       }
     },
     {
@@ -252,6 +348,18 @@ export const physicsData: SubjectData = {
         ],
         objectives: ['Understand Wheatstone bridge principle', 'Find unknown resistance', 'Calculate specific resistance'],
         observationTable: { columns: ['S.No.', 'R (Ω)', 'Balancing length l (cm)', '100−l (cm)', 'S = R(100−l)/l (Ω)'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'A metre bridge works on the principle of:', options: ['Ohm\'s Law', 'Wheatstone\'s bridge', 'Kirchhoff\'s law', 'Faraday\'s law'], correctIndex: 1, explanation: 'A metre bridge is a practical form of the Wheatstone bridge.' },
+          { id: 2, question: 'At the balance point of a metre bridge, the galvanometer shows:', options: ['Maximum deflection', 'Zero deflection', 'Oscillating deflection', 'Negative deflection'], correctIndex: 1, explanation: 'At balance, no current flows through the galvanometer (null point).' },
+          { id: 3, question: 'If R = 10 Ω and balancing length l = 40 cm, the unknown resistance S is:', options: ['15 Ω', '6.67 Ω', '10 Ω', '25 Ω'], correctIndex: 0, explanation: 'S = R(100−l)/l = 10 × 60/40 = 15 Ω.' },
+          { id: 4, question: 'The balancing length should ideally be near:', options: ['0 cm', '100 cm', '50 cm (middle)', '25 cm'], correctIndex: 2, explanation: 'For minimum percentage error, the null point should be near the middle of the wire.' },
+          { id: 5, question: 'Specific resistance (resistivity) has the unit:', options: ['Ω', 'Ω/m', 'Ω·m', 'Ω/m²'], correctIndex: 2, explanation: 'ρ = RA/L, so unit = Ω·m²/m = Ω·m.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Tabulate your readings and calculate the unknown resistance S for each value of R. Find the mean value and calculate the specific resistance of the wire material.', marks: 5 },
+          { id: 2, question: 'Draw the Wheatstone bridge circuit diagram. Derive the balance condition P/Q = R/S.', marks: 4 },
+          { id: 3, question: 'Why should the balancing length not be too close to either end of the bridge wire? What are the sources of error in this experiment?', marks: 3 },
+        ],
       }
     },
     {
@@ -276,6 +384,18 @@ export const physicsData: SubjectData = {
         ],
         objectives: ['Understand potentiometer principle', 'Compare EMFs accurately', 'Appreciate null method advantage'],
         observationTable: { columns: ['S.No.', 'l₁ (cm)', 'l₂ (cm)', 'E₁/E₂ = l₁/l₂'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'A potentiometer is superior to a voltmeter for measuring EMF because:', options: ['It is cheaper', 'It draws no current from the cell at balance', 'It is more portable', 'It has a longer scale'], correctIndex: 1, explanation: 'At the null point, no current is drawn from the cell, so the true EMF is measured without internal resistance drop.' },
+          { id: 2, question: 'The potential gradient along the potentiometer wire is:', options: ['V/L (voltage per unit length)', 'L/V', 'V × L', 'V + L'], correctIndex: 0, explanation: 'Potential gradient k = V/L, where V is the potential across the wire of length L.' },
+          { id: 3, question: 'If l₁ = 60 cm and l₂ = 40 cm, then E₁/E₂ is:', options: ['1.5', '0.67', '2.0', '1.0'], correctIndex: 0, explanation: 'E₁/E₂ = l₁/l₂ = 60/40 = 1.5.' },
+          { id: 4, question: 'The EMF of the driver cell must be:', options: ['Equal to the cells being compared', 'Less than the cells being compared', 'Greater than the EMFs being compared', 'Zero'], correctIndex: 2, explanation: 'The driver cell\'s EMF must be greater so the null point falls on the wire.' },
+          { id: 5, question: 'A potentiometer works on the principle of:', options: ['Null method', 'Deflection method', 'Resonance method', 'Oscillation method'], correctIndex: 0, explanation: 'The potentiometer uses the null method — at balance, galvanometer shows zero deflection.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Calculate E₁/E₂ from your readings and find the mean ratio. If E₁ = 1.5 V, calculate E₂.', marks: 5 },
+          { id: 2, question: 'Explain why a potentiometer gives more accurate EMF than a voltmeter. What is the role of internal resistance?', marks: 3 },
+          { id: 3, question: 'Draw the circuit diagram of a potentiometer used for comparing EMFs. Label all components clearly.', marks: 4 },
+        ],
       }
     },
     {
@@ -300,6 +420,18 @@ export const physicsData: SubjectData = {
         ],
         objectives: ['Understand Zener diode operation', 'Identify breakdown voltage', 'Plot I-V characteristics'],
         observationTable: { columns: ['S.No.', 'Forward V (V)', 'Forward I (mA)', 'Reverse V (V)', 'Reverse I (mA)'], rows: 8 },
+        quizQuestions: [
+          { id: 1, question: 'A Zener diode is primarily used as a:', options: ['Rectifier', 'Amplifier', 'Voltage regulator', 'Oscillator'], correctIndex: 2, explanation: 'The constant reverse breakdown voltage makes Zener diodes ideal for voltage regulation.' },
+          { id: 2, question: 'In forward bias, a Zener diode behaves like:', options: ['An open circuit', 'A normal p-n junction diode', 'A capacitor', 'A resistor'], correctIndex: 1, explanation: 'In forward bias, Zener diode conducts like any normal diode with ~0.7 V threshold for Si.' },
+          { id: 3, question: 'The sharp increase in reverse current occurs at:', options: ['Forward threshold voltage', 'Zener breakdown voltage', 'Zero voltage', 'Saturation voltage'], correctIndex: 1, explanation: 'At the Zener breakdown voltage Vz, avalanche/Zener breakdown causes a sharp rise in current.' },
+          { id: 4, question: 'A Zener diode is heavily doped to:', options: ['Increase forward resistance', 'Achieve a sharp breakdown at low reverse voltage', 'Reduce current', 'Increase the depletion width'], correctIndex: 1, explanation: 'Heavy doping creates a thin depletion region, enabling breakdown at a well-defined low voltage.' },
+          { id: 5, question: 'The I-V curve of a Zener diode in reverse bias shows:', options: ['Linear increase', 'No current until breakdown, then sharp increase', 'Exponential decay', 'Constant current'], correctIndex: 1, explanation: 'Minimal reverse current flows until Vz, after which current increases sharply while voltage stays nearly constant.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Plot the complete I-V characteristics (forward and reverse) of the Zener diode on graph paper. Identify the knee voltage and Zener breakdown voltage.', marks: 5 },
+          { id: 2, question: 'Design a simple Zener diode voltage regulator circuit for a 5.1 V output from a 9 V supply. Calculate the required series resistance for a load current of 20 mA.', marks: 4 },
+          { id: 3, question: 'Compare the I-V characteristics of a normal p-n junction diode and a Zener diode. What is the key structural difference?', marks: 3 },
+        ],
       }
     },
     {
@@ -324,6 +456,18 @@ export const physicsData: SubjectData = {
         ],
         objectives: ["Verify Hooke's Law", 'Determine spring constant', 'Understand elastic limit'],
         observationTable: { columns: ['S.No.', 'Load m (g)', 'Scale reading (cm)', 'Extension x (cm)', 'F = mg (N)'], rows: 6 },
+        quizQuestions: [
+          { id: 1, question: 'Hooke\'s Law is valid:', options: ['For all deformations', 'Only within the elastic limit', 'Only for plastic deformation', 'At the breaking point'], correctIndex: 1, explanation: 'Hooke\'s Law (F ∝ x) holds only within the elastic limit of the material.' },
+          { id: 2, question: 'The spring constant k has the unit:', options: ['N', 'N/m', 'N·m', 'kg'], correctIndex: 1, explanation: 'k = F/x, so unit = Newton/metre = N/m.' },
+          { id: 3, question: 'The slope of the Load (F) vs Extension (x) graph gives:', options: ['Extension', 'Mass', 'Spring constant k', 'Gravitational acceleration'], correctIndex: 2, explanation: 'F = kx, so slope = ΔF/Δx = k.' },
+          { id: 4, question: 'If a spring extends by 2 cm under a 100 g load, the spring constant is:', options: ['50 N/m', '49 N/m', '5 N/m', '0.49 N/m'], correctIndex: 1, explanation: 'k = F/x = (0.1 × 9.8)/0.02 = 0.98/0.02 = 49 N/m.' },
+          { id: 5, question: 'Two identical springs of spring constant k are connected in parallel. The effective spring constant is:', options: ['k/2', 'k', '2k', '4k'], correctIndex: 2, explanation: 'In parallel, k_eff = k₁ + k₂ = k + k = 2k.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Plot the F vs x graph from your data. Calculate the spring constant from the slope. Is the graph linear throughout? Discuss.', marks: 5 },
+          { id: 2, question: 'Explain the terms: elastic limit, yield point, and breaking stress with a stress-strain curve diagram.', marks: 4 },
+          { id: 3, question: 'A spring of spring constant 200 N/m is cut into two equal halves. What is the spring constant of each half? Justify your answer.', marks: 3 },
+        ],
       }
     },
   ]

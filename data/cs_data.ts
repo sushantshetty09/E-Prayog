@@ -32,6 +32,18 @@ export const csData: SubjectData = {
         ],
         objectives: ['Understand Bubble Sort algorithm', 'Analyse time complexity', 'Compare best/worst cases'],
         observationTable: { columns: ['Input type', 'Array size', 'Comparisons', 'Swaps', 'Time complexity'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'The worst-case time complexity of Bubble Sort is:', options: ['O(n)', 'O(n log n)', 'O(n²)', 'O(log n)'], correctIndex: 2, explanation: 'Bubble Sort performs n×(n-1)/2 comparisons in the worst case = O(n²).' },
+          { id: 2, question: 'In Bubble Sort, after the first pass, the _____ element is in its correct position.', options: ['Smallest', 'Largest', 'Middle', 'Random'], correctIndex: 1, explanation: 'Bubble Sort bubbles the largest element to the end in each pass.' },
+          { id: 3, question: 'Bubble Sort is a _____ sorting algorithm.', options: ['Divide and conquer', 'Comparison-based, in-place', 'Non-comparison', 'External'], correctIndex: 1, explanation: 'Bubble Sort compares adjacent elements and sorts in-place (no extra array needed).' },
+          { id: 4, question: 'How many passes are needed to sort [5, 3, 1] using Bubble Sort?', options: ['1', '2', '3', '5'], correctIndex: 1, explanation: 'Pass 1: [3,1,5], Pass 2: [1,3,5]. Two passes needed.' },
+          { id: 5, question: 'The best-case time complexity of optimized Bubble Sort is:', options: ['O(n²)', 'O(n)', 'O(n log n)', 'O(1)'], correctIndex: 1, explanation: 'With the swap-flag optimization, if the array is already sorted, only one pass (O(n)) is needed.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Trace the Bubble Sort algorithm step-by-step for the array [64, 34, 25, 12, 22, 11, 90]. Show the array state after each pass.', marks: 5 },
+          { id: 2, question: 'Compare Bubble Sort with Selection Sort and Insertion Sort in terms of time complexity, space complexity, and stability.', marks: 4 },
+          { id: 3, question: 'Write an optimized Bubble Sort that stops early if no swaps occur in a pass. Implement in the language of your choice.', marks: 3 },
+        ],
       }
     },
     {
@@ -56,6 +68,18 @@ export const csData: SubjectData = {
         ],
         objectives: ['Understand Insertion Sort', 'Compare with Bubble Sort', 'Identify stable sorting'],
         observationTable: { columns: ['Input type', 'Array size', 'Comparisons', 'Shifts', 'Time complexity'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'Insertion Sort is most efficient when the array is:', options: ['Reverse sorted', 'Already sorted', 'Random', 'Contains duplicates only'], correctIndex: 1, explanation: 'When already sorted, each element needs only 1 comparison → O(n) best case.' },
+          { id: 2, question: 'Insertion Sort is called a stable sorting algorithm because:', options: ['It never crashes', 'It preserves the relative order of equal elements', 'It uses less memory', 'It is the fastest'], correctIndex: 1, explanation: 'Stable means equal elements retain their original relative positions.' },
+          { id: 3, question: 'The worst-case time complexity of Insertion Sort is:', options: ['O(n)', 'O(n log n)', 'O(n²)', 'O(log n)'], correctIndex: 2, explanation: 'Reverse sorted array requires maximum shifts: 1+2+...+(n-1) = O(n²).' },
+          { id: 4, question: 'Insertion Sort is analogous to:', options: ['Binary search', 'Sorting playing cards in hand', 'Merging two arrays', 'Building a heap'], correctIndex: 1, explanation: 'Like picking up cards one at a time and inserting each in the correct position in your hand.' },
+          { id: 5, question: 'The space complexity of Insertion Sort is:', options: ['O(n)', 'O(n²)', 'O(1)', 'O(log n)'], correctIndex: 2, explanation: 'Insertion Sort is in-place — it only needs a constant amount of extra memory (O(1)).' },
+        ],
+        assignments: [
+          { id: 1, question: 'Trace the Insertion Sort algorithm for the array [12, 11, 13, 5, 6]. Show the sorted portion after inserting each element.', marks: 5 },
+          { id: 2, question: 'Explain why Insertion Sort is preferred over Merge Sort for small arrays (n < 15). What optimization do hybrid algorithms like Timsort use?', marks: 4 },
+          { id: 3, question: 'Compare the number of comparisons and shifts for Insertion Sort on [1,2,3,4,5] (best case) vs [5,4,3,2,1] (worst case).', marks: 3 },
+        ],
       }
     },
     {
@@ -80,7 +104,19 @@ export const csData: SubjectData = {
           'Compare with Linear Search step count.',
         ],
         objectives: ['Understand divide-and-conquer', 'Analyse O(log n) complexity', 'Compare with linear search'],
-        observationTable: { columns: ['Array size', 'Target', 'Steps', 'Found (Yes/No)', 'Log₂(n)'], rows: 4 },
+        observationTable: { columns: ['Array', 'Target', 'Linear steps', 'Binary steps', 'Found?'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'Binary search requires the array to be:', options: ['Unsorted', 'Sorted', 'Of even length', 'Of prime length'], correctIndex: 1, explanation: 'Binary search works only on sorted arrays, as it relies on the ordering to eliminate half the search space.' },
+          { id: 2, question: 'The time complexity of binary search is:', options: ['O(n)', 'O(n²)', 'O(log n)', 'O(1)'], correctIndex: 2, explanation: 'Binary search halves the search space each time, giving O(log₂ n) complexity.' },
+          { id: 3, question: 'In linear search, the worst case is when:', options: ['Element is at the beginning', 'Element is at the end or not present', 'Array has one element', 'Array is sorted'], correctIndex: 1, explanation: 'Linear search checks elements one by one; worst case is O(n) when the element is last or absent.' },
+          { id: 4, question: 'How many comparisons does binary search need for a sorted array of 1024 elements?', options: ['10', '1024', '512', '100'], correctIndex: 0, explanation: 'log₂(1024) = 10. Binary search needs at most 10 comparisons.' },
+          { id: 5, question: 'Binary search cannot be easily applied to:', options: ['Arrays', 'Sorted arrays', 'Linked lists', 'Strings in sorted order'], correctIndex: 2, explanation: 'Linked lists don\'t support O(1) access to the middle element, making binary search inefficient.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Implement both linear and binary search. Search for 5 different targets in a sorted array of 100 elements. Compare the number of comparisons in a table.', marks: 5 },
+          { id: 2, question: 'Write a recursive binary search function. Trace its execution for searching 42 in [10, 20, 30, 42, 50, 60, 70].', marks: 4 },
+          { id: 3, question: 'What happens if you apply binary search on an unsorted array? Demonstrate with an example.', marks: 3 },
+        ],
       }
     },
     {
@@ -105,7 +141,19 @@ export const csData: SubjectData = {
           'Push beyond capacity — observe overflow.',
         ],
         objectives: ['Understand LIFO principle', 'Perform stack operations', 'Handle overflow/underflow'],
-        observationTable: { columns: ['Operation', 'Element', 'Stack state after', 'Top element'], rows: 6 },
+        observationTable: { columns: ['Operation', 'Before', 'After', 'Top pointer'], rows: 6 },
+        quizQuestions: [
+          { id: 1, question: 'A stack follows the principle of:', options: ['FIFO', 'LIFO', 'Random access', 'Priority'], correctIndex: 1, explanation: 'Stack is Last-In, First-Out (LIFO) — the last element pushed is the first to be popped.' },
+          { id: 2, question: 'The condition for stack overflow (array implementation) is:', options: ['top == -1', 'top == MAX_SIZE - 1', 'top == 0', 'top == NULL'], correctIndex: 1, explanation: 'When the top pointer equals the last index, no more elements can be pushed.' },
+          { id: 3, question: 'Which of the following is NOT a stack application?', options: ['Function call management', 'Undo operation', 'BFS traversal', 'Expression evaluation'], correctIndex: 2, explanation: 'BFS uses a queue. Stacks are used for DFS, function calls, undo, and expression evaluation.' },
+          { id: 4, question: 'The time complexity of push and pop operations is:', options: ['O(n)', 'O(log n)', 'O(1)', 'O(n²)'], correctIndex: 2, explanation: 'Push and pop operate on the top element only, so they are O(1) — constant time.' },
+          { id: 5, question: 'To convert infix expression A + B * C to postfix:', options: ['A B C + *', 'A B + C *', 'A B C * +', '+ A * B C'], correctIndex: 2, explanation: 'Operator precedence: * before +. So B*C first → BC*, then A + → ABC*+.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Implement a stack using an array. Write functions for push, pop, peek, isEmpty, and isFull. Test with 10 operations.', marks: 5 },
+          { id: 2, question: 'Convert the infix expression ((A + B) * C − (D / E)) to postfix and prefix notation. Show the stack trace for the conversion.', marks: 4 },
+          { id: 3, question: 'Explain how the function call stack works in recursion. Trace the stack for factorial(4).', marks: 3 },
+        ],
       }
     },
     {
@@ -130,6 +178,18 @@ export const csData: SubjectData = {
         ],
         objectives: ['Understand FIFO principle', 'Perform queue operations', 'Compare with Stack'],
         observationTable: { columns: ['Operation', 'Element', 'Queue state', 'Front', 'Rear'], rows: 6 },
+        quizQuestions: [
+          { id: 1, question: 'Queues follow which principle?', options: ['LIFO', 'FIFO', 'Random', 'LILO'], correctIndex: 1, explanation: 'Queue is First-In, First-Out (FIFO) — elements are removed in the same order they arrived.' },
+          { id: 2, question: 'Which pointer is used for Enqueue in a linear queue?', options: ['Front', 'Rear', 'Top', 'Middle'], correctIndex: 1, explanation: 'In a queue, Enqueue adds elements to the rear; Dequeue removes from the front.' },
+          { id: 3, question: 'A circular queue is used to:', options: ['Increase speed', 'Save space/reuse empty slots', 'Support random access', 'Increase security'], correctIndex: 1, explanation: 'Circular queues solve the limitation of linear queues where capacity remains unused even when empty.' },
+          { id: 4, question: 'Enqueue and Dequeue operations take:', options: ['O(n)', 'O(log n)', 'O(1)', 'O(n²)'], correctIndex: 2, explanation: 'Both operations are O(1) in a standard array or linked-list based queue.' },
+          { id: 5, question: 'Which scenario is best suited for a Queue?', options: ['Undo feature', 'Function recursion', 'Print job scheduling', 'Backtracking'], correctIndex: 2, explanation: 'Print job scheduling requires maintaining order of arrival, which is the definition of a queue.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Implement a linear queue using an array. Include functions for enqueue, dequeue, display, and isEmpty.', marks: 5 },
+          { id: 2, question: 'What is a Circular Queue? Explain its benefits over a linear queue. Draw a diagram of a circular queue with 5 elements.', marks: 4 },
+          { id: 3, question: 'Compare a Priority Queue with a standard Queue. When would you use a Priority Queue?', marks: 3 },
+        ],
       }
     },
     {
@@ -153,7 +213,19 @@ export const csData: SubjectData = {
           'Build a full-adder extending the half-adder.',
         ],
         objectives: ['Understand logic gate operations', 'Verify truth tables', 'Build combinational circuits'],
-        observationTable: { columns: ['Gate', 'A', 'B', 'Output', 'Boolean expression'], rows: 8 },
+        observationTable: { columns: ['Gate', 'A', 'B', 'Output', 'Verified?'], rows: 14 },
+        quizQuestions: [
+          { id: 1, question: 'The output of an AND gate is 1 only when:', options: ['Any input is 1', 'All inputs are 1', 'All inputs are 0', 'Any input is 0'], correctIndex: 1, explanation: 'AND gate: Output = 1 only when ALL inputs are 1.' },
+          { id: 2, question: 'The NAND gate is called a universal gate because:', options: ['It is the most common gate', 'Any Boolean function can be implemented using only NAND gates', 'It has the simplest circuit', 'It uses the least power'], correctIndex: 1, explanation: 'NAND (and NOR) gates alone can implement any combinational logic circuit.' },
+          { id: 3, question: 'The output of XOR gate for inputs A=1, B=1 is:', options: ['1', '0', 'Undefined', 'Both 0 and 1'], correctIndex: 1, explanation: 'XOR: Output = 1 when inputs differ. 1 XOR 1 = 0.' },
+          { id: 4, question: 'NOT(A AND B) is equivalent to:', options: ['A AND B', 'A OR B', 'NOT A OR NOT B', 'NOT A AND NOT B'], correctIndex: 2, explanation: 'By De Morgan\'s theorem: NOT(A·B) = A\' + B\' (NAND = OR of complements).' },
+          { id: 5, question: 'How many rows does a truth table have for 3 input variables?', options: ['3', '6', '8', '16'], correctIndex: 2, explanation: 'A truth table with n inputs has 2ⁿ rows. For n=3: 2³ = 8 rows.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Construct the truth tables for all 7 basic logic gates (AND, OR, NOT, NAND, NOR, XOR, XNOR) and verify using the simulator.', marks: 5 },
+          { id: 2, question: 'Implement a full adder circuit using only NAND gates. Draw the circuit diagram and verify the truth table.', marks: 4 },
+          { id: 3, question: 'Simplify the expression F = A\'BC + AB\'C + ABC\' + ABC using Boolean algebra and verify with a truth table.', marks: 3 },
+        ],
       }
     },
   ]

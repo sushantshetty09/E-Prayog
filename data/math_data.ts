@@ -31,6 +31,18 @@ export const mathData: SubjectData = {
         ],
         objectives: ['Understand unit circle', 'Relate angle to trig ratios', 'Identify quadrant signs'],
         observationTable: { columns: ['Angle (°)', 'sin θ', 'cos θ', 'tan θ', 'Quadrant'], rows: 8 },
+        quizQuestions: [
+          { id: 1, question: 'The value of sin 30° is:', options: ['0', '1/2', '√3/2', '1'], correctIndex: 1, explanation: 'sin 30° = 1/2 (from the standard trigonometric table).' },
+          { id: 2, question: 'In the second quadrant (90° to 180°), which trigonometric ratio is positive?', options: ['cos θ', 'tan θ', 'sin θ', 'All are positive'], correctIndex: 2, explanation: 'ASTC rule: All, Sin, Tan, Cos — only sin is positive in Q2.' },
+          { id: 3, question: 'On the unit circle, cos θ represents:', options: ['The y-coordinate', 'The x-coordinate', 'The radius', 'The angle'], correctIndex: 1, explanation: 'For a point on the unit circle, x = cos θ and y = sin θ.' },
+          { id: 4, question: 'tan 90° is:', options: ['0', '1', 'Undefined', '∞'], correctIndex: 2, explanation: 'tan 90° = sin 90°/cos 90° = 1/0, which is undefined.' },
+          { id: 5, question: 'The period of sin θ is:', options: ['180°', '360°', '90°', '720°'], correctIndex: 1, explanation: 'sin θ repeats every 360° (or 2π radians).' },
+        ],
+        assignments: [
+          { id: 1, question: 'Fill in the values of sin, cos, and tan for angles 0°, 30°, 45°, 60°, 90°, 120°, 135°, 150°, 180° in a table. Verify using the unit circle.', marks: 5 },
+          { id: 2, question: 'Prove that sin²θ + cos²θ = 1 using the unit circle definition. Derive the other two Pythagorean identities.', marks: 4 },
+          { id: 3, question: 'Sketch the graphs of y = sin x and y = cos x for 0 to 2π. Identify amplitude, period, and phase difference.', marks: 3 },
+        ],
       }
     },
     {
@@ -55,6 +67,18 @@ export const mathData: SubjectData = {
         ],
         objectives: ['Generate binomial coefficients', 'Identify patterns', 'Relate to binomial expansion'],
         observationTable: { columns: ['n', 'Expansion of (a+b)ⁿ', 'Coefficients', 'Sum'], rows: 6 },
+        quizQuestions: [
+          { id: 1, question: 'The number of terms in the expansion of (a+b)⁵ is:', options: ['5', '6', '4', '10'], correctIndex: 1, explanation: '(a+b)ⁿ has (n+1) terms. So (a+b)⁵ has 6 terms.' },
+          { id: 2, question: 'The sum of all coefficients in (a+b)ⁿ is:', options: ['n', 'n²', '2ⁿ', 'n!'], correctIndex: 2, explanation: 'Put a = b = 1: (1+1)ⁿ = 2ⁿ.' },
+          { id: 3, question: 'C(5,2) equals:', options: ['5', '10', '20', '25'], correctIndex: 1, explanation: 'C(5,2) = 5!/(2!·3!) = 120/12 = 10.' },
+          { id: 4, question: 'In Pascal\'s Triangle, each entry is:', options: ['The product of the two above', 'The sum of the two entries directly above it', 'Always prime', 'The difference of two above'], correctIndex: 1, explanation: 'Each entry in Pascal\'s Triangle = sum of the two entries above it.' },
+          { id: 5, question: 'The middle term of (a+b)⁶ is:', options: ['3rd term', '4th term', '5th term', 'There is no single middle term'], correctIndex: 1, explanation: 'For even n=6, middle term is the (n/2 + 1) = 4th term.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Expand (2x + 3)⁴ using the Binomial Theorem. Verify each coefficient using Pascal\'s Triangle.', marks: 5 },
+          { id: 2, question: 'Find the coefficient of x³ in the expansion of (1 + x)¹. Relate it to C(9,3).', marks: 3 },
+          { id: 3, question: 'Prove that the sum of even-positioned coefficients equals the sum of odd-positioned coefficients in (1+x)ⁿ. (Hint: put x = −1)', marks: 4 },
+        ],
       }
     },
     {
@@ -79,6 +103,18 @@ export const mathData: SubjectData = {
         ],
         objectives: ['Calculate measures of central tendency', 'Understand effect of outliers', 'Visualise frequency distribution'],
         observationTable: { columns: ['Data set', 'Mean', 'Median', 'Mode', 'Range'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'The mean of 2, 4, 6, 8, 10 is:', options: ['4', '6', '8', '5'], correctIndex: 1, explanation: 'Mean = (2+4+6+8+10)/5 = 30/5 = 6.' },
+          { id: 2, question: 'The median of 3, 7, 2, 9, 5 is:', options: ['5', '7', '2', '9'], correctIndex: 0, explanation: 'Arranged: 2, 3, 5, 7, 9. Middle value = 5.' },
+          { id: 3, question: 'Which measure of central tendency is most affected by outliers?', options: ['Mode', 'Median', 'Mean', 'Range'], correctIndex: 2, explanation: 'Mean is pulled towards extreme values (outliers), while median and mode are resistant.' },
+          { id: 4, question: 'The mode of 1, 2, 2, 3, 3, 3, 4 is:', options: ['1', '2', '3', '4'], correctIndex: 2, explanation: 'Mode is the most frequently occurring value. 3 appears 3 times.' },
+          { id: 5, question: 'For the data: 10, 20, 30, 40, 50, the range is:', options: ['30', '40', '50', '20'], correctIndex: 1, explanation: 'Range = Maximum − Minimum = 50 − 10 = 40.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Collect the marks of 20 students in a test. Calculate mean, median, and mode. Show workings for grouped data using assumed mean method.', marks: 5 },
+          { id: 2, question: 'A data set has mean = 50, median = 45. Is the data positively or negatively skewed? Explain with a diagram.', marks: 3 },
+          { id: 3, question: 'Explain when median is a better measure of central tendency than mean. Give a real-life example involving salaries.', marks: 4 },
+        ],
       }
     },
     {
@@ -103,6 +139,18 @@ export const mathData: SubjectData = {
         ],
         objectives: ['Perform matrix arithmetic', 'Calculate determinant', 'Understand inverse matrices'],
         observationTable: { columns: ['Operation', 'Input', 'Result', 'Verified (Yes/No)'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'Two matrices can be multiplied (A×B) only if:', options: ['They have the same dimensions', 'Number of columns of A = Number of rows of B', 'They are square matrices', 'They are equal'], correctIndex: 1, explanation: 'For A(m×n) × B(n×p), the inner dimensions must match.' },
+          { id: 2, question: 'The determinant of [[2, 3], [1, 4]] is:', options: ['5', '11', '8', '−5'], correctIndex: 0, explanation: 'det = (2×4) − (3×1) = 8 − 3 = 5.' },
+          { id: 3, question: 'If det(A) = 0, then:', options: ['A has an inverse', 'A is called a singular matrix', 'A is an identity matrix', 'A is a zero matrix'], correctIndex: 1, explanation: 'A matrix with determinant 0 is singular and does not have an inverse.' },
+          { id: 4, question: 'The identity matrix I satisfies:', options: ['A × I = 0', 'A × I = A', 'A × I = I', 'A + I = A'], correctIndex: 1, explanation: 'Multiplying any matrix by the identity matrix gives the same matrix: AI = A.' },
+          { id: 5, question: 'The transpose of a 2×3 matrix is:', options: ['2×3', '3×2', '3×3', '2×2'], correctIndex: 1, explanation: 'Transposing swaps rows and columns, so 2×3 becomes 3×2.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Given A = [[1,2],[3,4]] and B = [[5,6],[7,8]], compute A+B, A×B, det(A), and A⁻¹. Verify A×A⁻¹ = I.', marks: 5 },
+          { id: 2, question: 'Solve the system of equations 2x + 3y = 8, x + 4y = 7 using the matrix inverse method.', marks: 4 },
+          { id: 3, question: 'Prove that (AB)ᵀ = BᵀAᵀ for two 2×2 matrices of your choice.', marks: 3 },
+        ],
       }
     },
     {
@@ -128,6 +176,18 @@ export const mathData: SubjectData = {
         ],
         objectives: ['Understand experimental probability', 'Observe Law of Large Numbers', 'Visualise probability distributions'],
         observationTable: { columns: ['Trials', 'Heads', 'Tails', 'P(H) experimental', 'P(H) theoretical'], rows: 5 },
+        quizQuestions: [
+          { id: 1, question: 'The probability of getting a head in a single fair coin toss is:', options: ['0', '0.5', '1', '0.25'], correctIndex: 1, explanation: 'P(H) = 1/2 = 0.5 for a fair coin.' },
+          { id: 2, question: 'The Law of Large Numbers states that:', options: ['Large numbers are more probable', 'Experimental probability approaches theoretical probability as trials increase', 'Every outcome is equally likely', 'Probability is always 0.5'], correctIndex: 1, explanation: 'As the number of trials increases, experimental probability converges to theoretical probability.' },
+          { id: 3, question: 'The probability of rolling a 7 on a standard die is:', options: ['1/6', '1/7', '0', '1'], correctIndex: 2, explanation: 'A standard die has faces 1-6 only. P(7) = 0 (impossible event).' },
+          { id: 4, question: 'If P(A) = 0.3, then P(not A) is:', options: ['0.3', '0.7', '1.3', '0'], correctIndex: 1, explanation: 'P(A\'') = 1 − P(A) = 1 − 0.3 = 0.7.' },
+          { id: 5, question: 'The probability of getting at least one head in two coin tosses is:', options: ['1/4', '1/2', '3/4', '1'], correctIndex: 2, explanation: 'P(at least 1H) = 1 − P(no heads) = 1 − (1/2)² = 1 − 1/4 = 3/4.' },
+        ],
+        assignments: [
+          { id: 1, question: 'Toss a coin 50 times. Record the frequency of heads and tails. Compare experimental P(H) with 0.5. Repeat for 100 and 200 tosses.', marks: 5 },
+          { id: 2, question: 'Two dice are thrown together. Find the probability of getting: (a) a sum of 7, (b) a doublet, (c) a sum greater than 9.', marks: 4 },
+          { id: 3, question: 'Explain the difference between theoretical probability and experimental probability with a real-world example.', marks: 3 },
+        ],
       }
     },
     {
@@ -153,6 +213,18 @@ export const mathData: SubjectData = {
         ],
         objectives: ['Visualise conic sections', 'Understand eccentricity', 'Relate equation to geometry'],
         observationTable: { columns: ['Conic', 'Equation', 'Eccentricity', 'Focus/Foci', 'Key property'], rows: 4 },
+        quizQuestions: [
+          { id: 1, question: 'A conic section with eccentricity e = 0 is a:', options: ['Parabola', 'Ellipse', 'Circle', 'Hyperbola'], correctIndex: 2, explanation: 'e = 0 means the conic is a circle (a special case of an ellipse).' },
+          { id: 2, question: 'The equation x²/16 + y²/9 = 1 represents:', options: ['A circle', 'An ellipse', 'A parabola', 'A hyperbola'], correctIndex: 1, explanation: 'x²/a² + y²/b² = 1 with a ≠ b is an ellipse.' },
+          { id: 3, question: 'The focus of the parabola y² = 12x is at:', options: ['(3, 0)', '(0, 3)', '(12, 0)', '(0, 12)'], correctIndex: 0, explanation: 'y² = 4ax gives 4a = 12, so a = 3. Focus is at (a, 0) = (3, 0).' },
+          { id: 4, question: 'An eccentricity greater than 1 indicates:', options: ['Circle', 'Ellipse', 'Parabola', 'Hyperbola'], correctIndex: 3, explanation: 'e > 1 → Hyperbola, e = 1 → Parabola, 0 < e < 1 → Ellipse, e = 0 → Circle.' },
+          { id: 5, question: 'The asymptotes of the hyperbola x²/a² − y²/b² = 1 are:', options: ['y = ±(a/b)x', 'y = ±(b/a)x', 'y = ±ax', 'y = ±bx'], correctIndex: 1, explanation: 'The asymptotes are y = ±(b/a)x for the standard hyperbola.' },
+        ],
+        assignments: [
+          { id: 1, question: 'For the ellipse x²/25 + y²/16 = 1, find: (a) lengths of major and minor axes, (b) eccentricity, (c) coordinates of foci, (d) length of latus rectum.', marks: 5 },
+          { id: 2, question: 'Explain with diagrams how different conic sections are obtained by cutting a double cone at different angles.', marks: 4 },
+          { id: 3, question: 'The orbit of Earth around the Sun is an ellipse. If the semi-major axis is 1 AU and eccentricity is 0.017, calculate the semi-minor axis.', marks: 3 },
+        ],
       }
     },
   ]
