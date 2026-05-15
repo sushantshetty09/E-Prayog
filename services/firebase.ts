@@ -5,7 +5,7 @@ import {
   browserLocalPersistence,
   setPersistence,
 } from 'firebase/auth';
-import {
+import { 
   getFirestore,
   doc, setDoc, getDoc, updateDoc, addDoc, deleteDoc,
   collection, query, where, getDocs, onSnapshot,
@@ -37,7 +37,10 @@ if (!firebaseConfig.apiKey || firebaseConfig.apiKey === '""' || firebaseConfig.a
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+
+// Use standard getFirestore — we do our own caching via localStorage in AuthContext
 export const db = getFirestore(app);
+
 export const storage = getStorage(app);
 export const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({ prompt: 'select_account' });

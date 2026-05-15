@@ -20,6 +20,9 @@ const SUBJECT_COLORS: Record<string, string> = {
   physics: 'bg-emerald-500', chemistry: 'bg-orange-500', biology: 'bg-purple-500', math: 'bg-blue-500', cs: 'bg-pink-500'
 };
 
+// Module-level cache so teacher name survives tab switches
+const teacherNameCache: Record<string, string> = {};
+
 const Profile: React.FC = () => {
   const { t } = useLang();
   const { user: authUser, loading: authLoading, profileData, role, refreshProfile } = useAuth();
@@ -43,17 +46,23 @@ const Profile: React.FC = () => {
   });
 
   useEffect(() => {
-    if (!authLoading && !authUser) navigate('/login');
-    else if (profileData) {
-      setFormData({
-        name: profileData.name || profileData.full_name || authUser?.displayName || '',
-        grade: profileData.grade || 'Not Specified',
-        syllabus: profileData.syllabus || 'Not Specified',
-        institution: profileData.institution || '',
-        language: profileData.language || 'English',
-        avatar: profileData.avatar?.startsWith('bg-') ? profileData.avatar : 'bg-emerald-500',
-      });
-      if (profileData.teacherUid && role === 'Student') {
+    if (!authLoading && !authUser) { navigate('/login'); return; }
+    if (!profileData) return;
+
+    setFormData({
+      name: profileData.name || profileData.full_name || authUser?.displayName || '',
+      grade: profileData.grade || 'Not Specified',
+      syllabus: profileData.syllabus || 'Not Specified',
+      institution: profileData.institution || '',
+      language: profileData.language || 'English',
+      avatar: profileData.avatar?.startsWith('bg-') ? profileData.avatar : 'bg-emerald-500',
+    });
+
+    if (profileData.teacherUid && role === 'Student') {
+      // Use cache first — avoid extra Firestore fetch on every render
+      if (teacherNameCache[profileData.teacherUid]) {
+        setLinkedTeacherName(teacherNameCache[profileData.teacherUid]);
+      } else {
         resolveLinkedTeacher(profileData.teacherUid);
       }
     }
@@ -63,7 +72,9 @@ const Profile: React.FC = () => {
     try {
       const snap = await getDoc(doc(db, 'users', teacherUid));
       if (snap.exists()) {
-        setLinkedTeacherName(snap.data().name || snap.data().full_name || 'Teacher');
+        const name = snap.data().name || snap.data().full_name || 'Teacher';
+        teacherNameCache[teacherUid] = name; // cache so next visit is instant
+        setLinkedTeacherName(name);
       }
     } catch {}
   };
@@ -144,12 +155,35 @@ const Profile: React.FC = () => {
     }
   };
 
-  if (authLoading || !profileData) {
-    return <div className="pt-24 min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-emerald-500" size={40} /></div>;
+  // Redirect teacher to their own profile page
+  if (!authLoading && role === 'Teacher') { navigate('/teacher-profile', { replace: true }); return null; }
+
+  // Still fetching auth/profile — show skeleton
+  if (authLoading) {
+    return (
+      <div className="pt-24 min-h-screen pb-12 px-6 lg:px-12 max-w-7xl mx-auto">
+        <div className="mb-8 h-10 w-48 bg-white/10 rounded-xl animate-pulse" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {[1,2,3].map(i => (
+            <div key={i} className="rounded-2xl bg-white/5 border border-white/10 h-80 animate-pulse" />
+          ))}
+        </div>
+      </div>
+    );
   }
 
-  // If teacher, redirect to teacher profile
-  if (role === 'Teacher') { navigate('/teacher-profile', { replace: true }); return null; }
+  // Auth done but no Firestore profile doc found
+  if (!profileData) {
+    return (
+      <div className="pt-24 min-h-screen flex flex-col items-center justify-center gap-4">
+        <Loader2 className="animate-spin text-emerald-500" size={36} />
+        <p className="text-slate-400 text-sm">Setting up your profile…</p>
+        <button onClick={() => refreshProfile()} className="mt-2 px-4 py-2 rounded-xl bg-white/10 text-white text-sm hover:bg-white/20 transition-all">
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   const avatarUrl = profileData.photoURL || authUser?.photoURL || '';
   const createdDate = authUser?.metadata?.creationTime ? new Date(authUser.metadata.creationTime).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : 'Unknown';

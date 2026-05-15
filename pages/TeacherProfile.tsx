@@ -5,7 +5,7 @@ import { updateProfile } from 'firebase/auth';
 import { auth } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
-import { Loader2, CheckCircle2, User, Mail, Calendar, Save, Edit3, BookOpen, Key, Camera, Copy, Link2 } from 'lucide-react';
+import { Loader2, CheckCircle2, User, Mail, Calendar, Save, Edit3, BookOpen, Key, Camera, Copy, Link2, RefreshCw } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const TeacherProfile: React.FC = () => {
@@ -72,8 +72,20 @@ const TeacherProfile: React.FC = () => {
     }
   };
 
-  if (authLoading || !profileData) {
+  if (authLoading) {
     return <div className="pt-24 min-h-screen flex items-center justify-center"><Loader2 className="animate-spin text-purple-500" size={40} /></div>;
+  }
+  
+  if (!profileData) {
+    return (
+      <div className="pt-24 min-h-screen flex flex-col items-center justify-center gap-4">
+        <Loader2 className="animate-spin text-purple-500" size={36} />
+        <p className="text-slate-400 text-sm font-medium">Setting up teacher profile…</p>
+        <button onClick={() => refreshProfile()} className="mt-2 px-6 py-2.5 rounded-xl bg-purple-600/10 text-purple-400 text-sm font-bold hover:bg-purple-600/20 border border-purple-500/20 transition-all flex items-center gap-2">
+          <RefreshCw size={16} /> Retry Sync
+        </button>
+      </div>
+    );
   }
 
   const avatarUrl = profileData.photoURL || authUser?.photoURL || '';

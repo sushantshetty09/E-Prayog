@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, onAuthStateChanged, signOut as firebaseSignOut } from 'firebase/auth';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { auth, db } from './firebase';
 
 // Extended profile type with all new fields (backwards-compatible)
@@ -70,17 +70,98 @@ const AuthContext = createContext<AuthContextType>({
 
 export const useAuth = () => useContext(AuthContext);
 
+// Simple in-memory profile cache (lives for 60 seconds)
+const profileCache: { data: ProfileData | null; ts: number; uid: string } = { data: null, ts: 0, uid: '' };
+const CACHE_TTL_MS = 60_000;
+
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [role, setRole] = useState('');
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchProfile = async (userId: string) => {
+  const applyProfile = (data: ProfileData | null) => {
+    setProfileData(data);
+    if (data?.role) {
+      setRole(data.role);
+      // Save to localStorage for quick load on next session
+      if (auth.currentUser) {
+        localStorage.setItem(`ep_profile_${auth.currentUser.uid}`, JSON.stringify(data));
+      }
+    } else if (auth.currentUser) {
+      // Guess role from email if profile doc is missing or role field is empty
+      const email = auth.currentUser.email || '';
+      const isTeacher = email.includes('@tchr.e-prayog') || 
+                        email.includes('-tchr-e-prayog@eprayog-auth.com') || 
+                        email === 'teacher@eprayog.com';
+      const isAdmin = email.includes('@admin.e-prayog') || 
+                      email.includes('-admin-e-prayog@eprayog-auth.com') || 
+                      email === 'admin@eprayog.com';
+      setRole(isAdmin ? 'Admin' : (isTeacher ? 'Teacher' : 'Student'));
+    } else {
+      setRole('Student');
+    }
+  };
+
+  const fetchProfile = async (userId: string, forceRefresh = false) => {
+    // Serve cache immediately so the UI renders without waiting
+    const now = Date.now();
+    if (!forceRefresh && profileCache.uid === userId && now - profileCache.ts < CACHE_TTL_MS && profileCache.data) {
+      applyProfile(profileCache.data);
+      setLoading(false);
+      return;
+    }
+
+    if (profileCache.uid === userId && profileCache.data) {
+      applyProfile(profileCache.data);
+      setLoading(false);
+    }
+
+    const provisionDefaultProfile = async (uid: string): Promise<ProfileData | null> => {
+      try {
+        // If we're here, authUser exists but Firestore doc doesn't.
+        // We use the current auth user info to create a basic profile.
+        const authUser = auth.currentUser;
+        if (!authUser) return null;
+
+        const email = authUser.email || '';
+        const isTeacher = email.includes('@tchr.e-prayog') || 
+                          email.includes('-tchr-e-prayog@eprayog-auth.com') || 
+                          email === 'teacher@eprayog.com';
+        const isAdmin = email.includes('@admin.e-prayog') || 
+                        email.includes('-admin-e-prayog@eprayog-auth.com') || 
+                        email === 'admin@eprayog.com';
+        const role = isAdmin ? 'Admin' : (isTeacher ? 'Teacher' : 'Student');
+
+        const newProfile: any = {
+          uid,
+          name: authUser.displayName || (isAdmin ? 'Admin' : (isTeacher ? 'Teacher' : 'Student')),
+          full_name: authUser.displayName || (isAdmin ? 'Admin' : (isTeacher ? 'Teacher' : 'Student')),
+          email: email,
+          role: role,
+          photoURL: authUser.photoURL || '',
+          progress: { physics: 0, chemistry: 0, biology: 0, math: 0, cs: 0 },
+          completedLabs: [],
+          visitedLabs: [],
+          streak: 0,
+          lastActiveDate: '',
+          totalTimeSpent: 0,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+
+        await setDoc(doc(db, 'users', uid), newProfile);
+        return { ...newProfile, id: uid };
+      } catch (err) {
+        console.error('[Auth] Failed to provision default profile:', err);
+        return null;
+      }
+    };
+
     try {
       const profilePromise = getDoc(doc(db, 'users', userId));
       const timeout = new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error('Profile fetch timeout')), 8000);
+        setTimeout(() => reject(new Error('Profile fetch timeout')), 10000);
       });
       const docSnap = await Promise.race([profilePromise, timeout]) as any;
 
@@ -89,25 +170,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         const data: ProfileData = {
           id: docSnap.id,
           ...raw,
-          // Normalize name: prefer `name`, fallback to `full_name`
           name: raw.name || raw.full_name || '',
           full_name: raw.full_name || raw.name || '',
-          // Normalize class code fields
           classCode: raw.classCode || raw.class_code || '',
           class_code: raw.class_code || raw.classCode || '',
           teacherCode: raw.teacherCode || raw.teacher_code || '',
           teacher_code: raw.teacher_code || raw.teacherCode || '',
         };
-        setProfileData(data);
-        setRole(data.role || 'Student');
+        // Update cache
+        profileCache.data = data;
+        profileCache.ts = Date.now();
+        profileCache.uid = userId;
+        applyProfile(data);
       } else {
-        setRole('Student');
-        setProfileData(null);
+        // PROFILE REPAIR: Try to create the missing doc
+        const repaired = await provisionDefaultProfile(userId);
+        if (repaired) {
+          profileCache.data = repaired;
+          profileCache.ts = Date.now();
+          profileCache.uid = userId;
+          applyProfile(repaired);
+        } else {
+          applyProfile(null);
+        }
       }
+
     } catch (e) {
       console.error('Error fetching profile:', e);
-      setRole('Student');
-      setProfileData(null);
+      // Don't wipe existing data on network error — keep showing cached
+      if (!profileCache.data) applyProfile(null);
     } finally {
       setLoading(false);
     }
@@ -115,7 +206,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const refreshProfile = async () => {
     if (user) {
-      await fetchProfile(user.uid);
+      await fetchProfile(user.uid, true); // force re-fetch, bypass cache
     }
   };
 
@@ -123,7 +214,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       setUser(firebaseUser);
       if (firebaseUser) {
-        await fetchProfile(firebaseUser.uid).catch(() => setLoading(false));
+        // QUICK LOAD: Load from localStorage immediately
+        try {
+          const cached = localStorage.getItem(`ep_profile_${firebaseUser.uid}`);
+          if (cached) {
+            const data = JSON.parse(cached);
+            applyProfile(data);
+            setLoading(false); // Stop main loader early
+          }
+        } catch (e) {}
+
+        // Background sync
+        fetchProfile(firebaseUser.uid).catch(() => {
+          if (loading) setLoading(false);
+        });
       } else {
         setUser(null);
         setRole('');
@@ -137,8 +241,15 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const handleSignOut = async () => {
     try {
+      if (user) {
+        localStorage.removeItem(`ep_profile_${user.uid}`);
+      }
       await firebaseSignOut(auth);
     } finally {
+      // Clear cache so next login always fetches fresh data
+      profileCache.data = null;
+      profileCache.ts = 0;
+      profileCache.uid = '';
       setUser(null);
       setRole('');
       setProfileData(null);

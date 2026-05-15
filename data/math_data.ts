@@ -1,4 +1,4 @@
-import { Calculator } from 'lucide-react';
+﻿import { Calculator } from 'lucide-react';
 import { SubjectData, SubjectType } from '../types';
 
 export const mathData: SubjectData = {
@@ -180,7 +180,7 @@ export const mathData: SubjectData = {
           { id: 1, question: 'The probability of getting a head in a single fair coin toss is:', options: ['0', '0.5', '1', '0.25'], correctIndex: 1, explanation: 'P(H) = 1/2 = 0.5 for a fair coin.' },
           { id: 2, question: 'The Law of Large Numbers states that:', options: ['Large numbers are more probable', 'Experimental probability approaches theoretical probability as trials increase', 'Every outcome is equally likely', 'Probability is always 0.5'], correctIndex: 1, explanation: 'As the number of trials increases, experimental probability converges to theoretical probability.' },
           { id: 3, question: 'The probability of rolling a 7 on a standard die is:', options: ['1/6', '1/7', '0', '1'], correctIndex: 2, explanation: 'A standard die has faces 1-6 only. P(7) = 0 (impossible event).' },
-          { id: 4, question: 'If P(A) = 0.3, then P(not A) is:', options: ['0.3', '0.7', '1.3', '0'], correctIndex: 1, explanation: 'P(A\'') = 1 − P(A) = 1 − 0.3 = 0.7.' },
+          { id: 4, question: 'If P(A) = 0.3, then P(not A) is:', options: ['0.3', '0.7', '1.3', '0'], correctIndex: 1, explanation: "P(A') = 1 - P(A) = 1 - 0.3 = 0.7." },
           { id: 5, question: 'The probability of getting at least one head in two coin tosses is:', options: ['1/4', '1/2', '3/4', '1'], correctIndex: 2, explanation: 'P(at least 1H) = 1 − P(no heads) = 1 − (1/2)² = 1 − 1/4 = 3/4.' },
         ],
         assignments: [

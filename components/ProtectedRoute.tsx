@@ -25,8 +25,9 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
     return <Navigate to="/login" state={{ from: location.pathname }} replace />;
   }
 
-  // Wrong role → redirect to correct dashboard (not blocking page)
-  if (allowedRoles && role && !allowedRoles.includes(role as any)) {
+  // Wrong role → redirect to correct dashboard
+  // NOTE: do NOT add `role &&` here — empty role must also be blocked
+  if (allowedRoles && !allowedRoles.includes(role as any)) {
     if (role === 'Admin') return <Navigate to="/admin-dashboard" replace />;
     if (role === 'Teacher') return <Navigate to="/teacher-dashboard" replace />;
     return <Navigate to="/dashboard" replace />;

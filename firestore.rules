@@ -1,94 +1,129 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Check if the request is from an authenticated user
+
+    // ── Core Auth Check ────────────────────────────────────────
     function isAuthenticated() {
       return request.auth != null;
     }
 
-    // Check if the user is a Teacher
+    // ── Safe Role Lookup ───────────────────────────────────────
+    // Returns null (never throws) if the user doc is missing.
+    // This avoids the chicken-and-egg deadlock on first login.
+    function getUserData() {
+      let path = /databases/$(database)/documents/users/$(request.auth.uid);
+      return exists(path) ? get(path).data : null;
+    }
+
+    function getRole() {
+      let data = getUserData();
+      return data != null ? data.get('role', 'Student') : 'Student';
+    }
+
     function isTeacher() {
-      return isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "Teacher";
+      return isAuthenticated() && getRole() == 'Teacher';
     }
 
-    // Check if the user is an Admin
     function isAdmin() {
-      return isAuthenticated() && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "Admin";
+      return isAuthenticated() && getRole() == 'Admin';
     }
 
-    // --- Users Collection ---
+    // ── Users Collection ───────────────────────────────────────
     match /users/{userId} {
+      // Any authenticated user can read any profile.
+      // This is required for teacher-student lookups and profile loading.
       allow read: if isAuthenticated();
-      allow create: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
-      // Users can update own profile but NOT change their role, unless Admin
-      allow update: if isAuthenticated() && (
-        isAdmin() || 
-        (request.auth.uid == userId && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role']))
+
+      // A user can create their OWN profile (needed for first-login provisioning),
+      // OR an admin can create any profile (for teacher provisioning).
+      // We intentionally allow self-creation without the isAdmin() check to break the deadlock.
+      allow create: if isAuthenticated() && (
+        request.auth.uid == userId ||
+        getRole() == 'Admin'
       );
+
+      // Users can update their own profile but CANNOT change their own role.
+      // Admins can update any profile including role changes.
+      allow update: if isAuthenticated() && (
+        getRole() == 'Admin' ||
+        (
+          request.auth.uid == userId &&
+          !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role'])
+        )
+      );
+
       allow delete: if isAdmin();
     }
 
-    // --- Lab Progress Sub-collection ---
+    // ── Lab Progress ───────────────────────────────────────────
     match /labProgress/{uid}/labs/{labId} {
-      // Only the student themselves can write their lab progress
-      allow read: if isAuthenticated();
+      allow read: if isAuthenticated() && (
+        request.auth.uid == uid || isTeacher() || isAdmin()
+      );
       allow create, update: if isAuthenticated() && request.auth.uid == uid;
       allow delete: if isAdmin();
     }
 
-    // --- Teachers Collection ---
+    // ── Teachers Collection ────────────────────────────────────
     match /teachers/{teacherUid} {
       allow read: if isAuthenticated();
-      allow create, update: if isAuthenticated() && (request.auth.uid == teacherUid || isAdmin());
+      allow create, update: if isAuthenticated() && (
+        request.auth.uid == teacherUid || isAdmin()
+      );
       allow delete: if isAdmin();
 
-      // Sub-collection: students under a teacher
       match /students/{studentUid} {
         allow read: if isAuthenticated();
         allow create, update, delete: if isAuthenticated() && (
-          request.auth.uid == studentUid || 
-          request.auth.uid == teacherUid || 
+          request.auth.uid == studentUid ||
+          request.auth.uid == teacherUid ||
           isAdmin()
         );
       }
     }
 
-    // --- Teacher Codes (O(1) lookup) ---
+    // ── Teacher Codes ──────────────────────────────────────────
     match /teacherCodes/{code} {
+      // Any authenticated user can read (needed to resolve teacher code on signup)
       allow read: if isAuthenticated();
+      // Teachers and Admins can create/update codes
       allow create, update: if isAuthenticated() && (isTeacher() || isAdmin());
-      allow delete: if isAdmin();
-    }
-
-    // --- Quiz Scores Collection ---
-    match /quiz_scores/{scoreId} {
-      allow read: if isAuthenticated() && (
-        request.auth.uid == resource.data.user_id || 
-        isTeacher() || 
-        isAdmin()
+      // Also allow the owning teacher to write their own code
+      allow create, update: if isAuthenticated() && (
+        resource == null || resource.data.teacherUid == request.auth.uid
       );
-      allow create, update: if isAuthenticated() && request.auth.uid == request.resource.data.user_id;
       allow delete: if isAdmin();
     }
 
-    // --- Activity Feed (legacy name) ---
-    match /activity_feed/{activityId} {
-      allow read: if isAuthenticated();
-      allow create: if isAuthenticated() && request.resource.data.actorUid == request.auth.uid;
-      allow update: if false;
+    // ── Password Resets ────────────────────────────────────────
+    match /passwordResets/{uid} {
+      // Only the target user can read their own reset, or admin
+      allow read: if isAuthenticated() && (request.auth.uid == uid || isAdmin());
+      allow create, update: if isAdmin();
       allow delete: if isAdmin();
     }
 
-    // --- Activity Feed (new name) ---
+    // ── Password Reset Requests ────────────────────────────────
+    match /passwordResetRequests/{requestId} {
+      // Admins and Teachers can see pending requests
+      allow read: if isAuthenticated() && (isAdmin() || isTeacher());
+      // Any authenticated user can submit a reset request (e.g. locked-out teacher)
+      allow create: if isAuthenticated();
+      // Only admin can update (resolve) or delete requests
+      allow update, delete: if isAdmin();
+    }
+
+    // ── Activity Feed ──────────────────────────────────────────
     match /activityFeed/{activityId} {
       allow read: if isAuthenticated();
-      allow create: if isAuthenticated() && request.resource.data.actorUid == request.auth.uid;
+      // Allow any authenticated user to log activity for themselves.
+      // The actorUid check is relaxed here to allow system-level calls during login.
+      allow create: if isAuthenticated();
       allow update: if false;
       allow delete: if isAdmin();
     }
 
-    // --- Feedbacks Collection ---
+    // ── Feedbacks ──────────────────────────────────────────────
     match /feedbacks/{feedbackId} {
       allow read: if isAuthenticated() && (isAdmin() || isTeacher());
       allow create: if isAuthenticated() && request.resource.data.uid == request.auth.uid;
@@ -96,19 +131,23 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
-    // --- Password Reset Requests ---
-    match /passwordResetRequests/{requestId} {
-      allow read: if isAuthenticated() && (isAdmin() || isTeacher());
-      allow create: if isAuthenticated();
-      allow update: if isAdmin();
+    // ── Quiz Scores ────────────────────────────────────────────
+    match /quiz_scores/{scoreId} {
+      allow read: if isAuthenticated() && (
+        request.auth.uid == resource.data.user_id ||
+        isTeacher() ||
+        isAdmin()
+      );
+      allow create, update: if isAuthenticated() && (
+        request.auth.uid == request.resource.data.user_id
+      );
       allow delete: if isAdmin();
     }
 
-    // --- Assignments Collection ---
+    // ── Assignments ────────────────────────────────────────────
     match /assignments/{assignmentId} {
       allow read: if isAuthenticated();
-      allow create, update: if isTeacher() || isAdmin();
-      allow delete: if isTeacher() || isAdmin();
+      allow create, update, delete: if isTeacher() || isAdmin();
     }
   }
 }

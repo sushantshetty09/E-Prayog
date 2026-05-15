@@ -58,7 +58,7 @@ const Login: React.FC = () => {
     : isAdminLoginId(loginId) ? 'admin'
     : 'student';
 
-  // Redirect if already logged in
+  // Redirect if already logged in — wait for role to be fully resolved
   useEffect(() => {
     if (!authLoading && authUser && authRole) {
       const from = (location.state as any)?.from;
@@ -102,25 +102,24 @@ const Login: React.FC = () => {
 
     const cred = await signInWithEmailAndPassword(auth, firebaseEmail, password);
 
-    // Read role from Firestore
+    // Read role for activity logging only — navigation is handled by useEffect
+    // once AuthContext finishes loading the profile
     const snap = await getDoc(doc(db, 'users', cred.user.uid));
     const role = snap.exists() ? snap.data().role : 'Student';
 
-    await updateStreak(cred.user.uid);
-    await logActivity({
+    // Fire-and-forget — don't await these so they don't delay navigation
+    updateStreak(cred.user.uid).catch(() => {});
+    logActivity({
       type: 'user_login', actorUid: cred.user.uid,
       actorName: snap.exists() ? (snap.data().name || '') : '',
       actorEmail: loginId, actorRole: role,
       metadata: { method: 'email' }, visibility: 'admin',
-    });
+    }).catch(() => {});
 
-    const from = (location.state as any)?.from;
-    if (from) {
-      navigate(from, { replace: true });
-    } else {
-      redirectByRole(role);
-    }
+    // Do NOT navigate here — let the useEffect above handle it
+    // once AuthContext resolves the role from Firestore
   };
+
 
   const handleGoogleLogin = async () => {
     if (loginType !== 'student') {
