@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import EprayogLogo from '../components/EprayogLogo';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { SUBJECTS } from '../constants';
 import SimulationStage from '../components/SimulationStage';
@@ -195,9 +196,7 @@ const LabView: React.FC = () => {
             <ArrowLeft size={14} /> {t.labBackTo} {subject.name}
           </Link>
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${subject.hex}15` }}>
-              <subject.icon size={20} style={{ color: subject.hex }} />
-            </div>
+            <EprayogLogo size={52} idSuffix={lab.id} />
             <div>
               <h1 className="text-2xl md:text-3xl font-display font-bold text-white">{lab.title}</h1>
               <p className="text-sm text-slate-400">{lab.category} • {lab.difficulty} • {lab.duration}</p>
