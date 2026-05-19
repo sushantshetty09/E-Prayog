@@ -16,12 +16,11 @@ const StaffLogin: React.FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Pre-fill placeholder emails for convenience (no passwords auto-filled)
     if (type === 'admin') {
-      setEmail('sushantshetty09@gmail.com');
-      setPassword('Shetty@09');
+      setEmail('admin@eprayog.com');
     } else if (type === 'teacher') {
       setEmail('teacher@eprayog.com');
-      setPassword('Teacher@123');
     }
   }, [type]);
 
@@ -36,14 +35,8 @@ const StaffLogin: React.FC = () => {
         navigate('/dashboard');
       }
     } catch (err: any) {
-      // Dev mock fallback
-      if (email.toLowerCase() === 'sushantshetty09@gmail.com' && password === 'Shetty@09') {
-        alert("Dev Mock Activated: Simulated login for Admin account.");
-        navigate('/dashboard');
-      } else {
-        console.error(err);
-        setError(err.message || 'Invalid login credentials.');
-      }
+      console.error(err);
+      setError(err.message || 'Invalid login credentials.');
     } finally {
       setLoading(false);
     }
