@@ -110,7 +110,7 @@ const PeriodicTableTool: React.FC = () => {
       <div className="mb-10 text-center">
         <div className="flex justify-center mb-4"><EprayogLogo size={72} idSuffix="periodic"/></div>
         <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolPeriodicTableTitle}</h1>
-        <p className="text-slate-400 max-w-2xl mx-auto">{t.toolPeriodicTableSubtitle}</p>
+        <p className="text-zinc-400 max-w-2xl mx-auto">{t.toolPeriodicTableSubtitle}</p>
       </div>
 
       <div className="overflow-x-auto pb-8">
@@ -120,7 +120,7 @@ const PeriodicTableTool: React.FC = () => {
             <div key={el.number}
               style={{gridColumn:el.group,gridRow:el.period,
                 background:CATEGORY_COLORS[el.category]||CATEGORY_COLORS['unknown'],cursor:'pointer'}}
-              className="rounded-lg p-1 border border-black/10 hover:scale-110 hover:z-10 text-slate-900 hover:shadow-2xl transition-transform relative flex flex-col justify-between"
+              className="rounded-lg p-1 border border-black/10 hover:scale-110 hover:z-10 text-zinc-900 hover:shadow-2xl transition-transform relative flex flex-col justify-between"
               onClick={()=>setSel(el)}>
               <div className="text-[9px] font-bold opacity-60 text-left pl-0.5">{el.number}</div>
               <div className="text-base sm:text-xl font-black text-center leading-none my-auto">{el.symbol}</div>
@@ -130,7 +130,7 @@ const PeriodicTableTool: React.FC = () => {
 
           {/* La-Lu placeholder at period 6, group 3 */}
           <div style={{gridColumn:3,gridRow:6,background:'#fce7f3',cursor:'default'}}
-            className="rounded-lg p-1 border border-black/10 text-slate-900 relative flex flex-col justify-between">
+            className="rounded-lg p-1 border border-black/10 text-zinc-900 relative flex flex-col justify-between">
             <div className="text-[8px] font-bold opacity-50 text-left pl-0.5">57-71</div>
             <div className="text-sm font-black text-center leading-none my-auto text-pink-700">La-Lu</div>
             <div className="text-[7px] font-bold text-center opacity-60 truncate px-0.5">Lanthanides</div>
@@ -138,7 +138,7 @@ const PeriodicTableTool: React.FC = () => {
 
           {/* Ac-Lr placeholder at period 7, group 3 */}
           <div style={{gridColumn:3,gridRow:7,background:'#fddddd',cursor:'default'}}
-            className="rounded-lg p-1 border border-black/10 text-slate-900 relative flex flex-col justify-between">
+            className="rounded-lg p-1 border border-black/10 text-zinc-900 relative flex flex-col justify-between">
             <div className="text-[8px] font-bold opacity-50 text-left pl-0.5">89-103</div>
             <div className="text-sm font-black text-center leading-none my-auto text-red-700">Ac-Lr</div>
             <div className="text-[7px] font-bold text-center opacity-60 truncate px-0.5">Actinides</div>
@@ -150,7 +150,7 @@ const PeriodicTableTool: React.FC = () => {
               {Object.entries(CATEGORY_COLORS).map(([key,color])=>(
                 <div key={key} className="flex items-center gap-2">
                   <div className="w-3 h-3 rounded-full border border-black/20" style={{backgroundColor:color}}/>
-                  <span className="text-xs text-slate-400 capitalize">{key.replace(/-/g,' ')}</span>
+                  <span className="text-xs text-zinc-400 capitalize">{key.replace(/-/g,' ')}</span>
                 </div>
               ))}
             </div>
@@ -175,13 +175,13 @@ const PeriodicTableTool: React.FC = () => {
                 {/* Header */}
                 <div className="p-5 pb-3">
                   <div className="flex items-start justify-between mb-1">
-                    <div className="text-slate-600 text-sm font-bold leading-none">
+                    <div className="text-zinc-600 text-sm font-bold leading-none">
                       <span className="text-xl">{sel.mass}</span><br/>
                       <span className="text-base">{sel.number}</span>
                     </div>
                   </div>
-                  <div className="text-6xl font-black text-slate-900 leading-none mt-1">{sel.symbol}</div>
-                  <div className="text-xl font-bold text-slate-700 mt-1">{sel.name}</div>
+                  <div className="text-6xl font-black text-zinc-900 leading-none mt-1">{sel.symbol}</div>
+                  <div className="text-xl font-bold text-zinc-700 mt-1">{sel.name}</div>
                 </div>
 
                 {/* Info card */}
@@ -194,19 +194,19 @@ const PeriodicTableTool: React.FC = () => {
                     {label:'ELECTRON BLOCK', val:block},
                   ].map(row=>(
                     <div key={row.label} className="flex items-center justify-between">
-                      <span className="text-[10px] font-bold tracking-widest text-slate-500 uppercase">{row.label}</span>
-                      <span className="text-sm font-bold text-slate-800">{row.val}</span>
+                      <span className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase">{row.label}</span>
+                      <span className="text-sm font-bold text-zinc-800">{row.val}</span>
                     </div>
                   ))}
 
                   {ions.length > 0 && (
-                    <div className="mt-2 pt-3 border-t border-slate-400/30">
-                      <p className="text-[10px] font-bold tracking-widest text-slate-500 uppercase text-center mb-2">COMMON IONS</p>
+                    <div className="mt-2 pt-3 border-t border-zinc-400/30">
+                      <p className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase text-center mb-2">COMMON IONS</p>
                       <div className="flex flex-col gap-2">
                         {ions.map((ion,i)=>(
                           <div key={i} className="flex items-center justify-between bg-white/60 rounded-lg px-3 py-2">
-                            <span className="text-base font-black text-slate-800">{ion.formula}</span>
-                            <span className="text-xs text-slate-500 font-medium">{ion.name}</span>
+                            <span className="text-base font-black text-zinc-800">{ion.formula}</span>
+                            <span className="text-xs text-zinc-500 font-medium">{ion.name}</span>
                           </div>
                         ))}
                       </div>
@@ -220,11 +220,11 @@ const PeriodicTableTool: React.FC = () => {
                 style={{background:'linear-gradient(135deg,#f8fafc 0%,#e2e8f0 100%)'}}>
                 {/* top bar */}
                 <div className="flex items-center justify-between px-5 pt-4 pb-2">
-                  <span className="text-sm font-mono font-bold text-slate-600 bg-white/80 px-3 py-1 rounded-lg border border-slate-200">
+                  <span className="text-sm font-mono font-bold text-zinc-600 bg-white/80 px-3 py-1 rounded-lg border border-zinc-200">
                     {config}
                   </span>
                   <button onClick={()=>setSel(null)}
-                    className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 transition-colors">
+                    className="w-8 h-8 flex items-center justify-center rounded-full bg-zinc-200 hover:bg-zinc-300 text-zinc-600 transition-colors">
                     <X size={16}/>
                   </button>
                 </div>
@@ -237,7 +237,7 @@ const PeriodicTableTool: React.FC = () => {
                 {/* Shell count labels */}
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 flex-wrap px-4">
                   {shells.slice(0,7).map((count,i)=>(
-                    <span key={i} className="text-[10px] font-bold text-slate-500 bg-white/70 px-2 py-0.5 rounded-full border border-slate-200">
+                    <span key={i} className="text-[10px] font-bold text-zinc-500 bg-white/70 px-2 py-0.5 rounded-full border border-zinc-200">
                       {'KLMNOPQ'[i]}: {count}e⁻
                     </span>
                   ))}

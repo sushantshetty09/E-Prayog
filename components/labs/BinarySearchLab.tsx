@@ -164,14 +164,14 @@ const BinarySearchLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(245,158,11,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🔍 Binary Search Visualiser</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">O(log n) · Halves search space each step · Requires sorted array</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">O(log n) · Halves search space each step · Requires sorted array</p>
         </div>
         <button onClick={reset} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>🔄 Reset</button>
       </div>
       <canvas ref={canvasRef} width={560} height={220} className="w-full" style={{ display: 'block' }} />
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(245,158,11,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-slate-400 whitespace-nowrap">Target</label>
+          <label className="text-xs text-zinc-400 whitespace-nowrap">Target</label>
           <input type="range" min={5} max={96} step={7} value={target} onChange={e => { setTarget(Number(e.target.value)); reset(); }}
             className="flex-1 h-1.5 rounded-full accent-amber-400" />
           <span className="text-xs font-mono text-amber-400 w-8">{target}</span>

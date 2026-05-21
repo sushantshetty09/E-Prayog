@@ -170,7 +170,7 @@ const BubbleSortLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🫧 Bubble Sort Visualiser</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">O(n²) · Compare adjacent → swap if out of order · Largest bubbles to end</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">O(n²) · Compare adjacent → swap if out of order · Largest bubbles to end</p>
         </div>
         <button onClick={generate} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(96,165,250,0.12)', color: '#60a5fa', border: '1px solid rgba(96,165,250,0.25)' }}>🔄 New Array</button>
       </div>
@@ -204,12 +204,12 @@ const BubbleSortLab: React.FC = () => {
             { label: 'Status', val: state === 'done' ? 'Sorted ✓' : state === 'running' ? 'Running' : 'Ready', color: state === 'done' ? '#10b981' : state === 'running' ? '#fbbf24' : '#64748b' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[7px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[7px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-sm font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}
         </div>
-        <div className="flex gap-3 text-[9px] text-slate-600 justify-center">
+        <div className="flex gap-3 text-[9px] text-zinc-600 justify-center">
           <span className="flex items-center gap-1"><span className="w-3 h-3 rounded inline-block" style={{ background: '#1e40af' }} />Default</span>
           <span className="flex items-center gap-1"><span className="w-3 h-3 rounded inline-block" style={{ background: '#b45309' }} />Comparing</span>
           <span className="flex items-center gap-1"><span className="w-3 h-3 rounded inline-block" style={{ background: '#991b1b' }} />Swapping</span>

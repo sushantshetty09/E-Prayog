@@ -214,7 +214,7 @@ const PHLabSimulation: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(34,197,94,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">⚗ pH Measurement — Digital pH Meter</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Universal indicator · Hydrogen ion concentration · pH = −log[H⁺]</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Universal indicator · Hydrogen ion concentration · pH = −log[H⁺]</p>
         </div>
         <div className="text-xs font-bold px-3 py-1.5 rounded-lg font-mono" style={{ background: phToColor(animPh) + '20', color: phToColor(animPh), border: `1px solid ${phToColor(animPh)}40` }}>
           pH {animPh.toFixed(1)}
@@ -225,7 +225,7 @@ const PHLabSimulation: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(34,197,94,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div>
-          <label className="text-[10px] text-slate-500 uppercase tracking-widest mb-2 block">Test Solution</label>
+          <label className="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 block">Test Solution</label>
           <div className="flex flex-wrap gap-1.5">
             {SOLUTIONS.map((sol, i) => (
               <button key={i} onClick={() => handleSolution(i)}
@@ -237,7 +237,7 @@ const PHLabSimulation: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-slate-400 whitespace-nowrap">Custom pH</label>
+          <label className="text-xs text-zinc-400 whitespace-nowrap">Custom pH</label>
           <input type="range" min={0} max={14} step={0.1} value={ph}
             onChange={e => { setPh(Number(e.target.value)); setCustomMode(true); setSelectedSol(-1); }}
             className="flex-1 h-1.5 rounded-full"
@@ -245,11 +245,11 @@ const PHLabSimulation: React.FC = () => {
           <span className="text-xs font-mono w-12 text-right font-bold" style={{ color: phToColor(ph) }}>{ph.toFixed(1)}</span>
         </div>
         <div className="rounded-xl p-2.5 text-center text-xs" style={{ background: phToColor(animPh) + '12', border: `1px solid ${phToColor(animPh)}30` }}>
-          <span className="text-slate-400">Classification: </span>
+          <span className="text-zinc-400">Classification: </span>
           <span className="font-bold" style={{ color: phToColor(animPh) }}>
             {animPh < 2 ? 'Strong Acid' : animPh < 5 ? 'Weak Acid' : animPh < 6.5 ? 'Slightly Acidic' : animPh < 7.5 ? 'Neutral' : animPh < 9 ? 'Slightly Basic' : animPh < 12 ? 'Weak Base' : 'Strong Base'}
           </span>
-          <span className="text-slate-500 ml-2">[H⁺] = 10⁻{animPh.toFixed(1)} mol/L</span>
+          <span className="text-zinc-500 ml-2">[H⁺] = 10⁻{animPh.toFixed(1)} mol/L</span>
         </div>
       </div>
     </div>

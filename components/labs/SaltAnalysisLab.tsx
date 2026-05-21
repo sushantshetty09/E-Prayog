@@ -174,7 +174,7 @@ const SaltAnalysisLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(167,139,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🔬 Salt Analysis — Systematic Identification</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Physical exam → Preliminary tests → Wet tests → Conclusion</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Physical exam → Preliminary tests → Wet tests → Conclusion</p>
         </div>
         <div className="text-xs px-2.5 py-1 rounded-lg font-bold" style={{ background: salt.color + '20', color: salt.color, border: `1px solid ${salt.color}45` }}>{salt.name}</div>
       </div>
@@ -211,8 +211,8 @@ const SaltAnalysisLab: React.FC = () => {
             ↩
           </button>
         </div>
-        <div className="text-[9px] text-slate-500 px-1">
-          <span className="text-slate-400 font-bold">{salt.cationGroup}</span> · Cation: {salt.cation} · Anion: {salt.anion}
+        <div className="text-[9px] text-zinc-500 px-1">
+          <span className="text-zinc-400 font-bold">{salt.cationGroup}</span> · Cation: {salt.cation} · Anion: {salt.anion}
         </div>
       </div>
     </div>

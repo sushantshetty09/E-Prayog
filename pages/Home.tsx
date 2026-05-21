@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Zap, FlaskConical, Dna, Calculator, Monitor, Bot, Microscope, GraduationCap, Sparkles, ArrowRight, BookOpen } from 'lucide-react';
+import { Zap, FlaskConical, Dna, Calculator, Monitor, Bot, Microscope, GraduationCap, Sparkles, ArrowRight, BookOpen, BarChart3, Smartphone, HelpCircle } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import { SUBJECTS } from '../constants';
 import { useAuth } from '../services/AuthContext';
@@ -21,12 +21,12 @@ const stats = [
 ];
 
 const features = [
-  { title: 'Interactive 2D Simulations', desc: 'Rich Canvas & SVG labs for every experiment — no 3D required.', icon: '🔬' },
-  { title: 'AI Lab Tutor', desc: 'Context-aware Gemini AI that knows your current experiment.', icon: '🤖' },
-  { title: 'Karnataka PUC Syllabus', desc: 'Every lab aligned with 1st and 2nd PUC curriculum.', icon: '📚' },
-  { title: 'Real-time Calculations', desc: 'Live physics engine with error analysis and graphing.', icon: '📊' },
-  { title: 'Mobile Responsive', desc: 'Learn on any device — phone, tablet, or laptop.', icon: '📱' },
-  { title: 'Viva Questions', desc: 'Prepare for practical exams with curated viva Q&A.', icon: '❓' },
+  { title: 'Interactive 2D Simulations', desc: 'Rich Canvas & SVG labs for every experiment — no 3D required.', icon: Microscope, color: '#10b981' },
+  { title: 'AI Lab Tutor', desc: 'Context-aware Gemini AI that knows your current experiment.', icon: Bot, color: '#8b5cf6' },
+  { title: 'Karnataka PUC Syllabus', desc: 'Every lab aligned with 1st and 2nd PUC curriculum.', icon: BookOpen, color: '#0ea5e9' },
+  { title: 'Real-time Calculations', desc: 'Live physics engine with error analysis and graphing.', icon: BarChart3, color: '#f59e0b' },
+  { title: 'Mobile Responsive', desc: 'Learn on any device — phone, tablet, or laptop.', icon: Smartphone, color: '#ec4899' },
+  { title: 'Viva Questions', desc: 'Prepare for practical exams with curated viva Q&A.', icon: HelpCircle, color: '#6366f1' },
 ];
 
 function AnimatedCounter({ target }: { target: number }) {
@@ -57,12 +57,12 @@ const Home: React.FC = () => {
   ];
 
   const features = [
-    { title: t.feat1Title, desc: t.feat1Desc, icon: '🔬' },
-    { title: t.feat2Title, desc: t.feat2Desc, icon: '🤖' },
-    { title: t.feat3Title, desc: t.feat3Desc, icon: '📚' },
-    { title: t.feat4Title, desc: t.feat4Desc, icon: '📊' },
-    { title: t.feat5Title, desc: t.feat5Desc, icon: '📱' },
-    { title: t.feat6Title, desc: t.feat6Desc, icon: '❓' },
+    { title: t.feat1Title, desc: t.feat1Desc, icon: Microscope, color: '#10b981' },
+    { title: t.feat2Title, desc: t.feat2Desc, icon: Bot, color: '#8b5cf6' },
+    { title: t.feat3Title, desc: t.feat3Desc, icon: BookOpen, color: '#0ea5e9' },
+    { title: t.feat4Title, desc: t.feat4Desc, icon: BarChart3, color: '#f59e0b' },
+    { title: t.feat5Title, desc: t.feat5Desc, icon: Smartphone, color: '#ec4899' },
+    { title: t.feat6Title, desc: t.feat6Desc, icon: HelpCircle, color: '#6366f1' },
   ];
   
   return (
@@ -76,13 +76,13 @@ const Home: React.FC = () => {
               <Sparkles size={14} /> {t.heroBadge}
             </div>
             <MotionH1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
-              className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-slate-900 dark:text-white leading-tight mb-6">
+              className="text-4xl md:text-6xl lg:text-7xl font-display font-bold text-zinc-900 dark:text-white leading-tight mb-6">
               E-<span className="text-emerald-600 dark:text-emerald-400">Prayog</span>
               <br />
-              <span className="text-2xl md:text-3xl lg:text-4xl font-normal text-slate-500 dark:text-gray-400">ಇ-ಪ್ರಯೋಗ</span>
+              <span className="text-2xl md:text-3xl lg:text-4xl font-normal text-zinc-500 dark:text-zinc-400">ಇ-ಪ್ರಯೋಗ</span>
             </MotionH1>
             <MotionP initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5, duration: 0.8 }}
-              className="text-lg md:text-xl text-slate-600 dark:text-gray-400 mb-10 leading-relaxed">
+              className="text-lg md:text-xl text-zinc-600 dark:text-zinc-400 mb-10 leading-relaxed">
               {t.heroDesc}
             </MotionP>
             <MotionDiv initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }} className="flex flex-wrap gap-4 justify-center">
@@ -109,7 +109,7 @@ const Home: React.FC = () => {
               <div className="text-3xl md:text-4xl font-bold font-display text-white">
                 <AnimatedCounter target={stat.value} />{stat.suffix}
               </div>
-              <div className="text-sm text-slate-500 mt-1">{stat.label}</div>
+              <div className="text-sm text-zinc-500 mt-1">{stat.label}</div>
             </MotionDiv>
           ))}
         </div>
@@ -118,8 +118,8 @@ const Home: React.FC = () => {
       {/* Subjects */}
       <section className="px-6 md:px-12 lg:px-20 py-16">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-center text-slate-900 dark:text-white mb-4">{t.subjectsHeading}</h2>
-          <p className="text-center text-slate-500 dark:text-gray-400 mb-12 max-w-2xl mx-auto">{t.subjectsSubheading}</p>
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-center text-zinc-900 dark:text-white mb-4">{t.subjectsHeading}</h2>
+          <p className="text-center text-zinc-500 dark:text-zinc-400 mb-12 max-w-2xl mx-auto">{t.subjectsSubheading}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {SUBJECTS.map((subject, idx) => {
               const Icon = subjectIcons[idx] || Zap;
@@ -130,7 +130,7 @@ const Home: React.FC = () => {
                       <Icon size={28} style={{ color: subject.hex }} />
                     </div>
                     <h3 className="text-lg font-bold text-white mb-2">{subject.name}</h3>
-                    <p className="text-sm text-slate-500 dark:text-gray-400 mb-3 line-clamp-2">{subject.description}</p>
+                    <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-3 line-clamp-2">{subject.description}</p>
                     <div className="text-xs font-bold px-3 py-1 rounded-full inline-block" style={{ background: `${subject.hex}15`, color: subject.hex }}>
                       {subject.labs.length} {t.labsLabel}
                     </div>
@@ -147,13 +147,18 @@ const Home: React.FC = () => {
         <div className="max-w-6xl mx-auto">
           <h2 className="text-3xl md:text-4xl font-display font-bold text-center text-white mb-12">{t.featuresHeading}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature, idx) => (
+            {features.map((feature, idx) => {
+              const Icon = feature.icon;
+              return (
               <GlassCard key={idx} hoverEffect={false} className="text-center">
-                <div className="text-4xl mb-4">{feature.icon}</div>
+                <div className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: `${feature.color}15` }}>
+                  <Icon size={28} style={{ color: feature.color }} />
+                </div>
                 <h3 className="text-lg font-bold text-white mb-2">{feature.title}</h3>
-                <p className="text-sm text-slate-400">{feature.desc}</p>
+                <p className="text-sm text-zinc-400">{feature.desc}</p>
               </GlassCard>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -163,7 +168,7 @@ const Home: React.FC = () => {
         <div className="max-w-3xl mx-auto text-center">
           <div className="glass-panel rounded-3xl p-12">
             <h2 className="text-3xl font-display font-bold text-white mb-4">{t.ctaHeading}</h2>
-              <p className="text-slate-400 mb-8">{t.ctaSubheading}</p>
+              <p className="text-zinc-400 mb-8">{t.ctaSubheading}</p>
               <Link to="/subjects" className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-lg shadow-lg shadow-emerald-600/25 transition-all hover:scale-105">
                 {t.ctaBtn} <ArrowRight size={20} />
               </Link>

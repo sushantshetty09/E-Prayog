@@ -243,7 +243,7 @@ const StatisticsLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(16,185,129,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">📊 Statistics — Descriptive Analysis</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Mean · Median · Mode · Std Dev · Box Plot · Bell Curve</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Mean · Median · Mode · Std Dev · Box Plot · Bell Curve</p>
         </div>
         <div className="flex gap-1.5">
           <button onClick={() => setShowCurve(c => !c)} className="px-2.5 py-1 rounded-lg text-[9px] font-bold"
@@ -282,7 +282,7 @@ const StatisticsLab: React.FC = () => {
             { label: 'IQR', val: iqr.toFixed(1), color: '#f97316' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <div className="text-[7px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[7px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-xs font-bold font-mono mt-0.5" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}

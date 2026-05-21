@@ -122,7 +122,12 @@ const AIFloatingTutor: React.FC = () => {
       chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
     }
   }, [messages]);
-  useEffect(() => { if (isOpen) setTimeout(() => inputRef.current?.focus(), 300); }, [isOpen]);
+  useEffect(() => {
+    if (isOpen) {
+      const timer = setTimeout(() => inputRef.current?.focus(), 300);
+      return () => clearTimeout(timer);
+    }
+  }, [isOpen]);
 
   const handleSend = useCallback(async () => {
     if (!input.trim() || !chatSessionRef.current) return;
@@ -271,7 +276,7 @@ const AIFloatingTutor: React.FC = () => {
               <div className="flex items-center gap-1 flex-shrink-0">
                 <button
                   onClick={() => setIsExpanded(e => !e)}
-                  className="p-1.5 rounded-lg text-gray-400 hover:text-white transition-colors"
+                  className="p-1.5 rounded-lg text-zinc-400 hover:text-white transition-colors"
                   style={{ background: 'transparent' }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'rgba(139,92,246,0.15)')}
                   onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
@@ -280,7 +285,7 @@ const AIFloatingTutor: React.FC = () => {
                 </button>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1.5 rounded-lg text-gray-400 hover:text-white transition-colors"
+                  className="p-1.5 rounded-lg text-zinc-400 hover:text-white transition-colors"
                   style={{ background: 'transparent' }}
                   onMouseEnter={e => (e.currentTarget.style.background = 'rgba(236,72,153,0.15)')}
                   onMouseLeave={e => (e.currentTarget.style.background = 'transparent')}
@@ -342,7 +347,7 @@ const AIFloatingTutor: React.FC = () => {
                 <input
                   ref={inputRef}
                   type="text"
-                  className="w-full bg-transparent py-3 pl-4 pr-12 text-sm text-white placeholder-gray-500 focus:outline-none"
+                  className="w-full bg-transparent py-3 pl-4 pr-12 text-sm text-white placeholder-zinc-500 focus:outline-none"
                   placeholder={labContext ? t.aiAskLabPlaceholder.replace('{lab}', labContext.labTitle) : t.aiAskPlaceholder}
                   value={input}
                   onChange={e => setInput(e.target.value)}

@@ -273,7 +273,7 @@ const MitosisLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(34,197,94,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🔬 Mitosis — Cell Division Stages</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Somatic cell division · Chromosome behaviour · Equational division</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Somatic cell division · Chromosome behaviour · Equational division</p>
         </div>
         <button onClick={() => setAutoPlay(p => !p)}
           className="px-3 py-1.5 rounded-lg text-xs font-bold"
@@ -294,12 +294,12 @@ const MitosisLab: React.FC = () => {
             </button>
           ))}
         </div>
-        <div className="rounded-xl p-3 text-[10px] text-slate-400" style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${STAGES[stage].color}25` }}>
+        <div className="rounded-xl p-3 text-[10px] text-zinc-400" style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${STAGES[stage].color}25` }}>
           <span className="font-bold" style={{ color: STAGES[stage].color }}>{STAGES[stage].name}: </span>{STAGES[stage].desc}
         </div>
         {/* Intra-stage progress */}
         <div className="flex items-center gap-2">
-          <span className="text-[9px] text-slate-500 whitespace-nowrap">Stage progress</span>
+          <span className="text-[9px] text-zinc-500 whitespace-nowrap">Stage progress</span>
           <div className="flex-1 h-1 rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }}>
             <div className="h-full rounded-full transition-all duration-100" style={{ width: `${intraT * 100}%`, background: STAGES[stage].color }} />
           </div>

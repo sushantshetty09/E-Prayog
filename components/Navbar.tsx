@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
   const navLinkClass = (path: string) => `relative text-sm font-medium transition-colors duration-300 ${
     isActive(path)
       ? 'text-white'
-      : 'text-gray-400 hover:text-emerald-300'
+      : 'text-zinc-400 hover:text-emerald-300'
   }`;
 
   useEffect(() => {
@@ -247,7 +247,7 @@ const Navbar: React.FC = () => {
 
         {/* ── Language Switcher ── */}
         <div className="flex items-center gap-0.5 bg-white/5 rounded-full px-1 py-1 border border-white/10" title="Change Language">
-          <Languages size={13} className="text-gray-500 mx-1" />
+          <Languages size={13} className="text-zinc-500 mx-1" />
           {LANG_OPTIONS.map(opt => (
             <button
               key={opt.code}
@@ -256,7 +256,7 @@ const Navbar: React.FC = () => {
               className={`px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200 ${
                 lang === opt.code
                   ? 'bg-gradient-to-r from-violet-600 to-sky-500 text-white shadow-sm'
-                  : 'text-gray-400 hover:text-white'
+                  : 'text-zinc-400 hover:text-white'
               }`}
             >
               {opt.label}
@@ -277,11 +277,11 @@ const Navbar: React.FC = () => {
                   {displayName?.charAt(0)?.toUpperCase() || <User size={14} />}
                 </div>
               )}
-              <span className="text-sm text-gray-400 hidden lg:inline font-medium">
+              <span className="text-sm text-zinc-400 hidden lg:inline font-medium">
                 {displayName?.split(' ')[0] || t.navProfile}
               </span>
             </Link>
-            <button onClick={handleLogout} aria-label="Logout" className="p-2 rounded-full bg-white/5 hover:bg-red-500/20 text-slate-400 hover:text-red-400 transition-all">
+            <button onClick={handleLogout} aria-label="Logout" className="p-2 rounded-full bg-white/5 hover:bg-red-500/20 text-zinc-400 hover:text-red-400 transition-all">
               <LogOut size={16} />
             </button>
           </div>
@@ -295,7 +295,7 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile hamburger */}
-      <button className="md:hidden p-2 -mr-2 text-gray-400" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? "Close menu" : "Open menu"}>
+      <button className="md:hidden p-2 -mr-2 text-zinc-400" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? "Close menu" : "Open menu"}>
         {isOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
 
@@ -304,8 +304,8 @@ const Navbar: React.FC = () => {
         <div className="absolute top-20 left-0 w-full glass-nav flex flex-col p-6 gap-4 md:hidden border-b border-white/5 shadow-2xl">
           {/* Mobile Language Switcher */}
           <div className="flex items-center gap-2">
-            <Languages size={14} className="text-gray-500" />
-            <span className="text-xs text-gray-500 font-semibold">Language / ಭಾಷೆ / भाषा:</span>
+            <Languages size={14} className="text-zinc-500" />
+            <span className="text-xs text-zinc-500 font-semibold">Language / ಭಾಷೆ / भाषा:</span>
           </div>
           <div className="flex gap-2">
             {LANG_OPTIONS.map(opt => (
@@ -315,7 +315,7 @@ const Navbar: React.FC = () => {
                 className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
                   lang === opt.code
                     ? 'bg-gradient-to-r from-violet-600 to-sky-500 text-white shadow-sm'
-                    : 'bg-white/5 text-gray-400 hover:text-white border border-white/10'
+                    : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
                 }`}
               >
                 {opt.fullLabel}

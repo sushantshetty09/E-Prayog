@@ -269,7 +269,7 @@ const PotashAlumLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(139,92,246,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">💎 Crystallisation — Potash Alum (KAl(SO₄)₂·12H₂O)</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Slow cooling of supersaturated solution → octahedral crystal formation</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Slow cooling of supersaturated solution → octahedral crystal formation</p>
         </div>
         <button onClick={() => { setTemp(95); setCooling(false); particlesRef.current = []; }}
           className="px-3 py-1.5 rounded-lg text-xs font-bold"
@@ -282,7 +282,7 @@ const PotashAlumLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(139,92,246,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-4">
-          <label className="text-xs text-slate-400 whitespace-nowrap">Temperature</label>
+          <label className="text-xs text-zinc-400 whitespace-nowrap">Temperature</label>
           <input type="range" min={25} max={95} step={1} value={temp}
             onChange={e => { setTemp(Number(e.target.value)); setCooling(false); particlesRef.current = []; }}
             className="flex-1 h-1.5 rounded-full accent-violet-500" />
@@ -302,7 +302,7 @@ const PotashAlumLab: React.FC = () => {
             { label: 'State', val: temp > 70 ? 'Dissolved' : temp > 40 ? 'Cooling' : 'Crystallised', color: '#38bdf8' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div className="text-[8px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[8px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-sm font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}

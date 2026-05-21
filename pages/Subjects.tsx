@@ -35,7 +35,7 @@ const Subjects: React.FC = () => {
           <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">
             {t.subjectsTitle}
           </h1>
-          <p className="text-slate-400 max-w-2xl mx-auto">
+          <p className="text-zinc-400 max-w-2xl mx-auto">
             {t.subjectsDesc}
           </p>
         </MotionDiv>
@@ -59,12 +59,12 @@ const Subjects: React.FC = () => {
                       </span>
                     </div>
                   </div>
-                  <p className="text-sm text-slate-400 mb-4 leading-relaxed">{translatedDesc}</p>
+                  <p className="text-sm text-zinc-400 mb-4 leading-relaxed">{translatedDesc}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {subject.labs.slice(0, 4).map(lab => (
-                      <span key={lab.id} className="text-xs text-slate-500 bg-white/5 rounded-full px-2 py-0.5">{lab.title}</span>
+                      <span key={lab.id} className="text-xs text-zinc-500 bg-white/5 rounded-full px-2 py-0.5">{lab.title}</span>
                     ))}
-                    {subject.labs.length > 4 && <span className="text-xs text-slate-600">+{subject.labs.length - 4} {t.subjectsMore}</span>}
+                    {subject.labs.length > 4 && <span className="text-xs text-zinc-600">+{subject.labs.length - 4} {t.subjectsMore}</span>}
                   </div>
                   <div className="flex items-center gap-2 text-sm font-bold" style={{ color: subject.hex }}>
                     {t.subjectsExplore} <ArrowRight size={16} />

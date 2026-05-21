@@ -64,7 +64,7 @@ const SubjectView: React.FC = () => {
     <div className="min-h-screen pt-24 pb-20 px-6 md:px-12 lg:px-20">
       <div className="max-w-6xl mx-auto">
         <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
-          <Link to="/subjects" className="text-sm text-slate-500 hover:text-emerald-400 transition-colors mb-4 inline-block">
+          <Link to="/subjects" className="text-sm text-zinc-500 hover:text-emerald-400 transition-colors mb-4 inline-block">
             ← {t.subjectBack}
           </Link>
           <div className="flex items-center gap-4 mb-4">
@@ -73,7 +73,7 @@ const SubjectView: React.FC = () => {
             </div>
             <div>
               <h1 className="text-3xl md:text-4xl font-display font-bold text-white">{translatedName}</h1>
-              <p className="text-slate-400 text-sm">
+              <p className="text-zinc-400 text-sm">
                 {subject.labs.length} {t.subjectsExperiments.toLowerCase()} • {t.subjectKarnatakaPuc}
               </p>
             </div>
@@ -84,8 +84,8 @@ const SubjectView: React.FC = () => {
         <div className="flex flex-wrap gap-4 mb-8">
           {/* Difficulty filter */}
           <div className="flex items-center gap-2">
-            <Filter size={14} className="text-slate-500" />
-            <span className="text-xs text-slate-500 uppercase font-bold">{t.subjectDifficulty}:</span>
+            <Filter size={14} className="text-zinc-500" />
+            <span className="text-xs text-zinc-500 uppercase font-bold">{t.subjectDifficulty}:</span>
             {difficultyOptions.map(opt => (
               <button
                 key={opt.value}
@@ -94,7 +94,7 @@ const SubjectView: React.FC = () => {
                 className={`px-3 py-1 rounded-full text-xs font-bold border transition-all ${
                   difficulty === opt.value
                     ? 'bg-white/10 text-white border-white/20'
-                    : 'text-slate-500 border-white/5 hover:text-white'
+                    : 'text-zinc-500 border-white/5 hover:text-white'
                 }`}
               >
                 {opt.label}
@@ -104,7 +104,7 @@ const SubjectView: React.FC = () => {
 
           {/* Standard filter */}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-slate-500 uppercase font-bold">{t.subjectStandard}:</span>
+            <span className="text-xs text-zinc-500 uppercase font-bold">{t.subjectStandard}:</span>
             {standardOptions.map(opt => (
               <button
                 key={opt.value}
@@ -113,7 +113,7 @@ const SubjectView: React.FC = () => {
                 className={`px-3 py-1 rounded-full text-xs font-bold border transition-all ${
                   standard === opt.value
                     ? 'bg-white/10 text-white border-white/20'
-                    : 'text-slate-500 border-white/5 hover:text-white'
+                    : 'text-zinc-500 border-white/5 hover:text-white'
                 }`}
               >
                 {opt.label}
@@ -131,14 +131,14 @@ const SubjectView: React.FC = () => {
                   <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${diffColors[lab.difficulty] || ''}`}>
                     {diffLabelMap[lab.difficulty] || lab.difficulty}
                   </span>
-                  <div className="flex items-center gap-1 text-xs text-slate-500">
+                  <div className="flex items-center gap-1 text-xs text-zinc-500">
                     <Clock size={12} /> {lab.duration}
                   </div>
                 </div>
                 <h3 className="text-lg font-bold text-white mb-2">{lab.title}</h3>
-                <p className="text-sm text-slate-400 mb-3 line-clamp-2">{lab.description}</p>
+                <p className="text-sm text-zinc-400 mb-3 line-clamp-2">{lab.description}</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-xs text-slate-600 bg-white/5 rounded-full px-2 py-0.5">{lab.category}</span>
+                  <span className="text-xs text-zinc-600 bg-white/5 rounded-full px-2 py-0.5">{lab.category}</span>
                   <span className="text-sm font-bold flex items-center gap-1" style={{ color: subject.hex }}>
                     {t.subjectOpenLab} <ArrowRight size={14} />
                   </span>
@@ -149,7 +149,7 @@ const SubjectView: React.FC = () => {
         </div>
 
         {filtered.length === 0 && (
-          <p className="text-center text-slate-500 py-12">{t.subjectNoExperiments}</p>
+          <p className="text-center text-zinc-500 py-12">{t.subjectNoExperiments}</p>
         )}
       </div>
     </div>

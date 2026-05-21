@@ -53,7 +53,7 @@ const AuthCallback: React.FC = () => {
           <div className="flex flex-col items-center gap-4">
             <AlertCircle className="w-12 h-12 text-red-400" />
             <p className="text-red-400 font-medium">{error}</p>
-            <p className="text-sm text-slate-500">Redirecting to login...</p>
+            <p className="text-sm text-zinc-500">Redirecting to login...</p>
           </div>
         ) : (
           <div className="flex flex-col items-center gap-4">
@@ -62,8 +62,8 @@ const AuthCallback: React.FC = () => {
               <FlaskConical className="w-12 h-12 text-emerald-400 relative z-10 animate-bounce" />
             </div>
             <div className="w-10 h-10 border-3 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
-            <p className="text-sm text-slate-400 font-medium">Completing sign in...</p>
-            <p className="text-xs text-slate-600">Please wait while we verify your account</p>
+            <p className="text-sm text-zinc-400 font-medium">Completing sign in...</p>
+            <p className="text-xs text-zinc-600">Please wait while we verify your account</p>
           </div>
         )}
       </div>

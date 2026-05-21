@@ -3,7 +3,7 @@ import { db } from '../services/firebase';
 import { collection, query, orderBy, getDocs, onSnapshot, limit } from 'firebase/firestore';
 import { useAuth } from '../services/AuthContext';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shield, Activity, Users, TrendingUp, Filter, Search, Download } from 'lucide-react';
+import { Shield, Activity, Users, TrendingUp, Filter, Search, Download, Key, ClipboardList, Star } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import { ActivityEvent } from '../services/activityService';
 
@@ -121,7 +121,7 @@ const AdminActivityFeed: React.FC = () => {
       teacher_code_generated: 'bg-amber-500/20 text-amber-400',
       new_teacher_registered: 'bg-teal-500/20 text-teal-400',
     };
-    return map[type] || 'bg-gray-500/20 text-gray-400';
+    return map[type] || 'bg-zinc-500/20 text-zinc-400';
   };
 
   const formatEventMessage = (event: ActivityEvent): string => {
@@ -167,11 +167,11 @@ const AdminActivityFeed: React.FC = () => {
               </span>
             )}
           </div>
-          <p className="text-gray-400 text-sm">All platform events across all users</p>
+          <p className="text-zinc-400 text-sm">All platform events across all users</p>
         </div>
         <button
           onClick={exportCSV}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white text-sm font-bold transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white text-sm font-bold transition-colors"
         >
           <Download size={14} /> Export CSV
         </button>
@@ -180,31 +180,38 @@ const AdminActivityFeed: React.FC = () => {
       {/* Platform Stats */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
         {[
-          { label: 'Total Signups',   value: totalSignups,        color: 'text-emerald-400', icon: '📈' },
-          { label: 'Active Today',    value: uniqueActiveToday,   color: 'text-blue-400',    icon: '👤' },
-          { label: 'Logins Today',    value: todayLogins,         color: 'text-sky-400',     icon: '🔑' },
-          { label: 'Quizzes Today',   value: todayQuizzes,        color: 'text-green-400',   icon: '📝' },
-          { label: 'Avg Quiz Score',  value: `${avgQuizScore}%`,  color: 'text-purple-400',  icon: '⭐' },
-        ].map(stat => (
-          <GlassCard key={stat.label} className="p-5" color="blue">
-            <div className="text-2xl mb-1">{stat.icon}</div>
-            <div className={`text-3xl font-bold ${stat.color} mb-1`}>{stat.value}</div>
-            <div className="text-xs text-gray-500 font-medium">{stat.label}</div>
-          </GlassCard>
-        ))}
+          { label: 'Total Signups',   value: totalSignups,        cardColor: 'emerald', hex: '#10b981', icon: TrendingUp },
+          { label: 'Active Today',    value: uniqueActiveToday,   cardColor: 'blue',    hex: '#3b82f6', icon: Users },
+          { label: 'Logins Today',    value: todayLogins,         cardColor: 'sky',     hex: '#0ea5e9', icon: Key },
+          { label: 'Quizzes Today',   value: todayQuizzes,        cardColor: 'green',   hex: '#22c55e', icon: ClipboardList },
+          { label: 'Avg Quiz Score',  value: `${avgQuizScore}%`,  cardColor: 'purple',  hex: '#a855f7', icon: Star },
+        ].map(stat => {
+          const Icon = stat.icon;
+          return (
+            <GlassCard key={stat.label} className="p-5" color={stat.cardColor} hoverEffect={true}>
+              <div className="flex items-center justify-between mb-3">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${stat.hex}15` }}>
+                  <Icon size={20} style={{ color: stat.hex }} />
+                </div>
+              </div>
+              <div className="text-3xl font-bold mb-1" style={{ color: stat.hex }}>{stat.value}</div>
+              <div className="text-xs text-zinc-500 font-medium">{stat.label}</div>
+            </GlassCard>
+          );
+        })}
       </div>
 
       {/* Filters Row */}
       <div className="glass-panel rounded-2xl p-4 mb-6 flex flex-col gap-4">
         {/* Type filter */}
         <div className="flex gap-2 flex-wrap items-center">
-          <Filter size={14} className="text-gray-500 flex-shrink-0" />
+          <Filter size={14} className="text-zinc-500 flex-shrink-0" />
           {(['all', 'user_signup', 'user_login', 'quiz_completed', 'admin_role_change', 'student_joined_class'] as AdminFilter[]).map(f => (
             <button
               key={f}
               onClick={() => setTypeFilter(f)}
               className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
-                typeFilter === f ? 'bg-red-600 text-white' : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+                typeFilter === f ? 'bg-red-600 text-white' : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10'
               }`}
             >
               {f === 'all' ? 'All Events' : f.replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase())}
@@ -225,8 +232,8 @@ const AdminActivityFeed: React.FC = () => {
                     ? r === 'Admin' ? 'bg-red-500 text-white'
                     : r === 'Teacher' ? 'bg-purple-500 text-white'
                     : r === 'Student' ? 'bg-blue-500 text-white'
-                    : 'bg-gray-600 text-white'
-                    : 'bg-white/5 text-gray-500 hover:text-white'
+                    : 'bg-zinc-600 text-white'
+                    : 'bg-white/5 text-zinc-500 hover:text-white'
                 }`}
               >
                 {r === 'all' ? 'All Roles' : r}
@@ -241,7 +248,7 @@ const AdminActivityFeed: React.FC = () => {
                 key={d}
                 onClick={() => setDateFilter(d)}
                 className={`px-3 py-1 rounded-full text-xs font-bold transition-all ${
-                  dateFilter === d ? 'bg-amber-500 text-white' : 'bg-white/5 text-gray-500 hover:text-white'
+                  dateFilter === d ? 'bg-amber-500 text-white' : 'bg-white/5 text-zinc-500 hover:text-white'
                 }`}
               >
                 {d === 'today' ? 'Today' : d === 'week' ? '7 days' : d === 'month' ? '30 days' : 'All time'}
@@ -251,17 +258,17 @@ const AdminActivityFeed: React.FC = () => {
 
           {/* Search */}
           <div className="relative flex-1 min-w-[180px] max-w-xs">
-            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+            <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
             <input
               value={search}
               onChange={e => setSearch(e.target.value)}
               placeholder="Search user..."
               className="w-full pl-8 pr-3 py-1.5 bg-white/5 border border-white/10 rounded-xl 
-                         text-white placeholder-gray-600 text-xs focus:outline-none focus:border-red-500/50"
+                         text-white placeholder-zinc-600 text-xs focus:outline-none focus:border-red-500/50"
             />
           </div>
 
-          <span className="text-xs text-gray-600 ml-auto">{filteredEvents.length} events</span>
+          <span className="text-xs text-zinc-600 ml-auto">{filteredEvents.length} events</span>
         </div>
       </div>
 
@@ -272,8 +279,8 @@ const AdminActivityFeed: React.FC = () => {
         </div>
       ) : filteredEvents.length === 0 ? (
         <GlassCard className="p-12 text-center" color="blue">
-          <Activity size={40} className="mx-auto text-gray-600 mb-4" />
-          <p className="text-lg font-bold text-gray-400">No events match your filters</p>
+          <Activity size={40} className="mx-auto text-zinc-600 mb-4" />
+          <p className="text-lg font-bold text-zinc-400">No events match your filters</p>
         </GlassCard>
       ) : (
         <AnimatePresence>
@@ -308,13 +315,13 @@ const AdminActivityFeed: React.FC = () => {
                       {event.type.replace(/_/g, ' ')}
                     </span>
                   </div>
-                  <p className="text-xs text-gray-400 mt-0.5 truncate">{formatEventMessage(event)}</p>
+                  <p className="text-xs text-zinc-400 mt-0.5 truncate">{formatEventMessage(event)}</p>
                 </div>
 
                 {/* Time + email */}
                 <div className="text-right flex-shrink-0">
-                  <p className="text-xs text-gray-600">{getTimeAgo(event.timestamp)}</p>
-                  <p className="text-[10px] text-gray-700 hidden group-hover:block">{event.actorEmail}</p>
+                  <p className="text-xs text-zinc-600">{getTimeAgo(event.timestamp)}</p>
+                  <p className="text-[10px] text-zinc-700 hidden group-hover:block">{event.actorEmail}</p>
                 </div>
               </motion.div>
             ))}

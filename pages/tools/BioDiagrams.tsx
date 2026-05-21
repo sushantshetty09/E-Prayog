@@ -108,17 +108,17 @@ const BioDiagrams: React.FC = () => {
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
         <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolBioDiagramsTitle}</h1>
-        <p className="text-slate-400 max-w-2xl mx-auto">{t.toolBioDiagramsSubtitle}</p>
+        <p className="text-zinc-400 max-w-2xl mx-auto">{t.toolBioDiagramsSubtitle}</p>
       </div>
 
       <div className="mb-8 relative max-w-md mx-auto">
-         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
          <input
            type="text"
            placeholder={t.toolBioDiagramsSubtitle}
            value={search}
            onChange={(e) => setSearch(e.target.value)}
-           className="w-full pl-9 pr-4 py-3 bg-slate-900/60 border border-white/10 rounded-xl text-white focus:outline-none focus:border-green-500/50"
+           className="w-full pl-9 pr-4 py-3 bg-zinc-900/60 border border-white/10 rounded-xl text-white focus:outline-none focus:border-green-500/50"
          />
       </div>
 
@@ -131,10 +131,10 @@ const BioDiagrams: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
               key={d.id}
-              className="glass-panel rounded-2xl overflow-hidden border border-white/10 bg-slate-900/60 flex flex-col group cursor-pointer"
+              className="glass-panel rounded-2xl overflow-hidden border border-white/10 bg-zinc-900/60 flex flex-col group cursor-pointer"
               onClick={() => setSelectedDiagram(d)}
             >
-              <div className="aspect-square bg-slate-100 p-4 border-b border-white/10 relative">
+              <div className="aspect-square bg-zinc-100 p-4 border-b border-white/10 relative">
                 {d.svg}
                 <div className="absolute top-2 right-2 bg-black/50 p-1.5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity">
                   <Maximize2 size={16} className="text-white" />
@@ -142,7 +142,7 @@ const BioDiagrams: React.FC = () => {
               </div>
               <div className="p-4">
                 <h3 className="font-bold text-white mb-1">{d.title}</h3>
-                <p className="text-xs text-slate-400 line-clamp-2">{d.description}</p>
+                <p className="text-xs text-zinc-400 line-clamp-2">{d.description}</p>
               </div>
             </motion.div>
           ))}
@@ -162,12 +162,12 @@ const BioDiagrams: React.FC = () => {
                initial={{ scale: 0.95 }}
                animate={{ scale: 1 }}
                exit={{ scale: 0.95 }}
-               className="bg-slate-900 rounded-3xl overflow-hidden w-full max-w-4xl max-h-full flex flex-col md:flex-row border border-white/10 shadow-2xl relative"
+               className="bg-zinc-900 rounded-3xl overflow-hidden w-full max-w-4xl max-h-full flex flex-col md:flex-row border border-white/10 shadow-2xl relative"
                onClick={e => e.stopPropagation()}
              >
                 <button 
                   onClick={() => setSelectedDiagram(null)}
-                  className="absolute top-4 right-4 p-2 bg-black/40 hover:bg-black/60 rounded-full text-slate-300 transition-colors z-10"
+                  className="absolute top-4 right-4 p-2 bg-black/40 hover:bg-black/60 rounded-full text-zinc-300 transition-colors z-10"
                 >
                   <X size={20} />
                 </button>
@@ -178,7 +178,7 @@ const BioDiagrams: React.FC = () => {
                 
                 <div className="w-full md:w-80 p-8 flex flex-col shrink-0">
                   <h2 className="text-2xl font-bold text-white mb-4">{selectedDiagram.title}</h2>
-                  <p className="text-slate-400 text-sm leading-relaxed mb-8">{selectedDiagram.description}</p>
+                  <p className="text-zinc-400 text-sm leading-relaxed mb-8">{selectedDiagram.description}</p>
                 </div>
              </motion.div>
            </motion.div>

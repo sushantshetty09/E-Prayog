@@ -193,7 +193,7 @@ const SonometerLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(251,191,36,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🎵 Sonometer — Laws of Vibrating Strings</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">f = (n/2L)√(T/μ) · Standing waves · Resonance</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">f = (n/2L)√(T/μ) · Standing waves · Resonance</p>
         </div>
         <button onClick={() => setVibrating(v => !v)}
           className="px-3 py-1.5 rounded-lg text-xs font-bold"
@@ -207,12 +207,12 @@ const SonometerLab: React.FC = () => {
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(251,191,36,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="grid grid-cols-2 gap-3">
           <div className="flex items-center gap-2">
-            <label className="text-xs text-slate-400 whitespace-nowrap">Freq (Hz)</label>
+            <label className="text-xs text-zinc-400 whitespace-nowrap">Freq (Hz)</label>
             <input type="range" min={128} max={512} step={4} value={freq} onChange={e => setFreq(Number(e.target.value))} className="flex-1 h-1.5 rounded-full accent-amber-400" />
             <span className="text-xs font-mono text-amber-400 w-10">{freq}</span>
           </div>
           <div className="flex items-center gap-2">
-            <label className="text-xs text-slate-400 whitespace-nowrap">Weight</label>
+            <label className="text-xs text-zinc-400 whitespace-nowrap">Weight</label>
             <div className="flex gap-1">
               {WEIGHTS.map(w => (
                 <button key={w} onClick={() => setWeight(w)}
@@ -225,7 +225,7 @@ const SonometerLab: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-slate-400">Mode (n)</label>
+          <label className="text-xs text-zinc-400">Mode (n)</label>
           <div className="flex gap-1.5">
             {[1, 2, 3].map(m => (
               <button key={m} onClick={() => setMode(m)}
@@ -235,7 +235,7 @@ const SonometerLab: React.FC = () => {
               </button>
             ))}
           </div>
-          <span className="text-[10px] text-slate-500 ml-2">{mode === 1 ? 'Fundamental' : mode === 2 ? '2nd Harmonic' : '3rd Harmonic'}</span>
+          <span className="text-[10px] text-zinc-500 ml-2">{mode === 1 ? 'Fundamental' : mode === 2 ? '2nd Harmonic' : '3rd Harmonic'}</span>
         </div>
         <div className="grid grid-cols-4 gap-2">
           {[
@@ -245,7 +245,7 @@ const SonometerLab: React.FC = () => {
             { label: 'Wave Vel.', val: `${vWave.toFixed(0)} m/s`, color: '#34d399' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[7px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[7px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-xs font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}

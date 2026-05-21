@@ -80,7 +80,7 @@ const TeacherProfile: React.FC = () => {
     return (
       <div className="pt-24 min-h-screen flex flex-col items-center justify-center gap-4">
         <Loader2 className="animate-spin text-purple-500" size={36} />
-        <p className="text-slate-400 text-sm font-medium">Setting up teacher profile…</p>
+        <p className="text-zinc-400 text-sm font-medium">Setting up teacher profile…</p>
         <button onClick={() => refreshProfile()} className="mt-2 px-6 py-2.5 rounded-xl bg-purple-600/10 text-purple-400 text-sm font-bold hover:bg-purple-600/20 border border-purple-500/20 transition-all flex items-center gap-2">
           <RefreshCw size={16} /> Retry Sync
         </button>
@@ -124,14 +124,14 @@ const TeacherProfile: React.FC = () => {
             <BookOpen size={14}/> Teacher
           </span>
           {profileData.teacherId && <p className="text-xs text-purple-400 font-mono z-10 mb-1">{profileData.teacherId}</p>}
-          <p className="text-xs text-slate-500 font-mono z-10 mb-4">{profileData.loginId || profileData.email}</p>
+          <p className="text-xs text-zinc-500 font-mono z-10 mb-4">{profileData.loginId || profileData.email}</p>
 
           <div className="w-full space-y-3 text-sm z-10">
-            <div className="flex items-center justify-between text-slate-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
+            <div className="flex items-center justify-between text-zinc-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
               <div className="flex items-center gap-2"><Mail size={16} /> Login ID</div>
               <span className="text-white font-mono text-xs truncate max-w-[180px]">{profileData.loginId || profileData.email}</span>
             </div>
-            <div className="flex items-center justify-between text-slate-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
+            <div className="flex items-center justify-between text-zinc-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
               <div className="flex items-center gap-2"><Calendar size={16} /> Joined</div>
               <span className="text-white">{createdDate}</span>
             </div>
@@ -151,7 +151,7 @@ const TeacherProfile: React.FC = () => {
               <h2 className="text-xl font-bold text-white">Details</h2>
               {isEditing && (
                 <div className="flex gap-3">
-                  <button onClick={() => setIsEditing(false)} className="px-4 py-2 text-slate-400 font-bold hover:text-white">Cancel</button>
+                  <button onClick={() => setIsEditing(false)} className="px-4 py-2 text-zinc-400 font-bold hover:text-white">Cancel</button>
                   <button onClick={handleSave} disabled={isSaving} className="px-6 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold flex items-center gap-2 disabled:opacity-50">
                     {isSaving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />} Save
                   </button>
@@ -160,25 +160,25 @@ const TeacherProfile: React.FC = () => {
             </div>
             <div className="space-y-5">
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Display Name</label>
+                <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">Display Name</label>
                 {isEditing ? (
                   <input type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})}
                     className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-purple-500/50" />
                 ) : <div className="bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{formData.name || 'Not set'}</div>}
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Institution</label>
+                <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">Institution</label>
                 {isEditing ? (
                   <input type="text" value={formData.institution} onChange={e => setFormData({...formData, institution: e.target.value})}
                     placeholder="College name"
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50" />
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500/50" />
                 ) : <div className="bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{formData.institution || 'Not set'}</div>}
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Profession</label>
+                <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">Profession</label>
                 {isEditing ? (
                   <select value={formData.profession} onChange={e => setFormData({...formData, profession: e.target.value})}
-                    className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-purple-500/50 appearance-none">
+                    className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-purple-500/50 appearance-none">
                     <option>PUC Lecturer</option><option>Assistant Professor</option><option>Professor</option><option>Lab Instructor</option>
                   </select>
                 ) : <div className="bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{formData.profession}</div>}
@@ -200,13 +200,13 @@ const TeacherProfile: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <p className="text-sm text-slate-400">No class code generated yet. Go to your Dashboard to generate one.</p>
+              <p className="text-sm text-zinc-400">No class code generated yet. Go to your Dashboard to generate one.</p>
             )}
-            <p className="text-xs text-slate-500 mt-3">Share this code with your students so they can link to your class.</p>
+            <p className="text-xs text-zinc-500 mt-3">Share this code with your students so they can link to your class.</p>
           </GlassCard>
 
-          <GlassCard className="p-4 border-slate-500/20">
-            <p className="text-xs text-slate-500 text-center">🔒 Password changes are managed by the Admin. Contact the administrator if you need to reset your password.</p>
+          <GlassCard className="p-4 border-zinc-500/20">
+            <p className="text-xs text-zinc-500 text-center">🔒 Password changes are managed by the Admin. Contact the administrator if you need to reset your password.</p>
           </GlassCard>
         </div>
       </div>

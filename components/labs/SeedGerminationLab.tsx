@@ -224,7 +224,7 @@ const SeedGerminationLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(34,197,94,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🌱 Seed Germination — Time-Lapse</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Imbibition → radicle → hypocotyl → cotyledons → true leaves</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Imbibition → radicle → hypocotyl → cotyledons → true leaves</p>
         </div>
         <button onClick={() => setAutoPlay(a => !a)}
           className="px-3 py-1.5 rounded-lg text-xs font-bold"
@@ -237,12 +237,12 @@ const SeedGerminationLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(34,197,94,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-slate-400">Day</label>
+          <label className="text-xs text-zinc-400">Day</label>
           <input type="range" min={0} max={12} step={1} value={day} onChange={e => { setDay(Number(e.target.value)); setAutoPlay(false); }}
             className="flex-1 h-1.5 rounded-full accent-emerald-400" />
           <span className="text-xs font-mono text-emerald-400 w-14 text-right">Day {day}</span>
         </div>
-        <div className="rounded-xl p-3 text-[10px] text-slate-400" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(34,197,94,0.15)' }}>
+        <div className="rounded-xl p-3 text-[10px] text-zinc-400" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(34,197,94,0.15)' }}>
           <span className="font-bold text-emerald-400">{currentStage.label}: </span>{currentStage.desc}
         </div>
         <div className="flex gap-1">

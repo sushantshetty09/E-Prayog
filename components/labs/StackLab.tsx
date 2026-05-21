@@ -150,7 +150,7 @@ const StackLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">📚 Stack — LIFO Data Structure</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Last-In First-Out · Push / Pop / Peek · Overflow & Underflow</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Last-In First-Out · Push / Pop / Peek · Overflow & Underflow</p>
         </div>
         <div className="text-xs font-mono px-2.5 py-1 rounded-lg" style={{ background: stack.length > MAX * 0.8 ? 'rgba(239,68,68,0.15)' : 'rgba(96,165,250,0.12)', color: stack.length > MAX * 0.8 ? '#f87171' : '#60a5fa', border: '1px solid rgba(255,255,255,0.08)' }}>
           {stack.length}/{MAX}

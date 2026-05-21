@@ -150,7 +150,7 @@ const QueueLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🚦 Queue — FIFO Data Structure</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">First-In First-Out · Enqueue at REAR · Dequeue from FRONT</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">First-In First-Out · Enqueue at REAR · Dequeue from FRONT</p>
         </div>
         <div className="text-xs font-mono px-2.5 py-1 rounded-lg" style={{ background: queue.length >= MAX_Q ? 'rgba(239,68,68,0.15)' : 'rgba(96,165,250,0.12)', color: queue.length >= MAX_Q ? '#f87171' : '#60a5fa', border: '1px solid rgba(255,255,255,0.08)' }}>
           {queue.length}/{MAX_Q}

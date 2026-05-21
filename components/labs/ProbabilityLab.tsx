@@ -255,7 +255,7 @@ const ProbabilityLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(251,191,36,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🎲 Probability — Law of Large Numbers</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Empirical → Theoretical probability · Convergence with n→∞</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Empirical → Theoretical probability · Convergence with n→∞</p>
         </div>
         <div className="flex gap-1.5">
           {(['coin', 'dice'] as const).map(m => (

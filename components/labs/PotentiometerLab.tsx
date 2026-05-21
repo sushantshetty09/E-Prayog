@@ -163,7 +163,7 @@ const PotentiometerLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(251,191,36,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🔋 Potentiometer — EMF Comparison</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">E₁/E₂ = l₁/l₂ · Potential gradient φ = E_driver/L</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">E₁/E₂ = l₁/l₂ · Potential gradient φ = E_driver/L</p>
         </div>
         <button onClick={() => setShowBoth(b => !b)}
           className="px-3 py-1 rounded-lg text-xs font-bold"
@@ -199,7 +199,7 @@ const PotentiometerLab: React.FC = () => {
             { label: 'E₂', val: `${emf2} V`, color: '#38bdf8' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[8px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[8px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-sm font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}

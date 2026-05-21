@@ -38,20 +38,20 @@ const SafetyGuide: React.FC = () => {
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
         <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolSafetyTitle}</h1>
-        <p className="text-slate-400 max-w-2xl mx-auto">{t.toolSafetySubtitle}</p>
+        <p className="text-zinc-400 max-w-2xl mx-auto">{t.toolSafetySubtitle}</p>
       </div>
 
-      <div className="mb-8 flex flex-col md:flex-row gap-4 justify-between items-center bg-slate-900/60 p-4 rounded-2xl border border-white/5">
+      <div className="mb-8 flex flex-col md:flex-row gap-4 justify-between items-center bg-zinc-900/60 p-4 rounded-2xl border border-white/5">
         <div className="flex gap-2 overflow-x-auto w-full md:w-auto no-scrollbar pb-2 md:pb-0">
           {categories.map(cat => (
             <button key={cat} onClick={() => setActiveCategory(cat)}
-              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${activeCategory === cat ? 'bg-red-600 text-white' : 'hover:bg-white/10 text-slate-400'}`}>
+              className={`px-4 py-2 rounded-xl text-sm font-bold transition-all whitespace-nowrap ${activeCategory === cat ? 'bg-red-600 text-white' : 'hover:bg-white/10 text-zinc-400'}`}>
               {cat}
             </button>
           ))}
         </div>
         <div className="relative w-full md:w-64">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
           <input type="text" placeholder={t.toolSafetySearchPlaceholder} value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full pl-9 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white focus:outline-none focus:border-red-500/50 text-sm" />
@@ -63,7 +63,7 @@ const SafetyGuide: React.FC = () => {
           {filteredRules.map(rule => (
             <motion.div layout initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.9 }}
               key={rule.id}
-              className={`glass-panel rounded-xl p-5 border-l-4 bg-slate-900/60 hover:bg-slate-800 transition-colors ${
+              className={`glass-panel rounded-xl p-5 border-l-4 bg-zinc-900/60 hover:bg-zinc-800 transition-colors ${
                 rule.severity === 'critical' ? 'border-l-red-500 border-y-white/5 border-r-white/5' :
                 rule.severity === 'warning'  ? 'border-l-amber-500 border-y-white/5 border-r-white/5' :
                 'border-l-blue-500 border-y-white/5 border-r-white/5'
@@ -73,16 +73,16 @@ const SafetyGuide: React.FC = () => {
                   <rule.icon size={24} className={rule.severity === 'critical' ? 'text-red-400' : rule.severity === 'warning' ? 'text-amber-400' : 'text-blue-400'} />
                 </div>
                 <div>
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500 mb-1 block">{rule.category}</span>
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-zinc-500 mb-1 block">{rule.category}</span>
                   <p className="font-bold text-white mb-2 leading-tight">{rule.title}</p>
-                  <p className="text-sm text-slate-400">{rule.description}</p>
+                  <p className="text-sm text-zinc-400">{rule.description}</p>
                 </div>
               </div>
             </motion.div>
           ))}
         </AnimatePresence>
         {filteredRules.length === 0 && (
-          <div className="col-span-full py-12 text-center text-slate-500">{t.toolSafetyNoResults}</div>
+          <div className="col-span-full py-12 text-center text-zinc-500">{t.toolSafetyNoResults}</div>
         )}
       </div>
     </div>

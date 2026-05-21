@@ -117,14 +117,14 @@ const TutorPage: React.FC = () => {
               <span className="ai-gradient-text">{t.tutorTitle}</span>
               <Sparkles size={18} className="text-amber-400 animate-pulse" />
             </h1>
-            <p className="text-sm text-slate-400 mt-0.5">
+            <p className="text-sm text-zinc-400 mt-0.5">
               {t.tutorSubtitle}
             </p>
           </div>
 
           <button
             onClick={() => setMessages([messages[0]])}
-            className="p-2.5 rounded-xl text-slate-500 hover:text-rose-400 transition-colors"
+            className="p-2.5 rounded-xl text-zinc-500 hover:text-rose-400 transition-colors"
             style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.06)' }}
             title={t.tutorClear}
           >
@@ -222,7 +222,7 @@ const TutorPage: React.FC = () => {
               <button
                 key={i}
                 onClick={() => setInput(q)}
-                className="quick-pill px-3 py-1.5 rounded-full text-xs font-medium text-slate-400 transition-all duration-200"
+                className="quick-pill px-3 py-1.5 rounded-full text-xs font-medium text-zinc-400 transition-all duration-200"
                 style={{
                   background: 'rgba(255,255,255,0.04)',
                   border: '1px solid rgba(139,92,246,0.2)',
@@ -256,7 +256,7 @@ const TutorPage: React.FC = () => {
               onBlur={() => setInputFocused(false)}
               placeholder={t.tutorPlaceholder}
               disabled={loading}
-              className="flex-1 bg-transparent px-5 py-3.5 text-sm text-white placeholder-slate-500 focus:outline-none disabled:opacity-50"
+              className="flex-1 bg-transparent px-5 py-3.5 text-sm text-white placeholder-zinc-500 focus:outline-none disabled:opacity-50"
             />
           </div>
           <button

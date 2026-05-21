@@ -4,7 +4,7 @@ import { collection, query, where, orderBy, getDocs, onSnapshot, limit } from 'f
 import { useAuth } from '../services/AuthContext';
 import { getTeacherStudents } from '../services/teacherService';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Activity, BookOpen, CheckCircle, UserPlus, Filter, Search, RefreshCw } from 'lucide-react';
+import { Activity, BookOpen, CheckCircle, UserPlus, Filter, Search, RefreshCw, Users, ClipboardList, FlaskConical, Star } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import { ActivityEvent } from '../services/activityService';
 
@@ -100,7 +100,7 @@ const TeacherActivityFeed: React.FC = () => {
       case 'quiz_completed':   return <CheckCircle size={18} className="text-green-400" />;
       case 'lab_visited':      return <BookOpen size={18} className="text-blue-400" />;
       case 'student_joined_class': return <UserPlus size={18} className="text-purple-400" />;
-      default:                 return <Activity size={18} className="text-gray-400" />;
+      default:                 return <Activity size={18} className="text-zinc-400" />;
     }
   };
 
@@ -109,7 +109,7 @@ const TeacherActivityFeed: React.FC = () => {
       case 'quiz_completed':       return 'border-l-green-500';
       case 'lab_visited':          return 'border-l-blue-500';
       case 'student_joined_class': return 'border-l-purple-500';
-      default:                     return 'border-l-gray-500';
+      default:                     return 'border-l-zinc-500';
     }
   };
 
@@ -159,11 +159,11 @@ const TeacherActivityFeed: React.FC = () => {
               </span>
             )}
           </div>
-          <p className="text-gray-400 text-sm">Real-time activity from your students</p>
+          <p className="text-zinc-400 text-sm">Real-time activity from your students</p>
         </div>
         <button
           onClick={() => setNewEventCount(0)}
-          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-gray-400 hover:text-white text-sm font-bold transition-colors"
+          className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-zinc-400 hover:text-white text-sm font-bold transition-colors"
         >
           <RefreshCw size={14} /> Mark all seen
         </button>
@@ -171,30 +171,46 @@ const TeacherActivityFeed: React.FC = () => {
 
       {/* Stats Row */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-        <GlassCard className="p-5" color="blue">
-           <div className="text-2xl mb-1">👥</div>
-           <div className={`text-3xl font-bold text-blue-400 mb-1`}>{myStudentUids.size}</div>
-           <div className="text-xs text-gray-500 font-medium">Your Students</div>
+        <GlassCard className="p-5" color="blue" hoverEffect={true}>
+           <div className="flex items-center justify-between mb-3">
+             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-500/10">
+               <Users size={20} className="text-blue-400" />
+             </div>
+           </div>
+           <div className="text-3xl font-bold text-blue-400 mb-1">{myStudentUids.size}</div>
+           <div className="text-xs text-zinc-500 font-medium">Your Students</div>
         </GlassCard>
-        <GlassCard className="p-5" color="blue">
-           <div className="text-2xl mb-1">📝</div>
-           <div className={`text-3xl font-bold text-green-400 mb-1`}>{events.filter(e => e.type === 'quiz_completed' && e.timestamp && new Date(e.timestamp).toDateString() === new Date().toDateString()).length}</div>
-           <div className="text-xs text-gray-500 font-medium">Quizzes Today</div>
+        <GlassCard className="p-5" color="green" hoverEffect={true}>
+           <div className="flex items-center justify-between mb-3">
+             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-green-500/10">
+               <ClipboardList size={20} className="text-green-400" />
+             </div>
+           </div>
+           <div className="text-3xl font-bold text-green-400 mb-1">{events.filter(e => e.type === 'quiz_completed' && e.timestamp && new Date(e.timestamp).toDateString() === new Date().toDateString()).length}</div>
+           <div className="text-xs text-zinc-500 font-medium">Quizzes Today</div>
         </GlassCard>
-        <GlassCard className="p-5" color="blue">
-           <div className="text-2xl mb-1">🧪</div>
-           <div className={`text-3xl font-bold text-amber-400 mb-1`}>{events.filter(e => e.type === 'lab_visited' && e.timestamp && new Date(e.timestamp).toDateString() === new Date().toDateString()).length}</div>
-           <div className="text-xs text-gray-500 font-medium">Labs Visited Today</div>
+        <GlassCard className="p-5" color="amber" hoverEffect={true}>
+           <div className="flex items-center justify-between mb-3">
+             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-amber-500/10">
+               <BookOpen size={20} className="text-amber-400" />
+             </div>
+           </div>
+           <div className="text-3xl font-bold text-amber-400 mb-1">{events.filter(e => e.type === 'lab_visited' && e.timestamp && new Date(e.timestamp).toDateString() === new Date().toDateString()).length}</div>
+           <div className="text-xs text-zinc-500 font-medium">Labs Visited Today</div>
         </GlassCard>
-        <GlassCard className="p-5" color="blue">
-           <div className="text-2xl mb-1">⭐</div>
-           <div className={`text-3xl font-bold text-purple-400 mb-1`}>{(() => {
+        <GlassCard className="p-5" color="purple" hoverEffect={true}>
+           <div className="flex items-center justify-between mb-3">
+             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-purple-500/10">
+               <Star size={20} className="text-purple-400" />
+             </div>
+           </div>
+           <div className="text-3xl font-bold text-purple-400 mb-1">{(() => {
             const quizzes = events.filter(e => e.type === 'quiz_completed');
             if (!quizzes.length) return 'N/A';
             const avg = quizzes.reduce((a, e) => a + (e.metadata.percentage || 0), 0) / quizzes.length;
             return `${Math.round(avg)}%`;
           })()}</div>
-           <div className="text-xs text-gray-500 font-medium">Avg Quiz Score</div>
+           <div className="text-xs text-zinc-500 font-medium">Avg Quiz Score</div>
         </GlassCard>
       </div>
 
@@ -208,7 +224,7 @@ const TeacherActivityFeed: React.FC = () => {
               className={`px-4 py-2 rounded-full text-sm font-bold transition-all ${
                 filter === f
                   ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/20'
-                  : 'bg-white/5 text-gray-400 hover:text-white hover:bg-white/10'
+                  : 'bg-white/5 text-zinc-400 hover:text-white hover:bg-white/10'
               }`}
             >
               {f === 'all' ? 'All Events' : f === 'quiz_completed' ? 'Quizzes' : f === 'lab_visited' ? 'Lab Visits' : 'New Joins'}
@@ -216,13 +232,13 @@ const TeacherActivityFeed: React.FC = () => {
           ))}
         </div>
         <div className="relative flex-1 max-w-xs">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
             placeholder="Search by student name..."
             className="w-full pl-9 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white 
-                       placeholder-gray-600 text-sm focus:outline-none focus:border-blue-500/50"
+                       placeholder-zinc-600 text-sm focus:outline-none focus:border-blue-500/50"
           />
         </div>
       </div>
@@ -234,9 +250,9 @@ const TeacherActivityFeed: React.FC = () => {
         </div>
       ) : filteredEvents.length === 0 ? (
         <GlassCard className="p-12 text-center" color="blue">
-          <Activity size={40} className="mx-auto text-gray-600 mb-4" />
-          <p className="text-lg font-bold text-gray-400">No activity yet</p>
-          <p className="text-sm text-gray-600 mt-1">
+          <Activity size={40} className="mx-auto text-zinc-600 mb-4" />
+          <p className="text-lg font-bold text-zinc-400">No activity yet</p>
+          <p className="text-sm text-zinc-600 mt-1">
             {myStudentUids.size === 0
               ? 'Share your class code with students so they can join.'
               : 'Activity will appear here as your students work on labs and quizzes.'}
@@ -265,9 +281,9 @@ const TeacherActivityFeed: React.FC = () => {
                     <p className="text-sm text-white">
                       <span className="font-bold">{event.actorName}</span>
                       {' '}
-                      <span className="text-gray-400">{formatEventMessage(event)}</span>
+                      <span className="text-zinc-400">{formatEventMessage(event)}</span>
                     </p>
-                    <span className="text-xs text-gray-600 flex-shrink-0">{getTimeAgo(event.timestamp)}</span>
+                    <span className="text-xs text-zinc-600 flex-shrink-0">{getTimeAgo(event.timestamp)}</span>
                   </div>
                   
                   {/* Extra badge for quiz score */}
@@ -280,7 +296,7 @@ const TeacherActivityFeed: React.FC = () => {
                       }`}>
                         {event.metadata.percentage}%
                       </span>
-                      <span className="text-xs text-gray-500">{event.metadata.subjectId}</span>
+                      <span className="text-xs text-zinc-500">{event.metadata.subjectId}</span>
                     </div>
                   )}
                 </div>

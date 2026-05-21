@@ -226,7 +226,7 @@ const PendulumLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(56,189,248,0.2)', background: 'rgba(7,9,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🕰 Simple Pendulum — Time Period Measurement</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">g = 9.78 m/s² (Bangalore) &nbsp;|&nbsp; T = 2π√(L/g)</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">g = 9.78 m/s² (Bangalore) &nbsp;|&nbsp; T = 2π√(L/g)</p>
         </div>
         <button onClick={toggleSwing}
           className="px-4 py-2 rounded-lg text-xs font-bold transition-all"
@@ -245,7 +245,7 @@ const PendulumLab: React.FC = () => {
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
             <div className="flex justify-between">
-              <label className="text-xs text-slate-400">String Length (L)</label>
+              <label className="text-xs text-zinc-400">String Length (L)</label>
               <span className="text-xs font-mono text-sky-400">{length} cm</span>
             </div>
             <input type="range" min={20} max={120} step={2} value={length}
@@ -254,7 +254,7 @@ const PendulumLab: React.FC = () => {
           </div>
           <div className="flex flex-col gap-1.5">
             <div className="flex justify-between">
-              <label className="text-xs text-slate-400">Bob Mass (m)</label>
+              <label className="text-xs text-zinc-400">Bob Mass (m)</label>
               <span className="text-xs font-mono text-violet-400">{mass} g</span>
             </div>
             <input type="range" min={20} max={300} step={10} value={mass}
@@ -274,16 +274,16 @@ const PendulumLab: React.FC = () => {
             <div key={m.label} className="rounded-xl p-2 text-center" style={{ background: m.bg, border: `1px solid ${m.border}` }}>
               <div className="text-[8px] font-bold tracking-widest" style={{ color: 'rgba(148,163,184,0.6)' }}>{m.label}</div>
               <div className="text-base font-bold font-mono mt-0.5" style={{ color: m.color }}>{m.val}</div>
-              <div className="text-[8px] text-slate-600">{m.unit}</div>
+              <div className="text-[8px] text-zinc-600">{m.unit}</div>
             </div>
           ))}
         </div>
 
         {/* Formula strip */}
         <div className="flex items-center gap-2 px-3 py-2 rounded-xl" style={{ background: 'rgba(16,185,129,0.06)', border: '1px solid rgba(16,185,129,0.15)' }}>
-          <span className="text-[10px] text-slate-500">Formula:</span>
+          <span className="text-[10px] text-zinc-500">Formula:</span>
           <span className="text-[11px] font-mono text-emerald-400">T = 2π√(L/g) = 2π × √({L_m.toFixed(2)}/{g}) = <strong>{T.toFixed(3)} s</strong></span>
-          <span className="ml-auto text-[9px] text-slate-600">Note: T independent of mass m</span>
+          <span className="ml-auto text-[9px] text-zinc-600">Note: T independent of mass m</span>
         </div>
       </div>
     </div>

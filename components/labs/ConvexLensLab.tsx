@@ -205,7 +205,7 @@ const ConvexLensLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🔭 Convex Lens — Ray Diagram & Image Formation</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">f = {f} cm &nbsp;|&nbsp; Lens Formula: 1/v − 1/u = 1/f</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">f = {f} cm &nbsp;|&nbsp; Lens Formula: 1/v − 1/u = 1/f</p>
         </div>
         <div className="text-xs px-3 py-1.5 rounded-lg font-bold" style={{ background: isReal ? 'rgba(56,189,248,0.12)' : 'rgba(167,139,250,0.12)', color: isReal ? '#38bdf8' : '#a78bfa', border: `1px solid ${isReal ? 'rgba(56,189,248,0.3)' : 'rgba(167,139,250,0.3)'}` }}>
           {nature}
@@ -216,7 +216,7 @@ const ConvexLensLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(96,165,250,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-4">
-          <label className="text-xs text-slate-400 whitespace-nowrap">Object Distance</label>
+          <label className="text-xs text-zinc-400 whitespace-nowrap">Object Distance</label>
           <input type="range" min={5} max={80} step={1} value={objectDist}
             onChange={e => setObjectDist(Number(e.target.value))}
             className="flex-1 h-1.5 rounded-full accent-blue-500" />
@@ -231,14 +231,14 @@ const ConvexLensLab: React.FC = () => {
             { label: 'Nature', val: isReal ? 'Real' : 'Virtual', color: isReal ? '#38bdf8' : '#a78bfa', bg: isReal ? 'rgba(56,189,248,0.08)' : 'rgba(167,139,250,0.08)', border: isReal ? 'rgba(56,189,248,0.2)' : 'rgba(167,139,250,0.2)' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2.5 text-center" style={{ background: d.bg, border: `1px solid ${d.border}` }}>
-              <div className="text-[8px] font-bold uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[8px] font-bold uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-sm font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}
         </div>
 
         <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-[10px]" style={{ background: 'rgba(96,165,250,0.05)', border: '1px solid rgba(96,165,250,0.12)' }}>
-          <span className="text-slate-500">Lens Formula:</span>
+          <span className="text-zinc-500">Lens Formula:</span>
           <span className="font-mono text-sky-400">1/v − 1/u = 1/f &nbsp;→&nbsp; 1/{v_val.toFixed(1)} − 1/({u}) = 1/{f} ✓</span>
           {isInverted && <span className="ml-auto text-rose-400">↕ Inverted image</span>}
         </div>

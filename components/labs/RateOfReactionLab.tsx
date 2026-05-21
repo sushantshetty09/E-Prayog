@@ -226,7 +226,7 @@ const RateOfReactionLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(16,185,129,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">⚗ Rate of Reaction — Na₂S₂O₃ + HCl</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Clock reaction · Sulfur precipitation · Rate = 1/t · Effect of concentration</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Clock reaction · Sulfur precipitation · Rate = 1/t · Effect of concentration</p>
         </div>
         <button onClick={() => { setRunning(false); setTurbidity(0); setElapsed(0); particlesRef.current = []; }}
           className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>🔄 Reset</button>
@@ -239,7 +239,7 @@ const RateOfReactionLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(16,185,129,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-slate-400 whitespace-nowrap">Na₂S₂O₃ Vol.</label>
+          <label className="text-xs text-zinc-400 whitespace-nowrap">Na₂S₂O₃ Vol.</label>
           <input type="range" min={10} max={100} step={5} value={concentration}
             onChange={e => { setConcentration(Number(e.target.value)); setRunning(false); setTurbidity(0); setElapsed(0); particlesRef.current = []; }}
             className="flex-1 h-1.5 rounded-full accent-emerald-400" />
@@ -260,7 +260,7 @@ const RateOfReactionLab: React.FC = () => {
             { label: 'Reactions', val: crosses.toString(), color: '#a78bfa' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[7px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[7px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-xs font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}

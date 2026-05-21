@@ -195,7 +195,7 @@ const AnionAnalysisLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(167,139,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🧬 Anion Analysis — Wet Tests</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Cl⁻ · SO₄²⁻ · CO₃²⁻ · NO₃⁻ · S²⁻ · Confirmatory tests</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Cl⁻ · SO₄²⁻ · CO₃²⁻ · NO₃⁻ · S²⁻ · Confirmatory tests</p>
         </div>
         <div className="text-xs px-2.5 py-1 rounded-lg font-bold" style={{ background: anion.color + '20', color: anion.color, border: `1px solid ${anion.color}40` }}>{anion.id}</div>
       </div>
@@ -224,8 +224,8 @@ const AnionAnalysisLab: React.FC = () => {
           style={{ background: 'rgba(239,68,68,0.2)', color: '#f87171', border: '1px solid rgba(239,68,68,0.3)' }}>
           🧪 Add {test.reagent}
         </button>
-        <div className="text-[9px] text-slate-500 px-1">
-          <span className="text-slate-400 font-bold">Confirm: </span>{anion.confirmTest}
+        <div className="text-[9px] text-zinc-500 px-1">
+          <span className="text-zinc-400 font-bold">Confirm: </span>{anion.confirmTest}
         </div>
       </div>
     </div>

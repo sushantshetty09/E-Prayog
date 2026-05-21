@@ -253,10 +253,10 @@ const DNAIsolationLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(16,185,129,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🧬 DNA Isolation from Plant Tissue (Banana)</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Detergent lysis → ethanol precipitation → DNA spooling</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Detergent lysis → ethanol precipitation → DNA spooling</p>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="text-[10px] text-slate-500">Step {step + 1}/5</span>
+          <span className="text-[10px] text-zinc-500">Step {step + 1}/5</span>
         </div>
       </div>
 
@@ -273,7 +273,7 @@ const DNAIsolationLab: React.FC = () => {
             </button>
           ))}
         </div>
-        <div className="rounded-xl p-3 text-[10px] text-slate-400" style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${s.colors.label}25` }}>
+        <div className="rounded-xl p-3 text-[10px] text-zinc-400" style={{ background: 'rgba(255,255,255,0.04)', border: `1px solid ${s.colors.label}25` }}>
           <span className="font-bold" style={{ color: s.colors.label }}>{s.title}: </span>{s.desc}
         </div>
         <div className="flex gap-2">

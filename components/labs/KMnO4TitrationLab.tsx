@@ -162,7 +162,7 @@ const KMnO4TitrationLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(109,40,217,0.3)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🟣 KMnO₄ Titration — Redox</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Permanganate (self-indicator) · MnO₄⁻ + Fe²⁺ → Mn²⁺ + Fe³⁺ · Endpoint = pink</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Permanganate (self-indicator) · MnO₄⁻ + Fe²⁺ → Mn²⁺ + Fe³⁺ · Endpoint = pink</p>
         </div>
         <div className="text-xs font-mono px-2.5 py-1 rounded-lg font-bold" style={{ background: isPastEP ? 'rgba(219,39,119,0.2)' : 'rgba(109,40,217,0.15)', color: isPastEP ? '#f472b6' : '#a855f7', border: '1px solid rgba(109,40,217,0.3)' }}>
           {volume.toFixed(1)} mL
@@ -171,7 +171,7 @@ const KMnO4TitrationLab: React.FC = () => {
       <canvas ref={canvasRef} width={400} height={310} className="w-full" style={{ display: 'block' }} />
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(109,40,217,0.15)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-slate-400 whitespace-nowrap">Volume added</label>
+          <label className="text-xs text-zinc-400 whitespace-nowrap">Volume added</label>
           <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
             <div className="h-full rounded-full transition-all duration-200" style={{ width: `${(volume / 50) * 100}%`, background: isPastEP ? 'linear-gradient(90deg,#7c3aed,#db2777)' : 'linear-gradient(90deg,#7c3aed,#a855f7)' }} />
           </div>
@@ -195,7 +195,7 @@ const KMnO4TitrationLab: React.FC = () => {
             { label: 'Status', val: isPastEP ? 'EP Reached' : isNearEP ? 'Near EP' : 'Titrating', color: isPastEP ? '#f472b6' : isNearEP ? '#f59e0b' : '#64748b' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[7px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[7px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-xs font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}

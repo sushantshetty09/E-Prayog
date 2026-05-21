@@ -182,7 +182,7 @@ const BloodGroupLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(239,68,68,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🩸 Blood Group Identification — ABO + Rh System</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Antigen-antibody agglutination on microscope slide</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Antigen-antibody agglutination on microscope slide</p>
         </div>
         <button onClick={() => { setTested(false); animTRef.current = 0; }} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>🔄 Reset</button>
       </div>
@@ -191,7 +191,7 @@ const BloodGroupLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(239,68,68,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div>
-          <label className="text-[10px] text-slate-500 uppercase tracking-widest mb-2 block">Select Blood Sample</label>
+          <label className="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 block">Select Blood Sample</label>
           <div className="grid grid-cols-8 gap-1">
             {BLOOD_TYPES.map((b, i) => (
               <button key={i} onClick={() => { setSelIdx(i); setTested(false); animTRef.current = 0; }}

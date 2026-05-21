@@ -54,6 +54,14 @@ const LabView: React.FC = () => {
 
   const subject = SUBJECTS.find(s => s.id === subjectId);
   const lab = subject?.labs.find(l => l.id === labId);
+  const labContent = lab?.content;
+
+  // Use effect to initialize shuffled viva
+  React.useEffect(() => {
+    if (labContent?.vivaQuestions) {
+      setShuffledViva([...labContent.vivaQuestions]);
+    }
+  }, [labContent]);
 
   // Track lab visit on mount (after lab is resolved)
   useEffect(() => {
@@ -128,13 +136,6 @@ const LabView: React.FC = () => {
 
   // Setup Quiz and Viva
   const quizQuestions = content?.quizQuestions || [];
-  
-  // Use effect to initialize shuffled viva
-  React.useEffect(() => {
-    if (content?.vivaQuestions) {
-      setShuffledViva([...content.vivaQuestions]);
-    }
-  }, [content]);
 
   const handleQuizSubmit = async () => {
     let score = 0;
@@ -192,14 +193,14 @@ const LabView: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-6">
-          <Link to={`/subjects/${subject.id}`} className="text-sm text-slate-500 hover:text-emerald-400 transition-colors flex items-center gap-1 mb-3">
+          <Link to={`/subjects/${subject.id}`} className="text-sm text-zinc-500 hover:text-emerald-400 transition-colors flex items-center gap-1 mb-3">
             <ArrowLeft size={14} /> {t.labBackTo} {subject.name}
           </Link>
           <div className="flex items-center gap-3">
             <EprayogLogo size={52} idSuffix={lab.id} />
             <div>
               <h1 className="text-2xl md:text-3xl font-display font-bold text-white">{lab.title}</h1>
-              <p className="text-sm text-slate-400">{lab.category} • {lab.difficulty} • {lab.duration}</p>
+              <p className="text-sm text-zinc-400">{lab.category} • {lab.difficulty} • {lab.duration}</p>
             </div>
           </div>
         </div>
@@ -216,11 +217,11 @@ const LabView: React.FC = () => {
                   ? 'bg-white/10 text-white border-white/20 shadow-lg'
                   : tabIdx > idx
                     ? 'text-emerald-400/60 border-emerald-500/10 bg-emerald-500/5'
-                    : 'text-slate-500 border-transparent hover:text-white hover:bg-white/5'
+                    : 'text-zinc-500 border-transparent hover:text-white hover:bg-white/5'
                 }`}
             >
               <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 ${
-                tabIdx === idx ? 'bg-white/20 text-white' : tabIdx > idx ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/5 text-slate-600'
+                tabIdx === idx ? 'bg-white/20 text-white' : tabIdx > idx ? 'bg-emerald-500/20 text-emerald-400' : 'bg-white/5 text-zinc-600'
               }`}>
                 {tabIdx > idx ? '✓' : idx + 1}
               </span>
@@ -240,11 +241,11 @@ const LabView: React.FC = () => {
                 <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
                   <Target size={18} style={{ color: subject.hex }} /> {t.labAimHeading}
                 </h3>
-                <p className="text-slate-300">{content.aim}</p>
+                <p className="text-zinc-300">{content.aim}</p>
               </div>
               <div>
                 <h3 className="text-lg font-bold text-white mb-2">{t.labRequirements}</h3>
-                <ul className="list-disc list-inside text-slate-400 space-y-1">
+                <ul className="list-disc list-inside text-zinc-400 space-y-1">
                   {content.requirements.map((r, i) => <li key={i}>{r}</li>)}
                 </ul>
               </div>
@@ -252,12 +253,12 @@ const LabView: React.FC = () => {
                 <h3 className="text-lg font-bold text-white mb-2 flex items-center gap-2">
                   <BookOpen size={18} style={{ color: subject.hex }} /> {t.labTheory}
                 </h3>
-                <p className="text-slate-300 leading-relaxed whitespace-pre-wrap">{content.theory}</p>
+                <p className="text-zinc-300 leading-relaxed whitespace-pre-wrap">{content.theory}</p>
               </div>
               {content.objectives?.length > 0 && (
                 <div>
                 <h3 className="text-lg font-bold text-white mb-2">{t.labObjectives}</h3>
-                  <ul className="list-disc list-inside text-slate-400 space-y-1">
+                  <ul className="list-disc list-inside text-zinc-400 space-y-1">
                     {content.objectives.map((o, i) => <li key={i}>{o}</li>)}
                   </ul>
                 </div>
@@ -281,7 +282,7 @@ const LabView: React.FC = () => {
               </h3>
               <ol className="space-y-3">
                 {content.procedure.map((step, i) => (
-                  <li key={i} className="flex gap-3 items-start text-slate-300">
+                  <li key={i} className="flex gap-3 items-start text-zinc-300">
                     <span className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
                       style={{ background: `${subject.hex}20`, color: subject.hex }}>
                       {i + 1}
@@ -303,13 +304,13 @@ const LabView: React.FC = () => {
                 {content.instructions && content.instructions.length > 0 ? (
                   <ul className="space-y-2">
                     {content.instructions.map((inst, i) => (
-                      <li key={i} className="flex gap-2 items-start text-slate-300 text-sm">
+                      <li key={i} className="flex gap-2 items-start text-zinc-300 text-sm">
                         <span className="text-amber-400 mt-0.5">•</span> {inst}
                       </li>
                     ))}
                   </ul>
                 ) : (
-                  <div className="space-y-2 text-slate-400 text-sm">
+                  <div className="space-y-2 text-zinc-400 text-sm">
                     <p>• Read the aim and theory before starting the simulation.</p>
                     <p>• Follow the procedure step-by-step.</p>
                     <p>• Record all readings in the observation table carefully.</p>
@@ -336,8 +337,8 @@ const LabView: React.FC = () => {
                   </div>
                 ) : (
                   <div className="aspect-video rounded-xl bg-white/5 border border-white/10 flex items-center justify-center flex-col gap-3">
-                    <Youtube size={48} className="text-slate-700" />
-                    <p className="text-sm text-slate-500">{t.labVideoComingSoon}</p>
+                    <Youtube size={48} className="text-zinc-700" />
+                    <p className="text-sm text-zinc-500">{t.labVideoComingSoon}</p>
                     <a
                       href={`https://www.youtube.com/results?search_query=Karnataka+PUC+${encodeURIComponent(lab.title)}+experiment`}
                       target="_blank" rel="noopener noreferrer"
@@ -374,7 +375,7 @@ const LabView: React.FC = () => {
                   <thead>
                     <tr>
                       {content.observationTable.columns.map((col, i) => (
-                        <th key={i} className="text-left py-2 px-3 text-slate-400 border-b border-white/10 font-bold">{col}</th>
+                        <th key={i} className="text-left py-2 px-3 text-zinc-400 border-b border-white/10 font-bold">{col}</th>
                       ))}
                     </tr>
                   </thead>
@@ -398,8 +399,8 @@ const LabView: React.FC = () => {
           )}
           {activeTab.id === 'observation' && (!content || !content.observationTable) && (
             <div className="glass-panel rounded-2xl p-8 max-w-4xl text-center">
-              <ClipboardList size={48} className="text-slate-700 mx-auto mb-4" />
-              <p className="text-slate-400">{t.labNoObservation}</p>
+              <ClipboardList size={48} className="text-zinc-700 mx-auto mb-4" />
+              <p className="text-zinc-400">{t.labNoObservation}</p>
             </div>
           )}
 
@@ -415,7 +416,7 @@ const LabView: React.FC = () => {
                 </div>
               ) : (
                 <div className="bg-emerald-500/5 border border-emerald-500/10 rounded-xl p-4">
-                  <p className="text-slate-400 text-sm mb-2">{t.labExpectedResultFormat}</p>
+                  <p className="text-zinc-400 text-sm mb-2">{t.labExpectedResultFormat}</p>
                   <p className="text-emerald-300/80 text-sm">
                     Based on your observations, write the result matching the aim of the experiment.
                     Compare your experimental value with the theoretical/standard value and calculate percentage error.
@@ -427,16 +428,16 @@ const LabView: React.FC = () => {
                 <textarea
                   rows={4}
                   placeholder={t.labWriteResult}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 resize-none"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/50 resize-none"
                 />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="text-xs text-slate-500 font-bold block mb-1">{t.labExperimentalValue}</label>
+                  <label className="text-xs text-zinc-500 font-bold block mb-1">{t.labExperimentalValue}</label>
                   <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-emerald-500/50" placeholder="e.g., 9.72 m/s²" />
                 </div>
                 <div>
-                  <label className="text-xs text-slate-500 font-bold block mb-1">{t.labPercentageError}</label>
+                  <label className="text-xs text-zinc-500 font-bold block mb-1">{t.labPercentageError}</label>
                   <input type="text" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm text-white focus:outline-none focus:border-emerald-500/50" placeholder="e.g., 0.8%" />
                 </div>
               </div>
@@ -456,13 +457,13 @@ const LabView: React.FC = () => {
                       <span className="w-8 h-8 rounded-xl flex items-center justify-center text-lg flex-shrink-0 bg-white/5">
                         {['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'][i % 8]}
                       </span>
-                      <p className="text-slate-300 text-sm leading-relaxed pt-1">{app}</p>
+                      <p className="text-zinc-300 text-sm leading-relaxed pt-1">{app}</p>
                     </li>
                   ))}
                 </ul>
               ) : (
                 <div className="space-y-3">
-                  <p className="text-slate-400 text-sm">
+                  <p className="text-zinc-400 text-sm">
                     {t.labRealWorldDefault} <strong className="text-white">{lab.title}</strong>
                   </p>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -474,7 +475,7 @@ const LabView: React.FC = () => {
                     ].map((app, i) => (
                       <div key={i} className="bg-white/5 rounded-xl p-3 flex items-center gap-2">
                         <span className="text-lg">{['1', '2', '3', '4'][i]}</span>
-                        <span className="text-sm text-slate-400">{app}</span>
+                        <span className="text-sm text-zinc-400">{app}</span>
                       </div>
                     ))}
                   </div>
@@ -495,7 +496,7 @@ const LabView: React.FC = () => {
                     <div className="w-48 h-1.5 bg-black/30 rounded-full overflow-hidden">
                       <div className="h-full rounded-full transition-all" style={{ width: `${(vivaRevealed.size / shuffledViva.length) * 100}%`, background: subject.hex }} />
                     </div>
-                    <span className="text-xs text-slate-400 font-bold">{vivaRevealed.size} / {shuffledViva.length} {t.labRevealed}</span>
+                    <span className="text-xs text-zinc-400 font-bold">{vivaRevealed.size} / {shuffledViva.length} {t.labRevealed}</span>
                   </div>
                 </div>
                 <button 
@@ -531,14 +532,14 @@ const LabView: React.FC = () => {
                       </div>
                     ) : (
                       <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="ml-12">
-                        <div className="p-4 rounded-xl bg-black/20 text-slate-300 leading-relaxed mb-4 border border-white/5">
+                        <div className="p-4 rounded-xl bg-black/20 text-zinc-300 leading-relaxed mb-4 border border-white/5">
                           {vq.answer}
                         </div>
                         <div className="flex flex-wrap items-center gap-3">
-                          <span className="text-xs text-slate-500 font-bold uppercase mr-2">{t.labHowDidYouDo}</span>
-                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'knew'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'knew' ? 'bg-green-500/20 text-green-400 border-green-500/50' : 'border-white/10 text-slate-400 hover:bg-white/5 hover:text-white'}`}>{t.labKnew}</button>
-                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'unsure'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'unsure' ? 'bg-amber-500/20 text-amber-400 border-amber-500/50' : 'border-white/10 text-slate-400 hover:bg-white/5 hover:text-white'}`}>{t.labUnsure}</button>
-                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'missed'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'missed' ? 'bg-red-500/20 text-red-400 border-red-500/50' : 'border-white/10 text-slate-400 hover:bg-white/5 hover:text-white'}`}>{t.labMissed}</button>
+                          <span className="text-xs text-zinc-500 font-bold uppercase mr-2">{t.labHowDidYouDo}</span>
+                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'knew'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'knew' ? 'bg-green-500/20 text-green-400 border-green-500/50' : 'border-white/10 text-zinc-400 hover:bg-white/5 hover:text-white'}`}>{t.labKnew}</button>
+                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'unsure'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'unsure' ? 'bg-amber-500/20 text-amber-400 border-amber-500/50' : 'border-white/10 text-zinc-400 hover:bg-white/5 hover:text-white'}`}>{t.labUnsure}</button>
+                          <button onClick={() => setVivaRating({...vivaRating, [i]: 'missed'})} className={`px-4 py-2 rounded-xl text-sm font-bold border transition-colors ${rating === 'missed' ? 'bg-red-500/20 text-red-400 border-red-500/50' : 'border-white/10 text-zinc-400 hover:bg-white/5 hover:text-white'}`}>{t.labMissed}</button>
                         </div>
                       </motion.div>
                     )}
@@ -569,8 +570,8 @@ const LabView: React.FC = () => {
           )}
           {activeTab.id === 'viva' && (!content?.vivaQuestions || content.vivaQuestions.length === 0) && (
             <div className="glass-panel rounded-2xl p-8 max-w-4xl text-center">
-              <HelpCircle size={48} className="text-slate-700 mx-auto mb-4" />
-              <p className="text-slate-400">{t.labNoViva}</p>
+              <HelpCircle size={48} className="text-zinc-700 mx-auto mb-4" />
+              <p className="text-zinc-400">{t.labNoViva}</p>
             </div>
           )}
 
@@ -592,7 +593,7 @@ const LabView: React.FC = () => {
                   }`}>
                     {quizScore} / {quizQuestions.length}
                   </div>
-                  <p className="text-slate-400 font-medium">({Math.round((quizScore / quizQuestions.length) * 100)}%)</p>
+                  <p className="text-zinc-400 font-medium">({Math.round((quizScore / quizQuestions.length) * 100)}%)</p>
                 </div>
               )}
 
@@ -602,7 +603,7 @@ const LabView: React.FC = () => {
                 </h3>
                 {!quizSubmitted && quizQuestions.length > 0 && (
                   <div className="flex items-center gap-3">
-                    <div className="text-xs text-slate-400 font-bold">{Object.keys(quizAnswers).length} / {quizQuestions.length} {t.labAnswered}</div>
+                    <div className="text-xs text-zinc-400 font-bold">{Object.keys(quizAnswers).length} / {quizQuestions.length} {t.labAnswered}</div>
                     <div className="w-24 h-1.5 bg-black/30 rounded-full overflow-hidden">
                       <div className="h-full bg-blue-500 transition-all" style={{ width: `${(Object.keys(quizAnswers).length / quizQuestions.length) * 100}%` }} />
                     </div>
@@ -631,11 +632,11 @@ const LabView: React.FC = () => {
                           const isCorrect = quizSubmitted && optIdx === q.correctIndex;
                           const isWrong = quizSubmitted && isSelected && optIdx !== q.correctIndex;
                           
-                          let btnClass = 'bg-white/5 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white';
+                          let btnClass = 'bg-white/5 border border-white/10 text-zinc-300 hover:bg-white/10 hover:text-white';
                           if (quizSubmitted) {
                             if (isCorrect) btnClass = 'bg-green-500/20 border border-green-500/50 text-green-300';
                             else if (isWrong) btnClass = 'bg-red-500/20 border border-red-500/50 text-red-300';
-                            else btnClass = 'bg-black/20 border border-transparent text-slate-500 opacity-50';
+                            else btnClass = 'bg-black/20 border border-transparent text-zinc-500 opacity-50';
                           } else if (isSelected) {
                             btnClass = 'bg-blue-600/20 border-l-4 border-y border-r border-blue-500 text-white';
                           }
@@ -688,8 +689,8 @@ const LabView: React.FC = () => {
                 </>
               ) : (
                 <div className="glass-panel p-12 text-center rounded-2xl flex flex-col items-center justify-center border border-white/5">
-                  <Brain size={48} className="text-slate-700 mb-4" />
-                  <p className="text-slate-400 font-medium">{t.labNoQuiz}</p>
+                  <Brain size={48} className="text-zinc-700 mb-4" />
+                  <p className="text-zinc-400 font-medium">{t.labNoQuiz}</p>
                 </div>
               )}
             </div>
@@ -707,7 +708,7 @@ const LabView: React.FC = () => {
             <ChevronLeft size={16} /> {tabIdx > 0 ? TABS[tabIdx - 1].label : t.labPrevious}
           </button>
 
-          <span className="text-xs text-slate-500 font-mono">
+          <span className="text-xs text-zinc-500 font-mono">
             {tabIdx + 1} / {TABS.length}
           </span>
 

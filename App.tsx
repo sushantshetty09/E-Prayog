@@ -2,6 +2,7 @@ import React, { lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './services/AuthContext';
 import { LanguageProvider } from './services/LanguageContext';
+import { MotionConfig } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AIFloatingTutor from './components/AIFloatingTutor';
@@ -43,7 +44,7 @@ const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
     <div className="flex flex-col items-center gap-4">
       <div className="w-12 h-12 border-3 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
-      <p className="text-sm text-slate-500 font-medium">Loading E-Prayog...</p>
+      <p className="text-sm text-zinc-500 font-medium">Loading E-Prayog...</p>
     </div>
   </div>
 );
@@ -57,8 +58,9 @@ const App: React.FC = () => {
   return (
     <LanguageProvider>
     <AuthProvider>
-      <BrowserRouter>
-        <div className="min-h-screen flex flex-col bg-slate-950 text-white">
+      <MotionConfig reducedMotion="user">
+        <BrowserRouter>
+        <div className="min-h-screen flex flex-col bg-zinc-950 text-white">
           <Navbar />
           <main className="flex-1">
             <React.Suspense fallback={<PageLoader />}>
@@ -113,6 +115,7 @@ const App: React.FC = () => {
           <AIFloatingTutor />
         </div>
       </BrowserRouter>
+      </MotionConfig>
     </AuthProvider>
     </LanguageProvider>
   );

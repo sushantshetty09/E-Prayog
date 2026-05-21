@@ -236,7 +236,7 @@ const TitrationLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(139,92,246,0.2)', background: 'rgba(8,11,20,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🧪 Acid-Base Titration — HCl vs NaOH</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Indicator: Phenolphthalein &nbsp;|&nbsp; Endpoint: ~20.5 mL NaOH</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Indicator: Phenolphthalein &nbsp;|&nbsp; Endpoint: ~20.5 mL NaOH</p>
         </div>
         <button onClick={() => { setBuretteVol(0); setIsDropping(false); }}
           className="px-3 py-1.5 rounded-lg text-xs font-bold"
@@ -252,14 +252,14 @@ const TitrationLab: React.FC = () => {
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(139,92,246,0.15)', background: 'rgba(6,8,15,0.95)' }}>
         <div className="flex flex-col gap-1.5">
           <div className="flex justify-between items-center">
-            <label className="text-xs text-slate-400">Burette volume — NaOH added</label>
+            <label className="text-xs text-zinc-400">Burette volume — NaOH added</label>
             <span className="text-xs font-mono text-violet-400">{buretteVol.toFixed(1)} mL</span>
           </div>
           <input type="range" min={0} max={40} step={0.5} value={buretteVol}
             onChange={e => { setBuretteVol(Number(e.target.value)); setIsDropping(true); }}
             onMouseUp={() => setIsDropping(false)}
             className="w-full h-2 rounded-full accent-violet-500" />
-          <div className="flex justify-between text-[9px] text-slate-600">
+          <div className="flex justify-between text-[9px] text-zinc-600">
             <span>0 mL</span><span>10</span><span>20</span><span>30</span><span>40 mL</span>
           </div>
         </div>
@@ -275,14 +275,14 @@ const TitrationLab: React.FC = () => {
             <div key={m.label} className="rounded-xl p-2 text-center" style={{ background: m.bg, border: `1px solid ${m.border}` }}>
               <div className="text-[8px] font-bold tracking-widest" style={{ color: 'rgba(148,163,184,0.6)' }}>{m.label}</div>
               <div className="text-sm font-bold font-mono mt-0.5" style={{ color: m.color }}>{m.val}</div>
-              <div className="text-[8px] text-slate-600">{m.unit}</div>
+              <div className="text-[8px] text-zinc-600">{m.unit}</div>
             </div>
           ))}
         </div>
 
         {/* Indicator strip visual */}
         <div className="flex items-center gap-3 px-1">
-          <span className="text-[9px] text-slate-500">Indicator:</span>
+          <span className="text-[9px] text-zinc-500">Indicator:</span>
           <div className="flex-1 h-4 rounded-full overflow-hidden relative" style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>
             <div className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
               style={{ width: `${Math.min(100, (buretteVol / 40) * 100)}%`, background: `linear-gradient(90deg, rgba(200,220,255,0.3), ${phColor})` }} />

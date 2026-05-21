@@ -191,7 +191,7 @@ const MetreBridgeLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(245,158,11,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🔌 Metre Bridge — Wheatstone's Principle</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">S = R(100−l)/l · Null deflection method · Unknown resistance</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">S = R(100−l)/l · Null deflection method · Unknown resistance</p>
         </div>
         <div className="text-xs font-bold px-2.5 py-1 rounded-lg" style={{ background: isBalanced ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.1)', color: isBalanced ? '#10b981' : '#f87171', border: `1px solid ${isBalanced ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.2)'}` }}>
           {isBalanced ? '✓ Balanced' : '⚡ Deflection'}
@@ -222,7 +222,7 @@ const MetreBridgeLab: React.FC = () => {
             { label: 'Unknown S', val: `${unknownR} Ω`, color: '#38bdf8' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[8px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[8px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-sm font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}

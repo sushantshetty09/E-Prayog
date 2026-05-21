@@ -58,7 +58,7 @@ const StudentDashboard: React.FC = () => {
           <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-2">
             Welcome back, <span className="text-emerald-400">{displayName.split(' ')[0]}</span>!
           </h1>
-          <p className="text-slate-400">Continue your learning journey. You've completed {overallProgress}% overall.</p>
+          <p className="text-zinc-400">Continue your learning journey. You've completed {overallProgress}% overall.</p>
         </div>
         {/* Streak badge */}
         <div className="flex items-center gap-2 px-4 py-2 rounded-2xl bg-orange-500/10 border border-orange-500/20 shrink-0">
@@ -72,7 +72,7 @@ const StudentDashboard: React.FC = () => {
 
       {/* Quick Access Tools */}
       <section className="mb-8">
-        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Quick Access</h3>
+        <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Quick Access</h3>
         <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
           {[
             { id: 'formula', label: 'Formula Sheet', icon: Sigma, color: '#3b82f6', bg: 'rgba(59,130,246,0.15)', path: '/tools/formula-sheet' },
@@ -85,7 +85,7 @@ const StudentDashboard: React.FC = () => {
           ].map(tool => (
             <Link key={tool.id} to={tool.path}>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
-                className="rounded-2xl p-4 flex flex-col items-center gap-3 cursor-pointer bg-slate-900/60 border border-white/5 hover:border-white/15 transition-all h-full">
+                className="rounded-2xl p-4 flex flex-col items-center gap-3 cursor-pointer bg-zinc-900/60 border border-white/5 hover:border-white/15 transition-all h-full">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: tool.bg }}>
                   <tool.icon size={22} style={{ color: tool.color }} />
                 </div>
@@ -101,25 +101,25 @@ const StudentDashboard: React.FC = () => {
         <GlassCard hoverEffect={false} className="p-5">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20"><TrendingUp size={20} className="text-emerald-400" /></div>
-            <div><div className="text-2xl font-display font-bold text-white">{overallProgress}%</div><div className="text-xs text-slate-400 font-medium">Overall Progress</div></div>
+            <div><div className="text-2xl font-display font-bold text-white">{overallProgress}%</div><div className="text-xs text-zinc-400 font-medium">Overall Progress</div></div>
           </div>
         </GlassCard>
         <GlassCard hoverEffect={false} className="p-5">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20"><FlaskConical size={20} className="text-blue-400" /></div>
-            <div><div className="text-2xl font-display font-bold text-white">{completedLabs.length}</div><div className="text-xs text-slate-400 font-medium">Labs Completed</div></div>
+            <div><div className="text-2xl font-display font-bold text-white">{completedLabs.length}</div><div className="text-xs text-zinc-400 font-medium">Labs Completed</div></div>
           </div>
         </GlassCard>
         <GlassCard hoverEffect={false} className="p-5">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-purple-500/10 border border-purple-500/20"><BookOpen size={20} className="text-purple-400" /></div>
-            <div><div className="text-2xl font-display font-bold text-white">5</div><div className="text-xs text-slate-400 font-medium">Subjects</div></div>
+            <div><div className="text-2xl font-display font-bold text-white">5</div><div className="text-xs text-zinc-400 font-medium">Subjects</div></div>
           </div>
         </GlassCard>
         <GlassCard hoverEffect={false} className="p-5">
           <div className="flex items-center gap-3">
             <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20"><GraduationCap size={20} className="text-amber-400" /></div>
-            <div><div className="text-2xl font-display font-bold text-white">{grade || 'PUC'}</div><div className="text-xs text-slate-400 font-medium">Your Grade</div></div>
+            <div><div className="text-2xl font-display font-bold text-white">{grade || 'PUC'}</div><div className="text-xs text-zinc-400 font-medium">Your Grade</div></div>
           </div>
         </GlassCard>
       </div>
@@ -133,9 +133,9 @@ const StudentDashboard: React.FC = () => {
             {recentLabData ? (
               <div className="flex items-center justify-between gap-4">
                 <div>
-                  <p className="text-sm text-slate-400 mb-1">Last experiment</p>
+                  <p className="text-sm text-zinc-400 mb-1">Last experiment</p>
                   <h3 className="text-lg font-bold text-white mb-2">{recentLabData.lab.title}</h3>
-                  <p className="text-xs text-slate-500 capitalize">{recentLabData.subject.name}</p>
+                  <p className="text-xs text-zinc-500 capitalize">{recentLabData.subject.name}</p>
                 </div>
                 <Link to={`/subjects/${recentLabData.subject.id}/${recentLabData.lab.id}`}
                   className="shrink-0 px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-colors flex items-center gap-2">
@@ -144,8 +144,8 @@ const StudentDashboard: React.FC = () => {
               </div>
             ) : (
               <div className="flex flex-col items-center text-center py-4">
-                <FlaskConical className="text-slate-600 mb-4" size={40} />
-                <p className="text-slate-400 mb-4">You haven't started any experiments yet.</p>
+                <FlaskConical className="text-zinc-600 mb-4" size={40} />
+                <p className="text-zinc-400 mb-4">You haven't started any experiments yet.</p>
                 <Link to="/subjects" className="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-colors flex items-center gap-2">
                   Explore Labs <ArrowRight size={16} />
                 </Link>
@@ -159,17 +159,17 @@ const StudentDashboard: React.FC = () => {
             <Link to="/subjects" className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/5 transition-colors group">
               <FlaskConical size={20} className="text-emerald-400 group-hover:scale-110 transition-transform" />
               <span className="text-white font-medium">Browse All Labs</span>
-              <ArrowRight size={16} className="ml-auto text-slate-500 group-hover:text-white transition-colors" />
+              <ArrowRight size={16} className="ml-auto text-zinc-500 group-hover:text-white transition-colors" />
             </Link>
             <Link to="/tutor" className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/5 transition-colors group">
               <Zap size={20} className="text-amber-400 group-hover:scale-110 transition-transform" />
               <span className="text-white font-medium">Ask AI Tutor</span>
-              <ArrowRight size={16} className="ml-auto text-slate-500 group-hover:text-white transition-colors" />
+              <ArrowRight size={16} className="ml-auto text-zinc-500 group-hover:text-white transition-colors" />
             </Link>
             <Link to="/profile" className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/5 transition-colors group">
               <GraduationCap size={20} className="text-blue-400 group-hover:scale-110 transition-transform" />
               <span className="text-white font-medium">Edit Profile</span>
-              <ArrowRight size={16} className="ml-auto text-slate-500 group-hover:text-white transition-colors" />
+              <ArrowRight size={16} className="ml-auto text-zinc-500 group-hover:text-white transition-colors" />
             </Link>
           </div>
         </div>
@@ -193,7 +193,7 @@ const StudentDashboard: React.FC = () => {
                   {SUBJECT_ICONS[subjectId] || <FlaskConical size={24} />}
                 </div>
                 <h3 className="text-white font-bold capitalize mb-1">{subject.name}</h3>
-                <p className="text-xs text-slate-400 mb-3">{completedCount}/{totalLabs} experiments</p>
+                <p className="text-xs text-zinc-400 mb-3">{completedCount}/{totalLabs} experiments</p>
                 <div className="w-full h-2 bg-black/30 rounded-full overflow-hidden border border-white/5 mb-1">
                   <motion.div initial={{ width: 0 }} animate={{ width: `${percentage}%` }}
                     transition={{ duration: 1, ease: 'easeOut' }}

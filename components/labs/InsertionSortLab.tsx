@@ -144,7 +144,7 @@ const InsertionSortLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(167,139,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">📥 Insertion Sort Visualiser</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">O(n²) · Pick key, shift right, insert · Efficient on nearly sorted data</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">O(n²) · Pick key, shift right, insert · Efficient on nearly sorted data</p>
         </div>
         <button onClick={generate} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(167,139,250,0.12)', color: '#a78bfa', border: '1px solid rgba(167,139,250,0.25)' }}>🔄 New Array</button>
       </div>
@@ -170,7 +170,7 @@ const InsertionSortLab: React.FC = () => {
             { label: 'Status', val: status === 'done' ? 'Done ✓' : status === 'running' ? 'Running' : 'Ready', color: status === 'done' ? '#10b981' : '#64748b' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[7px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[7px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-sm font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}

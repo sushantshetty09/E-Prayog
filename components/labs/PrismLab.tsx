@@ -182,7 +182,7 @@ const PrismLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(5,8,16,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🌈 Glass Prism — Light Dispersion & Deviation</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Borosilicate glass (n = {n}) &nbsp;|&nbsp; Prism angle A = {A}°</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Borosilicate glass (n = {n}) &nbsp;|&nbsp; Prism angle A = {A}°</p>
         </div>
         <div className="text-xs px-3 py-1.5 rounded-lg font-bold" style={{ background: isTIR ? 'rgba(239,68,68,0.12)' : 'rgba(250,204,21,0.1)', color: isTIR ? '#f87171' : '#facc15', border: `1px solid ${isTIR ? 'rgba(239,68,68,0.3)' : 'rgba(250,204,21,0.25)'}` }}>
           {isTIR ? '⚡ TIR' : `δ = ${deviation.toFixed(1)}°`}
@@ -193,7 +193,7 @@ const PrismLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(96,165,250,0.12)', background: 'rgba(4,5,8,0.97)' }}>
         <div className="flex items-center gap-4">
-          <label className="text-xs text-slate-400 whitespace-nowrap">Angle of Incidence (i)</label>
+          <label className="text-xs text-zinc-400 whitespace-nowrap">Angle of Incidence (i)</label>
           <input type="range" min={20} max={70} step={1} value={angle}
             onChange={e => setAngle(Number(e.target.value))}
             className="w-full h-1.5 rounded-full accent-yellow-500" />
@@ -208,7 +208,7 @@ const PrismLab: React.FC = () => {
             { label: 'δ (Deviation)', val: `${deviation.toFixed(1)}°`, color: '#facc15', bg: 'rgba(250,204,21,0.06)', border: 'rgba(250,204,21,0.15)' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2.5 text-center" style={{ background: d.bg, border: `1px solid ${d.border}` }}>
-              <div className="text-[8px] font-bold uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[8px] font-bold uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-base font-bold font-mono mt-0.5" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}
@@ -216,11 +216,11 @@ const PrismLab: React.FC = () => {
 
         <div className="flex gap-2">
           <div className="flex-1 flex items-center gap-2 px-3 py-2 rounded-xl text-[10px]" style={{ background: 'rgba(96,165,250,0.04)', border: '1px solid rgba(96,165,250,0.12)' }}>
-            <span className="text-slate-500">Snell's law:</span>
+            <span className="text-zinc-500">Snell's law:</span>
             <span className="font-mono text-sky-400">n₁sinθ₁ = n₂sinθ₂ &nbsp;→&nbsp; sin({angle}°)/{n} = sin({r1.toFixed(1)}°)</span>
           </div>
           <div className="flex items-center gap-2 px-3 py-2 rounded-xl text-[10px]" style={{ background: 'rgba(167,139,250,0.05)', border: '1px solid rgba(167,139,250,0.15)' }}>
-            <span className="text-slate-500">δ_min:</span>
+            <span className="text-zinc-500">δ_min:</span>
             <span className="font-mono text-violet-400">{Dm.toFixed(1)}°</span>
           </div>
         </div>

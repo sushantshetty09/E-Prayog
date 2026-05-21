@@ -11,9 +11,9 @@ import { motion } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
 
 const AVATAR_COLORS = [
-  'bg-slate-500', 'bg-red-500', 'bg-orange-500', 'bg-amber-500',
+  'bg-zinc-500', 'bg-red-500', 'bg-orange-500', 'bg-amber-500',
   'bg-emerald-500', 'bg-teal-500', 'bg-cyan-500', 'bg-blue-500',
-  'bg-indigo-500', 'bg-violet-500', 'bg-purple-500', 'bg-pink-500'
+  'bg-violet-500', 'bg-violet-500', 'bg-purple-500', 'bg-pink-500'
 ];
 
 const SUBJECT_COLORS: Record<string, string> = {
@@ -177,7 +177,7 @@ const Profile: React.FC = () => {
     return (
       <div className="pt-24 min-h-screen flex flex-col items-center justify-center gap-4">
         <Loader2 className="animate-spin text-emerald-500" size={36} />
-        <p className="text-slate-400 text-sm">Setting up your profile…</p>
+        <p className="text-zinc-400 text-sm">Setting up your profile…</p>
         <button onClick={() => refreshProfile()} className="mt-2 px-4 py-2 rounded-xl bg-white/10 text-white text-sm hover:bg-white/20 transition-all">
           Retry
         </button>
@@ -221,7 +221,7 @@ const Profile: React.FC = () => {
 
           {isEditing && !avatarUrl && (
             <div className="w-full mb-4 z-10">
-              <p className="text-xs text-slate-400 font-bold mb-2 uppercase">{t.profileThemeColor}</p>
+              <p className="text-xs text-zinc-400 font-bold mb-2 uppercase">{t.profileThemeColor}</p>
               <div className="flex flex-wrap justify-center gap-2">
                 {AVATAR_COLORS.map(color => (
                   <button key={color} onClick={() => setFormData({...formData, avatar: color})}
@@ -242,15 +242,15 @@ const Profile: React.FC = () => {
           {profileData.studentId && <p className="text-xs text-emerald-400 font-mono z-10 mb-4">{profileData.studentId}</p>}
 
           <div className="w-full space-y-3 text-sm z-10">
-            <div className="flex items-center justify-between text-slate-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
+            <div className="flex items-center justify-between text-zinc-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
               <div className="flex items-center gap-2"><Mail size={16} /> {t.profileEmailLabel}</div>
               <span className="text-white truncate max-w-[150px]">{authUser?.email}</span>
             </div>
-            <div className="flex items-center justify-between text-slate-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
+            <div className="flex items-center justify-between text-zinc-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
               <div className="flex items-center gap-2"><Shield size={16} /> {t.profileIdLabel}</div>
               <span className="text-white font-mono">{authUser?.uid?.substring(0,8)}...</span>
             </div>
-            <div className="flex items-center justify-between text-slate-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
+            <div className="flex items-center justify-between text-zinc-400 bg-white/5 py-2 px-3 rounded-lg border border-white/5">
               <div className="flex items-center gap-2"><Calendar size={16} /> {t.profileJoinedLabel}</div>
               <span className="text-white">{createdDate}</span>
             </div>
@@ -270,7 +270,7 @@ const Profile: React.FC = () => {
             <h2 className="text-xl font-bold text-white flex items-center gap-2"><Settings size={20} className="text-emerald-400" /> {t.profileAccountSettings}</h2>
             {isEditing && (
               <div className="flex items-center gap-3">
-                <button onClick={() => { setIsEditing(false); }} className="px-4 py-2 rounded-xl text-slate-400 hover:text-white font-bold transition-colors">{t.profileCancel}</button>
+                <button onClick={() => { setIsEditing(false); }} className="px-4 py-2 rounded-xl text-zinc-400 hover:text-white font-bold transition-colors">{t.profileCancel}</button>
                 <button onClick={handleSave} disabled={isSaving} className="px-6 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all flex items-center gap-2 disabled:opacity-50">
                   {isSaving ? <Loader2 className="animate-spin" size={18} /> : <Save size={18} />} {t.profileSave}
                 </button>
@@ -283,39 +283,39 @@ const Profile: React.FC = () => {
               { label: t.profileInstitution, key: 'institution', type: 'text', placeholder: 'School/College' },
             ].map(field => (
               <div key={field.key}>
-                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{field.label}</label>
+                <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{field.label}</label>
                 {isEditing ? (
                   <input type={field.type} value={(formData as any)[field.key]} onChange={e => setFormData({...formData, [field.key]: e.target.value})}
                     placeholder={field.placeholder}
-                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50" />
+                    className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/50" />
                 ) : (
                   <div className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{(formData as any)[field.key] || t.profileNotSet}</div>
                 )}
               </div>
             ))}
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{t.profileGradeClass}</label>
+              <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.profileGradeClass}</label>
               {isEditing ? (
                 <select value={formData.grade} onChange={e => setFormData({...formData, grade: e.target.value})}
-                  className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
+                  className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
                   <option>Not Specified</option><option>1st PUC / Class 11</option><option>2nd PUC / Class 12</option>
                 </select>
               ) : <div className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{formData.grade}</div>}
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{t.profileBoardSyllabus}</label>
+              <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.profileBoardSyllabus}</label>
               {isEditing ? (
                 <select value={formData.syllabus} onChange={e => setFormData({...formData, syllabus: e.target.value})}
-                  className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
+                  className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
                   <option>Not Specified</option><option>Karnataka PUC</option><option>CBSE</option><option>ICSE</option>
                 </select>
               ) : <div className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{formData.syllabus}</div>}
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{t.profileLanguageLabel}</label>
+              <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.profileLanguageLabel}</label>
               {isEditing ? (
                 <select value={formData.language} onChange={e => setFormData({...formData, language: e.target.value})}
-                  className="w-full bg-slate-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
+                  className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
                   <option>English</option><option>Kannada</option><option>Hindi</option>
                 </select>
               ) : <div className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{formData.language}</div>}
@@ -359,19 +359,19 @@ const Profile: React.FC = () => {
                       </div>
                     </div>
                     <button onClick={handleLeaveClass}
-                      className="px-3 py-1.5 rounded-lg bg-white/5 text-slate-400 border border-white/10 hover:bg-red-500/10 hover:text-red-400 text-xs font-bold transition-all">{t.profileLeave}</button>
+                      className="px-3 py-1.5 rounded-lg bg-white/5 text-zinc-400 border border-white/10 hover:bg-red-500/10 hover:text-red-400 text-xs font-bold transition-all">{t.profileLeave}</button>
                   </div>
                 </div>
               ) : (
                 <div>
-                  <p className="text-xs text-slate-400 mb-3">{t.profileJoinClassHelp}</p>
+                  <p className="text-xs text-zinc-400 mb-3">{t.profileJoinClassHelp}</p>
                   <div className="flex gap-2">
                     <div className="relative flex-1">
-                      <Key className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+                      <Key className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
                       <input type="text" maxLength={6} value={joinCode}
                         onChange={e => { setJoinCode(e.target.value.toUpperCase()); setLinkError(''); }}
                         placeholder="AB3K7M"
-                        className="w-full pl-9 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white font-mono text-lg tracking-[0.2em] placeholder-slate-600 focus:outline-none focus:border-amber-500/50 uppercase" />
+                        className="w-full pl-9 pr-4 py-3 bg-white/5 border border-white/10 rounded-xl text-white font-mono text-lg tracking-[0.2em] placeholder-zinc-600 focus:outline-none focus:border-amber-500/50 uppercase" />
                     </div>
                     <button onClick={handleJoinClass} disabled={linking || joinCode.length < 6}
                       className="px-5 py-3 rounded-xl bg-amber-600 hover:bg-amber-500 text-white font-bold transition-all disabled:opacity-40 shrink-0">
@@ -395,8 +395,8 @@ const Profile: React.FC = () => {
                 return (
                   <div key={subject}>
                     <div className="flex justify-between mb-1">
-                      <span className="text-sm font-bold text-slate-300 capitalize">{subject}</span>
-                      <span className="text-sm font-mono text-slate-400">{percentage}%</span>
+                      <span className="text-sm font-bold text-zinc-300 capitalize">{subject}</span>
+                      <span className="text-sm font-mono text-zinc-400">{percentage}%</span>
                     </div>
                     <div className="w-full h-2 bg-black/30 rounded-full overflow-hidden border border-white/5">
                       <motion.div initial={{ width: 0 }} animate={{ width: `${percentage}%` }}

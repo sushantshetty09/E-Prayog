@@ -179,7 +179,7 @@ const StomataLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(34,197,94,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🌿 Stomata — Guard Cell Mechanism</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Light → K⁺ influx → turgid guard cells → stomatal opening</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Light → K⁺ influx → turgid guard cells → stomatal opening</p>
         </div>
         <div className="text-xs font-bold px-2.5 py-1 rounded-lg" style={{ background: lvl.lux > 0 ? 'rgba(251,191,36,0.15)' : 'rgba(30,41,59,0.5)', color: lvl.lux > 0 ? '#fbbf24' : '#475569', border: `1px solid ${lvl.lux > 0 ? 'rgba(251,191,36,0.3)' : 'rgba(71,85,105,0.3)'}` }}>
           {lvl.lux} lux
@@ -197,13 +197,13 @@ const StomataLab: React.FC = () => {
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-slate-400 whitespace-nowrap">Opening</label>
+          <label className="text-xs text-zinc-400 whitespace-nowrap">Opening</label>
           <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.07)' }}>
             <div className="h-full rounded-full transition-all duration-500" style={{ width: `${animOpening * 100}%`, background: 'linear-gradient(90deg,#22c55e,#4ade80)' }} />
           </div>
           <span className="text-xs font-mono text-emerald-400 w-10 text-right">{(animOpening * 100).toFixed(0)}%</span>
         </div>
-        <div className="rounded-xl p-3 text-[10px] text-slate-400" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(34,197,94,0.15)' }}>
+        <div className="rounded-xl p-3 text-[10px] text-zinc-400" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(34,197,94,0.15)' }}>
           <span className="font-bold text-emerald-400">{lvl.label}: </span>{lvl.desc}
         </div>
         <div className="grid grid-cols-3 gap-2">
@@ -213,7 +213,7 @@ const StomataLab: React.FC = () => {
             { label: 'K⁺ flux', val: animOpening > 0.1 ? '→ Influx' : '← Efflux', color: animOpening > 0.1 ? '#60a5fa' : '#f87171' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[7px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[7px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-xs font-bold mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}

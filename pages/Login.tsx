@@ -352,7 +352,7 @@ const Login: React.FC = () => {
           <h1 className="text-2xl font-display font-bold text-white">
             {isSignup ? (signupStep === 2 ? t.loginCompleteProfile : t.loginCreateAccount) : t.loginWelcome}
           </h1>
-          <p className="text-sm text-slate-400 mt-1">
+          <p className="text-sm text-zinc-400 mt-1">
             {isSignup ? (signupStep === 2 ? t.loginFewDetails : t.loginJoinToday) : t.loginToAccount}
           </p>
         </div>
@@ -369,11 +369,11 @@ const Login: React.FC = () => {
           {isSignup && signupStep === 2 ? (
             <>
               <button type="button" onClick={() => setSignupStep(1)}
-                className="flex items-center gap-1 text-sm text-slate-400 hover:text-white mb-2">
+                className="flex items-center gap-1 text-sm text-zinc-400 hover:text-white mb-2">
                 <ArrowLeft size={14} /> {t.loginBack}
               </button>
               <div className="relative">
-                <GraduationCap size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                <GraduationCap size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" />
                 <select value={signupData.grade} onChange={e => setSignupData({...signupData, grade: e.target.value})}
                   className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
                   <option value="2nd PUC / Class 12">2nd PUC / Class 12</option>
@@ -381,11 +381,11 @@ const Login: React.FC = () => {
                 </select>
               </div>
               <div className="relative">
-                <Building size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                <Building size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" />
                 <input type="text" value={signupData.institution}
                   onChange={e => setSignupData({...signupData, institution: e.target.value})}
                   placeholder="School / College name (optional)"
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50" />
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/50" />
               </div>
               <select value={signupData.language} onChange={e => setSignupData({...signupData, language: e.target.value})}
                 className="w-full bg-white/5 border border-white/10 rounded-xl py-3 px-4 text-sm text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
@@ -399,36 +399,36 @@ const Login: React.FC = () => {
               {/* Signup Step 1: Name field */}
               {isSignup && (
                 <div className="relative">
-                  <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                  <User size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" />
                   <input type="text" value={signupData.name}
                     onChange={e => setSignupData({...signupData, name: e.target.value})}
                     placeholder={t.loginFullName} required
-                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50" />
+                    className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/50" />
                 </div>
               )}
               {/* ID field */}
               <div className="relative">
-                <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                <Mail size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" />
                 <input
                   type={loginType === 'student' ? 'email' : 'text'}
                   value={loginId}
                   onChange={e => setLoginId(e.target.value)}
                   placeholder={idLabel}
                   required
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-4 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/50"
                 />
               </div>
               {/* Password field */}
               <div className="relative">
-                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" />
+                <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" />
                 <input
                   type={showPw ? 'text' : 'password'} value={password}
                   onChange={e => setPassword(e.target.value)}
                   placeholder={t.loginPassword} required minLength={6}
-                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-11 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-11 pr-11 text-sm text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/50"
                 />
                 <button type="button" onClick={() => setShowPw(!showPw)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-white">
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-white">
                   {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
@@ -455,7 +455,7 @@ const Login: React.FC = () => {
           <>
             <div className="flex items-center my-6">
               <div className="flex-1 h-px bg-white/10" />
-              <span className="px-4 text-xs text-slate-500">{t.loginOr}</span>
+              <span className="px-4 text-xs text-zinc-500">{t.loginOr}</span>
               <div className="flex-1 h-px bg-white/10" />
             </div>
             <button onClick={handleGoogleLogin} disabled={loading}
@@ -473,7 +473,7 @@ const Login: React.FC = () => {
 
         {/* Toggle Sign Up (students only) */}
         {loginType === 'student' && (
-          <p className="text-center text-sm text-slate-400 mt-6">
+          <p className="text-center text-sm text-zinc-400 mt-6">
             {isSignup ? t.loginHaveAccount : t.loginNoAccount}
             <button
               onClick={() => { setIsSignup(!isSignup); setError(''); setSignupStep(1); }}
@@ -486,7 +486,7 @@ const Login: React.FC = () => {
 
         {/* Hint for teacher/admin */}
         {loginType !== 'student' && !isSignup && (
-          <p className="text-center text-xs text-slate-500 mt-6">
+          <p className="text-center text-xs text-zinc-500 mt-6">
             {loginType === 'teacher' ? t.loginTeacherHint : t.loginAdminHint}
           </p>
         )}

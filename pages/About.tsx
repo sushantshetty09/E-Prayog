@@ -67,7 +67,7 @@ const About: React.FC = () => {
             <Atom size={16} className="animate-spin" style={{ animationDuration: '8s' }} /> {t.aboutOpenSource}
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-white leading-tight mb-6">{t.aboutTitle}</h1>
-          <p className="text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed mb-10">
+          <p className="text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-10">
             {t.aboutDesc}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
@@ -92,7 +92,7 @@ const About: React.FC = () => {
           ].map((stat) => (
             <div key={stat.label} className="text-center p-6 rounded-2xl bg-white/5 border border-white/5 backdrop-blur-sm">
               <div className="text-3xl sm:text-4xl font-display font-bold text-emerald-400 mb-1">{stat.num}</div>
-              <div className="text-sm text-slate-400 font-medium">{stat.label}</div>
+              <div className="text-sm text-zinc-400 font-medium">{stat.label}</div>
             </div>
           ))}
         </MotionDiv>
@@ -104,8 +104,8 @@ const About: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-6">{t.aboutMissionTitle}</h2>
-              <p className="text-slate-400 leading-relaxed mb-6">{t.aboutMissionP1}</p>
-              <p className="text-slate-400 leading-relaxed">{t.aboutMissionP2}</p>
+              <p className="text-zinc-400 leading-relaxed mb-6">{t.aboutMissionP1}</p>
+              <p className="text-zinc-400 leading-relaxed">{t.aboutMissionP2}</p>
             </div>
             <GlassCard hoverEffect={false} className="p-8 bg-emerald-500/5 border-emerald-500/20">
               <div className="grid grid-cols-2 gap-6">
@@ -117,7 +117,7 @@ const About: React.FC = () => {
                 ].map(stat => (
                   <div key={stat.label} className="text-center">
                     <div className="text-2xl font-display font-bold text-emerald-400 mb-1">{stat.num}</div>
-                    <div className="text-xs text-slate-400 font-medium">{stat.label}</div>
+                    <div className="text-xs text-zinc-400 font-medium">{stat.label}</div>
                   </div>
                 ))}
               </div>
@@ -130,7 +130,7 @@ const About: React.FC = () => {
       <section className="py-24 px-6 lg:px-12 max-w-6xl mx-auto">
         <MotionDiv {...fadeIn} className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">{t.featuresHeading}</h2>
-          <p className="text-slate-400 max-w-xl mx-auto">{t.aboutFeaturesSubheading}</p>
+          <p className="text-zinc-400 max-w-xl mx-auto">{t.aboutFeaturesSubheading}</p>
         </MotionDiv>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {FEATURES.map((feature, i) => (
@@ -140,7 +140,7 @@ const About: React.FC = () => {
                   {feature.icon}
                 </div>
                 <h3 className="text-lg font-bold text-white mb-2">{feature.title}</h3>
-                <p className="text-sm text-slate-400 leading-relaxed">{feature.desc}</p>
+                <p className="text-sm text-zinc-400 leading-relaxed">{feature.desc}</p>
               </GlassCard>
             </MotionDiv>
           ))}
@@ -151,7 +151,7 @@ const About: React.FC = () => {
       <section className="py-24 px-6 lg:px-12 max-w-6xl mx-auto">
         <MotionDiv {...fadeIn} className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">{t.aboutSubjectsHeading}</h2>
-          <p className="text-slate-400">{t.aboutSubjectsSubheading}</p>
+          <p className="text-zinc-400">{t.aboutSubjectsSubheading}</p>
         </MotionDiv>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
           {SUBJECTS.map((subject) => {
@@ -165,7 +165,7 @@ const About: React.FC = () => {
                     </div>
                     <h3 className="text-white font-bold mb-1">{subject.name}</h3>
                     <p className="text-emerald-400 text-sm font-bold mb-2">{subject.labs.length} experiments</p>
-                    <p className="text-xs text-slate-500 leading-relaxed">{SUBJECT_DESCRIPTIONS[subject.name] || subject.description}</p>
+                    <p className="text-xs text-zinc-500 leading-relaxed">{SUBJECT_DESCRIPTIONS[subject.name] || subject.description}</p>
                   </GlassCard>
                 </Link>
               </MotionDiv>
@@ -194,7 +194,7 @@ const About: React.FC = () => {
                 <div>
                   <h3 className="text-white font-bold text-lg">{person.name}</h3>
                   <p className="text-emerald-400 text-sm font-medium">{person.title}</p>
-                  <p className="text-slate-500 text-xs mt-1">{person.school}</p>
+                  <p className="text-zinc-500 text-xs mt-1">{person.school}</p>
                 </div>
               </GlassCard>
             </MotionDiv>
@@ -208,7 +208,7 @@ const About: React.FC = () => {
           <h2 className="text-3xl sm:text-5xl font-display font-bold text-white mb-6">
             {t.ctaHeading}
           </h2>
-          <p className="text-slate-400 text-lg mb-10 max-w-xl mx-auto">
+          <p className="text-zinc-400 text-lg mb-10 max-w-xl mx-auto">
             {t.aboutCtaSubheading}
           </p>
           <div className="flex flex-wrap justify-center gap-4">

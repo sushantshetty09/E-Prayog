@@ -55,7 +55,7 @@ const Contact: React.FC = () => {
             <CheckCircle2 size={40} className="text-emerald-400" />
           </div>
           <h2 className="text-3xl font-display font-bold text-white mb-3">{t.contactThankYou}</h2>
-          <p className="text-slate-400 mb-6">{t.contactSubmitted}</p>
+          <p className="text-zinc-400 mb-6">{t.contactSubmitted}</p>
           <button onClick={() => setSubmitted(false)} className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-colors">
             {t.contactSubmitAnother}
           </button>
@@ -69,14 +69,14 @@ const Contact: React.FC = () => {
       <div className="mb-8 text-center">
         <MessageSquare size={40} className="text-emerald-400 mx-auto mb-4" />
         <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-2">{t.contactTitle}</h1>
-        <p className="text-slate-400">{t.contactDesc}</p>
+        <p className="text-zinc-400">{t.contactDesc}</p>
       </div>
 
       <GlassCard className="p-8">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Star Rating */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase mb-3">{t.contactRatingPrompt}</label>
+            <label className="block text-xs font-bold text-zinc-400 uppercase mb-3">{t.contactRatingPrompt}</label>
             <div className="flex gap-2 justify-center">
               {[1, 2, 3, 4, 5].map(star => (
                 <button key={star} type="button"
@@ -85,7 +85,7 @@ const Contact: React.FC = () => {
                   onClick={() => setRating(star)}
                   className="transition-transform hover:scale-110 focus:outline-none">
                   <Star size={36}
-                    className={`transition-colors ${(hoverRating || rating) >= star ? 'text-amber-400 fill-amber-400' : 'text-slate-600'}`} />
+                    className={`transition-colors ${(hoverRating || rating) >= star ? 'text-amber-400 fill-amber-400' : 'text-zinc-600'}`} />
                 </button>
               ))}
             </div>
@@ -98,14 +98,14 @@ const Contact: React.FC = () => {
 
           {/* Category */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{t.contactCategory}</label>
+            <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.contactCategory}</label>
             <div className="grid grid-cols-2 gap-3">
               {CATEGORIES.map(cat => (
                 <button key={cat.value} type="button" onClick={() => setCategory(cat.value)}
                   className={`p-3 rounded-xl text-sm font-bold text-center transition-all border ${
                     category === cat.value
                       ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
-                      : 'bg-white/5 border-white/10 text-slate-400 hover:bg-white/10'
+                      : 'bg-white/5 border-white/10 text-zinc-400 hover:bg-white/10'
                   }`}>
                   {cat.label}
                 </button>
@@ -115,12 +115,12 @@ const Contact: React.FC = () => {
 
           {/* Message */}
           <div>
-            <label className="block text-xs font-bold text-slate-400 uppercase mb-2">{t.contactMessage}</label>
+            <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.contactMessage}</label>
             <textarea value={message} onChange={e => setMessage(e.target.value)}
               placeholder={t.contactPlaceholder}
               rows={5} required minLength={20}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500/50 resize-none" />
-            <p className="text-xs text-slate-500 mt-1 text-right">{message.length}/20 min</p>
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white placeholder-zinc-500 focus:outline-none focus:border-emerald-500/50 resize-none" />
+            <p className="text-xs text-zinc-500 mt-1 text-right">{message.length}/20 min</p>
           </div>
 
           {error && <p className="text-sm text-red-400 bg-red-500/10 rounded-xl px-4 py-2">{error}</p>}

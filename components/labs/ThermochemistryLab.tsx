@@ -178,7 +178,7 @@ const ThermochemistryLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: `${rxn.color}35`, background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🌡 Thermochemistry — Calorimetry</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">q = mcΔT · Enthalpy change ΔH · Exo vs Endo</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">q = mcΔT · Enthalpy change ΔH · Exo vs Endo</p>
         </div>
         <div className="text-xs px-2.5 py-1 rounded-lg font-bold" style={{ background: rxn.color + '20', color: rxn.color, border: `1px solid ${rxn.color}40` }}>{isExo ? '🔥 Exothermic' : '❄ Endothermic'}</div>
       </div>
@@ -207,7 +207,7 @@ const ThermochemistryLab: React.FC = () => {
             { label: 'ΔH', val: `${rxn.deltaH > 0 ? '+' : ''}${rxn.deltaH} kJ/mol`, color: rxn.color },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[7px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[7px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-xs font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}

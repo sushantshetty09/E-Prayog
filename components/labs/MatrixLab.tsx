@@ -200,7 +200,7 @@ const MatrixLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🔲 Matrix Operations — Linear Algebra</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Addition · Multiplication · Determinant · Inverse · Transpose</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Addition · Multiplication · Determinant · Inverse · Transpose</p>
         </div>
         <div className="flex gap-1">
           {([['add','A+B'],['mul','A×B'],['det','|A|'],['inv','A⁻¹'],['trans','Aᵀ']] as [Op,string][]).map(([o, lbl]) => (
@@ -251,7 +251,7 @@ const MatrixLab: React.FC = () => {
           )}
           {/* Presets */}
           <div className="flex flex-col gap-1.5 justify-center">
-            <span className="text-[9px] text-slate-500 font-bold text-center">Presets</span>
+            <span className="text-[9px] text-zinc-500 font-bold text-center">Presets</span>
             {[
               { label: 'Identity', a: [[1,0],[0,1]] as Mat },
               { label: 'Rotation', a: [[0,-1],[1,0]] as Mat },

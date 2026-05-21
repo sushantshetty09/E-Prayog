@@ -218,7 +218,7 @@ const ChromatographyLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(34,197,94,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🌿 Paper Chromatography — Leaf Pigments</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Rf = distance (solute) ÷ distance (solvent front)</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Rf = distance (solute) ÷ distance (solvent front)</p>
         </div>
         <button onClick={() => { setRunning(false); setSolventPct(0); }}
           className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>
@@ -230,7 +230,7 @@ const ChromatographyLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(34,197,94,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-slate-400 whitespace-nowrap">Solvent front</label>
+          <label className="text-xs text-zinc-400 whitespace-nowrap">Solvent front</label>
           <div className="flex-1 h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }}>
             <div className="h-full rounded-full transition-all duration-100" style={{ width: `${solventPct}%`, background: 'linear-gradient(90deg,#38bdf8,#60a5fa)' }} />
           </div>

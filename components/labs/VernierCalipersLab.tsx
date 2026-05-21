@@ -161,7 +161,7 @@ const VernierCalipersLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(56,189,248,0.2)', background: 'rgba(7,9,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">📏 Vernier Calipers</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Least Count (LC) = {LC} cm &nbsp;|&nbsp; Reading = MSR + (VSD × LC)</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Least Count (LC) = {LC} cm &nbsp;|&nbsp; Reading = MSR + (VSD × LC)</p>
         </div>
         <div className="text-xs font-mono px-3 py-1.5 rounded-lg" style={{ background: 'rgba(16,185,129,0.1)', color: '#10b981', border: '1px solid rgba(16,185,129,0.25)' }}>
           {reading.toFixed(2)} cm
@@ -172,7 +172,7 @@ const VernierCalipersLab: React.FC = () => {
       
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(56,189,248,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-4">
-          <label className="text-xs text-slate-400 whitespace-nowrap">Slide Jaw</label>
+          <label className="text-xs text-zinc-400 whitespace-nowrap">Slide Jaw</label>
           <input type="range" min={0} max={100} step={0.2} value={jawPos} onChange={e => setJawPos(Number(e.target.value))} className="flex-1 h-1.5 rounded-full accent-sky-500" />
           <span className="text-xs font-mono text-sky-400 w-16 text-right">{diameter.toFixed(2)} cm</span>
         </div>
@@ -185,7 +185,7 @@ const VernierCalipersLab: React.FC = () => {
             { label: 'TOTAL', val: `${reading.toFixed(2)} cm`, color: '#10b981', bg: 'rgba(16,185,129,0.1)', border: 'rgba(16,185,129,0.25)' },
           ].map(m => (
             <div key={m.label} className="rounded-xl p-2.5 text-center" style={{ background: m.bg, border: `1px solid ${m.border}` }}>
-              <div className="text-[8px] font-bold uppercase tracking-widest text-slate-500">{m.label}</div>
+              <div className="text-[8px] font-bold uppercase tracking-widest text-zinc-500">{m.label}</div>
               <div className="text-sm font-bold font-mono mt-0.5" style={{ color: m.color }}>{m.val}</div>
             </div>
           ))}

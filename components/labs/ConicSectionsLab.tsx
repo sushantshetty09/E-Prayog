@@ -151,7 +151,7 @@ const ConicSectionsLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: `${colorMap[type]}35`, background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🔵 Conic Sections</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Circle · Ellipse · Parabola · Hyperbola · Eccentricity</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Circle · Ellipse · Parabola · Hyperbola · Eccentricity</p>
         </div>
         <div className="text-xs font-mono px-2.5 py-1 rounded-lg font-bold" style={{ background: colorMap[type] + '20', color: colorMap[type], border: `1px solid ${colorMap[type]}40` }}>e = {type === 'parabola' ? '1' : e.toFixed(2)}</div>
       </div>
@@ -167,7 +167,7 @@ const ConicSectionsLab: React.FC = () => {
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-slate-400 whitespace-nowrap">Shape param</label>
+          <label className="text-xs text-zinc-400 whitespace-nowrap">Shape param</label>
           <input type="range" min={5} max={95} step={1} value={param} onChange={e => setParam(Number(e.target.value))}
             className="flex-1 h-1.5 rounded-full" style={{ accentColor: colorMap[type] }} />
           <span className="text-xs font-mono w-8" style={{ color: colorMap[type] }}>{param}</span>
@@ -179,7 +179,7 @@ const ConicSectionsLab: React.FC = () => {
             { label: 'Eccentricity e', val: type === 'parabola' ? '1' : e.toFixed(3), color: type === 'circle' ? '#10b981' : type === 'ellipse' ? '#a78bfa' : type === 'parabola' ? '#fbbf24' : '#f87171' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[7px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[7px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-xs font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}

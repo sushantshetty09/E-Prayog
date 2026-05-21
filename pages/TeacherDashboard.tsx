@@ -101,9 +101,9 @@ const TeacherDashboard: React.FC = () => {
           <div>
             <h1 className="text-2xl md:text-3xl font-display font-bold text-white mb-1">Teacher Dashboard</h1>
             <p className="text-sm text-purple-400/80">{teacherName}</p>
-            {teacherId && <p className="text-xs text-slate-500 font-mono">{teacherId}</p>}
-            {loginId && <p className="text-xs text-slate-500">{loginId}</p>}
-            {institution && <p className="text-xs text-slate-500">{institution}</p>}
+            {teacherId && <p className="text-xs text-zinc-500 font-mono">{teacherId}</p>}
+            {loginId && <p className="text-xs text-zinc-500">{loginId}</p>}
+            {institution && <p className="text-xs text-zinc-500">{institution}</p>}
           </div>
         </div>
         <div className="z-10 flex gap-3 w-full md:w-auto">
@@ -122,7 +122,7 @@ const TeacherDashboard: React.FC = () => {
             </div>
             <div>
               <h2 className="text-lg font-bold text-white flex items-center gap-2"><Link2 size={18} className="text-amber-400" /> Class Code</h2>
-              <p className="text-xs text-slate-400 mt-0.5">Share this code with students so they can link to your class.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Share this code with students so they can link to your class.</p>
             </div>
           </div>
           <div className="flex items-center gap-3">
@@ -136,7 +136,7 @@ const TeacherDashboard: React.FC = () => {
                   {codeCopied ? <><CheckCircle2 size={16} /> Copied!</> : <><Copy size={16} /> Copy</>}
                 </button>
                 <button onClick={handleGenerateCode} disabled={generatingCode}
-                  className="px-4 py-3 rounded-xl bg-white/5 text-slate-400 border border-white/10 hover:bg-white/10 hover:text-white font-bold text-sm transition-all flex items-center gap-2 disabled:opacity-50"
+                  className="px-4 py-3 rounded-xl bg-white/5 text-zinc-400 border border-white/10 hover:bg-white/10 hover:text-white font-bold text-sm transition-all flex items-center gap-2 disabled:opacity-50"
                   title="Regenerate code">
                   <RefreshCw size={16} className={generatingCode ? 'animate-spin' : ''} /> Regenerate
                 </button>
@@ -160,7 +160,7 @@ const TeacherDashboard: React.FC = () => {
               <div key={req.id} className="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-red-500/10">
                 <div>
                   <p className="font-bold text-white text-sm">{req.teacherName || req.teacherId}</p>
-                  <p className="text-xs text-slate-400">{req.failedAttempts} failed attempts — {new Date(req.requestedAt).toLocaleDateString()}</p>
+                  <p className="text-xs text-zinc-400">{req.failedAttempts} failed attempts — {new Date(req.requestedAt).toLocaleDateString()}</p>
                 </div>
                 <span className="text-xs font-bold text-amber-400 px-3 py-1 bg-amber-500/10 rounded-full border border-amber-500/20">Contact Admin</span>
               </div>
@@ -176,7 +176,7 @@ const TeacherDashboard: React.FC = () => {
             <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center border border-blue-500/30 shrink-0"><Activity className="text-blue-400" size={24} /></div>
             <div>
               <h2 className="text-lg font-bold text-white">Live Activity Feed</h2>
-              <p className="text-xs text-slate-400 mt-0.5">Monitor real-time student events.</p>
+              <p className="text-xs text-zinc-400 mt-0.5">Monitor real-time student events.</p>
             </div>
           </div>
           <Link to="/teacher-activity" className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-bold transition-all flex items-center gap-2 text-sm">Open Live Feed</Link>
@@ -189,10 +189,10 @@ const TeacherDashboard: React.FC = () => {
           <Users className="text-purple-400" size={20} /> Linked Students ({filteredStudents.length})
         </h2>
         <div className="relative w-full sm:w-64">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" size={16} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" size={16} />
           <input type="text" placeholder="Search students..." value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-9 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-purple-500/50 text-sm" />
+            className="w-full pl-9 pr-4 py-2 bg-white/5 border border-white/10 rounded-xl text-white placeholder-zinc-500 focus:outline-none focus:border-purple-500/50 text-sm" />
         </div>
       </div>
 
@@ -201,9 +201,9 @@ const TeacherDashboard: React.FC = () => {
           <GlassCard className="p-12 flex justify-center"><Loader2 className="animate-spin text-purple-400" size={32} /></GlassCard>
         ) : filteredStudents.length === 0 ? (
           <GlassCard className="p-12 text-center">
-            <Users size={48} className="text-slate-700 mx-auto mb-4" />
-            <p className="text-slate-400 font-bold mb-2">{classCode ? 'No students have linked to your class yet.' : 'Generate a class code to start linking students.'}</p>
-            {classCode && <p className="text-slate-500 text-sm">Share your class code <span className="font-mono text-amber-400 font-bold">{classCode}</span> with students.</p>}
+            <Users size={48} className="text-zinc-700 mx-auto mb-4" />
+            <p className="text-zinc-400 font-bold mb-2">{classCode ? 'No students have linked to your class yet.' : 'Generate a class code to start linking students.'}</p>
+            {classCode && <p className="text-zinc-500 text-sm">Share your class code <span className="font-mono text-amber-400 font-bold">{classCode}</span> with students.</p>}
           </GlassCard>
         ) : (
           filteredStudents.map(student => {
@@ -215,12 +215,12 @@ const TeacherDashboard: React.FC = () => {
               <GlassCard key={student.id} className="p-6 transition-colors hover:bg-white/5">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                   <div className="flex items-center gap-4 flex-1">
-                    <div className="w-12 h-12 rounded-full bg-slate-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
+                    <div className="w-12 h-12 rounded-full bg-zinc-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
                       {studentName.charAt(0).toUpperCase()}
                     </div>
                     <div>
                       <h3 className="text-white font-bold text-lg">{studentName}</h3>
-                      <div className="flex items-center gap-3 text-xs text-slate-400 mt-1">
+                      <div className="flex items-center gap-3 text-xs text-zinc-400 mt-1">
                         <span>{student.email}</span>
                         <span className="w-1 h-1 rounded-full bg-white/20"></span>
                         <span>{student.grade || 'N/A'}</span>
@@ -230,7 +230,7 @@ const TeacherDashboard: React.FC = () => {
                   </div>
                   <div className="flex-1 max-w-md w-full">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-xs font-bold text-slate-400 uppercase">Average Completion</span>
+                      <span className="text-xs font-bold text-zinc-400 uppercase">Average Completion</span>
                       <span className="text-xs font-mono font-bold text-purple-400">{avgProgress}%</span>
                     </div>
                     <div className="w-full h-2 rounded-full bg-black/30 border border-white/5 overflow-hidden mb-3">
@@ -258,28 +258,28 @@ const TeacherDashboard: React.FC = () => {
       {/* ASSIGNMENT MODAL */}
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm">
-          <div className="w-full max-w-md bg-slate-900 border border-white/10 rounded-2xl p-6 shadow-2xl">
+          <div className="w-full max-w-md bg-zinc-900 border border-white/10 rounded-2xl p-6 shadow-2xl">
             <h2 className="text-xl font-bold text-white mb-6">Create Assignment</h2>
             <form onSubmit={(e) => { e.preventDefault(); setShowModal(false); alert('Assignment created!'); }} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Title</label>
+                <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">Title</label>
                 <input required type="text" value={assignment.title} onChange={e => setAssignment({...assignment, title: e.target.value})}
                   className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-purple-500/50" placeholder="e.g. Complete Titration Lab" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Subject</label>
+                <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">Subject</label>
                 <select value={assignment.subject} onChange={e => setAssignment({...assignment, subject: e.target.value})}
                   className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-purple-500/50 appearance-none">
                   <option>Physics</option><option>Chemistry</option><option>Biology</option><option>Math</option><option>CS</option>
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-bold text-slate-400 uppercase mb-2">Due Date</label>
+                <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">Due Date</label>
                 <input required type="date" value={assignment.dueDate} onChange={e => setAssignment({...assignment, dueDate: e.target.value})}
                   className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-purple-500/50" />
               </div>
               <div className="pt-4 flex gap-3">
-                <button type="button" onClick={() => setShowModal(false)} className="flex-1 py-3 rounded-xl text-slate-400 font-bold hover:bg-white/5 transition-colors">Cancel</button>
+                <button type="button" onClick={() => setShowModal(false)} className="flex-1 py-3 rounded-xl text-zinc-400 font-bold hover:bg-white/5 transition-colors">Cancel</button>
                 <button type="submit" className="flex-1 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold transition-colors">Assign</button>
               </div>
             </form>

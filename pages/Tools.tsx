@@ -20,7 +20,7 @@ const Tools: React.FC = () => {
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
         <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolsTitle}</h1>
-        <p className="text-slate-400 max-w-2xl mx-auto">
+        <p className="text-zinc-400 max-w-2xl mx-auto">
           {t.toolsDesc}
         </p>
       </div>
@@ -36,7 +36,7 @@ const Tools: React.FC = () => {
               whileTap={{ scale: 0.97 }}
               className="glass-panel rounded-2xl p-6 flex flex-col items-center gap-4 cursor-pointer
                          border border-white/5 hover:border-white/15 transition-colors
-                         bg-slate-900/60 hover:bg-slate-800/60 h-full"
+                         bg-zinc-900/60 hover:bg-zinc-800/60 h-full"
             >
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0"
                    style={{ background: tool.bg, border: `1.5px solid ${tool.color}25` }}>

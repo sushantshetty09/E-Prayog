@@ -126,14 +126,14 @@ const BinomialTheoremLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(167,139,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🔢 Binomial Theorem — Pascal's Triangle</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">(x+y)ⁿ = Σ C(n,r) xⁿ⁻ʳ yʳ · Binomial coefficients · Pascal's Triangle</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">(x+y)ⁿ = Σ C(n,r) xⁿ⁻ʳ yʳ · Binomial coefficients · Pascal's Triangle</p>
         </div>
         <div className="text-xs font-mono px-2.5 py-1 rounded-lg font-bold" style={{ background: 'rgba(167,139,250,0.15)', color: '#a78bfa', border: '1px solid rgba(167,139,250,0.3)' }}>n = {n}</div>
       </div>
       <canvas ref={canvasRef} width={500} height={340} className="w-full" style={{ display: 'block' }} />
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(167,139,250,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-slate-400">n</label>
+          <label className="text-xs text-zinc-400">n</label>
           <input type="range" min={1} max={10} step={1} value={n} onChange={e => setN(Number(e.target.value))}
             className="flex-1 h-1.5 rounded-full accent-violet-400" />
           <span className="text-xs font-mono text-violet-400 w-8">{n}</span>
@@ -145,12 +145,12 @@ const BinomialTheoremLab: React.FC = () => {
             { label: 'No. of terms', val: (n + 1).toString(), color: '#10b981' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[7px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[7px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-sm font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}
         </div>
-        <div className="text-[9px] text-slate-500 font-mono overflow-x-auto whitespace-nowrap px-1" style={{ color: '#64748b' }}>
+        <div className="text-[9px] text-zinc-500 font-mono overflow-x-auto whitespace-nowrap px-1" style={{ color: '#64748b' }}>
           <span className="text-violet-400 font-bold">Expansion: </span>
           {terms.map((t2, i) => (
             <span key={i} className="mr-1" style={{ color: '#a78bfa' }}>

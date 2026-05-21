@@ -170,7 +170,7 @@ const LogicGatesLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(16,185,129,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">⚡ Logic Gates — Interactive Circuit</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">AND · OR · NOT · NAND · NOR · XOR · XNOR · Truth tables</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">AND · OR · NOT · NAND · NOR · XOR · XNOR · Truth tables</p>
         </div>
         <div className="text-xs font-mono px-2.5 py-1 rounded-lg font-bold" style={{ background: output === 1 ? 'rgba(16,185,129,0.2)' : 'rgba(30,41,59,0.5)', color: output === 1 ? '#10b981' : '#475569', border: '1px solid rgba(255,255,255,0.08)' }}>
           Y = {output}
@@ -205,9 +205,9 @@ const LogicGatesLab: React.FC = () => {
           <table className="w-full text-[10px] font-mono">
             <thead>
               <tr>
-                <th className="py-1 px-2 text-slate-500 text-left font-bold">A</th>
-                {!isUnary && <th className="py-1 px-2 text-slate-500 text-left font-bold">B</th>}
-                <th className="py-1 px-2 text-slate-500 text-left font-bold">Y</th>
+                <th className="py-1 px-2 text-zinc-500 text-left font-bold">A</th>
+                {!isUnary && <th className="py-1 px-2 text-zinc-500 text-left font-bold">B</th>}
+                <th className="py-1 px-2 text-zinc-500 text-left font-bold">Y</th>
               </tr>
             </thead>
             <tbody>

@@ -259,7 +259,7 @@ const OsmosisLab: React.FC = () => {
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(56,189,248,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
           <h3 className="text-sm font-bold text-white tracking-wide">🌊 Osmosis — U-Tube Osmometer</h3>
-          <p className="text-[10px] text-slate-500 mt-0.5">Water potential gradient drives net movement of water molecules</p>
+          <p className="text-[10px] text-zinc-500 mt-0.5">Water potential gradient drives net movement of water molecules</p>
         </div>
         <div className="flex gap-2">
           <button onClick={handleReset} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>🔄 Reset</button>
@@ -281,12 +281,12 @@ const OsmosisLab: React.FC = () => {
             { label: 'Osmotic P.', val: `${(Math.min(55, elapsed * 0.18) * 0.12).toFixed(2)} atm`, color: '#34d399' },
           ].map(d => (
             <div key={d.label} className="rounded-xl p-2 text-center" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
-              <div className="text-[8px] uppercase tracking-widest text-slate-500">{d.label}</div>
+              <div className="text-[8px] uppercase tracking-widest text-zinc-500">{d.label}</div>
               <div className="text-sm font-bold font-mono mt-1" style={{ color: d.color }}>{d.val}</div>
             </div>
           ))}
         </div>
-        <div className="text-[10px] text-slate-500 text-center px-2">
+        <div className="text-[10px] text-zinc-500 text-center px-2">
           Water (high Ψ) → membrane → Sugar solution (low Ψ) · Net osmosis raises right column
         </div>
       </div>
