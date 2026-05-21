@@ -4,7 +4,7 @@ import { Send, Bot, X, Sparkles, User, Maximize2, Minimize2 } from 'lucide-react
 import { ChatMessage } from '../types';
 import { SUBJECTS } from '../constants';
 import { createChatSession, sendMessageToGemini, ChatSession } from '../services/geminiService';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m as motion, AnimatePresence } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
 
 const MotionDiv = motion.div as any;
@@ -210,7 +210,7 @@ const AIFloatingTutor: React.FC = () => {
             exit={{ scale: 0, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             onClick={() => setIsOpen(true)}
-            className="fixed bottom-6 right-6 z-40 w-14 h-14 rounded-full flex items-center justify-center cursor-pointer group"
+            className="fixed bottom-6 right-6 z-40 size-14 rounded-full flex items-center justify-center cursor-pointer group"
             style={styles.fab}
             aria-label="Open AI Tutor"
             id="ai-tutor-fab"
@@ -229,7 +229,7 @@ const AIFloatingTutor: React.FC = () => {
 
             {/* Lab context indicator */}
             {labContext && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full border-2 border-[#08081a] flex items-center justify-center"
+              <span className="absolute -top-1 -right-1 size-4 rounded-full border-2 border-[#08081a] flex items-center justify-center"
                 style={{ background: 'linear-gradient(135deg,#10b981,#0ea5e9)' }}>
                 <Sparkles size={8} className="text-white" />
               </span>
@@ -253,7 +253,7 @@ const AIFloatingTutor: React.FC = () => {
             <div className="flex items-center justify-between px-4 py-3" style={styles.header}>
               <div className="flex items-center gap-3 min-w-0">
                 {/* Bot avatar with animated gradient ring */}
-                <div className="relative w-9 h-9 flex-shrink-0">
+                <div className="relative size-9 flex-shrink-0">
                   <div className="absolute inset-[-2px] rounded-full ai-fab-ring opacity-70" />
                   <div className="relative w-full h-full rounded-full flex items-center justify-center" style={styles.botAvatar}>
                     <Bot size={17} className="text-white" />
@@ -261,7 +261,7 @@ const AIFloatingTutor: React.FC = () => {
                 </div>
 
                 <div className="min-w-0">
-                  <h2 className="text-sm font-bold flex items-center gap-1.5 truncate">
+                  <h2 className="text-sm font-semibold flex items-center gap-1.5 truncate">
                     <span className="ai-gradient-text">AI Lab Tutor</span>
                     <Sparkles size={12} className="text-amber-400 animate-pulse flex-shrink-0" />
                   </h2>
@@ -305,7 +305,7 @@ const AIFloatingTutor: React.FC = () => {
                 <div key={msg.id} className={`flex items-start gap-2.5 ${msg.role === 'user' ? 'flex-row-reverse' : ''}`}>
                   {/* Avatar */}
                   <div
-                    className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0 text-white"
+                    className="size-7 rounded-full flex items-center justify-center flex-shrink-0 text-white"
                     style={msg.role === 'model' ? styles.msgBotAvatar : { background: 'linear-gradient(135deg,#0ea5e9,#38bdf8)' }}
                   >
                     {msg.role === 'model' ? <Bot size={13} /> : <User size={13} />}
@@ -320,9 +320,9 @@ const AIFloatingTutor: React.FC = () => {
                   >
                     {msg.isThinking && msg.text === '' ? (
                       <div className="flex gap-1.5 h-5 items-center py-1">
-                        <span className="w-1.5 h-1.5 rounded-full ai-dot-bounce-1" style={{ background: 'linear-gradient(135deg,#0ea5e9,#8b5cf6)' }} />
-                        <span className="w-1.5 h-1.5 rounded-full ai-dot-bounce-2" style={{ background: 'linear-gradient(135deg,#8b5cf6,#ec4899)' }} />
-                        <span className="w-1.5 h-1.5 rounded-full ai-dot-bounce-3" style={{ background: 'linear-gradient(135deg,#ec4899,#f59e0b)' }} />
+                        <span className="size-1.5 rounded-full ai-dot-bounce-1" style={{ background: 'linear-gradient(135deg,#0ea5e9,#8b5cf6)' }} />
+                        <span className="size-1.5 rounded-full ai-dot-bounce-2" style={{ background: 'linear-gradient(135deg,#8b5cf6,#ec4899)' }} />
+                        <span className="size-1.5 rounded-full ai-dot-bounce-3" style={{ background: 'linear-gradient(135deg,#ec4899,#f59e0b)' }} />
                       </div>
                     ) : (
                       <span className="whitespace-pre-wrap break-words">{msg.text}</span>
@@ -359,7 +359,7 @@ const AIFloatingTutor: React.FC = () => {
                 <button
                   onClick={handleSend}
                   disabled={isLoading || !input.trim()}
-                  className="absolute right-1.5 w-8 h-8 rounded-full flex items-center justify-center text-white transition-all disabled:opacity-40 active:scale-95"
+                  className="absolute right-1.5 size-8 rounded-full flex items-center justify-center text-white transition-all disabled:opacity-40 active:scale-95"
                   style={styles.sendBtn}
                 >
                   <Send size={13} />

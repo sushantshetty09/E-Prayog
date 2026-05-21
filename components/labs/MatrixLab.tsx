@@ -144,7 +144,7 @@ const MatrixLab: React.FC = () => {
         ctx.fillText(fmt(detVal), detX + 20, detY + 10);
         ctx.shadowBlur = 0;
         ctx.fillStyle = Math.abs(detVal) < 0.01 ? '#ef4444' : '#94a3b8'; ctx.font = '10px Inter';
-        ctx.fillText(Math.abs(detVal) < 0.01 ? 'Singular — no inverse' : '← det(A)', detX + 20, detY + 28);
+        ctx.fillText(Math.abs(detVal) < 0.01 ? 'Singular: no inverse' : '← det(A)', detX + 20, detY + 28);
       } else if (result === null) {
         ctx.fillStyle = '#ef4444'; ctx.font = 'bold 12px Inter'; ctx.textAlign = 'left';
         ctx.fillText('No inverse —', resX, matY + 35); ctx.fillText('det(A) = 0', resX, matY + 52);
@@ -199,7 +199,7 @@ const MatrixLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🔲 Matrix Operations — Linear Algebra</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🔲 Matrix Operations: Linear Algebra</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Addition · Multiplication · Determinant · Inverse · Transpose</p>
         </div>
         <div className="flex gap-1">

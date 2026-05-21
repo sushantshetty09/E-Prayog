@@ -7,7 +7,7 @@ import { auth } from '../services/firebase';
 import { useNavigate } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
 import { Loader2, CheckCircle2, User, Mail, Shield, ShieldCheck, GraduationCap, Calendar, Save, Edit3, Settings, BookOpen, Link2, Key, Camera, Flame, FlaskConical, TrendingUp, X } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
 
 const AVATAR_COLORS = [
@@ -59,7 +59,7 @@ const Profile: React.FC = () => {
     });
 
     if (profileData.teacherUid && role === 'Student') {
-      // Use cache first — avoid extra Firestore fetch on every render
+      // Use cache first: avoid extra Firestore fetch on every render
       if (teacherNameCache[profileData.teacherUid]) {
         setLinkedTeacherName(teacherNameCache[profileData.teacherUid]);
       } else {
@@ -158,14 +158,14 @@ const Profile: React.FC = () => {
   // Redirect teacher to their own profile page
   if (!authLoading && role === 'Teacher') { navigate('/teacher-profile', { replace: true }); return null; }
 
-  // Still fetching auth/profile — show skeleton
+  // Still fetching auth/profile: show skeleton
   if (authLoading) {
     return (
       <div className="pt-24 min-h-screen pb-12 px-6 lg:px-12 max-w-7xl mx-auto">
         <div className="mb-8 h-10 w-48 bg-white/10 rounded-xl animate-pulse" />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {[1,2,3].map(i => (
-            <div key={i} className="rounded-2xl bg-white/5 border border-white/10 h-80 animate-pulse" />
+          {[1,2,3].map(n => (
+            <div key={`skeleton-${n}`} className="rounded-2xl bg-white/5 border border-white/10 h-80 animate-pulse" />
           ))}
         </div>
       </div>
@@ -195,7 +195,7 @@ const Profile: React.FC = () => {
   return (
     <div className="pt-24 min-h-screen pb-12 px-6 lg:px-12 max-w-7xl mx-auto">
       <div className="mb-8 flex items-center justify-between">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white">{t.profileTitle}</h1>
+        <h1 className="text-3xl lg:text-4xl font-display font-semibold text-white">{t.profileTitle}</h1>
         {saveSuccess && (
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
             className="flex items-center gap-2 text-emerald-400 bg-emerald-400/10 px-4 py-2 rounded-full border border-emerald-400/20">
@@ -208,14 +208,14 @@ const Profile: React.FC = () => {
 
         {/* Column 1: Identity */}
         <GlassCard className="flex flex-col items-center text-center p-8 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 blur-3xl rounded-full"></div>
+          <div className="absolute top-0 right-0 size-32 bg-emerald-500/10 blur-3xl rounded-full"></div>
           <div className="relative z-10 mb-4">
-            <div className={`w-32 h-32 rounded-full flex items-center justify-center text-5xl font-bold text-white shadow-xl shadow-black/20 border-4 border-white/10 overflow-hidden ${avatarUrl ? '' : formData.avatar}`}>
+            <div className={`size-32 rounded-full flex items-center justify-center text-5xl font-bold text-white shadow-xl shadow-black/20 border-4 border-white/10 overflow-hidden ${avatarUrl ? '' : formData.avatar}`}>
               {avatarUrl ? <img src={avatarUrl} alt="Avatar" className="w-full h-full object-cover" /> : (formData.name?.charAt(0)?.toUpperCase() || <User size={48} />)}
             </div>
-            <label className="absolute bottom-0 right-0 w-9 h-9 bg-emerald-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-emerald-500 transition-colors shadow-lg">
+            <label htmlFor="student-avatar-upload" className="absolute bottom-0 right-0 size-9 bg-emerald-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-emerald-500 transition-colors shadow-lg">
               {uploadingPhoto ? <Loader2 size={16} className="animate-spin text-white" /> : <Camera size={16} className="text-white" />}
-              <input type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} disabled={uploadingPhoto} />
+              <input id="student-avatar-upload" type="file" accept="image/*" className="hidden" onChange={handlePhotoUpload} disabled={uploadingPhoto} />
             </label>
           </div>
 
@@ -225,13 +225,13 @@ const Profile: React.FC = () => {
               <div className="flex flex-wrap justify-center gap-2">
                 {AVATAR_COLORS.map(color => (
                   <button key={color} onClick={() => setFormData({...formData, avatar: color})}
-                    className={`w-6 h-6 rounded-full ${color} ${formData.avatar === color ? 'ring-2 ring-white scale-110' : 'opacity-50 hover:opacity-100'} transition-all`} />
+                    className={`size-6 rounded-full ${color} ${formData.avatar === color ? 'ring-2 ring-white scale-110' : 'opacity-50 hover:opacity-100'} transition-all`} />
                 ))}
               </div>
             </div>
           )}
 
-          <h2 className="text-2xl font-bold text-white mb-1 z-10">{formData.name || 'E-Prayog User'}</h2>
+          <h2 className="text-2xl font-semibold text-white mb-1 z-10">{formData.name || 'E-Prayog User'}</h2>
           <div className="flex items-center gap-2 text-sm font-medium z-10 mb-2">
             {role === 'Admin' ? (
               <span className="px-3 py-1 rounded-full bg-red-500/20 text-red-400 border border-red-500/30 flex items-center gap-1"><ShieldCheck size={14}/> Admin</span>
@@ -267,7 +267,7 @@ const Profile: React.FC = () => {
         {/* Column 2: Editable Details */}
         <GlassCard className="p-8">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2"><Settings size={20} className="text-emerald-400" /> {t.profileAccountSettings}</h2>
+            <h2 className="text-xl font-semibold text-white flex items-center gap-2"><Settings size={20} className="text-emerald-400" /> {t.profileAccountSettings}</h2>
             {isEditing && (
               <div className="flex items-center gap-3">
                 <button onClick={() => { setIsEditing(false); }} className="px-4 py-2 rounded-xl text-zinc-400 hover:text-white font-bold transition-colors">{t.profileCancel}</button>
@@ -283,7 +283,7 @@ const Profile: React.FC = () => {
               { label: t.profileInstitution, key: 'institution', type: 'text', placeholder: 'School/College' },
             ].map(field => (
               <div key={field.key}>
-                <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{field.label}</label>
+                <span className="block text-xs font-bold text-zinc-400 uppercase mb-2">{field.label}</span>
                 {isEditing ? (
                   <input type={field.type} value={(formData as any)[field.key]} onChange={e => setFormData({...formData, [field.key]: e.target.value})}
                     placeholder={field.placeholder}
@@ -294,7 +294,7 @@ const Profile: React.FC = () => {
               </div>
             ))}
             <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.profileGradeClass}</label>
+              <span className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.profileGradeClass}</span>
               {isEditing ? (
                 <select value={formData.grade} onChange={e => setFormData({...formData, grade: e.target.value})}
                   className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
@@ -303,7 +303,7 @@ const Profile: React.FC = () => {
               ) : <div className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{formData.grade}</div>}
             </div>
             <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.profileBoardSyllabus}</label>
+              <span className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.profileBoardSyllabus}</span>
               {isEditing ? (
                 <select value={formData.syllabus} onChange={e => setFormData({...formData, syllabus: e.target.value})}
                   className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
@@ -312,7 +312,7 @@ const Profile: React.FC = () => {
               ) : <div className="w-full bg-black/20 border border-white/5 rounded-xl px-4 py-2.5 text-white">{formData.syllabus}</div>}
             </div>
             <div>
-              <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.profileLanguageLabel}</label>
+              <span className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.profileLanguageLabel}</span>
               {isEditing ? (
                 <select value={formData.language} onChange={e => setFormData({...formData, language: e.target.value})}
                   className="w-full bg-zinc-900 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-emerald-500/50 appearance-none">
@@ -327,7 +327,7 @@ const Profile: React.FC = () => {
         <div className="flex flex-col gap-6">
           {/* Stats */}
           <GlassCard className="p-6">
-            <h3 className="text-lg font-bold text-white mb-4">{t.profileStats}</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">{t.profileStats}</h3>
             <div className="space-y-4">
               <div className="flex items-center gap-4 p-3 rounded-xl bg-orange-500/10 border border-orange-500/20">
                 <Flame size={24} className="text-orange-400" />
@@ -347,7 +347,7 @@ const Profile: React.FC = () => {
           {/* Teacher Section (Students only) */}
           {role === 'Student' && (
             <GlassCard className="p-6 border-amber-500/20 bg-amber-500/5">
-              <h3 className="text-lg font-bold text-white mb-3 flex items-center gap-2"><Link2 size={18} className="text-amber-400" /> {t.profileYourTeacher}</h3>
+              <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2"><Link2 size={18} className="text-amber-400" /> {t.profileYourTeacher}</h3>
               {profileData?.teacherUid && linkedTeacherName ? (
                 <div className="p-4 rounded-xl bg-green-500/10 border border-green-500/20">
                   <div className="flex items-center justify-between">
@@ -387,7 +387,7 @@ const Profile: React.FC = () => {
 
           {/* Subject Progress */}
           <GlassCard className="p-6">
-            <h3 className="text-lg font-bold text-white mb-4">{t.profileSubjectProgress}</h3>
+            <h3 className="text-lg font-semibold text-white mb-4">{t.profileSubjectProgress}</h3>
             <div className="space-y-4">
               {Object.entries(progress).map(([subject, val]: [string, any]) => {
                 const colorClass = SUBJECT_COLORS[subject.toLowerCase()] || 'bg-emerald-500';

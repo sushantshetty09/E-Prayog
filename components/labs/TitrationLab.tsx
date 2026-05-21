@@ -17,7 +17,7 @@ const TitrationLab: React.FC = () => {
       return { r: 236, g: 72, b: 153, a: intensity };
     }
     if (atEndpoint) return { r: 236, g: 72, b: 153, a: 0.22 };
-    // Near endpoint — very faint pink tinge
+    // Near endpoint: very faint pink tinge
     if (buretteVol > endpoint - 3) {
       const t = (buretteVol - (endpoint - 3)) / 3;
       return { r: 200, g: 180, b: 220, a: t * 0.08 };
@@ -207,11 +207,11 @@ const TitrationLab: React.FC = () => {
     ctx.textAlign = 'center';
     if (pastEndpoint) {
       ctx.fillStyle = '#f87171'; ctx.font = 'bold 11px Inter';
-      ctx.fillText('⚠ OVER-TITRATED — Permanent pink (excess NaOH)', cx, statusY);
+      ctx.fillText('⚠ OVER-TITRATED: Permanent pink (excess NaOH)', cx, statusY);
     } else if (atEndpoint) {
       ctx.shadowBlur = 10; ctx.shadowColor = '#10b981';
       ctx.fillStyle = '#10b981'; ctx.font = 'bold 12px Inter';
-      ctx.fillText('✓ ENDPOINT — Phenolphthalein turns PINK!', cx, statusY);
+      ctx.fillText('✓ ENDPOINT: Phenolphthalein turns PINK!', cx, statusY);
       ctx.shadowBlur = 0;
     } else {
       ctx.fillStyle = '#64748b'; ctx.font = '10px Inter';
@@ -235,7 +235,7 @@ const TitrationLab: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(139,92,246,0.2)', background: 'rgba(8,11,20,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🧪 Acid-Base Titration — HCl vs NaOH</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🧪 Acid-Base Titration: HCl vs NaOH</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Indicator: Phenolphthalein &nbsp;|&nbsp; Endpoint: ~20.5 mL NaOH</p>
         </div>
         <button onClick={() => { setBuretteVol(0); setIsDropping(false); }}
@@ -252,10 +252,10 @@ const TitrationLab: React.FC = () => {
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(139,92,246,0.15)', background: 'rgba(6,8,15,0.95)' }}>
         <div className="flex flex-col gap-1.5">
           <div className="flex justify-between items-center">
-            <label className="text-xs text-zinc-400">Burette volume — NaOH added</label>
+            <span className="text-xs text-zinc-400">Burette volume: NaOH added</span>
             <span className="text-xs font-mono text-violet-400">{buretteVol.toFixed(1)} mL</span>
           </div>
-          <input type="range" min={0} max={40} step={0.5} value={buretteVol}
+          <input id="titration-burette-slider" type="range" min={0} max={40} step={0.5} value={buretteVol}
             onChange={e => { setBuretteVol(Number(e.target.value)); setIsDropping(true); }}
             onMouseUp={() => setIsDropping(false)}
             className="w-full h-2 rounded-full accent-violet-500" />

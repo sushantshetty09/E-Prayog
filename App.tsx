@@ -2,7 +2,7 @@ import React, { lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './services/AuthContext';
 import { LanguageProvider } from './services/LanguageContext';
-import { MotionConfig } from 'framer-motion';
+import { MotionConfig, LazyMotion, domAnimation } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AIFloatingTutor from './components/AIFloatingTutor';
@@ -43,7 +43,7 @@ const BioDiagrams = lazy(() => import('./pages/tools/BioDiagrams'));
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
     <div className="flex flex-col items-center gap-4">
-      <div className="w-12 h-12 border-3 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
+      <div className="size-12 border-3 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
       <p className="text-sm text-zinc-500 font-medium">Loading E-Prayog...</p>
     </div>
   </div>
@@ -59,7 +59,8 @@ const App: React.FC = () => {
     <LanguageProvider>
     <AuthProvider>
       <MotionConfig reducedMotion="user">
-        <BrowserRouter>
+        <LazyMotion features={domAnimation}>
+          <BrowserRouter>
         <div className="min-h-screen flex flex-col bg-zinc-950 text-white">
           <Navbar />
           <main className="flex-1">
@@ -71,7 +72,7 @@ const App: React.FC = () => {
                 <Route path="/login" element={<Login />} />
                 <Route path="/about" element={<About />} />
 
-                {/* TOOLS — public (no auth required) */}
+                {/* TOOLS: public (no auth required) */}
                 <Route path="/tools" element={<Tools />} />
                 <Route path="/tools/formula-sheet" element={<FormulaSheet />} />
                 <Route path="/tools/logic-gates" element={<LogicGates />} />
@@ -81,7 +82,7 @@ const App: React.FC = () => {
                 <Route path="/tools/safety-guide" element={<SafetyGuide />} />
                 <Route path="/tools/bio-diagrams" element={<BioDiagrams />} />
 
-                {/* AUTH REQUIRED — any role */}
+                {/* AUTH REQUIRED: any role */}
                 <Route path="/subjects" element={<ProtectedRoute><Subjects /></ProtectedRoute>} />
                 <Route path="/subjects/:subjectId" element={<ProtectedRoute><SubjectView /></ProtectedRoute>} />
                 <Route path="/subjects/:subjectId/:labId" element={<ProtectedRoute><LabView /></ProtectedRoute>} />
@@ -114,7 +115,8 @@ const App: React.FC = () => {
           <Footer />
           <AIFloatingTutor />
         </div>
-      </BrowserRouter>
+          </BrowserRouter>
+        </LazyMotion>
       </MotionConfig>
     </AuthProvider>
     </LanguageProvider>

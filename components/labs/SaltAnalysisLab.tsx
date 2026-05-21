@@ -8,7 +8,7 @@ const SALTS = [
     tests: [
       { test: 'AgNO₃', observation: 'White curdy ↓ AgCl (dissolves in NH₄OH)', color: '#f8fafc' },
       { test: 'Flame', observation: 'Golden yellow flame (Na⁺)', color: '#fbbf24' },
-      { test: 'Litmus', observation: 'No change — neutral salt', color: '#6b7280' },
+      { test: 'Litmus', observation: 'No change: neutral salt', color: '#6b7280' },
     ],
   },
   {
@@ -173,7 +173,7 @@ const SaltAnalysisLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(167,139,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🔬 Salt Analysis — Systematic Identification</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🔬 Salt Analysis: Systematic Identification</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Physical exam → Preliminary tests → Wet tests → Conclusion</p>
         </div>
         <div className="text-xs px-2.5 py-1 rounded-lg font-bold" style={{ background: salt.color + '20', color: salt.color, border: `1px solid ${salt.color}45` }}>{salt.name}</div>
@@ -182,7 +182,7 @@ const SaltAnalysisLab: React.FC = () => {
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(167,139,250,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="grid grid-cols-2 gap-1.5">
           {SALTS.map((s, i) => (
-            <button key={i} onClick={() => setSaltIdx(i)}
+            <button key={s.name} onClick={() => setSaltIdx(i)}
               className="py-2 px-3 rounded-xl text-[9px] font-bold text-left"
               style={{ background: i === saltIdx ? s.color + '20' : 'rgba(255,255,255,0.04)', color: i === saltIdx ? s.color : '#475569', border: `1px solid ${i === saltIdx ? s.color + '50' : 'rgba(255,255,255,0.07)'}` }}>
               <div className="font-bold text-xs">{s.name}</div>
@@ -192,7 +192,7 @@ const SaltAnalysisLab: React.FC = () => {
         </div>
         <div className="flex gap-1.5">
           {salt.tests.map((t3, i) => (
-            <button key={i} onClick={() => { setTestIdx(i); setReacted(false); tRef.current = 0; }}
+            <button key={t3.test} onClick={() => { setTestIdx(i); setReacted(false); tRef.current = 0; }}
               className="flex-1 py-1.5 rounded-lg text-[9px] font-bold"
               style={{ background: i === testIdx ? 'rgba(167,139,250,0.18)' : 'rgba(255,255,255,0.04)', color: i === testIdx ? '#a78bfa' : '#475569', border: `1px solid ${i === testIdx ? 'rgba(167,139,250,0.3)' : 'rgba(255,255,255,0.07)'}` }}>
               {t3.test}

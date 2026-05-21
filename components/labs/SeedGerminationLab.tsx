@@ -223,7 +223,7 @@ const SeedGerminationLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(34,197,94,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🌱 Seed Germination — Time-Lapse</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🌱 Seed Germination: Time-Lapse</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Imbibition → radicle → hypocotyl → cotyledons → true leaves</p>
         </div>
         <button onClick={() => setAutoPlay(a => !a)}
@@ -237,8 +237,8 @@ const SeedGerminationLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(34,197,94,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-zinc-400">Day</label>
-          <input type="range" min={0} max={12} step={1} value={day} onChange={e => { setDay(Number(e.target.value)); setAutoPlay(false); }}
+          <span className="text-xs text-zinc-400">Day</span>
+          <input id="germination-day-slider" type="range" min={0} max={12} step={1} value={day} onChange={e => { setDay(Number(e.target.value)); setAutoPlay(false); }}
             className="flex-1 h-1.5 rounded-full accent-emerald-400" />
           <span className="text-xs font-mono text-emerald-400 w-14 text-right">Day {day}</span>
         </div>
@@ -246,8 +246,8 @@ const SeedGerminationLab: React.FC = () => {
           <span className="font-bold text-emerald-400">{currentStage.label}: </span>{currentStage.desc}
         </div>
         <div className="flex gap-1">
-          {STAGES.map((s, i) => (
-            <button key={i} onClick={() => { setDay(s.day); setAutoPlay(false); }}
+          {STAGES.map((s) => (
+            <button key={s.label} onClick={() => { setDay(s.day); setAutoPlay(false); }}
               className="flex-1 py-1.5 rounded-lg text-[8px] font-bold"
               style={{ background: day >= s.day ? 'rgba(34,197,94,0.2)' : 'rgba(255,255,255,0.04)', color: day >= s.day ? '#4ade80' : '#374151', border: `1px solid ${day >= s.day ? 'rgba(34,197,94,0.3)' : 'rgba(255,255,255,0.06)'}` }}>
               d{s.day}

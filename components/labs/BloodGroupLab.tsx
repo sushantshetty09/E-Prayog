@@ -181,7 +181,7 @@ const BloodGroupLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080b14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(239,68,68,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🩸 Blood Group Identification — ABO + Rh System</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🩸 Blood Group Identification: ABO + Rh System</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Antigen-antibody agglutination on microscope slide</p>
         </div>
         <button onClick={() => { setTested(false); animTRef.current = 0; }} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>🔄 Reset</button>
@@ -191,10 +191,10 @@ const BloodGroupLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(239,68,68,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div>
-          <label className="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 block">Select Blood Sample</label>
+          <span className="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 block font-semibold">Select Blood Sample</span>
           <div className="grid grid-cols-8 gap-1">
             {BLOOD_TYPES.map((b, i) => (
-              <button key={i} onClick={() => { setSelIdx(i); setTested(false); animTRef.current = 0; }}
+              <button key={b.type} onClick={() => { setSelIdx(i); setTested(false); animTRef.current = 0; }}
                 className="py-1.5 rounded-lg text-xs font-bold transition-all"
                 style={{ background: i === selIdx ? 'rgba(239,68,68,0.2)' : 'rgba(255,255,255,0.04)', color: i === selIdx ? '#f87171' : '#64748b', border: `1px solid ${i === selIdx ? 'rgba(239,68,68,0.4)' : 'rgba(255,255,255,0.07)'}` }}>
                 {b.type}
@@ -205,7 +205,7 @@ const BloodGroupLab: React.FC = () => {
         <button onClick={() => { setTested(true); animTRef.current = 0; }} disabled={tested}
           className="w-full py-2.5 rounded-xl text-sm font-bold transition-all"
           style={{ background: tested ? 'rgba(255,255,255,0.04)' : 'rgba(239,68,68,0.2)', color: tested ? '#475569' : '#f87171', border: `1px solid ${tested ? 'rgba(255,255,255,0.08)' : 'rgba(239,68,68,0.3)'}` }}>
-          {tested ? '✓ Antisera Applied — Observe Slide' : '🧪 Apply Antisera & Test'}
+          {tested ? '✓ Antisera Applied: Observe Slide' : '🧪 Apply Antisera & Test'}
         </button>
       </div>
     </div>

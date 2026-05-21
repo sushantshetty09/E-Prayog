@@ -162,7 +162,7 @@ const PotentiometerLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(251,191,36,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🔋 Potentiometer — EMF Comparison</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🔋 Potentiometer: EMF Comparison</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">E₁/E₂ = l₁/l₂ · Potential gradient φ = E_driver/L</p>
         </div>
         <button onClick={() => setShowBoth(b => !b)}
@@ -177,18 +177,18 @@ const PotentiometerLab: React.FC = () => {
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(251,191,36,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="grid grid-cols-3 gap-3">
           <div className="flex flex-col gap-1">
-            <label className="text-[9px] text-amber-400 uppercase tracking-widest">l₁ (cm)</label>
-            <input type="range" min={5} max={95} step={1} value={l1} onChange={e => setL1(Number(e.target.value))} className="h-1.5 rounded-full accent-amber-400" />
+            <span className="text-[9px] text-amber-400 uppercase tracking-widest">l₁ (cm)</span>
+            <input id="potentiometer-l1-slider" type="range" min={5} max={95} step={1} value={l1} onChange={e => setL1(Number(e.target.value))} className="h-1.5 rounded-full accent-amber-400" />
             <span className="text-xs font-mono text-amber-400">{l1} cm → E₁={emf1}V</span>
           </div>
           <div className="flex flex-col gap-1">
-            <label className="text-[9px] text-sky-400 uppercase tracking-widest">l₂ (cm)</label>
-            <input type="range" min={5} max={95} step={1} value={l2} onChange={e => setL2(Number(e.target.value))} className="h-1.5 rounded-full accent-sky-400" />
+            <span className="text-[9px] text-sky-400 uppercase tracking-widest">l₂ (cm)</span>
+            <input id="potentiometer-l2-slider" type="range" min={5} max={95} step={1} value={l2} onChange={e => setL2(Number(e.target.value))} className="h-1.5 rounded-full accent-sky-400" />
             <span className="text-xs font-mono text-sky-400">{l2} cm → E₂={emf2}V</span>
           </div>
           <div className="flex flex-col gap-1">
-            <label className="text-[9px] text-blue-400 uppercase tracking-widest">Driver EMF (V)</label>
-            <input type="range" min={2} max={6} step={0.1} value={driverEMF} onChange={e => setDriverEMF(Number(e.target.value))} className="h-1.5 rounded-full accent-blue-400" />
+            <span className="text-[9px] text-blue-400 uppercase tracking-widest">Driver EMF (V)</span>
+            <input id="potentiometer-driver-slider" type="range" min={2} max={6} step={0.1} value={driverEMF} onChange={e => setDriverEMF(Number(e.target.value))} className="h-1.5 rounded-full accent-blue-400" />
             <span className="text-xs font-mono text-blue-400">{driverEMF.toFixed(1)} V</span>
           </div>
         </div>

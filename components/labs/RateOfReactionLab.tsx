@@ -7,8 +7,8 @@ const RateOfReactionLab: React.FC = () => {
   const graphRef = useRef<HTMLCanvasElement>(null);
   const [concentration, setConcentration] = useState(50); // mL of Na₂S₂O₃
   const [running, setRunning] = useState(false);
-  const [elapsed, setElapsed] = useState(0);
-  const [turbidity, setTurbidity] = useState(0); // 0→1
+  const elapsedRef = useRef(0);
+  const turbidityRef = useRef(0); // 0→1
   const [crosses, setCrosses] = useState(0); // reactions done
   const particlesRef = useRef<Particle[]>([]);
   const rafRef = useRef(0);
@@ -125,7 +125,7 @@ const RateOfReactionLab: React.FC = () => {
     ctx.clip();
 
     // Solution with turbidity (sulfur precipitate forms)
-    const t = turbidity;
+    const t = turbidityRef.current;
     // Clear solution → milky/white turbid
     const r = Math.round(200 + t * 55);
     const g2 = Math.round(220 + t * 35);
@@ -183,27 +183,27 @@ const RateOfReactionLab: React.FC = () => {
 
     // ── Turbidity indicator ──
     ctx.font = 'bold 11px Inter'; ctx.textAlign = 'center';
-    if (!running && turbidity === 0) {
+    if (!running && turbidityRef.current === 0) {
       ctx.fillStyle = '#475569'; ctx.fillText('Add HCl → observe cloudiness (S precipitate)', cx, H - 8);
-    } else if (turbidity >= 1) {
+    } else if (turbidityRef.current >= 1) {
       ctx.shadowBlur = 8; ctx.shadowColor = '#f59e0b';
-      ctx.fillStyle = '#f59e0b'; ctx.fillText(`Cross obscured! t = ${elapsed.toFixed(1)}s · Rate = 1/t = ${(1/elapsed).toFixed(4)} s⁻¹`, cx, H - 8);
+      ctx.fillStyle = '#f59e0b'; ctx.fillText(`Cross obscured! t = ${elapsedRef.current.toFixed(1)}s · Rate = 1/t = ${(1/elapsedRef.current).toFixed(4)} s⁻¹`, cx, H - 8);
       ctx.shadowBlur = 0;
     } else {
-      ctx.fillStyle = '#60a5fa'; ctx.fillText(`Reacting... ${(turbidity * 100).toFixed(0)}% turbid · ${elapsed.toFixed(1)}s / ${reactionTime.toFixed(1)}s`, cx, H - 8);
+      ctx.fillStyle = '#60a5fa'; ctx.fillText(`Reacting... ${(turbidityRef.current * 100).toFixed(0)}% turbid · ${elapsedRef.current.toFixed(1)}s / ${reactionTime.toFixed(1)}s`, cx, H - 8);
     }
 
     // Advance turbidity
-    if (running && turbidity < 1) {
-      const newElapsed = elapsed + dt * 0.001;
-      setElapsed(newElapsed);
+    if (running && turbidityRef.current < 1) {
+      const newElapsed = elapsedRef.current + dt * 0.001;
+      elapsedRef.current = newElapsed;
       const newT = Math.min(1, newElapsed / reactionTime);
-      setTurbidity(newT);
+      turbidityRef.current = newT;
       if (newT >= 1) { setRunning(false); setCrosses(c => c + 1); }
     }
 
     rafRef.current = requestAnimationFrame(draw);
-  }, [running, turbidity, elapsed, reactionTime]);
+  }, [running, reactionTime]);
 
   useEffect(() => {
     drawGraph();
@@ -215,8 +215,8 @@ const RateOfReactionLab: React.FC = () => {
   }, [draw]);
 
   const handleStart = () => {
-    if (turbidity >= 1) {
-      setTurbidity(0); setElapsed(0); particlesRef.current = [];
+    if (turbidityRef.current >= 1) {
+      turbidityRef.current = 0; elapsedRef.current = 0; particlesRef.current = [];
     }
     setRunning(true);
   };
@@ -225,10 +225,10 @@ const RateOfReactionLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(16,185,129,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">⚗ Rate of Reaction — Na₂S₂O₃ + HCl</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">⚗ Rate of Reaction: Na₂S₂O₃ + HCl</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Clock reaction · Sulfur precipitation · Rate = 1/t · Effect of concentration</p>
         </div>
-        <button onClick={() => { setRunning(false); setTurbidity(0); setElapsed(0); particlesRef.current = []; }}
+        <button onClick={() => { setRunning(false); turbidityRef.current = 0; elapsedRef.current = 0; particlesRef.current = []; }}
           className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>🔄 Reset</button>
       </div>
 
@@ -239,9 +239,9 @@ const RateOfReactionLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(16,185,129,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-zinc-400 whitespace-nowrap">Na₂S₂O₃ Vol.</label>
-          <input type="range" min={10} max={100} step={5} value={concentration}
-            onChange={e => { setConcentration(Number(e.target.value)); setRunning(false); setTurbidity(0); setElapsed(0); particlesRef.current = []; }}
+          <span className="text-xs text-zinc-400 whitespace-nowrap">Na₂S₂O₃ Vol.</span>
+          <input id="rate-concentration-slider" type="range" min={10} max={100} step={5} value={concentration}
+            onChange={e => { setConcentration(Number(e.target.value)); setRunning(false); turbidityRef.current = 0; elapsedRef.current = 0; particlesRef.current = []; }}
             className="flex-1 h-1.5 rounded-full accent-emerald-400" />
           <span className="text-xs font-mono text-emerald-400 w-14 text-right">{concentration} mL</span>
         </div>
@@ -249,7 +249,7 @@ const RateOfReactionLab: React.FC = () => {
           <button onClick={handleStart} disabled={running}
             className="flex-1 py-2 rounded-xl text-sm font-bold"
             style={{ background: running ? 'rgba(255,255,255,0.04)' : 'rgba(239,68,68,0.2)', color: running ? '#475569' : '#f87171', border: `1px solid ${running ? 'rgba(255,255,255,0.08)' : 'rgba(239,68,68,0.3)'}` }}>
-            {running ? '⏳ Reacting...' : turbidity >= 1 ? '🔄 New Reaction' : '🧪 Add HCl — Start Reaction'}
+            {running ? '⏳ Reacting...' : turbidityRef.current >= 1 ? '🔄 New Reaction' : '🧪 Add HCl: Start Reaction'}
           </button>
         </div>
         <div className="grid grid-cols-4 gap-2">

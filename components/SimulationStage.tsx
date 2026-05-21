@@ -77,7 +77,7 @@ const SimulationStage: React.FC<SimulationStageProps> = ({ labId, hex }) => {
     return (
       <div className="flex-1 flex flex-col items-center justify-center bg-zinc-900/50 rounded-2xl p-12 text-center">
         <FlaskConical size={64} className="text-zinc-700 mb-6" />
-        <h3 className="text-xl font-bold text-white mb-2">Simulation Coming Soon</h3>
+        <h3 className="text-xl font-semibold text-white mb-2">Simulation Coming Soon</h3>
         <p className="text-zinc-400 text-sm max-w-md">
           The interactive simulation for this experiment is being developed. Meanwhile, refer to the Theory and Procedure tabs for a detailed understanding.
         </p>
@@ -90,7 +90,7 @@ const SimulationStage: React.FC<SimulationStageProps> = ({ labId, hex }) => {
       <React.Suspense
         fallback={
           <div className="flex-1 flex items-center justify-center">
-            <div className="animate-spin w-8 h-8 border-2 border-white/20 border-t-white rounded-full" />
+            <div className="animate-spin size-8 border-2 border-white/20 border-t-white rounded-full" />
           </div>
         }
       >

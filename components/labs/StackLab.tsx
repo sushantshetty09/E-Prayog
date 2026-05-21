@@ -11,8 +11,8 @@ const StackLab: React.FC = () => {
   const [input, setInput] = useState('');
   const [msg, setMsg] = useState('Stack initialized with 3 elements');
   const [msgType, setMsgType] = useState<'info' | 'success' | 'error'>('info');
-  const [lastOp, setLastOp] = useState<'push' | 'pop' | null>(null);
-  const [animating, setAnimating] = useState(false);
+  const lastOpRef = useRef<'push' | 'pop' | null>(null);
+  const animatingRef = useRef(false);
   const rafRef = useRef(0);
   const animTRef = useRef(0);
   const animDirRef = useRef<'push' | 'pop'>('push');
@@ -22,25 +22,25 @@ const StackLab: React.FC = () => {
     if (isNaN(v)) { setMsg('Enter a valid number!'); setMsgType('error'); return; }
     if (stack.length >= MAX) { setMsg(`Stack OVERFLOW! Maximum size (${MAX}) reached`); setMsgType('error'); return; }
     setStack(s => [{ val: v, id: ++idCtr }, ...s]);
-    setMsg(`PUSH ${v} → Top of stack`); setMsgType('success'); setLastOp('push');
-    setInput(''); animTRef.current = 0; animDirRef.current = 'push'; setAnimating(true);
-    setTimeout(() => setAnimating(false), 500);
+    setMsg(`PUSH ${v} → Top of stack`); setMsgType('success'); lastOpRef.current = 'push';
+    setInput(''); animTRef.current = 0; animDirRef.current = 'push'; animatingRef.current = true;
+    setTimeout(() => { animatingRef.current = false; }, 500);
   };
 
   const pop = () => {
     if (stack.length === 0) { setMsg('Stack UNDERFLOW! Stack is empty'); setMsgType('error'); return; }
     const top = stack[0].val;
-    setMsg(`POP → removed ${top} from top`); setMsgType('success'); setLastOp('pop');
-    animDirRef.current = 'pop'; animTRef.current = 0; setAnimating(true);
-    setTimeout(() => { setStack(s => s.slice(1)); setAnimating(false); }, 300);
+    setMsg(`POP → removed ${top} from top`); setMsgType('success'); lastOpRef.current = 'pop';
+    animDirRef.current = 'pop'; animTRef.current = 0; animatingRef.current = true;
+    setTimeout(() => { setStack(s => s.slice(1)); animatingRef.current = false; }, 300);
   };
 
   const peek = () => {
-    if (stack.length === 0) { setMsg('Stack is EMPTY — nothing to peek'); setMsgType('error'); return; }
+    if (stack.length === 0) { setMsg('Stack is EMPTY: nothing to peek'); setMsgType('error'); return; }
     setMsg(`PEEK → Top element is ${stack[0].val}`); setMsgType('info');
   };
 
-  const clear = () => { setStack([]); setMsg('Stack cleared'); setMsgType('info'); setLastOp(null); };
+  const clear = () => { setStack([]); setMsg('Stack cleared'); setMsgType('info'); lastOpRef.current = null; };
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current; if (!canvas) return;
@@ -82,7 +82,6 @@ const StackLab: React.FC = () => {
     stack.forEach((item, i) => {
       const sy = botY - i * (slotH + slotGap);
       const isTop = i === 0;
-      const isNew = isTop && lastOp === 'push' && animating;
 
       const grad = ctx.createLinearGradient(stackX, sy - slotH, stackX + slotW, sy);
       if (isTop) { grad.addColorStop(0, '#1d4ed8dd'); grad.addColorStop(1, '#1e40af'); }
@@ -136,7 +135,7 @@ const StackLab: React.FC = () => {
     ctx.fillText('CAP', capX + 8, H - 45);
 
     rafRef.current = requestAnimationFrame(draw);
-  }, [stack, animating, lastOp]);
+  }, [stack]);
 
   useEffect(() => {
     rafRef.current = requestAnimationFrame(draw);
@@ -149,7 +148,7 @@ const StackLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">📚 Stack — LIFO Data Structure</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">📚 Stack: LIFO Data Structure</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Last-In First-Out · Push / Pop / Peek · Overflow & Underflow</p>
         </div>
         <div className="text-xs font-mono px-2.5 py-1 rounded-lg" style={{ background: stack.length > MAX * 0.8 ? 'rgba(239,68,68,0.15)' : 'rgba(96,165,250,0.12)', color: stack.length > MAX * 0.8 ? '#f87171' : '#60a5fa', border: '1px solid rgba(255,255,255,0.08)' }}>
@@ -162,6 +161,7 @@ const StackLab: React.FC = () => {
           <input type="number" value={input} onChange={e => setInput(e.target.value)}
             onKeyDown={e => e.key === 'Enter' && push()}
             placeholder="Enter value..."
+            aria-label="New stack element value"
             className="flex-1 px-3 py-2 rounded-xl text-sm font-mono"
             style={{ background: 'rgba(255,255,255,0.06)', color: '#e2e8f0', border: '1px solid rgba(255,255,255,0.1)', outline: 'none' }} />
           <button onClick={push} className="px-4 py-2 rounded-xl text-sm font-bold" style={{ background: 'rgba(16,185,129,0.2)', color: '#34d399', border: '1px solid rgba(16,185,129,0.3)' }}>PUSH</button>

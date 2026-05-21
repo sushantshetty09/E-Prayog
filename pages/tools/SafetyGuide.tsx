@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ShieldAlert, Flame, Beaker, Zap, Biohazard, HeartPulse, Glasses, EyeOff, Search } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m as motion, AnimatePresence } from 'framer-motion';
 import { useLang } from '../../services/LanguageContext';
 
 const SAFETY_RULES = [
@@ -37,7 +37,7 @@ const SafetyGuide: React.FC = () => {
   return (
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolSafetyTitle}</h1>
+        <h1 className="text-3xl lg:text-4xl font-display font-semibold text-white mb-4">{t.toolSafetyTitle}</h1>
         <p className="text-zinc-400 max-w-2xl mx-auto">{t.toolSafetySubtitle}</p>
       </div>
 

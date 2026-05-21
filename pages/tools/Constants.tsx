@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, Copy, CheckCircle2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m as motion, AnimatePresence } from 'framer-motion';
 import { useLang } from '../../services/LanguageContext';
 
 const CONSTANTS = [
@@ -41,7 +41,7 @@ const Constants: React.FC = () => {
   return (
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolConstantsTitle}</h1>
+        <h1 className="text-3xl lg:text-4xl font-display font-semibold text-white mb-4">{t.toolConstantsTitle}</h1>
         <p className="text-zinc-400 max-w-2xl mx-auto">{t.toolConstantsSubtitle}</p>
       </div>
       <div className="mb-8 flex flex-col md:flex-row gap-4 justify-between items-center bg-zinc-900/60 p-4 rounded-2xl border border-white/5">
@@ -73,7 +73,7 @@ const Constants: React.FC = () => {
                 </button>
               </div>
               <div className="flex gap-4 items-center mb-3">
-                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-xl font-serif italic text-amber-400 border border-white/10 shrink-0">{c.symbol}</div>
+                <div className="size-12 rounded-xl bg-white/5 flex items-center justify-center text-xl font-serif italic text-amber-400 border border-white/10 shrink-0">{c.symbol}</div>
                 <div>
                   <div className="text-xl font-mono font-bold text-white leading-tight">{c.value}</div>
                   <div className="text-sm text-zinc-400">{c.unit}</div>

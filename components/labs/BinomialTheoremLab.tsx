@@ -125,7 +125,7 @@ const BinomialTheoremLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(167,139,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🔢 Binomial Theorem — Pascal's Triangle</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🔢 Binomial Theorem: Pascal's Triangle</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">(x+y)ⁿ = Σ C(n,r) xⁿ⁻ʳ yʳ · Binomial coefficients · Pascal's Triangle</p>
         </div>
         <div className="text-xs font-mono px-2.5 py-1 rounded-lg font-bold" style={{ background: 'rgba(167,139,250,0.15)', color: '#a78bfa', border: '1px solid rgba(167,139,250,0.3)' }}>n = {n}</div>
@@ -133,8 +133,8 @@ const BinomialTheoremLab: React.FC = () => {
       <canvas ref={canvasRef} width={500} height={340} className="w-full" style={{ display: 'block' }} />
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(167,139,250,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-zinc-400">n</label>
-          <input type="range" min={1} max={10} step={1} value={n} onChange={e => setN(Number(e.target.value))}
+          <span className="text-xs text-zinc-400">n</span>
+          <input id="binomial-n-slider" type="range" min={1} max={10} step={1} value={n} onChange={e => setN(Number(e.target.value))}
             className="flex-1 h-1.5 rounded-full accent-violet-400" />
           <span className="text-xs font-mono text-violet-400 w-8">{n}</span>
         </div>
@@ -153,7 +153,7 @@ const BinomialTheoremLab: React.FC = () => {
         <div className="text-[9px] text-zinc-500 font-mono overflow-x-auto whitespace-nowrap px-1" style={{ color: '#64748b' }}>
           <span className="text-violet-400 font-bold">Expansion: </span>
           {terms.map((t2, i) => (
-            <span key={i} className="mr-1" style={{ color: '#a78bfa' }}>
+            <span key={t2.term + '-' + i} className="mr-1" style={{ color: '#a78bfa' }}>
               {i > 0 ? '+ ' : ''}{t2.term.replace('x^1', 'x').replace('y^1', 'y').replace('x^0', '1').replace('y^0', '')}
             </span>
           ))}

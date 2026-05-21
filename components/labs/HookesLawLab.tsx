@@ -201,7 +201,7 @@ const HookesLawLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#060810 0%,#040508 100%)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(7,9,16,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🌀 Hooke's Law — Spring Extension</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🌀 Hooke's Law: Spring Extension</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">F = kx &nbsp;|&nbsp; k = {k} N/m &nbsp;|&nbsp; g = 9.78 m/s²</p>
         </div>
         <div className="flex gap-2">
@@ -222,8 +222,8 @@ const HookesLawLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(96,165,250,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-4">
-          <label className="text-xs text-zinc-400 whitespace-nowrap">Mass (m)</label>
-          <input type="range" min={0} max={500} step={10} value={mass}
+          <span className="text-xs text-zinc-400 whitespace-nowrap">Mass (m)</span>
+          <input id="hookeslaw-mass-slider" type="range" min={0} max={500} step={10} value={mass}
             onChange={e => setMass(Number(e.target.value))}
             className="flex-1 h-1.5 rounded-full accent-amber-500" />
           <span className="text-xs font-mono text-amber-400 w-16 text-right">{mass} g</span>
@@ -248,7 +248,7 @@ const HookesLawLab: React.FC = () => {
               <span>#</span><span>m (g)</span><span>F (N)</span><span>x (cm)</span>
             </div>
             {readings.map((r, i) => (
-              <div key={i} className="grid px-3 py-1" style={{ gridTemplateColumns: 'repeat(4,1fr)', background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent' }}>
+              <div key={`${r.m}-${r.F}`} className="grid px-3 py-1" style={{ gridTemplateColumns: 'repeat(4,1fr)', background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent' }}>
                 <span className="text-zinc-500">{i + 1}</span>
                 <span className="text-amber-400 font-mono">{r.m}</span>
                 <span className="text-sky-400 font-mono">{r.F}</span>

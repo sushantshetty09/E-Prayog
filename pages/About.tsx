@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
 import { FlaskConical, Bot, GraduationCap, ShieldCheck, Languages, Trophy, Heart, ArrowRight, Atom, Zap, Dna, Calculator, Monitor } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { SUBJECTS } from '../constants';
 import { useLang } from '../services/LanguageContext';
 
@@ -55,8 +55,8 @@ const About: React.FC = () => {
     <div className="min-h-screen relative overflow-hidden">
       {/* Floating Background Decorations */}
       <div className="fixed inset-0 pointer-events-none -z-10">
-        <div className="absolute top-40 left-20 w-96 h-96 bg-emerald-500/5 blur-[120px] rounded-full animate-pulse"></div>
-        <div className="absolute bottom-40 right-20 w-80 h-80 bg-blue-500/5 blur-[100px] rounded-full" style={{ animationDuration: '8s', animationName: 'pulse', animationIterationCount: 'infinite' }}></div>
+        <div className="absolute top-40 left-20 size-96 bg-emerald-500/5 blur-[120px] rounded-full animate-pulse"></div>
+        <div className="absolute bottom-40 right-20 size-80 bg-blue-500/5 blur-[100px] rounded-full" style={{ animationDuration: '8s', animationName: 'pulse', animationIterationCount: 'infinite' }}></div>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-500/3 blur-[150px] rounded-full"></div>
       </div>
 
@@ -66,7 +66,7 @@ const About: React.FC = () => {
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-bold mb-8">
             <Atom size={16} className="animate-spin" style={{ animationDuration: '8s' }} /> {t.aboutOpenSource}
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-bold text-white leading-tight mb-6">{t.aboutTitle}</h1>
+          <h1 className="text-4xl sm:text-5xl lg:text-7xl font-display font-semibold text-white leading-tight mb-6">{t.aboutTitle}</h1>
           <p className="text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed mb-10">
             {t.aboutDesc}
           </p>
@@ -103,7 +103,7 @@ const About: React.FC = () => {
         <MotionDiv {...fadeIn}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-6">{t.aboutMissionTitle}</h2>
+              <h2 className="text-3xl sm:text-4xl font-display font-semibold text-white mb-6">{t.aboutMissionTitle}</h2>
               <p className="text-zinc-400 leading-relaxed mb-6">{t.aboutMissionP1}</p>
               <p className="text-zinc-400 leading-relaxed">{t.aboutMissionP2}</p>
             </div>
@@ -129,17 +129,17 @@ const About: React.FC = () => {
       {/* ========== SECTION 4: FEATURES GRID ========== */}
       <section className="py-24 px-6 lg:px-12 max-w-6xl mx-auto">
         <MotionDiv {...fadeIn} className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">{t.featuresHeading}</h2>
+          <h2 className="text-3xl sm:text-4xl font-display font-semibold text-white mb-4">{t.featuresHeading}</h2>
           <p className="text-zinc-400 max-w-xl mx-auto">{t.aboutFeaturesSubheading}</p>
         </MotionDiv>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {FEATURES.map((feature, i) => (
             <MotionDiv key={feature.title} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.1 }}>
               <GlassCard hoverEffect={true} color={feature.color} className="p-8 h-full">
-                <div className={`w-14 h-14 rounded-2xl bg-${feature.color}-500/10 border border-${feature.color}-500/20 flex items-center justify-center text-${feature.color}-400 mb-5`}>
+                <div className={`size-14 rounded-2xl bg-${feature.color}-500/10 border border-${feature.color}-500/20 flex items-center justify-center text-${feature.color}-400 mb-5`}>
                   {feature.icon}
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{feature.title}</h3>
+                <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
                 <p className="text-sm text-zinc-400 leading-relaxed">{feature.desc}</p>
               </GlassCard>
             </MotionDiv>
@@ -150,7 +150,7 @@ const About: React.FC = () => {
       {/* ========== SECTION 5: SUBJECTS ========== */}
       <section className="py-24 px-6 lg:px-12 max-w-6xl mx-auto">
         <MotionDiv {...fadeIn} className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-4">{t.aboutSubjectsHeading}</h2>
+          <h2 className="text-3xl sm:text-4xl font-display font-semibold text-white mb-4">{t.aboutSubjectsHeading}</h2>
           <p className="text-zinc-400">{t.aboutSubjectsSubheading}</p>
         </MotionDiv>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
@@ -160,10 +160,10 @@ const About: React.FC = () => {
               <MotionDiv key={subject.id} initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}>
                 <Link to={`/subjects/${subject.id}`}>
                   <GlassCard color={color} className="p-6 text-center h-full">
-                    <div className={`mx-auto w-14 h-14 rounded-2xl bg-${color}-500/10 border border-${color}-500/20 flex items-center justify-center text-${color}-400 mb-4`}>
+                    <div className={`mx-auto size-14 rounded-2xl bg-${color}-500/10 border border-${color}-500/20 flex items-center justify-center text-${color}-400 mb-4`}>
                       {SUBJECT_ICON_MAP[subject.name] || <FlaskConical size={28} />}
                     </div>
-                    <h3 className="text-white font-bold mb-1">{subject.name}</h3>
+                    <h3 className="text-white font-semibold mb-1">{subject.name}</h3>
                     <p className="text-emerald-400 text-sm font-bold mb-2">{subject.labs.length} experiments</p>
                     <p className="text-xs text-zinc-500 leading-relaxed">{SUBJECT_DESCRIPTIONS[subject.name] || subject.description}</p>
                   </GlassCard>
@@ -177,7 +177,7 @@ const About: React.FC = () => {
       {/* ========== SECTION 6: TEAM ========== */}
       <section className="py-24 px-6 lg:px-12 max-w-4xl mx-auto">
         <MotionDiv {...fadeIn} className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl font-display font-bold text-white mb-2 flex items-center justify-center gap-2">
+          <h2 className="text-3xl sm:text-4xl font-display font-semibold text-white mb-2 flex items-center justify-center gap-2">
             {t.aboutBuiltWith} <Heart size={28} className="text-red-400 fill-red-400" /> {t.aboutBuiltFor}
           </h2>
         </MotionDiv>
@@ -188,11 +188,11 @@ const About: React.FC = () => {
           ].map(person => (
             <MotionDiv key={person.name} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <GlassCard hoverEffect={false} className="p-6 flex items-center gap-5">
-                <div className={`w-16 h-16 rounded-2xl ${person.color} flex items-center justify-center text-white text-xl font-bold shrink-0`}>
+                <div className={`size-16 rounded-2xl ${person.color} flex items-center justify-center text-white text-xl font-bold shrink-0`}>
                   {person.initials}
                 </div>
                 <div>
-                  <h3 className="text-white font-bold text-lg">{person.name}</h3>
+                  <h3 className="text-white font-semibold text-lg">{person.name}</h3>
                   <p className="text-emerald-400 text-sm font-medium">{person.title}</p>
                   <p className="text-zinc-500 text-xs mt-1">{person.school}</p>
                 </div>
@@ -205,7 +205,7 @@ const About: React.FC = () => {
       {/* ========== SECTION 7: CTA ========== */}
       <section className="py-24 px-6 lg:px-12 max-w-4xl mx-auto text-center">
         <MotionDiv {...fadeIn}>
-          <h2 className="text-3xl sm:text-5xl font-display font-bold text-white mb-6">
+          <h2 className="text-3xl sm:text-5xl font-display font-semibold text-white mb-6">
             {t.ctaHeading}
           </h2>
           <p className="text-zinc-400 text-lg mb-10 max-w-xl mx-auto">

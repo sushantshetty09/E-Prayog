@@ -3,7 +3,7 @@ import { useAuth } from '../services/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
 import GlassCard from '../components/GlassCard';
 import { FlaskConical, BookOpen, GraduationCap, TrendingUp, ArrowRight, Zap, Dna, Calculator, Monitor, Clock, Sigma, Cpu, Table2, Hash, ShieldCheck, Microscope, Flame } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { SUBJECTS, findLabById, getSubjectLabIds, SUBJECT_LAB_COUNTS } from '../constants';
 
 const SUBJECT_ICONS: Record<string, React.ReactNode> = {
@@ -43,7 +43,7 @@ const StudentDashboard: React.FC = () => {
   if (loading) {
     return (
       <div className="pt-24 min-h-screen flex items-center justify-center">
-        <div className="w-12 h-12 border-3 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
+        <div className="size-12 border-3 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
       </div>
     );
   }
@@ -55,7 +55,7 @@ const StudentDashboard: React.FC = () => {
       {/* Welcome Header */}
       <div className="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-2">
+          <h1 className="text-3xl lg:text-4xl font-display font-semibold text-white mb-2">
             Welcome back, <span className="text-emerald-400">{displayName.split(' ')[0]}</span>!
           </h1>
           <p className="text-zinc-400">Continue your learning journey. You've completed {overallProgress}% overall.</p>
@@ -72,7 +72,7 @@ const StudentDashboard: React.FC = () => {
 
       {/* Quick Access Tools */}
       <section className="mb-8">
-        <h3 className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-4">Quick Access</h3>
+        <h3 className="text-xs font-semibold text-zinc-500 uppercase tracking-widest mb-4">Quick Access</h3>
         <div className="grid grid-cols-4 md:grid-cols-7 gap-3">
           {[
             { id: 'formula', label: 'Formula Sheet', icon: Sigma, color: '#3b82f6', bg: 'rgba(59,130,246,0.15)', path: '/tools/formula-sheet' },
@@ -86,7 +86,7 @@ const StudentDashboard: React.FC = () => {
             <Link key={tool.id} to={tool.path}>
               <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}
                 className="rounded-2xl p-4 flex flex-col items-center gap-3 cursor-pointer bg-zinc-900/60 border border-white/5 hover:border-white/15 transition-all h-full">
-                <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: tool.bg }}>
+                <div className="size-12 rounded-xl flex items-center justify-center shrink-0" style={{ background: tool.bg }}>
                   <tool.icon size={22} style={{ color: tool.color }} />
                 </div>
                 <span className="text-white text-xs font-semibold text-center leading-tight">{tool.label}</span>
@@ -127,14 +127,14 @@ const StudentDashboard: React.FC = () => {
       {/* Continue Learning + Quick Actions */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
         <div className="lg:col-span-2">
-          <h2 className="text-xl font-bold text-white mb-4 flex items-center gap-2"><Clock size={20} className="text-emerald-400" /> Continue Learning</h2>
+          <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-2"><Clock size={20} className="text-emerald-400" /> Continue Learning</h2>
           <GlassCard hoverEffect={false} className="p-6 relative overflow-hidden">
-            <div className="absolute -top-16 -right-16 w-48 h-48 bg-emerald-500/5 blur-3xl rounded-full"></div>
+            <div className="absolute -top-16 -right-16 size-48 bg-emerald-500/5 blur-3xl rounded-full"></div>
             {recentLabData ? (
               <div className="flex items-center justify-between gap-4">
                 <div>
                   <p className="text-sm text-zinc-400 mb-1">Last experiment</p>
-                  <h3 className="text-lg font-bold text-white mb-2">{recentLabData.lab.title}</h3>
+                  <h3 className="text-lg font-semibold text-white mb-2">{recentLabData.lab.title}</h3>
                   <p className="text-xs text-zinc-500 capitalize">{recentLabData.subject.name}</p>
                 </div>
                 <Link to={`/subjects/${recentLabData.subject.id}/${recentLabData.lab.id}`}
@@ -154,7 +154,7 @@ const StudentDashboard: React.FC = () => {
           </GlassCard>
         </div>
         <div>
-          <h2 className="text-xl font-bold text-white mb-4">Quick Actions</h2>
+          <h2 className="text-xl font-semibold text-white mb-4">Quick Actions</h2>
           <div className="space-y-3">
             <Link to="/subjects" className="flex items-center gap-3 p-4 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/5 transition-colors group">
               <FlaskConical size={20} className="text-emerald-400 group-hover:scale-110 transition-transform" />
@@ -176,7 +176,7 @@ const StudentDashboard: React.FC = () => {
       </div>
 
       {/* Subject Progress Cards */}
-      <h2 className="text-xl font-bold text-white mb-4">Subject Progress</h2>
+      <h2 className="text-xl font-semibold text-white mb-4">Subject Progress</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
         {SUBJECTS.map(subject => {
           const subjectId = subject.id;
@@ -192,7 +192,7 @@ const StudentDashboard: React.FC = () => {
                 <div className={`p-2.5 rounded-xl ${styles.bg} border ${styles.border} w-fit mb-3`}>
                   {SUBJECT_ICONS[subjectId] || <FlaskConical size={24} />}
                 </div>
-                <h3 className="text-white font-bold capitalize mb-1">{subject.name}</h3>
+                <h3 className="text-white font-semibold capitalize mb-1">{subject.name}</h3>
                 <p className="text-xs text-zinc-400 mb-3">{completedCount}/{totalLabs} experiments</p>
                 <div className="w-full h-2 bg-black/30 rounded-full overflow-hidden border border-white/5 mb-1">
                   <motion.div initial={{ width: 0 }} animate={{ width: `${percentage}%` }}

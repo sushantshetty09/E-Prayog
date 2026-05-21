@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../services/firebase';
 import { collection, query, orderBy, getDocs, onSnapshot, limit } from 'firebase/firestore';
 import { useAuth } from '../services/AuthContext';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m as motion, AnimatePresence } from 'framer-motion';
 import { Shield, Activity, Users, TrendingUp, Filter, Search, Download, Key, ClipboardList, Star } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import { ActivityEvent } from '../services/activityService';
@@ -128,7 +128,7 @@ const AdminActivityFeed: React.FC = () => {
     switch (event.type) {
       case 'user_signup':            return `signed up (${event.metadata.method})`;
       case 'user_login':             return `logged in (${event.metadata.method})`;
-      case 'quiz_completed':         return `completed "${event.metadata.labTitle}" quiz — ${event.metadata.score}/${event.metadata.total} (${event.metadata.percentage}%)`;
+      case 'quiz_completed':         return `completed "${event.metadata.labTitle}" quiz: ${event.metadata.score}/${event.metadata.total} (${event.metadata.percentage}%)`;
       case 'lab_visited':            return `opened "${event.metadata.labTitle}"`;
       case 'student_joined_class':   return `joined a class (code: ${event.metadata.teacherCode})`;
       case 'teacher_code_generated': return `generated/regenerated class code ${event.metadata.newCode}`;
@@ -156,9 +156,9 @@ const AdminActivityFeed: React.FC = () => {
         <div>
           <div className="flex items-center gap-3 mb-2">
             <Shield size={28} className="text-red-400" />
-            <h1 className="text-3xl font-display font-bold text-white">Platform Activity Monitor</h1>
+            <h1 className="text-3xl font-display font-semibold text-white">Platform Activity Monitor</h1>
             <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-bold">
-              <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
+              <span className="size-2 rounded-full bg-red-400 animate-pulse" />
               LIVE
             </span>
             {newCount > 0 && (
@@ -190,7 +190,7 @@ const AdminActivityFeed: React.FC = () => {
           return (
             <GlassCard key={stat.label} className="p-5" color={stat.cardColor} hoverEffect={true}>
               <div className="flex items-center justify-between mb-3">
-                <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `${stat.hex}15` }}>
+                <div className="size-10 rounded-xl flex items-center justify-center" style={{ background: `${stat.hex}15` }}>
                   <Icon size={20} style={{ color: stat.hex }} />
                 </div>
               </div>
@@ -275,7 +275,7 @@ const AdminActivityFeed: React.FC = () => {
       {/* Feed */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="w-8 h-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
+          <div className="size-8 border-2 border-red-500 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : filteredEvents.length === 0 ? (
         <GlassCard className="p-12 text-center" color="blue">
@@ -294,7 +294,7 @@ const AdminActivityFeed: React.FC = () => {
                 className="glass-panel rounded-xl px-5 py-4 flex items-center gap-4 group hover:bg-white/5 transition-colors"
               >
                 {/* Avatar */}
-                <div className={`w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0 ${
+                <div className={`size-9 rounded-full flex items-center justify-center text-white font-bold text-sm flex-shrink-0 ${
                   event.actorRole === 'Admin' ? 'bg-red-600/50' :
                   event.actorRole === 'Teacher' ? 'bg-purple-600/50' : 'bg-blue-600/50'
                 }`}>

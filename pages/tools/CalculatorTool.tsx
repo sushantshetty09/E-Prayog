@@ -222,7 +222,7 @@ const CalculatorTool: React.FC = () => {
   return (
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolCalculatorTitle}</h1>
+        <h1 className="text-3xl lg:text-4xl font-display font-semibold text-white mb-4">{t.toolCalculatorTitle}</h1>
       </div>
 
       <div className="max-w-md mx-auto glass-panel p-6 rounded-3xl border border-white/10 bg-zinc-900/80 shadow-2xl">

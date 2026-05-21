@@ -169,7 +169,7 @@ const LogicGatesLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(16,185,129,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">⚡ Logic Gates — Interactive Circuit</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">⚡ Logic Gates: Interactive Circuit</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">AND · OR · NOT · NAND · NOR · XOR · XNOR · Truth tables</p>
         </div>
         <div className="text-xs font-mono px-2.5 py-1 rounded-lg font-bold" style={{ background: output === 1 ? 'rgba(16,185,129,0.2)' : 'rgba(30,41,59,0.5)', color: output === 1 ? '#10b981' : '#475569', border: '1px solid rgba(255,255,255,0.08)' }}>
@@ -212,7 +212,7 @@ const LogicGatesLab: React.FC = () => {
             </thead>
             <tbody>
               {truthTable.map((row, i) => (
-                <tr key={i} style={{ background: row.isActive ? 'rgba(16,185,129,0.12)' : 'transparent', borderRadius: '6px' }}>
+                <tr key={`${row.a}-${row.b}-${row.out}`} style={{ background: row.isActive ? 'rgba(16,185,129,0.12)' : 'transparent', borderRadius: '6px' }}>
                   <td className="py-0.5 px-2" style={{ color: row.a ? '#10b981' : '#475569' }}>{row.a}</td>
                   {!isUnary && <td className="py-0.5 px-2" style={{ color: row.b ? '#10b981' : '#475569' }}>{row.b}</td>}
                   <td className="py-0.5 px-2 font-bold" style={{ color: row.out ? '#34d399' : '#64748b' }}>{row.out}</td>

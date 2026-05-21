@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { auth } from '../services/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Lock, Mail, ArrowRight, ShieldCheck, Link as LinkIcon, Loader2, BookOpen } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 
 const StaffLogin: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -46,18 +46,18 @@ const StaffLogin: React.FC = () => {
     <div className="min-h-screen pt-24 pb-12 flex items-center justify-center px-4 relative overflow-hidden">
       
       {/* Background Decor */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-red-500/10 blur-[100px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/10 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 size-96 bg-red-500/10 blur-[100px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 size-96 bg-purple-500/10 blur-[100px] rounded-full pointer-events-none" />
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-md bg-zinc-900/60 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl relative z-10"
       >
         <div className="flex flex-col items-center mb-8">
-          <div className={`w-16 h-16 rounded-2xl bg-gradient-to-tr ${type === 'teacher' ? 'from-purple-600 to-violet-600 shadow-purple-500/20' : 'from-red-600 to-purple-600 shadow-red-500/20'} flex items-center justify-center mb-4 shadow-lg`}>
+          <div className={`size-16 rounded-2xl bg-gradient-to-tr ${type === 'teacher' ? 'from-purple-600 to-violet-600 shadow-purple-500/20' : 'from-red-600 to-purple-600 shadow-red-500/20'} flex items-center justify-center mb-4 shadow-lg`}>
             {type === 'teacher' ? <BookOpen size={32} className="text-white" /> : <ShieldCheck size={32} className="text-white" />}
           </div>
-          <h1 className="text-2xl font-bold text-white mb-2">
+          <h1 className="text-2xl font-semibold text-white mb-2">
             {type === 'teacher' ? 'Teacher Portal Access' : 'Admin Portal Access'}
           </h1>
           <p className="text-sm text-zinc-400 text-center">
@@ -73,10 +73,11 @@ const StaffLogin: React.FC = () => {
 
         <form onSubmit={handleLogin} className="space-y-5">
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider ml-1">Work Email</label>
+            <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider ml-1">Work Email</span>
             <div className="relative">
               <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
               <input 
+                id="staff-email"
                 type="email" 
                 required
                 value={email}
@@ -88,10 +89,11 @@ const StaffLogin: React.FC = () => {
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-bold text-zinc-400 uppercase tracking-wider ml-1">Password</label>
+            <span className="text-xs font-bold text-zinc-400 uppercase tracking-wider ml-1">Password</span>
             <div className="relative">
               <Lock className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" size={18} />
               <input 
+                id="staff-password"
                 type="password" 
                 required
                 value={password}

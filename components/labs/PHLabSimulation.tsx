@@ -213,7 +213,7 @@ const PHLabSimulation: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(34,197,94,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">⚗ pH Measurement — Digital pH Meter</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">⚗ pH Measurement: Digital pH Meter</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Universal indicator · Hydrogen ion concentration · pH = −log[H⁺]</p>
         </div>
         <div className="text-xs font-bold px-3 py-1.5 rounded-lg font-mono" style={{ background: phToColor(animPh) + '20', color: phToColor(animPh), border: `1px solid ${phToColor(animPh)}40` }}>
@@ -225,10 +225,10 @@ const PHLabSimulation: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(34,197,94,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div>
-          <label className="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 block">Test Solution</label>
+          <span className="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 block font-semibold">Test Solution</span>
           <div className="flex flex-wrap gap-1.5">
             {SOLUTIONS.map((sol, i) => (
-              <button key={i} onClick={() => handleSolution(i)}
+              <button key={sol.name} onClick={() => handleSolution(i)}
                 className="px-2.5 py-1 rounded-lg text-[10px] font-bold transition-all"
                 style={{ background: i === selectedSol ? phToColor(sol.ph) + '25' : 'rgba(255,255,255,0.04)', color: i === selectedSol ? phToColor(sol.ph) : '#475569', border: `1px solid ${i === selectedSol ? phToColor(sol.ph) + '50' : 'rgba(255,255,255,0.07)'}` }}>
                 {sol.icon} {sol.name}
@@ -237,8 +237,8 @@ const PHLabSimulation: React.FC = () => {
           </div>
         </div>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-zinc-400 whitespace-nowrap">Custom pH</label>
-          <input type="range" min={0} max={14} step={0.1} value={ph}
+          <span className="text-xs text-zinc-400 whitespace-nowrap">Custom pH</span>
+          <input id="ph-custom-slider" type="range" min={0} max={14} step={0.1} value={ph}
             onChange={e => { setPh(Number(e.target.value)); setCustomMode(true); setSelectedSol(-1); }}
             className="flex-1 h-1.5 rounded-full"
             style={{ accentColor: phToColor(ph) }} />

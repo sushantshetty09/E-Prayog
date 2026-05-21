@@ -284,7 +284,7 @@ const OhmsLawLab: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(99,102,241,0.2)', background: 'rgba(10,14,26,0.8)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">⚡ Ohm's Law — V-I Characteristics</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">⚡ Ohm's Law: V-I Characteristics</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">V = I × R &nbsp;|&nbsp; Real circuit simulation</p>
         </div>
         <div className="flex gap-2">
@@ -306,18 +306,18 @@ const OhmsLawLab: React.FC = () => {
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
             <div className="flex justify-between">
-              <label className="text-xs text-zinc-400">Voltage (V)</label>
+              <span className="text-xs text-zinc-400">Voltage (V)</span>
               <span className="text-xs font-mono text-amber-400">{voltage.toFixed(1)} V</span>
             </div>
-            <input type="range" min={0} max={12} step={0.5} value={voltage} onChange={e => setVoltage(Number(e.target.value))}
+            <input id="ohmslaw-voltage-slider" type="range" min={0} max={12} step={0.5} value={voltage} onChange={e => setVoltage(Number(e.target.value))}
               className="w-full h-1.5 rounded-full accent-amber-500" />
           </div>
           <div className="flex flex-col gap-1.5">
             <div className="flex justify-between">
-              <label className="text-xs text-zinc-400">Resistance (Ω)</label>
+              <span className="text-xs text-zinc-400">Resistance (Ω)</span>
               <span className="text-xs font-mono text-orange-400">{resistance} Ω</span>
             </div>
-            <input type="range" min={5} max={100} step={5} value={resistance} onChange={e => setResistance(Number(e.target.value))}
+            <input id="ohmslaw-resistance-slider" type="range" min={5} max={100} step={5} value={resistance} onChange={e => setResistance(Number(e.target.value))}
               className="w-full h-1.5 rounded-full accent-orange-500" />
           </div>
         </div>
@@ -344,7 +344,7 @@ const OhmsLawLab: React.FC = () => {
               <span>#</span><span>V (V)</span><span>I (A)</span><span>V/I (Ω)</span>
             </div>
             {readings.map((r, i) => (
-              <div key={i} className="grid px-3 py-1" style={{ gridTemplateColumns: 'repeat(4,1fr)', background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent' }}>
+              <div key={`${r.v}-${r.i}`} className="grid px-3 py-1" style={{ gridTemplateColumns: 'repeat(4,1fr)', background: i % 2 === 0 ? 'rgba(255,255,255,0.02)' : 'transparent' }}>
                 <span className="text-[10px] text-zinc-500">{i + 1}</span>
                 <span className="text-[10px] font-mono text-violet-400">{r.v}</span>
                 <span className="text-[10px] font-mono text-sky-400">{r.i}</span>

@@ -15,13 +15,13 @@ const STEPS = [
   },
   {
     id: 2, title: 'Filter Through Gauze', icon: '🧹',
-    desc: 'Pour through cheesecloth. Removes large cell debris — only clear lysate passes through.',
+    desc: 'Pour through cheesecloth. Removes large cell debris: only clear lysate passes through.',
     colors: { solution: ['#b57040', '#7a4520'], label: '#94a3b8', layerName: 'Filtered lysate (clear)',
     layerH: 0.55, hasClear: true },
   },
   {
     id: 3, title: 'Layer Cold Ethanol', icon: '🧊',
-    desc: 'Gently pour ice-cold 95% ethanol over filtrate. DNA is insoluble in ethanol — it precipitates.',
+    desc: 'Gently pour ice-cold 95% ethanol over filtrate. DNA is insoluble in ethanol: it precipitates.',
     colors: { solution: ['#b57040', '#7a4520'], label: '#38bdf8', layerName: 'Filtrate',
     layerH: 0.55, hasEthanol: true },
   },
@@ -39,7 +39,7 @@ interface DNAStrand { x: number; y: number; phase: number; amp: number; }
 const DNAIsolationLab: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [step, setStep] = useState(0);
-  const [animT, setAnimT] = useState(0);
+  const animTRef = useRef(0);
   const bubblesRef = useRef<Bubble[]>([]);
   const dnaRef = useRef<DNAStrand[]>([]);
   const rafRef = useRef(0);
@@ -57,7 +57,7 @@ const DNAIsolationLab: React.FC = () => {
     }
     if (step < 4) dnaRef.current = [];
     bubblesRef.current = [];
-    setAnimT(0);
+    animTRef.current = 0;
   }, [step]);
 
   const draw = useCallback(() => {
@@ -149,7 +149,7 @@ const DNAIsolationLab: React.FC = () => {
 
     // ── DNA strands (step 4) ──
     if (step === 4) {
-      const dnaT = Math.min(1, animT / 60);
+      const dnaT = Math.min(1, animTRef.current / 60);
       const interfaceY = lysateTop - 6;
       ctx.shadowBlur = 12; ctx.shadowColor = '#10b981';
       dnaRef.current.forEach((strand, i) => {
@@ -160,7 +160,7 @@ const DNAIsolationLab: React.FC = () => {
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         for (let yy = 0; yy <= len; yy += 1) {
-          const xx = strand.x + Math.sin(yy * 0.3 + strand.phase + animT * 0.02) * strand.amp * 0.4;
+          const xx = strand.x + Math.sin(yy * 0.3 + strand.phase + animTRef.current * 0.02) * strand.amp * 0.4;
           if (yy === 0) ctx.moveTo(xx, interfaceY - yy);
           else ctx.lineTo(xx, interfaceY - yy);
         }
@@ -230,18 +230,9 @@ const DNAIsolationLab: React.FC = () => {
     ctx.fillText(s.title, cx, 34);
     ctx.shadowBlur = 0;
 
-    // DNA shimmer label
-    if (step === 4) {
-      const dnaT = Math.min(1, animT / 60);
-      ctx.shadowBlur = 15; ctx.shadowColor = '#10b981';
-      ctx.fillStyle = `rgba(16,185,129,${dnaT})`; ctx.font = 'bold 10px Inter';
-      ctx.fillText('✨ DNA precipitate visible!', cx, H - 30);
-      ctx.shadowBlur = 0;
-    }
-
-    setAnimT(t => t + 1);
+    animTRef.current += 1;
     rafRef.current = requestAnimationFrame(draw);
-  }, [step, s, animT]);
+  }, [step, s]);
 
   useEffect(() => {
     rafRef.current = requestAnimationFrame(draw);
@@ -252,7 +243,7 @@ const DNAIsolationLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(16,185,129,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🧬 DNA Isolation from Plant Tissue (Banana)</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🧬 DNA Isolation from Plant Tissue (Banana)</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Detergent lysis → ethanol precipitation → DNA spooling</p>
         </div>
         <div className="flex items-center gap-1.5">
@@ -266,7 +257,7 @@ const DNAIsolationLab: React.FC = () => {
         {/* Step pills */}
         <div className="flex gap-1 justify-center">
           {STEPS.map((st, i) => (
-            <button key={i} onClick={() => setStep(i)}
+            <button key={st.title} onClick={() => setStep(i)}
               className="flex-1 py-1.5 rounded-lg text-[9px] font-bold transition-all text-center"
               style={{ background: i === step ? st.colors.label + '25' : 'rgba(255,255,255,0.04)', color: i === step ? st.colors.label : '#475569', border: `1px solid ${i <= step ? st.colors.label + '40' : 'rgba(255,255,255,0.07)'}` }}>
               {st.icon} {i + 1}

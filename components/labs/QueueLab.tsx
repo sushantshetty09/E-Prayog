@@ -32,7 +32,7 @@ const QueueLab: React.FC = () => {
   };
 
   const peek = () => {
-    if (!queue.length) { setMsg('Queue is EMPTY — nothing to peek'); setMsgType('error'); return; }
+    if (!queue.length) { setMsg('Queue is EMPTY: nothing to peek'); setMsgType('error'); return; }
     setMsg(`PEEK FRONT → ${queue[0].val}  |  PEEK REAR → ${queue[queue.length - 1].val}`); setMsgType('info');
     setHighlight('front'); setTimeout(() => setHighlight(null), 1000);
   };
@@ -149,7 +149,7 @@ const QueueLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🚦 Queue — FIFO Data Structure</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🚦 Queue: FIFO Data Structure</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">First-In First-Out · Enqueue at REAR · Dequeue from FRONT</p>
         </div>
         <div className="text-xs font-mono px-2.5 py-1 rounded-lg" style={{ background: queue.length >= MAX_Q ? 'rgba(239,68,68,0.15)' : 'rgba(96,165,250,0.12)', color: queue.length >= MAX_Q ? '#f87171' : '#60a5fa', border: '1px solid rgba(255,255,255,0.08)' }}>

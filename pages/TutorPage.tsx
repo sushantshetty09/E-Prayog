@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Bot, Send, Sparkles, Trash2, User } from 'lucide-react';
 import { askTutor } from '../services/geminiService';
 import { ChatMessage } from '../types';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m as motion, AnimatePresence } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
 
 const MotionDiv = motion.div as any;
@@ -102,7 +102,7 @@ const TutorPage: React.FC = () => {
         {/* ── Page Header ── */}
         <div className="flex items-center gap-4 mb-6">
           {/* Animated avatar */}
-          <div className="relative w-14 h-14 flex-shrink-0">
+          <div className="relative size-14 flex-shrink-0">
             <div className="absolute inset-[-3px] rounded-2xl ai-orbit-ring opacity-80" />
             <div
               className="relative w-full h-full rounded-2xl flex items-center justify-center"
@@ -113,7 +113,7 @@ const TutorPage: React.FC = () => {
           </div>
 
           <div className="flex-1 min-w-0">
-            <h1 className="text-2xl font-bold flex items-center gap-2">
+            <h1 className="text-2xl font-semibold flex items-center gap-2">
               <span className="ai-gradient-text">{t.tutorTitle}</span>
               <Sparkles size={18} className="text-amber-400 animate-pulse" />
             </h1>
@@ -154,7 +154,7 @@ const TutorPage: React.FC = () => {
               >
                 {/* Avatar */}
                 <div
-                  className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 text-white text-sm"
+                  className="size-8 rounded-full flex items-center justify-center flex-shrink-0 text-white text-sm"
                   style={{
                     background: msg.role === 'user'
                       ? `linear-gradient(135deg, ${G.sky}, #38bdf8)`
@@ -194,7 +194,7 @@ const TutorPage: React.FC = () => {
           {loading && (
             <div className="flex gap-3">
               <div
-                className="w-8 h-8 rounded-full flex items-center justify-center"
+                className="size-8 rounded-full flex items-center justify-center"
                 style={{ background: `linear-gradient(135deg, ${G.sky}, ${G.violet})` }}
               >
                 <Bot size={15} className="text-white" />
@@ -205,8 +205,8 @@ const TutorPage: React.FC = () => {
               >
                 {[G.sky, G.violet, G.rose].map((color, i) => (
                   <span
-                    key={i}
-                    className="w-2 h-2 rounded-full animate-bounce"
+                    key={color}
+                    className="size-2 rounded-full animate-bounce"
                     style={{ background: color, animationDelay: `${i * 150}ms` }}
                   />
                 ))}
@@ -220,7 +220,7 @@ const TutorPage: React.FC = () => {
           <div className="flex flex-wrap gap-2 mb-4">
             {quickQuestions.map((q, i) => (
               <button
-                key={i}
+                key={q}
                 onClick={() => setInput(q)}
                 className="quick-pill px-3 py-1.5 rounded-full text-xs font-medium text-zinc-400 transition-all duration-200"
                 style={{

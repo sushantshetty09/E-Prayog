@@ -178,7 +178,7 @@ const StomataLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(34,197,94,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🌿 Stomata — Guard Cell Mechanism</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🌿 Stomata: Guard Cell Mechanism</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Light → K⁺ influx → turgid guard cells → stomatal opening</p>
         </div>
         <div className="text-xs font-bold px-2.5 py-1 rounded-lg" style={{ background: lvl.lux > 0 ? 'rgba(251,191,36,0.15)' : 'rgba(30,41,59,0.5)', color: lvl.lux > 0 ? '#fbbf24' : '#475569', border: `1px solid ${lvl.lux > 0 ? 'rgba(251,191,36,0.3)' : 'rgba(71,85,105,0.3)'}` }}>
@@ -189,7 +189,7 @@ const StomataLab: React.FC = () => {
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(34,197,94,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="grid grid-cols-4 gap-1.5">
           {LIGHT_LEVELS.map((l, i) => (
-            <button key={i} onClick={() => setLightIdx(i)}
+            <button key={l.label} onClick={() => setLightIdx(i)}
               className="py-2 rounded-xl text-[9px] font-bold"
               style={{ background: i === lightIdx ? 'rgba(251,191,36,0.2)' : 'rgba(255,255,255,0.04)', color: i === lightIdx ? '#fbbf24' : '#475569', border: `1px solid ${i === lightIdx ? 'rgba(251,191,36,0.35)' : 'rgba(255,255,255,0.07)'}` }}>
               {l.label}
@@ -197,7 +197,7 @@ const StomataLab: React.FC = () => {
           ))}
         </div>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-zinc-400 whitespace-nowrap">Opening</label>
+          <span className="text-xs text-zinc-400 whitespace-nowrap">Opening</span>
           <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.07)' }}>
             <div className="h-full rounded-full transition-all duration-500" style={{ width: `${animOpening * 100}%`, background: 'linear-gradient(90deg,#22c55e,#4ade80)' }} />
           </div>

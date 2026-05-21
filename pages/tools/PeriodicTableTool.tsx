@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m as motion, AnimatePresence } from 'framer-motion';
 import { X } from 'lucide-react';
 import { useLang } from '../../services/LanguageContext';
 import EprayogLogo from '../../components/EprayogLogo';
@@ -109,7 +109,7 @@ const PeriodicTableTool: React.FC = () => {
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-[1400px] mx-auto min-h-screen">
       <div className="mb-10 text-center">
         <div className="flex justify-center mb-4"><EprayogLogo size={72} idSuffix="periodic"/></div>
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolPeriodicTableTitle}</h1>
+        <h1 className="text-3xl lg:text-4xl font-display font-semibold text-white mb-4">{t.toolPeriodicTableTitle}</h1>
         <p className="text-zinc-400 max-w-2xl mx-auto">{t.toolPeriodicTableSubtitle}</p>
       </div>
 
@@ -144,12 +144,12 @@ const PeriodicTableTool: React.FC = () => {
             <div className="text-[7px] font-bold text-center opacity-60 truncate px-0.5">Actinides</div>
           </div>
 
-          {/* Legend — placed in cols 4-13, rows 1-2 */}
+          {/* Legend: placed in cols 4-13, rows 1-2 */}
           <div className="p-3 flex flex-col justify-center" style={{gridColumn:'4/14',gridRow:'1/3'}}>
             <div className="grid grid-cols-4 gap-2">
               {Object.entries(CATEGORY_COLORS).map(([key,color])=>(
                 <div key={key} className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full border border-black/20" style={{backgroundColor:color}}/>
+                  <div className="size-3 rounded-full border border-black/20" style={{backgroundColor:color}}/>
                   <span className="text-xs text-zinc-400 capitalize">{key.replace(/-/g,' ')}</span>
                 </div>
               ))}
@@ -169,7 +169,7 @@ const PeriodicTableTool: React.FC = () => {
               style={{minHeight:'420px'}}
               onClick={e=>e.stopPropagation()}>
 
-              {/* LEFT — element info */}
+              {/* LEFT: element info */}
               <div className="w-[280px] flex-shrink-0 flex flex-col"
                 style={{background: CATEGORY_COLORS[sel.category]||'#f1f5f9'}}>
                 {/* Header */}
@@ -203,8 +203,8 @@ const PeriodicTableTool: React.FC = () => {
                     <div className="mt-2 pt-3 border-t border-zinc-400/30">
                       <p className="text-[10px] font-bold tracking-widest text-zinc-500 uppercase text-center mb-2">COMMON IONS</p>
                       <div className="flex flex-col gap-2">
-                        {ions.map((ion,i)=>(
-                          <div key={i} className="flex items-center justify-between bg-white/60 rounded-lg px-3 py-2">
+                        {ions.map(ion=>(
+                          <div key={ion.formula} className="flex items-center justify-between bg-white/60 rounded-lg px-3 py-2">
                             <span className="text-base font-black text-zinc-800">{ion.formula}</span>
                             <span className="text-xs text-zinc-500 font-medium">{ion.name}</span>
                           </div>
@@ -215,7 +215,7 @@ const PeriodicTableTool: React.FC = () => {
                 </div>
               </div>
 
-              {/* RIGHT — Bohr model */}
+              {/* RIGHT: Bohr model */}
               <div className="flex-1 flex flex-col relative"
                 style={{background:'linear-gradient(135deg,#f8fafc 0%,#e2e8f0 100%)'}}>
                 {/* top bar */}
@@ -224,7 +224,7 @@ const PeriodicTableTool: React.FC = () => {
                     {config}
                   </span>
                   <button onClick={()=>setSel(null)}
-                    className="w-8 h-8 flex items-center justify-center rounded-full bg-zinc-200 hover:bg-zinc-300 text-zinc-600 transition-colors">
+                    className="size-8 flex items-center justify-center rounded-full bg-zinc-200 hover:bg-zinc-300 text-zinc-600 transition-colors">
                     <X size={16}/>
                   </button>
                 </div>
@@ -237,7 +237,7 @@ const PeriodicTableTool: React.FC = () => {
                 {/* Shell count labels */}
                 <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 flex-wrap px-4">
                   {shells.slice(0,7).map((count,i)=>(
-                    <span key={i} className="text-[10px] font-bold text-zinc-500 bg-white/70 px-2 py-0.5 rounded-full border border-zinc-200">
+                    <span key={'KLMNOPQ'[i]} className="text-[10px] font-bold text-zinc-500 bg-white/70 px-2 py-0.5 rounded-full border border-zinc-200">
                       {'KLMNOPQ'[i]}: {count}e⁻
                     </span>
                   ))}

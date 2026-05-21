@@ -272,7 +272,7 @@ const MitosisLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(34,197,94,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🔬 Mitosis — Cell Division Stages</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🔬 Mitosis: Cell Division Stages</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Somatic cell division · Chromosome behaviour · Equational division</p>
         </div>
         <button onClick={() => setAutoPlay(p => !p)}
@@ -287,7 +287,7 @@ const MitosisLab: React.FC = () => {
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(34,197,94,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex gap-1">
           {STAGES.map((st, i) => (
-            <button key={i} onClick={() => { setStage(i); tRef.current = 0; setAutoPlay(false); }}
+            <button key={st.name} onClick={() => { setStage(i); tRef.current = 0; setAutoPlay(false); }}
               className="flex-1 py-1.5 rounded-lg text-[9px] font-bold transition-all"
               style={{ background: i === stage ? st.color + '25' : 'rgba(255,255,255,0.04)', color: i === stage ? st.color : '#475569', border: `1px solid ${i === stage ? st.color + '50' : 'rgba(255,255,255,0.07)'}` }}>
               {st.short}

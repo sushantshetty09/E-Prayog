@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { SUBJECTS } from '../constants';
 import GlassCard from '../components/GlassCard';
 import { ArrowRight, Clock, Filter } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
 
 const MotionDiv = motion.div as any;
@@ -68,11 +68,11 @@ const SubjectView: React.FC = () => {
             ← {t.subjectBack}
           </Link>
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: `${subject.hex}15` }}>
+            <div className="size-14 rounded-2xl flex items-center justify-center" style={{ background: `${subject.hex}15` }}>
               <subject.icon size={28} style={{ color: subject.hex }} />
             </div>
             <div>
-              <h1 className="text-3xl md:text-4xl font-display font-bold text-white">{translatedName}</h1>
+              <h1 className="text-3xl md:text-4xl font-display font-semibold text-white">{translatedName}</h1>
               <p className="text-zinc-400 text-sm">
                 {subject.labs.length} {t.subjectsExperiments.toLowerCase()} • {t.subjectKarnatakaPuc}
               </p>
@@ -135,7 +135,7 @@ const SubjectView: React.FC = () => {
                     <Clock size={12} /> {lab.duration}
                   </div>
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{lab.title}</h3>
+                <h3 className="text-lg font-semibold text-white mb-2">{lab.title}</h3>
                 <p className="text-sm text-zinc-400 mb-3 line-clamp-2">{lab.description}</p>
                 <div className="flex items-center justify-between">
                   <span className="text-xs text-zinc-600 bg-white/5 rounded-full px-2 py-0.5">{lab.category}</span>

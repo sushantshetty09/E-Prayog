@@ -137,7 +137,7 @@ const UnitCircleLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(167,139,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">⭕ Unit Circle — Trigonometry</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">⭕ Unit Circle: Trigonometry</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">sin · cos · tan · sec · csc · cot · All quadrants</p>
         </div>
         <button onClick={() => setAnimating(a => !a)} className="px-3 py-1.5 rounded-lg text-xs font-bold"
@@ -148,8 +148,8 @@ const UnitCircleLab: React.FC = () => {
       <canvas ref={canvasRef} width={520} height={320} className="w-full" style={{ display: 'block' }} />
       <div className="px-4 py-3 flex flex-col gap-2 border-t" style={{ borderColor: 'rgba(167,139,250,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-zinc-400">θ</label>
-          <input type="range" min={0} max={359} step={1} value={angle} onChange={e => { setAngle(Number(e.target.value)); setAnimating(false); }}
+          <span className="text-xs text-zinc-400">θ</span>
+          <input id="unitcircle-angle-slider" type="range" min={0} max={359} step={1} value={angle} onChange={e => { setAngle(Number(e.target.value)); setAnimating(false); }}
             className="flex-1 h-1.5 rounded-full accent-violet-400" />
           <span className="text-xs font-mono text-violet-400 w-12 text-right">{angle}°</span>
         </div>

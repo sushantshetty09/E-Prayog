@@ -164,7 +164,7 @@ const ThermochemistryLab: React.FC = () => {
       ctx.fillText(`Mixing... T = ${currentTemp.toFixed(1)}°C`, cx - 45, H - 8);
     } else {
       ctx.fillStyle = '#475569';
-      ctx.fillText(`${rxn.name} — click Mix to start`, cx - 45, H - 8);
+      ctx.fillText(`${rxn.name}: click Mix to start`, cx - 45, H - 8);
     }
   }, [mixT, rxn, isExo, currentTemp, baseTemp]);
 
@@ -177,7 +177,7 @@ const ThermochemistryLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: `${rxn.color}35`, background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🌡 Thermochemistry — Calorimetry</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🌡 Thermochemistry: Calorimetry</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">q = mcΔT · Enthalpy change ΔH · Exo vs Endo</p>
         </div>
         <div className="text-xs px-2.5 py-1 rounded-lg font-bold" style={{ background: rxn.color + '20', color: rxn.color, border: `1px solid ${rxn.color}40` }}>{isExo ? '🔥 Exothermic' : '❄ Endothermic'}</div>
@@ -186,7 +186,7 @@ const ThermochemistryLab: React.FC = () => {
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: `${rxn.color}15`, background: 'rgba(5,7,12,0.97)' }}>
         <div className="grid grid-cols-2 gap-1.5">
           {REACTIONS.map((r, i) => (
-            <button key={i} onClick={() => { setRxnIdx(i); setMixing(false); setMixT(0); }}
+            <button key={r.name} onClick={() => { setRxnIdx(i); setMixing(false); setMixT(0); }}
               className="py-2 px-2.5 rounded-xl text-[9px] font-bold text-left"
               style={{ background: i === rxnIdx ? r.color + '20' : 'rgba(255,255,255,0.04)', color: i === rxnIdx ? r.color : '#475569', border: `1px solid ${i === rxnIdx ? r.color + '40' : 'rgba(255,255,255,0.07)'}` }}>
               <div>{r.name}</div>

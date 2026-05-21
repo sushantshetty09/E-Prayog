@@ -186,7 +186,7 @@ const CationAnalysisLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(251,191,36,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">⚗ Cation Analysis — Wet Tests</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">⚗ Cation Analysis: Wet Tests</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Fe³⁺ · Cu²⁺ · Zn²⁺ · Pb²⁺ · Ca²⁺ · Confirmatory reactions</p>
         </div>
         <div className="text-xs px-2.5 py-1 rounded-lg font-bold" style={{ background: cation.color + '22', color: cation.color, border: `1px solid ${cation.color}45` }}>{cation.id}</div>
@@ -195,7 +195,7 @@ const CationAnalysisLab: React.FC = () => {
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(251,191,36,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex flex-wrap gap-1.5">
           {CATIONS.map((c, i) => (
-            <button key={i} onClick={() => setCatIdx(i)}
+            <button key={c.id} onClick={() => setCatIdx(i)}
               className="px-3 py-1.5 rounded-lg text-xs font-bold"
               style={{ background: i === catIdx ? c.color + '25' : 'rgba(255,255,255,0.04)', color: i === catIdx ? c.color : '#475569', border: `1px solid ${i === catIdx ? c.color + '50' : 'rgba(255,255,255,0.07)'}` }}>
               {c.id}
@@ -204,7 +204,7 @@ const CationAnalysisLab: React.FC = () => {
         </div>
         <div className="flex gap-1.5">
           {cation.tests.map((t2, i) => (
-            <button key={i} onClick={() => { setTestIdx(i); setReacted(false); tRef.current = 0; }}
+            <button key={t2.reagent} onClick={() => { setTestIdx(i); setReacted(false); tRef.current = 0; }}
               className="flex-1 py-1.5 rounded-lg text-[9px] font-bold"
               style={{ background: i === testIdx ? 'rgba(251,191,36,0.15)' : 'rgba(255,255,255,0.04)', color: i === testIdx ? '#fbbf24' : '#475569', border: `1px solid ${i === testIdx ? 'rgba(251,191,36,0.3)' : 'rgba(255,255,255,0.07)'}` }}>
               {t2.reagent.split(' ')[0]}

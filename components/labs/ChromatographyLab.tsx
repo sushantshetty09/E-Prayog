@@ -1,10 +1,10 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 
 const PIGMENTS = [
-  { name: 'Carotene',      color: '#f97316', Rf: 0.92, width: 10, desc: 'Most non-polar — travels farthest' },
+  { name: 'Carotene',      color: '#f97316', Rf: 0.92, width: 10, desc: 'Most non-polar: travels farthest' },
   { name: 'Xanthophyll',   color: '#eab308', Rf: 0.71, width: 9,  desc: 'Yellow-orange accessory pigment' },
   { name: 'Chlorophyll a', color: '#16a34a', Rf: 0.52, width: 11, desc: 'Primary photosynthetic pigment' },
-  { name: 'Chlorophyll b', color: '#4ade80', Rf: 0.36, width: 9,  desc: 'Accessory — most polar, least travel' },
+  { name: 'Chlorophyll b', color: '#4ade80', Rf: 0.36, width: 9,  desc: 'Accessory: most polar, least travel' },
 ];
 
 const ChromatographyLab: React.FC = () => {
@@ -195,7 +195,7 @@ const ChromatographyLab: React.FC = () => {
     if (solventPct >= 100) {
       ctx.shadowBlur = 8; ctx.shadowColor = '#10b981';
       ctx.fillStyle = '#10b981';
-      ctx.fillText('✓ Chromatogram complete — pigments separated!', cx, H - 10);
+      ctx.fillText('✓ Chromatogram complete: pigments separated!', cx, H - 10);
       ctx.shadowBlur = 0;
     } else if (running) {
       ctx.fillStyle = '#60a5fa';
@@ -217,7 +217,7 @@ const ChromatographyLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(34,197,94,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🌿 Paper Chromatography — Leaf Pigments</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🌿 Paper Chromatography: Leaf Pigments</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Rf = distance (solute) ÷ distance (solvent front)</p>
         </div>
         <button onClick={() => { setRunning(false); setSolventPct(0); }}
@@ -230,7 +230,7 @@ const ChromatographyLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(34,197,94,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-zinc-400 whitespace-nowrap">Solvent front</label>
+          <span className="text-xs text-zinc-400 whitespace-nowrap">Solvent front</span>
           <div className="flex-1 h-1.5 rounded-full" style={{ background: 'rgba(255,255,255,0.08)' }}>
             <div className="h-full rounded-full transition-all duration-100" style={{ width: `${solventPct}%`, background: 'linear-gradient(90deg,#38bdf8,#60a5fa)' }} />
           </div>

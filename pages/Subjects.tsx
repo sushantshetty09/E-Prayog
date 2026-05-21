@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Zap, FlaskConical, Dna, Calculator, Monitor, ArrowRight } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import { SUBJECTS } from '../constants';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
 
 const MotionDiv = motion.div as any;
@@ -32,7 +32,7 @@ const Subjects: React.FC = () => {
     <div className="min-h-screen pt-24 pb-20 px-6 md:px-12 lg:px-20">
       <div className="max-w-6xl mx-auto">
         <MotionDiv initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
-          <h1 className="text-3xl md:text-5xl font-display font-bold text-white mb-4">
+          <h1 className="text-3xl md:text-5xl font-display font-semibold text-white mb-4">
             {t.subjectsTitle}
           </h1>
           <p className="text-zinc-400 max-w-2xl mx-auto">
@@ -49,11 +49,11 @@ const Subjects: React.FC = () => {
               <Link key={subject.id} to={`/subjects/${subject.id}`}>
                 <GlassCard color={subject.color} className="h-full">
                   <div className="flex items-center gap-4 mb-4">
-                    <div className="w-14 h-14 rounded-2xl flex items-center justify-center" style={{ background: `${subject.hex}15` }}>
+                    <div className="size-14 rounded-2xl flex items-center justify-center" style={{ background: `${subject.hex}15` }}>
                       <Icon size={28} style={{ color: subject.hex }} />
                     </div>
                     <div>
-                      <h2 className="text-xl font-bold text-white">{translatedName}</h2>
+                      <h2 className="text-xl font-semibold text-white">{translatedName}</h2>
                       <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: `${subject.hex}15`, color: subject.hex }}>
                         {subject.labs.length} {t.subjectsExperiments}
                       </span>

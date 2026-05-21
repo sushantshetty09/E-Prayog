@@ -134,7 +134,7 @@ const InsertionSortLab: React.FC = () => {
     ctx.font = 'bold 10px Inter'; ctx.textAlign = 'center';
     const { i: ci } = stateRef.current;
     ctx.fillStyle = status === 'done' ? '#10b981' : '#60a5fa';
-    ctx.fillText(status === 'done' ? '✓ Sorted! — O(n²) worst case' : status === 'idle' ? 'Insertion Sort — press Step or Auto Sort' : `Pass ${ci}/${elements.length} — key = ${stateRef.current.key}`, W / 2, 22);
+    ctx.fillText(status === 'done' ? '✓ Sorted!: O(n²) worst case' : status === 'idle' ? 'Insertion Sort: press Step or Auto Sort' : `Pass ${ci}/${elements.length}: key = ${stateRef.current.key}`, W / 2, 22);
   }, [elements, status]);
 
   useEffect(() => { draw(); }, [draw]);
@@ -143,7 +143,7 @@ const InsertionSortLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(167,139,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">📥 Insertion Sort Visualiser</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">📥 Insertion Sort Visualiser</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">O(n²) · Pick key, shift right, insert · Efficient on nearly sorted data</p>
         </div>
         <button onClick={generate} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(167,139,250,0.12)', color: '#a78bfa', border: '1px solid rgba(167,139,250,0.25)' }}>🔄 New Array</button>

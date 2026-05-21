@@ -230,7 +230,7 @@ const OsmosisLab: React.FC = () => {
       ctx.shadowBlur = 0;
     } else {
       ctx.fillStyle = '#475569'; ctx.font = '10px Inter';
-      ctx.fillText(running ? 'Osmosis in progress — water moving right →' : 'Start to observe osmosis across membrane', cx, H - 8);
+      ctx.fillText(running ? 'Osmosis in progress: water moving right →' : 'Start to observe osmosis across membrane', cx, H - 8);
     }
 
     if (running) {
@@ -258,7 +258,7 @@ const OsmosisLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(56,189,248,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🌊 Osmosis — U-Tube Osmometer</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🌊 Osmosis: U-Tube Osmometer</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Water potential gradient drives net movement of water molecules</p>
         </div>
         <div className="flex gap-2">

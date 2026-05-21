@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Search, X, Maximize2 } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m as motion, AnimatePresence } from 'framer-motion';
 import { useLang } from '../../services/LanguageContext';
 
 // Mock SVG diagrams for the biology tool section.
@@ -107,7 +107,7 @@ const BioDiagrams: React.FC = () => {
   return (
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolBioDiagramsTitle}</h1>
+        <h1 className="text-3xl lg:text-4xl font-display font-semibold text-white mb-4">{t.toolBioDiagramsTitle}</h1>
         <p className="text-zinc-400 max-w-2xl mx-auto">{t.toolBioDiagramsSubtitle}</p>
       </div>
 
@@ -141,7 +141,7 @@ const BioDiagrams: React.FC = () => {
                 </div>
               </div>
               <div className="p-4">
-                <h3 className="font-bold text-white mb-1">{d.title}</h3>
+                <h3 className="font-semibold text-white mb-1">{d.title}</h3>
                 <p className="text-xs text-zinc-400 line-clamp-2">{d.description}</p>
               </div>
             </motion.div>
@@ -177,7 +177,7 @@ const BioDiagrams: React.FC = () => {
                 </div>
                 
                 <div className="w-full md:w-80 p-8 flex flex-col shrink-0">
-                  <h2 className="text-2xl font-bold text-white mb-4">{selectedDiagram.title}</h2>
+                  <h2 className="text-2xl font-semibold text-white mb-4">{selectedDiagram.title}</h2>
                   <p className="text-zinc-400 text-sm leading-relaxed mb-8">{selectedDiagram.description}</p>
                 </div>
              </motion.div>

@@ -15,7 +15,7 @@ import {
 } from 'firebase/auth';
 import { doc, setDoc, getDoc, getDocs, collection, query, where, updateDoc, addDoc } from 'firebase/firestore';
 import { Mail, Lock, User, Eye, EyeOff, LogIn, ArrowRight, ArrowLeft, GraduationCap, Building } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
 
 const MotionDiv = motion.div as any;
@@ -58,7 +58,7 @@ const Login: React.FC = () => {
     : isAdminLoginId(loginId) ? 'admin'
     : 'student';
 
-  // Redirect if already logged in — wait for role to be fully resolved
+  // Redirect if already logged in: wait for role to be fully resolved
   useEffect(() => {
     if (!authLoading && authUser && authRole) {
       const from = (location.state as any)?.from;
@@ -102,12 +102,12 @@ const Login: React.FC = () => {
 
     const cred = await signInWithEmailAndPassword(auth, firebaseEmail, password);
 
-    // Read role for activity logging only — navigation is handled by useEffect
+    // Read role for activity logging only: navigation is handled by useEffect
     // once AuthContext finishes loading the profile
     const snap = await getDoc(doc(db, 'users', cred.user.uid));
     const role = snap.exists() ? snap.data().role : 'Student';
 
-    // Fire-and-forget — don't await these so they don't delay navigation
+    // Fire-and-forget: don't await these so they don't delay navigation
     updateStreak(cred.user.uid).catch(() => {});
     logActivity({
       type: 'user_login', actorUid: cred.user.uid,
@@ -116,7 +116,7 @@ const Login: React.FC = () => {
       metadata: { method: 'email' }, visibility: 'admin',
     }).catch(() => {});
 
-    // Do NOT navigate here — let the useEffect above handle it
+    // Do NOT navigate here: let the useEffect above handle it
     // once AuthContext resolves the role from Firestore
   };
 
@@ -349,7 +349,7 @@ const Login: React.FC = () => {
               <circle cx="16" cy="54" r="1"   fill="#60AAFF" className="ep-spark ep-s4"/>
             </svg>
           </div>
-          <h1 className="text-2xl font-display font-bold text-white">
+          <h1 className="text-2xl font-display font-semibold text-white">
             {isSignup ? (signupStep === 2 ? t.loginCompleteProfile : t.loginCreateAccount) : t.loginWelcome}
           </h1>
           <p className="text-sm text-zinc-400 mt-1">
@@ -365,7 +365,7 @@ const Login: React.FC = () => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
-          {/* Signup Step 2 — profile details */}
+          {/* Signup Step 2: profile details */}
           {isSignup && signupStep === 2 ? (
             <>
               <button type="button" onClick={() => setSignupStep(1)}
@@ -440,7 +440,7 @@ const Login: React.FC = () => {
           <button type="submit" disabled={loading}
             className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm transition-all flex items-center justify-center gap-2 disabled:opacity-50">
             {loading ? (
-              <span className="animate-spin w-4 h-4 border-2 border-white/30 border-t-white rounded-full" />
+              <span className="animate-spin size-4 border-2 border-white/30 border-t-white rounded-full" />
             ) : isSignup && signupStep === 2 ? (
               <ArrowRight size={16} />
             ) : (

@@ -3,7 +3,7 @@ import { db } from '../services/firebase';
 import { collection, query, where, orderBy, getDocs, onSnapshot, limit } from 'firebase/firestore';
 import { useAuth } from '../services/AuthContext';
 import { getTeacherStudents } from '../services/teacherService';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m as motion, AnimatePresence } from 'framer-motion';
 import { Activity, BookOpen, CheckCircle, UserPlus, Filter, Search, RefreshCw, Users, ClipboardList, FlaskConical, Star } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import { ActivityEvent } from '../services/activityService';
@@ -116,7 +116,7 @@ const TeacherActivityFeed: React.FC = () => {
   const formatEventMessage = (event: ActivityEvent): string => {
     switch (event.type) {
       case 'quiz_completed':
-        return `completed ${event.metadata.labTitle} quiz — Score: ${event.metadata.score}/${event.metadata.total} (${event.metadata.percentage}%)`;
+        return `completed ${event.metadata.labTitle} quiz: Score: ${event.metadata.score}/${event.metadata.total} (${event.metadata.percentage}%)`;
       case 'lab_visited':
         return `opened the ${event.metadata.labTitle} simulation`;
       case 'student_joined_class':
@@ -146,10 +146,10 @@ const TeacherActivityFeed: React.FC = () => {
         <div>
           <div className="flex items-center gap-3 mb-2">
             <Activity size={28} className="text-blue-400" />
-            <h1 className="text-3xl font-display font-bold text-white">Live Activity Feed</h1>
+            <h1 className="text-3xl font-display font-semibold text-white">Live Activity Feed</h1>
             {isLive && (
               <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-500/20 border border-red-500/30 text-red-400 text-xs font-bold">
-                <span className="w-2 h-2 rounded-full bg-red-400 animate-pulse" />
+                <span className="size-2 rounded-full bg-red-400 animate-pulse" />
                 LIVE
               </span>
             )}
@@ -173,7 +173,7 @@ const TeacherActivityFeed: React.FC = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
         <GlassCard className="p-5" color="blue" hoverEffect={true}>
            <div className="flex items-center justify-between mb-3">
-             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-blue-500/10">
+             <div className="size-10 rounded-xl flex items-center justify-center bg-blue-500/10">
                <Users size={20} className="text-blue-400" />
              </div>
            </div>
@@ -182,7 +182,7 @@ const TeacherActivityFeed: React.FC = () => {
         </GlassCard>
         <GlassCard className="p-5" color="green" hoverEffect={true}>
            <div className="flex items-center justify-between mb-3">
-             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-green-500/10">
+             <div className="size-10 rounded-xl flex items-center justify-center bg-green-500/10">
                <ClipboardList size={20} className="text-green-400" />
              </div>
            </div>
@@ -191,7 +191,7 @@ const TeacherActivityFeed: React.FC = () => {
         </GlassCard>
         <GlassCard className="p-5" color="amber" hoverEffect={true}>
            <div className="flex items-center justify-between mb-3">
-             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-amber-500/10">
+             <div className="size-10 rounded-xl flex items-center justify-center bg-amber-500/10">
                <BookOpen size={20} className="text-amber-400" />
              </div>
            </div>
@@ -200,7 +200,7 @@ const TeacherActivityFeed: React.FC = () => {
         </GlassCard>
         <GlassCard className="p-5" color="purple" hoverEffect={true}>
            <div className="flex items-center justify-between mb-3">
-             <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-purple-500/10">
+             <div className="size-10 rounded-xl flex items-center justify-center bg-purple-500/10">
                <Star size={20} className="text-purple-400" />
              </div>
            </div>
@@ -246,7 +246,7 @@ const TeacherActivityFeed: React.FC = () => {
       {/* Feed */}
       {loading ? (
         <div className="flex items-center justify-center py-20">
-          <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+          <div className="size-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
         </div>
       ) : filteredEvents.length === 0 ? (
         <GlassCard className="p-12 text-center" color="blue">
@@ -270,7 +270,7 @@ const TeacherActivityFeed: React.FC = () => {
                 className={`glass-panel rounded-2xl p-5 border-l-4 ${getEventColor(event.type)} flex items-start gap-4`}
               >
                 {/* Avatar */}
-                <div className="w-10 h-10 rounded-full bg-blue-600/20 border border-blue-500/30 
+                <div className="size-10 rounded-full bg-blue-600/20 border border-blue-500/30 
                                 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
                   {event.actorName.charAt(0).toUpperCase()}
                 </div>

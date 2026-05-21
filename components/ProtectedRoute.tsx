@@ -15,7 +15,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#020617]">
-        <div className="w-10 h-10 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+        <div className="size-10 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -26,7 +26,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedRoles 
   }
 
   // Wrong role → redirect to correct dashboard
-  // NOTE: do NOT add `role &&` here — empty role must also be blocked
+  // NOTE: do NOT add `role &&` here: empty role must also be blocked
   if (allowedRoles && !allowedRoles.includes(role as any)) {
     if (role === 'Admin') return <Navigate to="/admin-dashboard" replace />;
     if (role === 'Teacher') return <Navigate to="/teacher-dashboard" replace />;

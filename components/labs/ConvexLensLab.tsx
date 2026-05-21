@@ -204,7 +204,7 @@ const ConvexLensLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#05070d 0%,#060810 100%)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🔭 Convex Lens — Ray Diagram & Image Formation</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🔭 Convex Lens: Ray Diagram & Image Formation</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">f = {f} cm &nbsp;|&nbsp; Lens Formula: 1/v − 1/u = 1/f</p>
         </div>
         <div className="text-xs px-3 py-1.5 rounded-lg font-bold" style={{ background: isReal ? 'rgba(56,189,248,0.12)' : 'rgba(167,139,250,0.12)', color: isReal ? '#38bdf8' : '#a78bfa', border: `1px solid ${isReal ? 'rgba(56,189,248,0.3)' : 'rgba(167,139,250,0.3)'}` }}>
@@ -216,8 +216,8 @@ const ConvexLensLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(96,165,250,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-4">
-          <label className="text-xs text-zinc-400 whitespace-nowrap">Object Distance</label>
-          <input type="range" min={5} max={80} step={1} value={objectDist}
+          <span className="text-xs text-zinc-400 whitespace-nowrap">Object Distance</span>
+          <input id="convex-lens-object-slider" type="range" min={5} max={80} step={1} value={objectDist}
             onChange={e => setObjectDist(Number(e.target.value))}
             className="flex-1 h-1.5 rounded-full accent-blue-500" />
           <span className="text-xs font-mono text-amber-400 w-16 text-right">{objectDist} cm</span>

@@ -134,11 +134,11 @@ const KMnO4TitrationLab: React.FC = () => {
     if (isPastEP) {
       ctx.shadowBlur = 15; ctx.shadowColor = '#db2777';
       ctx.fillStyle = '#db2777'; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'center';
-      ctx.fillText('🎉 Endpoint reached — Permanent pink!', W / 2, H - 8);
+      ctx.fillText('🎉 Endpoint reached: Permanent pink!', W / 2, H - 8);
       ctx.shadowBlur = 0;
     } else if (isNearEP) {
       ctx.fillStyle = '#a855f7'; ctx.font = 'bold 10px Inter'; ctx.textAlign = 'center';
-      ctx.fillText('⚠ Near endpoint — add drop by drop!', W / 2, H - 8);
+      ctx.fillText('⚠ Near endpoint: add drop by drop!', W / 2, H - 8);
     } else {
       ctx.fillStyle = '#475569'; ctx.font = '10px Inter'; ctx.textAlign = 'center';
       ctx.fillText(`Vol added: ${volume.toFixed(1)} mL  ·  Remaining: ${(EQ_VOL - Math.min(EQ_VOL, volume)).toFixed(1)} mL to EP`, W / 2, H - 8);
@@ -161,7 +161,7 @@ const KMnO4TitrationLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(109,40,217,0.3)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🟣 KMnO₄ Titration — Redox</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🟣 KMnO₄ Titration: Redox</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Permanganate (self-indicator) · MnO₄⁻ + Fe²⁺ → Mn²⁺ + Fe³⁺ · Endpoint = pink</p>
         </div>
         <div className="text-xs font-mono px-2.5 py-1 rounded-lg font-bold" style={{ background: isPastEP ? 'rgba(219,39,119,0.2)' : 'rgba(109,40,217,0.15)', color: isPastEP ? '#f472b6' : '#a855f7', border: '1px solid rgba(109,40,217,0.3)' }}>
@@ -171,7 +171,7 @@ const KMnO4TitrationLab: React.FC = () => {
       <canvas ref={canvasRef} width={400} height={310} className="w-full" style={{ display: 'block' }} />
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(109,40,217,0.15)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-zinc-400 whitespace-nowrap">Volume added</label>
+          <span className="text-xs text-zinc-400 whitespace-nowrap">Volume added</span>
           <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
             <div className="h-full rounded-full transition-all duration-200" style={{ width: `${(volume / 50) * 100}%`, background: isPastEP ? 'linear-gradient(90deg,#7c3aed,#db2777)' : 'linear-gradient(90deg,#7c3aed,#a855f7)' }} />
           </div>

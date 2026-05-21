@@ -171,7 +171,7 @@ const MetreBridgeLab: React.FC = () => {
     if (isBalanced) {
       ctx.shadowBlur = 10; ctx.shadowColor = '#10b981';
       ctx.fillStyle = '#10b981'; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'center';
-      ctx.fillText('✓ BALANCED — Galvanometer shows zero deflection!', W / 2, H - 8);
+      ctx.fillText('✓ BALANCED: Galvanometer shows zero deflection!', W / 2, H - 8);
       ctx.shadowBlur = 0;
     } else {
       ctx.fillStyle = '#64748b'; ctx.font = '10px Inter'; ctx.textAlign = 'center';
@@ -190,7 +190,7 @@ const MetreBridgeLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(245,158,11,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🔌 Metre Bridge — Wheatstone's Principle</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🔌 Metre Bridge: Wheatstone's Principle</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">S = R(100−l)/l · Null deflection method · Unknown resistance</p>
         </div>
         <div className="text-xs font-bold px-2.5 py-1 rounded-lg" style={{ background: isBalanced ? 'rgba(16,185,129,0.15)' : 'rgba(239,68,68,0.1)', color: isBalanced ? '#10b981' : '#f87171', border: `1px solid ${isBalanced ? 'rgba(16,185,129,0.3)' : 'rgba(239,68,68,0.2)'}` }}>
@@ -202,15 +202,15 @@ const MetreBridgeLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(245,158,11,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-amber-400 whitespace-nowrap">Known R (Ω)</label>
-          <input type="range" min={1} max={50} step={1} value={knownR}
+          <span className="text-xs text-amber-400 whitespace-nowrap">Known R (Ω)</span>
+          <input id="metrebridge-r-slider" type="range" min={1} max={50} step={1} value={knownR}
             onChange={e => setKnownR(Number(e.target.value))}
             className="flex-1 h-1.5 rounded-full accent-amber-400" />
           <span className="text-xs font-mono text-amber-400 w-12 text-right">{knownR} Ω</span>
         </div>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-emerald-400 whitespace-nowrap">Jockey pos (cm)</label>
-          <input type="range" min={5} max={95} step={1} value={jockeyPos}
+          <span className="text-xs text-emerald-400 whitespace-nowrap">Jockey pos (cm)</span>
+          <input id="metrebridge-jockey-slider" type="range" min={5} max={95} step={1} value={jockeyPos}
             onChange={e => setJockeyPos(Number(e.target.value))}
             className="flex-1 h-1.5 rounded-full accent-emerald-400" />
           <span className="text-xs font-mono text-emerald-400 w-12 text-right">{jockeyPos} cm</span>

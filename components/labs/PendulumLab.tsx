@@ -225,7 +225,7 @@ const PendulumLab: React.FC = () => {
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(56,189,248,0.2)', background: 'rgba(7,9,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🕰 Simple Pendulum — Time Period Measurement</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🕰 Simple Pendulum: Time Period Measurement</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">g = 9.78 m/s² (Bangalore) &nbsp;|&nbsp; T = 2π√(L/g)</p>
         </div>
         <button onClick={toggleSwing}
@@ -245,19 +245,19 @@ const PendulumLab: React.FC = () => {
         <div className="grid grid-cols-2 gap-4">
           <div className="flex flex-col gap-1.5">
             <div className="flex justify-between">
-              <label className="text-xs text-zinc-400">String Length (L)</label>
+              <span className="text-xs text-zinc-400">String Length (L)</span>
               <span className="text-xs font-mono text-sky-400">{length} cm</span>
             </div>
-            <input type="range" min={20} max={120} step={2} value={length}
+            <input id="pendulum-length-slider" type="range" min={20} max={120} step={2} value={length}
               onChange={e => { setLength(Number(e.target.value)); setIsSwinging(false); frameRef.current = 0; }}
               className="w-full h-1.5 rounded-full accent-sky-500" />
           </div>
           <div className="flex flex-col gap-1.5">
             <div className="flex justify-between">
-              <label className="text-xs text-zinc-400">Bob Mass (m)</label>
+              <span className="text-xs text-zinc-400">Bob Mass (m)</span>
               <span className="text-xs font-mono text-violet-400">{mass} g</span>
             </div>
-            <input type="range" min={20} max={300} step={10} value={mass}
+            <input id="pendulum-mass-slider" type="range" min={20} max={300} step={10} value={mass}
               onChange={e => setMass(Number(e.target.value))}
               className="w-full h-1.5 rounded-full accent-violet-500" />
           </div>

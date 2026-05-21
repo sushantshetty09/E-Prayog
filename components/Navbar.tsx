@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, LogIn, LogOut, User, Languages } from 'lucide-react';
 import { NAV_ITEMS } from '../constants';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m as motion } from 'framer-motion';
 import { useAuth } from '../services/AuthContext';
 import { useLang, Lang } from '../services/LanguageContext';
 
@@ -59,12 +59,12 @@ const Navbar: React.FC = () => {
     }
   };
 
-  // Display info — prefer name, fallback to full_name, then Firebase displayName
+  // Display info: prefer name, fallback to full_name, then Firebase displayName
   const displayName = profileData?.name || profileData?.full_name || user?.displayName || user?.email?.split('@')[0] || '';
   const avatarUrl = profileData?.photoURL || user?.photoURL || '';
   const avatarClass = profileData?.avatar && profileData.avatar.startsWith('bg-') ? profileData.avatar : 'bg-emerald-500';
 
-  // Dashboard link — role-aware
+  // Dashboard link: role-aware
   const dashboardPath = role === 'Admin' ? '/admin-dashboard' : role === 'Teacher' ? '/teacher-dashboard' : '/dashboard';
 
   return (
@@ -136,7 +136,7 @@ const Navbar: React.FC = () => {
             />
           </g>
 
-          {/* Outer electrons — 2 dots 180° apart */}
+          {/* Outer electrons: 2 dots 180° apart */}
           <g className="ep-outer-ring" style={{transformOrigin:'40px 40px'}}>
             <g filter="url(#nav-outerElecGlow)">
               <circle r="2.2" fill="#1A73E8">
@@ -265,15 +265,15 @@ const Navbar: React.FC = () => {
         </div>
       </div>
 
-      {/* Right side — avatar or login */}
+      {/* Right side: avatar or login */}
       <div className="hidden md:flex items-center">
         {user ? (
           <div className="flex items-center gap-3">
             <Link to="/profile" aria-label="View Profile" className="group flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/5 transition-all">
               {avatarUrl ? (
-                <img src={avatarUrl} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
+                <img src={avatarUrl} alt="Profile" className="size-8 rounded-full object-cover" />
               ) : (
-                <div className={`w-8 h-8 rounded-full ${avatarClass} flex items-center justify-center text-white text-xs font-bold`}>
+                <div className={`size-8 rounded-full ${avatarClass} flex items-center justify-center text-white text-xs font-bold`}>
                   {displayName?.charAt(0)?.toUpperCase() || <User size={14} />}
                 </div>
               )}

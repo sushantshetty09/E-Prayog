@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { Sigma, Cpu, Table2, Hash, Calculator, ShieldCheck, Microscope } from 'lucide-react';
 import { useLang } from '../services/LanguageContext';
 
@@ -19,7 +19,7 @@ const Tools: React.FC = () => {
   return (
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-7xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolsTitle}</h1>
+        <h1 className="text-3xl lg:text-4xl font-display font-semibold text-white mb-4">{t.toolsTitle}</h1>
         <p className="text-zinc-400 max-w-2xl mx-auto">
           {t.toolsDesc}
         </p>
@@ -38,7 +38,7 @@ const Tools: React.FC = () => {
                          border border-white/5 hover:border-white/15 transition-colors
                          bg-zinc-900/60 hover:bg-zinc-800/60 h-full"
             >
-              <div className="w-16 h-16 rounded-2xl flex items-center justify-center shrink-0"
+              <div className="size-16 rounded-2xl flex items-center justify-center shrink-0"
                    style={{ background: tool.bg, border: `1.5px solid ${tool.color}25` }}>
                 <tool.icon size={30} style={{ color: tool.color }} />
               </div>

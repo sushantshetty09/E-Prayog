@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { Zap, FlaskConical, Dna, Calculator, Monitor, Bot, Microscope, GraduationCap, Sparkles, ArrowRight, BookOpen, BarChart3, Smartphone, HelpCircle } from 'lucide-react';
 import GlassCard from '../components/GlassCard';
 import { SUBJECTS } from '../constants';
@@ -21,11 +21,11 @@ const stats = [
 ];
 
 const features = [
-  { title: 'Interactive 2D Simulations', desc: 'Rich Canvas & SVG labs for every experiment — no 3D required.', icon: Microscope, color: '#10b981' },
+  { title: 'Interactive 2D Simulations', desc: 'Rich Canvas & SVG labs for every experiment: no 3D required.', icon: Microscope, color: '#10b981' },
   { title: 'AI Lab Tutor', desc: 'Context-aware Gemini AI that knows your current experiment.', icon: Bot, color: '#8b5cf6' },
   { title: 'Karnataka PUC Syllabus', desc: 'Every lab aligned with 1st and 2nd PUC curriculum.', icon: BookOpen, color: '#0ea5e9' },
   { title: 'Real-time Calculations', desc: 'Live physics engine with error analysis and graphing.', icon: BarChart3, color: '#f59e0b' },
-  { title: 'Mobile Responsive', desc: 'Learn on any device — phone, tablet, or laptop.', icon: Smartphone, color: '#ec4899' },
+  { title: 'Mobile Responsive', desc: 'Learn on any device: phone, tablet, or laptop.', icon: Smartphone, color: '#ec4899' },
   { title: 'Viva Questions', desc: 'Prepare for practical exams with curated viva Q&A.', icon: HelpCircle, color: '#6366f1' },
 ];
 
@@ -103,7 +103,7 @@ const Home: React.FC = () => {
       <section className="px-6 md:px-12 lg:px-20 py-16">
         <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
           {stats.map((stat, idx) => (
-            <MotionDiv key={idx} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }}
+            <MotionDiv key={stat.label} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }}
               className="glass-panel rounded-2xl p-6 text-center">
               <stat.icon size={28} className="mx-auto mb-3" style={{ color: stat.color }} />
               <div className="text-3xl md:text-4xl font-bold font-display text-white">
@@ -118,7 +118,7 @@ const Home: React.FC = () => {
       {/* Subjects */}
       <section className="px-6 md:px-12 lg:px-20 py-16">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-center text-zinc-900 dark:text-white mb-4">{t.subjectsHeading}</h2>
+          <h2 className="text-3xl md:text-4xl font-display font-semibold text-center text-zinc-900 dark:text-white mb-4">{t.subjectsHeading}</h2>
           <p className="text-center text-zinc-500 dark:text-zinc-400 mb-12 max-w-2xl mx-auto">{t.subjectsSubheading}</p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
             {SUBJECTS.map((subject, idx) => {
@@ -126,10 +126,10 @@ const Home: React.FC = () => {
               return (
                 <Link key={subject.id} to={`/subjects/${subject.id}`}>
                   <GlassCard color={subject.color} className="text-center h-full">
-                    <div className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: `${subject.hex}15` }}>
+                    <div className="size-14 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: `${subject.hex}15` }}>
                       <Icon size={28} style={{ color: subject.hex }} />
                     </div>
-                    <h3 className="text-lg font-bold text-white mb-2">{subject.name}</h3>
+                    <h3 className="text-lg font-semibold text-white mb-2">{subject.name}</h3>
                     <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-3 line-clamp-2">{subject.description}</p>
                     <div className="text-xs font-bold px-3 py-1 rounded-full inline-block" style={{ background: `${subject.hex}15`, color: subject.hex }}>
                       {subject.labs.length} {t.labsLabel}
@@ -145,16 +145,16 @@ const Home: React.FC = () => {
       {/* Features */}
       <section className="px-6 md:px-12 lg:px-20 py-16">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-display font-bold text-center text-white mb-12">{t.featuresHeading}</h2>
+          <h2 className="text-3xl md:text-4xl font-display font-semibold text-center text-white mb-12">{t.featuresHeading}</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {features.map((feature, idx) => {
               const Icon = feature.icon;
               return (
-              <GlassCard key={idx} hoverEffect={false} className="text-center">
-                <div className="w-14 h-14 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: `${feature.color}15` }}>
+              <GlassCard key={feature.title} hoverEffect={false} className="text-center">
+                <div className="size-14 rounded-2xl mx-auto mb-4 flex items-center justify-center" style={{ background: `${feature.color}15` }}>
                   <Icon size={28} style={{ color: feature.color }} />
                 </div>
-                <h3 className="text-lg font-bold text-white mb-2">{feature.title}</h3>
+                <h3 className="text-lg font-semibold text-white mb-2">{feature.title}</h3>
                 <p className="text-sm text-zinc-400">{feature.desc}</p>
               </GlassCard>
               );
@@ -167,7 +167,7 @@ const Home: React.FC = () => {
       <section className="px-6 md:px-12 lg:px-20 py-20">
         <div className="max-w-3xl mx-auto text-center">
           <div className="glass-panel rounded-3xl p-12">
-            <h2 className="text-3xl font-display font-bold text-white mb-4">{t.ctaHeading}</h2>
+            <h2 className="text-3xl font-display font-semibold text-white mb-4">{t.ctaHeading}</h2>
               <p className="text-zinc-400 mb-8">{t.ctaSubheading}</p>
               <Link to="/subjects" className="inline-flex items-center gap-2 px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-lg shadow-lg shadow-emerald-600/25 transition-all hover:scale-105">
                 {t.ctaBtn} <ArrowRight size={20} />

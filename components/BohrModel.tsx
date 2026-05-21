@@ -63,7 +63,7 @@ const BohrModel: React.FC<Props> = ({ shells, atomicNumber }) => {
         ctx.fillStyle = ng; ctx.beginPath(); ctx.arc(nx, ny, nr, 0, Math.PI * 2); ctx.fill();
       }
 
-      // Electrons — computed from angle on ellipse (always on ring)
+      // Electrons: computed from angle on ellipse (always on ring)
       shells.slice(0, 7).forEach((count, i) => {
         const { rx, ry } = BASE_RINGS[i];
         const rxz = rx * z, ryz = ry * z;
@@ -98,10 +98,10 @@ const BohrModel: React.FC<Props> = ({ shells, atomicNumber }) => {
         className="w-full" style={{ maxHeight: '300px', borderRadius: '12px' }} />
       <div className="flex items-center gap-3">
         <button onClick={() => setZoom(z => Math.max(0.4, +(z - 0.2).toFixed(1)))}
-          className="w-8 h-8 rounded-full bg-zinc-200 hover:bg-zinc-300 text-zinc-700 font-bold text-xl flex items-center justify-center transition-colors">−</button>
+          className="size-8 rounded-full bg-zinc-200 hover:bg-zinc-300 text-zinc-700 font-bold text-xl flex items-center justify-center transition-colors">−</button>
         <span className="text-xs text-zinc-500 font-mono w-12 text-center">{Math.round(zoom * 100)}%</span>
         <button onClick={() => setZoom(z => Math.min(2.2, +(z + 0.2).toFixed(1)))}
-          className="w-8 h-8 rounded-full bg-zinc-200 hover:bg-zinc-300 text-zinc-700 font-bold text-xl flex items-center justify-center transition-colors">+</button>
+          className="size-8 rounded-full bg-zinc-200 hover:bg-zinc-300 text-zinc-700 font-bold text-xl flex items-center justify-center transition-colors">+</button>
       </div>
     </div>
   );

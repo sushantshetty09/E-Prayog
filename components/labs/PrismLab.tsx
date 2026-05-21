@@ -181,7 +181,7 @@ const PrismLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#050710 0%,#060810 100%)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(5,8,16,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🌈 Glass Prism — Light Dispersion & Deviation</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🌈 Glass Prism: Light Dispersion & Deviation</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Borosilicate glass (n = {n}) &nbsp;|&nbsp; Prism angle A = {A}°</p>
         </div>
         <div className="text-xs px-3 py-1.5 rounded-lg font-bold" style={{ background: isTIR ? 'rgba(239,68,68,0.12)' : 'rgba(250,204,21,0.1)', color: isTIR ? '#f87171' : '#facc15', border: `1px solid ${isTIR ? 'rgba(239,68,68,0.3)' : 'rgba(250,204,21,0.25)'}` }}>
@@ -193,8 +193,8 @@ const PrismLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(96,165,250,0.12)', background: 'rgba(4,5,8,0.97)' }}>
         <div className="flex items-center gap-4">
-          <label className="text-xs text-zinc-400 whitespace-nowrap">Angle of Incidence (i)</label>
-          <input type="range" min={20} max={70} step={1} value={angle}
+          <span className="text-xs text-zinc-400 whitespace-nowrap">Angle of Incidence (i)</span>
+          <input id="prism-angle-slider" type="range" min={20} max={70} step={1} value={angle}
             onChange={e => setAngle(Number(e.target.value))}
             className="w-full h-1.5 rounded-full accent-yellow-500" />
           <span className="text-xs font-mono text-yellow-400 w-12 text-right">{angle}°</span>

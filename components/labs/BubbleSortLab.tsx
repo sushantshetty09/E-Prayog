@@ -12,63 +12,16 @@ const COLORS = {
 
 const BubbleSortLab: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [arr, setArr] = useState([64, 34, 25, 12, 22, 11, 90, 45, 38, 72]);
-  const [comparing, setComparing] = useState<[number, number] | null>(null);
-  const [swapping, setSwapping] = useState<[number, number] | null>(null);
-  const [sortedIndices, setSortedIndices] = useState<Set<number>>(new Set());
+  const arrRef = useRef([64, 34, 25, 12, 22, 11, 90, 45, 38, 72]);
+  const comparingRef = useRef<[number, number] | null>(null);
+  const swappingRef = useRef<[number, number] | null>(null);
+  const sortedIndicesRef = useRef<Set<number>>(new Set());
   const [state, setState] = useState<SortState>('idle');
   const [steps, setSteps] = useState(0);
   const [comparisons, setComparisons] = useState(0);
   const [swaps, setSwaps] = useState(0);
-  const stateRef = useRef({ arr: [...arr], i: 0, j: 0, sortedSet: new Set<number>() });
+  const stateRef = useRef({ arr: [...arrRef.current], i: 0, j: 0, sortedSet: new Set<number>() });
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const generate = () => {
-    if (autoRef.current) clearInterval(autoRef.current);
-    const a = Array.from({ length: 10 }, () => Math.floor(Math.random() * 88) + 12);
-    setArr(a); stateRef.current = { arr: [...a], i: 0, j: 0, sortedSet: new Set() };
-    setState('idle'); setSteps(0); setComparisons(0); setSwaps(0);
-    setComparing(null); setSwapping(null); setSortedIndices(new Set());
-  };
-
-  const doStep = useCallback((): boolean => {
-    const { arr: a, i, j } = stateRef.current;
-    const n = a.length;
-    if (i >= n - 1) {
-      const allSorted = new Set(Array.from({ length: n }, (_, k) => k));
-      setSortedIndices(allSorted); setState('done'); setComparing(null); setSwapping(null);
-      return false;
-    }
-    setComparing([j, j + 1]); setSwapping(null);
-    setComparisons(c => c + 1);
-    const didSwap = a[j] > a[j + 1];
-    if (didSwap) {
-      [a[j], a[j + 1]] = [a[j + 1], a[j]];
-      setSwapping([j, j + 1]); setSwaps(s => s + 1);
-    }
-    setArr([...a]); setSteps(s => s + 1);
-    let ni = i, nj = j + 1;
-    if (j + 1 >= n - 1 - i) {
-      const newSorted = new Set(stateRef.current.sortedSet);
-      newSorted.add(n - 1 - i);
-      stateRef.current.sortedSet = newSorted;
-      setSortedIndices(new Set(newSorted));
-      ni = i + 1; nj = 0;
-    }
-    stateRef.current = { ...stateRef.current, arr: a, i: ni, j: nj };
-    return ni < n - 1;
-  }, []);
-
-  const handleStep = () => { setState('running'); doStep(); };
-
-  const handleAuto = () => {
-    if (state === 'done') return;
-    setState('running');
-    autoRef.current = setInterval(() => {
-      const cont = doStep();
-      if (!cont && autoRef.current) { clearInterval(autoRef.current); autoRef.current = null; }
-    }, 180);
-  };
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current; if (!canvas) return;
@@ -80,12 +33,17 @@ const BubbleSortLab: React.FC = () => {
     bg.addColorStop(0, '#07080e'); bg.addColorStop(1, '#04050b');
     ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
 
+    const arr = arrRef.current;
     const n = arr.length;
     const maxV = Math.max(...arr);
     const padX = 20, padBot = 50, padTop = 45;
     const totalW = W - padX * 2;
     const barW = totalW / n - 5;
     const availH = H - padBot - padTop;
+
+    const comparing = comparingRef.current;
+    const swapping = swappingRef.current;
+    const sortedIndices = sortedIndicesRef.current;
 
     // Title area
     ctx.fillStyle = '#60a5fa'; ctx.font = 'bold 11px Inter'; ctx.textAlign = 'center';
@@ -159,7 +117,58 @@ const BubbleSortLab: React.FC = () => {
       ctx.fillStyle = 'rgba(16,185,129,0.5)'; ctx.font = '8px Inter'; ctx.textAlign = 'left';
       ctx.fillText('sorted ✓', bx + 4, padTop + 12);
     }
-  }, [arr, comparing, swapping, sortedIndices, state]);
+  }, [state]);
+
+  const generate = () => {
+    if (autoRef.current) clearInterval(autoRef.current);
+    const a = Array.from({ length: 10 }, () => Math.floor(Math.random() * 88) + 12);
+    arrRef.current = a;
+    stateRef.current = { arr: [...a], i: 0, j: 0, sortedSet: new Set() };
+    setState('idle'); setSteps(0); setComparisons(0); setSwaps(0);
+    comparingRef.current = null; swappingRef.current = null; sortedIndicesRef.current = new Set();
+    setTimeout(() => draw(), 0);
+  };
+
+  const doStep = useCallback((): boolean => {
+    const { arr: a, i, j } = stateRef.current;
+    const n = a.length;
+    if (i >= n - 1) {
+      const allSorted = new Set(Array.from({ length: n }, (_, k) => k));
+      sortedIndicesRef.current = allSorted; setState('done'); comparingRef.current = null; swappingRef.current = null;
+      setTimeout(() => draw(), 0);
+      return false;
+    }
+    comparingRef.current = [j, j + 1]; swappingRef.current = null;
+    setComparisons(c => c + 1);
+    const didSwap = a[j] > a[j + 1];
+    if (didSwap) {
+      [a[j], a[j + 1]] = [a[j + 1], a[j]];
+      swappingRef.current = [j, j + 1]; setSwaps(s => s + 1);
+    }
+    arrRef.current = [...a]; setSteps(s => s + 1);
+    let ni = i, nj = j + 1;
+    if (j + 1 >= n - 1 - i) {
+      const newSorted = new Set(stateRef.current.sortedSet);
+      newSorted.add(n - 1 - i);
+      stateRef.current.sortedSet = newSorted;
+      sortedIndicesRef.current = new Set(newSorted);
+      ni = i + 1; nj = 0;
+    }
+    stateRef.current = { ...stateRef.current, arr: a, i: ni, j: nj };
+    setTimeout(() => draw(), 0);
+    return ni < n - 1;
+  }, [draw]);
+
+  const handleStep = () => { setState('running'); doStep(); };
+
+  const handleAuto = () => {
+    if (state === 'done') return;
+    setState('running');
+    autoRef.current = setInterval(() => {
+      const cont = doStep();
+      if (!cont && autoRef.current) { clearInterval(autoRef.current); autoRef.current = null; }
+    }, 180);
+  };
 
   useEffect(() => {
     draw();
@@ -169,7 +178,7 @@ const BubbleSortLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(96,165,250,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🫧 Bubble Sort Visualiser</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🫧 Bubble Sort Visualiser</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">O(n²) · Compare adjacent → swap if out of order · Largest bubbles to end</p>
         </div>
         <button onClick={generate} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(96,165,250,0.12)', color: '#60a5fa', border: '1px solid rgba(96,165,250,0.25)' }}>🔄 New Array</button>
@@ -210,10 +219,10 @@ const BubbleSortLab: React.FC = () => {
           ))}
         </div>
         <div className="flex gap-3 text-[9px] text-zinc-600 justify-center">
-          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded inline-block" style={{ background: '#1e40af' }} />Default</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded inline-block" style={{ background: '#b45309' }} />Comparing</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded inline-block" style={{ background: '#991b1b' }} />Swapping</span>
-          <span className="flex items-center gap-1"><span className="w-3 h-3 rounded inline-block" style={{ background: '#065f46' }} />Sorted</span>
+          <span className="flex items-center gap-1"><span className="size-3 rounded inline-block" style={{ background: '#1e40af' }} />Default</span>
+          <span className="flex items-center gap-1"><span className="size-3 rounded inline-block" style={{ background: '#b45309' }} />Comparing</span>
+          <span className="flex items-center gap-1"><span className="size-3 rounded inline-block" style={{ background: '#991b1b' }} />Swapping</span>
+          <span className="flex items-center gap-1"><span className="size-3 rounded inline-block" style={{ background: '#065f46' }} />Sorted</span>
         </div>
       </div>
     </div>

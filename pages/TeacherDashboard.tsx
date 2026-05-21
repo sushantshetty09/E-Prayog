@@ -5,7 +5,7 @@ import { doc, updateDoc } from 'firebase/firestore';
 import GlassCard from '../components/GlassCard';
 import { useNavigate, Link } from 'react-router-dom';
 import { BookOpen, Users, Plus, Search, Loader2, Copy, CheckCircle2, RefreshCw, Link2, Key, Activity, BarChart3, AlertCircle } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 
 const TeacherDashboard: React.FC = () => {
   const { user, profileData, role, refreshProfile } = useAuth();
@@ -93,13 +93,13 @@ const TeacherDashboard: React.FC = () => {
 
       {/* HEADER */}
       <GlassCard className="p-6 md:p-8 mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-purple-500/20 bg-purple-500/5 relative overflow-hidden">
-        <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-purple-500/10 blur-[80px] rounded-full"></div>
+        <div className="absolute -bottom-24 -left-24 size-64 bg-purple-500/10 blur-[80px] rounded-full"></div>
         <div className="flex items-center gap-4 z-10 w-full md:w-auto">
-          <div className="w-14 h-14 rounded-2xl bg-purple-500/20 flex items-center justify-center border border-purple-500/30 shrink-0">
+          <div className="size-14 rounded-2xl bg-purple-500/20 flex items-center justify-center border border-purple-500/30 shrink-0">
             <BookOpen className="text-purple-400" size={28} />
           </div>
           <div>
-            <h1 className="text-2xl md:text-3xl font-display font-bold text-white mb-1">Teacher Dashboard</h1>
+            <h1 className="text-2xl md:text-3xl font-display font-semibold text-white mb-1">Teacher Dashboard</h1>
             <p className="text-sm text-purple-400/80">{teacherName}</p>
             {teacherId && <p className="text-xs text-zinc-500 font-mono">{teacherId}</p>}
             {loginId && <p className="text-xs text-zinc-500">{loginId}</p>}
@@ -117,11 +117,11 @@ const TeacherDashboard: React.FC = () => {
       <GlassCard className="p-6 mb-8 border-amber-500/20 bg-amber-500/5">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-amber-500/20 flex items-center justify-center border border-amber-500/30 shrink-0">
+            <div className="size-12 rounded-xl bg-amber-500/20 flex items-center justify-center border border-amber-500/30 shrink-0">
               <Key className="text-amber-400" size={24} />
             </div>
             <div>
-              <h2 className="text-lg font-bold text-white flex items-center gap-2"><Link2 size={18} className="text-amber-400" /> Class Code</h2>
+              <h2 className="text-lg font-semibold text-white flex items-center gap-2"><Link2 size={18} className="text-amber-400" /> Class Code</h2>
               <p className="text-xs text-zinc-400 mt-0.5">Share this code with students so they can link to your class.</p>
             </div>
           </div>
@@ -154,13 +154,13 @@ const TeacherDashboard: React.FC = () => {
       {/* Password Reset Alerts */}
       {resetRequests.length > 0 && (
         <GlassCard className="p-6 mb-8 border-red-500/20 bg-red-500/5">
-          <h2 className="text-lg font-bold text-white flex items-center gap-2 mb-4"><AlertCircle size={20} className="text-red-400" /> Pending Password Reset Requests</h2>
+          <h2 className="text-lg font-semibold text-white flex items-center gap-2 mb-4"><AlertCircle size={20} className="text-red-400" /> Pending Password Reset Requests</h2>
           <div className="space-y-3">
             {resetRequests.map(req => (
               <div key={req.id} className="flex items-center justify-between p-3 rounded-xl bg-black/20 border border-red-500/10">
                 <div>
                   <p className="font-bold text-white text-sm">{req.teacherName || req.teacherId}</p>
-                  <p className="text-xs text-zinc-400">{req.failedAttempts} failed attempts — {new Date(req.requestedAt).toLocaleDateString()}</p>
+                  <p className="text-xs text-zinc-400">{req.failedAttempts} failed attempts: {new Date(req.requestedAt).toLocaleDateString()}</p>
                 </div>
                 <span className="text-xs font-bold text-amber-400 px-3 py-1 bg-amber-500/10 rounded-full border border-amber-500/20">Contact Admin</span>
               </div>
@@ -173,9 +173,9 @@ const TeacherDashboard: React.FC = () => {
       <GlassCard className="p-6 mb-8 border-blue-500/20 bg-blue-500/5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center border border-blue-500/30 shrink-0"><Activity className="text-blue-400" size={24} /></div>
+            <div className="size-12 rounded-xl bg-blue-500/20 flex items-center justify-center border border-blue-500/30 shrink-0"><Activity className="text-blue-400" size={24} /></div>
             <div>
-              <h2 className="text-lg font-bold text-white">Live Activity Feed</h2>
+              <h2 className="text-lg font-semibold text-white">Live Activity Feed</h2>
               <p className="text-xs text-zinc-400 mt-0.5">Monitor real-time student events.</p>
             </div>
           </div>
@@ -185,7 +185,7 @@ const TeacherDashboard: React.FC = () => {
 
       {/* STUDENTS LIST */}
       <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-        <h2 className="text-xl font-bold text-white flex items-center gap-2">
+        <h2 className="text-xl font-semibold text-white flex items-center gap-2">
           <Users className="text-purple-400" size={20} /> Linked Students ({filteredStudents.length})
         </h2>
         <div className="relative w-full sm:w-64">
@@ -215,16 +215,16 @@ const TeacherDashboard: React.FC = () => {
               <GlassCard key={student.id} className="p-6 transition-colors hover:bg-white/5">
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
                   <div className="flex items-center gap-4 flex-1">
-                    <div className="w-12 h-12 rounded-full bg-zinc-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
+                    <div className="size-12 rounded-full bg-zinc-600 flex items-center justify-center text-white font-bold text-lg shrink-0">
                       {studentName.charAt(0).toUpperCase()}
                     </div>
                     <div>
-                      <h3 className="text-white font-bold text-lg">{studentName}</h3>
+                      <h3 className="text-white font-semibold text-lg">{studentName}</h3>
                       <div className="flex items-center gap-3 text-xs text-zinc-400 mt-1">
                         <span>{student.email}</span>
-                        <span className="w-1 h-1 rounded-full bg-white/20"></span>
+                        <span className="size-1 rounded-full bg-white/20"></span>
                         <span>{student.grade || 'N/A'}</span>
-                        {student.studentId && <><span className="w-1 h-1 rounded-full bg-white/20"></span><span className="font-mono text-emerald-400">{student.studentId}</span></>}
+                        {student.studentId && <><span className="size-1 rounded-full bg-white/20"></span><span className="font-mono text-emerald-400">{student.studentId}</span></>}
                       </div>
                     </div>
                   </div>
@@ -259,23 +259,23 @@ const TeacherDashboard: React.FC = () => {
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm">
           <div className="w-full max-w-md bg-zinc-900 border border-white/10 rounded-2xl p-6 shadow-2xl">
-            <h2 className="text-xl font-bold text-white mb-6">Create Assignment</h2>
+            <h2 className="text-xl font-semibold text-white mb-6">Create Assignment</h2>
             <form onSubmit={(e) => { e.preventDefault(); setShowModal(false); alert('Assignment created!'); }} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">Title</label>
-                <input required type="text" value={assignment.title} onChange={e => setAssignment({...assignment, title: e.target.value})}
+                <span className="block text-xs font-bold text-zinc-400 uppercase mb-2">Title</span>
+                <input id="assignment-title" required type="text" value={assignment.title} onChange={e => setAssignment({...assignment, title: e.target.value})}
                   className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-purple-500/50" placeholder="e.g. Complete Titration Lab" />
               </div>
               <div>
-                <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">Subject</label>
-                <select value={assignment.subject} onChange={e => setAssignment({...assignment, subject: e.target.value})}
+                <span className="block text-xs font-bold text-zinc-400 uppercase mb-2">Subject</span>
+                <select id="assignment-subject" value={assignment.subject} onChange={e => setAssignment({...assignment, subject: e.target.value})}
                   className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-purple-500/50 appearance-none">
                   <option>Physics</option><option>Chemistry</option><option>Biology</option><option>Math</option><option>CS</option>
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">Due Date</label>
-                <input required type="date" value={assignment.dueDate} onChange={e => setAssignment({...assignment, dueDate: e.target.value})}
+                <span className="block text-xs font-bold text-zinc-400 uppercase mb-2">Due Date</span>
+                <input id="assignment-due-date" required type="date" value={assignment.dueDate} onChange={e => setAssignment({...assignment, dueDate: e.target.value})}
                   className="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-2.5 text-white focus:outline-none focus:border-purple-500/50" />
               </div>
               <div className="pt-4 flex gap-3">

@@ -3,7 +3,7 @@ import { useAuth } from '../services/AuthContext';
 import { submitFeedback } from '../services/firebase';
 import GlassCard from '../components/GlassCard';
 import { MessageSquare, Star, Send, CheckCircle2, Loader2 } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
 
 const CATEGORIES = [
@@ -51,10 +51,10 @@ const Contact: React.FC = () => {
       <div className="pt-24 min-h-screen flex items-center justify-center px-6">
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}
           className="text-center">
-          <div className="w-20 h-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
+          <div className="size-20 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 border border-emerald-500/30">
             <CheckCircle2 size={40} className="text-emerald-400" />
           </div>
-          <h2 className="text-3xl font-display font-bold text-white mb-3">{t.contactThankYou}</h2>
+          <h2 className="text-3xl font-display font-semibold text-white mb-3">{t.contactThankYou}</h2>
           <p className="text-zinc-400 mb-6">{t.contactSubmitted}</p>
           <button onClick={() => setSubmitted(false)} className="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-bold transition-colors">
             {t.contactSubmitAnother}
@@ -68,7 +68,7 @@ const Contact: React.FC = () => {
     <div className="pt-24 min-h-screen pb-12 px-6 lg:px-12 max-w-2xl mx-auto">
       <div className="mb-8 text-center">
         <MessageSquare size={40} className="text-emerald-400 mx-auto mb-4" />
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-2">{t.contactTitle}</h1>
+        <h1 className="text-3xl lg:text-4xl font-display font-semibold text-white mb-2">{t.contactTitle}</h1>
         <p className="text-zinc-400">{t.contactDesc}</p>
       </div>
 
@@ -76,7 +76,7 @@ const Contact: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Star Rating */}
           <div>
-            <label className="block text-xs font-bold text-zinc-400 uppercase mb-3">{t.contactRatingPrompt}</label>
+            <span className="block text-xs font-bold text-zinc-400 uppercase mb-3">{t.contactRatingPrompt}</span>
             <div className="flex gap-2 justify-center">
               {[1, 2, 3, 4, 5].map(star => (
                 <button key={star} type="button"
@@ -98,7 +98,7 @@ const Contact: React.FC = () => {
 
           {/* Category */}
           <div>
-            <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.contactCategory}</label>
+            <span className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.contactCategory}</span>
             <div className="grid grid-cols-2 gap-3">
               {CATEGORIES.map(cat => (
                 <button key={cat.value} type="button" onClick={() => setCategory(cat.value)}
@@ -115,7 +115,7 @@ const Contact: React.FC = () => {
 
           {/* Message */}
           <div>
-            <label className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.contactMessage}</label>
+            <span className="block text-xs font-bold text-zinc-400 uppercase mb-2">{t.contactMessage}</span>
             <textarea value={message} onChange={e => setMessage(e.target.value)}
               placeholder={t.contactPlaceholder}
               rows={5} required minLength={20}

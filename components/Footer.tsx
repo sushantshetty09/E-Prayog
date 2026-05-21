@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Twitter, Github, Linkedin, Send, Mail, Heart } from 'lucide-react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { AnimatePresence, m as motion } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
 
 const MotionSpan = motion.span as any;
@@ -196,7 +196,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-6 tracking-wide">{t.footerPlatform}</h3>
+            <h3 className="text-white font-semibold mb-6 tracking-wide">{t.footerPlatform}</h3>
             <ul className="space-y-3 text-sm text-zinc-400">
               <li><Link to="/" className="hover:text-emerald-400 transition-colors">{t.navHome}</Link></li>
               <li><Link to="/subjects" className="hover:text-emerald-400 transition-colors">{t.footerVirtualLabs}</Link></li>
@@ -206,7 +206,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-6 tracking-wide">{t.footerSupport}</h3>
+            <h3 className="text-white font-semibold mb-6 tracking-wide">{t.footerSupport}</h3>
             <ul className="space-y-3 text-sm text-zinc-400">
               <li><Link to="/contact" className="hover:text-emerald-400 transition-colors">{t.footerContactUs}</Link></li>
               <li><Link to="/about" className="hover:text-emerald-400 transition-colors">{t.footerAboutUs}</Link></li>
@@ -216,7 +216,7 @@ const Footer: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-white font-bold mb-6 tracking-wide">{t.footerFeedback}</h3>
+            <h3 className="text-white font-semibold mb-6 tracking-wide">{t.footerFeedback}</h3>
             <p className="text-xs text-zinc-400 mb-4">{t.footerFeedbackDesc}</p>
             <form onSubmit={handleFeedback} className="space-y-4">
               <div className="relative group">

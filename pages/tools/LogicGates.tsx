@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { m as motion } from 'framer-motion';
 import { useLang } from '../../services/LanguageContext';
 
 const GATES = {
@@ -40,7 +40,7 @@ const TruthTable: React.FC<TruthTableProps> = ({ gateInfo, inputA, inputB }) => 
           const out = gateInfo.inputs === 1 ? gateInfo.fn(row[0]) : gateInfo.fn(row[0], row[1]);
           const isCurrent = gateInfo.inputs === 1 ? (inputA === row[0]) : (inputA === row[0] && inputB === row[1]);
           return (
-            <tr key={i} className={`border-b border-white/5 transition-colors ${isCurrent ? 'bg-purple-500/20' : 'hover:bg-white/5'}`}>
+            <tr key={`${row[0]}-${row[1] ?? 0}`} className={`border-b border-white/5 transition-colors ${isCurrent ? 'bg-purple-500/20' : 'hover:bg-white/5'}`}>
               <td className="py-3 font-mono">{row[0] ? '1' : '0'}</td>
               {gateInfo.inputs === 2 && <td className="py-3 font-mono">{row[1] ? '1' : '0'}</td>}
               <td className={`py-3 font-mono font-bold ${out ? 'text-green-400' : 'text-red-400'}`}>{out ? '1' : '0'}</td>
@@ -169,7 +169,7 @@ const LogicGates: React.FC = () => {
   return (
     <div className="pt-24 pb-12 px-6 lg:px-12 max-w-5xl mx-auto min-h-screen">
       <div className="mb-10 text-center">
-        <h1 className="text-3xl lg:text-4xl font-display font-bold text-white mb-4">{t.toolLogicGatesTitle}</h1>
+        <h1 className="text-3xl lg:text-4xl font-display font-semibold text-white mb-4">{t.toolLogicGatesTitle}</h1>
         <p className="text-zinc-400 max-w-2xl mx-auto">{t.toolLogicGatesSubtitle}</p>
       </div>
 
@@ -177,7 +177,7 @@ const LogicGates: React.FC = () => {
         
         {/* Gate Selector */}
         <div className="glass-panel p-6 rounded-2xl border border-white/10 bg-zinc-900/60">
-          <h2 className="text-lg font-bold text-white mb-4">Select Gate</h2>
+          <h2 className="text-lg font-semibold text-white mb-4">Select Gate</h2>
           <div className="flex flex-wrap gap-2">
             {(Object.keys(GATES) as GateType[]).map(gate => (
               <button
@@ -213,7 +213,7 @@ const LogicGates: React.FC = () => {
                 <div className="text-sm font-bold text-zinc-400 mb-2">Input A</div>
                 <button 
                   onClick={() => setInputA(!inputA)}
-                  className={`w-16 h-16 rounded-xl font-mono text-2xl font-bold transition-all ${inputA ? 'bg-green-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.3)]'}`}
+                  className={`size-16 rounded-xl font-mono text-2xl font-bold transition-all ${inputA ? 'bg-green-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.3)]'}`}
                 >
                   {inputA ? '1' : '0'}
                 </button>
@@ -223,7 +223,7 @@ const LogicGates: React.FC = () => {
                   <div className="text-sm font-bold text-zinc-400 mb-2">Input B</div>
                   <button 
                     onClick={() => setInputB(!inputB)}
-                    className={`w-16 h-16 rounded-xl font-mono text-2xl font-bold transition-all ${inputB ? 'bg-green-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.3)]'}`}
+                    className={`size-16 rounded-xl font-mono text-2xl font-bold transition-all ${inputB ? 'bg-green-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'bg-red-500 text-white shadow-[0_0_15px_rgba(239,68,68,0.3)]'}`}
                   >
                     {inputB ? '1' : '0'}
                   </button>
@@ -233,7 +233,7 @@ const LogicGates: React.FC = () => {
             
             <div className="flex flex-col items-center bg-black/30 p-4 rounded-2xl border border-white/5 min-w-[120px]">
               <div className="text-sm font-bold text-zinc-400 mb-2">Output Y</div>
-              <div className={`w-16 h-16 flex items-center justify-center rounded-xl font-mono text-2xl font-bold ${output ? 'text-green-400 bg-green-500/20 border border-green-500/40' : 'text-red-400 bg-red-500/20 border border-red-500/40'}`}>
+              <div className={`size-16 flex items-center justify-center rounded-xl font-mono text-2xl font-bold ${output ? 'text-green-400 bg-green-500/20 border border-green-500/40' : 'text-red-400 bg-red-500/20 border border-red-500/40'}`}>
                 {output ? '1' : '0'}
               </div>
             </div>
@@ -244,7 +244,7 @@ const LogicGates: React.FC = () => {
 
       {/* Truth Table */}
       <div className="mt-8 glass-panel p-6 rounded-2xl border border-white/10 bg-zinc-900/60 max-w-2xl mx-auto">
-        <h2 className="text-lg font-bold text-white mb-4">Truth Table</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">Truth Table</h2>
         <TruthTable gateInfo={gateInfo} inputA={inputA} inputB={inputB} />
       </div>
 

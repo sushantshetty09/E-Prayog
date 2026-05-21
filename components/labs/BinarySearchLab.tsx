@@ -6,57 +6,15 @@ const BinarySearchLab: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [arr] = useState(() => Array.from({ length: 14 }, (_, i) => i * 7 + 5)); // sorted
   const [target, setTarget] = useState(47);
-  const [low, setLow] = useState(-1);
-  const [high, setHigh] = useState(-1);
-  const [mid, setMid] = useState(-1);
-  const [foundIdx, setFoundIdx] = useState(-1);
+  const lowRef = useRef(-1);
+  const highRef = useRef(-1);
+  const midRef = useRef(-1);
+  const foundIdxRef = useRef(-1);
   const [state, setState] = useState<SearchState>('idle');
-  const [steps, setSteps] = useState(0);
+  const stepsRef = useRef(0);
   const [log, setLog] = useState<string[]>([]);
   const stateRef = useRef({ low: 0, high: arr.length - 1 });
   const autoRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const reset = () => {
-    if (autoRef.current) clearInterval(autoRef.current);
-    setLow(-1); setHigh(-1); setMid(-1); setFoundIdx(-1);
-    setState('idle'); setSteps(0); setLog([]);
-    stateRef.current = { low: 0, high: arr.length - 1 };
-  };
-
-  const doStep = useCallback((): boolean => {
-    const { low: l, high: h } = stateRef.current;
-    if (l > h) {
-      setState('notfound'); setLow(-1); setHigh(-1); setMid(-1);
-      setLog(lg => [...lg, `❌ Not found — search space exhausted`]);
-      return false;
-    }
-    const m = Math.floor((l + h) / 2);
-    setLow(l); setHigh(h); setMid(m); setState('searching');
-    setSteps(s => s + 1);
-    setLog(lg => [...lg, `Step: low=${l}, high=${h}, mid=${m}, arr[mid]=${arr[m]}`]);
-    if (arr[m] === target) {
-      setFoundIdx(m); setState('found'); setMid(-1);
-      setLog(lg => [...lg, `✓ Found ${target} at index ${m}!`]);
-      return false;
-    } else if (arr[m] < target) {
-      stateRef.current = { low: m + 1, high: h };
-      setLog(lg => [...lg, `  ${arr[m]} < ${target} → search RIGHT half`]);
-    } else {
-      stateRef.current = { low: l, high: m - 1 };
-      setLog(lg => [...lg, `  ${arr[m]} > ${target} → search LEFT half`]);
-    }
-    return true;
-  }, [arr, target]);
-
-  const handleAuto = () => {
-    reset();
-    stateRef.current = { low: 0, high: arr.length - 1 };
-    setState('searching');
-    autoRef.current = setInterval(() => {
-      const cont = doStep();
-      if (!cont && autoRef.current) { clearInterval(autoRef.current); autoRef.current = null; }
-    }, 700);
-  };
 
   const draw = useCallback(() => {
     const canvas = canvasRef.current; if (!canvas) return;
@@ -72,13 +30,19 @@ const BinarySearchLab: React.FC = () => {
     const padX = 20, slotH = 52, slotW = (W - padX * 2) / n - 3;
     const arrY = H / 2 - 26;
 
+    const lowVal = lowRef.current;
+    const highVal = highRef.current;
+    const midVal = midRef.current;
+    const foundIdxVal = foundIdxRef.current;
+    const stepsVal = stepsRef.current;
+
     // ── Array cells ──
     arr.forEach((v, i) => {
       const sx = padX + i * (slotW + 3);
-      const isLow = i === low, isHigh = i === high, isMid = i === mid;
-      const isFound = i === foundIdx;
-      const inRange = low >= 0 && high >= 0 && i >= low && i <= high;
-      const isEliminated = low >= 0 && !inRange && foundIdx < 0;
+      const isLow = i === lowVal, isHigh = i === highVal, isMid = i === midVal;
+      const isFound = i === foundIdxVal;
+      const inRange = lowVal >= 0 && highVal >= 0 && i >= lowVal && i <= highVal;
+      const isEliminated = lowVal >= 0 && !inRange && foundIdxVal < 0;
 
       let fillColor = 'rgba(30,41,59,0.6)';
       let strokeColor = 'rgba(51,65,85,0.4)';
@@ -103,12 +67,14 @@ const BinarySearchLab: React.FC = () => {
       }
 
       // Value
-      ctx.fillStyle = textColor; ctx.font = `bold ${slotW > 32 ? 13 : 10}px monospace`; ctx.textAlign = 'center';
-      ctx.fillText(v.toString(), sx + slotW / 2, arrY + slotH / 2 + 5);
+      if (slotW > 0) {
+        ctx.fillStyle = textColor; ctx.font = `bold ${slotW > 32 ? 13 : 10}px monospace`; ctx.textAlign = 'center';
+        ctx.fillText(v.toString(), sx + slotW / 2, arrY + slotH / 2 + 5);
 
-      // Index below
-      ctx.fillStyle = 'rgba(100,116,139,0.5)'; ctx.font = '8px Inter';
-      ctx.fillText(i.toString(), sx + slotW / 2, arrY + slotH + 13);
+        // Index below
+        ctx.fillStyle = 'rgba(100,116,139,0.5)'; ctx.font = '8px Inter';
+        ctx.fillText(i.toString(), sx + slotW / 2, arrY + slotH + 13);
+      }
     });
 
     // ── Low / High / Mid pointers ──
@@ -133,15 +99,15 @@ const BinarySearchLab: React.FC = () => {
       ctx.fillText(label, px, py + arrowDir * 28);
     };
 
-    drawPointer(low, 'low', false, '#60a5fa');
-    drawPointer(high, 'high', false, '#f87171');
-    drawPointer(mid, 'mid', true, '#f59e0b');
-    if (foundIdx >= 0) drawPointer(foundIdx, '✓ FOUND!', true, '#10b981');
+    drawPointer(lowVal, 'low', false, '#60a5fa');
+    drawPointer(highVal, 'high', false, '#f87171');
+    drawPointer(midVal, 'mid', true, '#f59e0b');
+    if (foundIdxVal >= 0) drawPointer(foundIdxVal, '✓ FOUND!', true, '#10b981');
 
     // Range bracket
-    if (low >= 0 && high >= 0) {
-      const lx = padX + low * (slotW + 3);
-      const rx = padX + high * (slotW + 3) + slotW;
+    if (lowVal >= 0 && highVal >= 0) {
+      const lx = padX + lowVal * (slotW + 3);
+      const rx = padX + highVal * (slotW + 3) + slotW;
       ctx.strokeStyle = 'rgba(37,99,235,0.3)'; ctx.lineWidth = 1.5; ctx.setLineDash([3, 4]);
       ctx.beginPath(); ctx.moveTo(lx - 2, arrY - 2); ctx.lineTo(lx - 2, arrY + slotH + 2); ctx.lineTo(rx + 2, arrY + slotH + 2); ctx.lineTo(rx + 2, arrY - 2); ctx.stroke();
       ctx.setLineDash([]);
@@ -149,13 +115,59 @@ const BinarySearchLab: React.FC = () => {
 
     // Status
     ctx.font = 'bold 11px Inter'; ctx.textAlign = 'center';
-    const status = state === 'found' ? `✓ Found ${target} at index ${foundIdx}! (${steps} steps)` :
+    const status = state === 'found' ? `✓ Found ${target} at index ${foundIdxVal}! (${stepsVal} steps)` :
       state === 'notfound' ? `✗ ${target} not in array` :
-      state === 'searching' ? `Searching... mid=${mid}, arr[mid]=${mid >= 0 ? arr[mid] : '—'}` :
+      state === 'searching' ? `Searching... mid=${midVal}, arr[mid]=${midVal >= 0 ? arr[midVal] : '—'}` :
       `Target: ${target} · Array size: ${n} · Max steps: ⌈log₂(${n})⌉ = ${Math.ceil(Math.log2(n))}`;
     ctx.fillStyle = state === 'found' ? '#10b981' : state === 'notfound' ? '#ef4444' : '#60a5fa';
     ctx.fillText(status, W / 2, 22);
-  }, [arr, low, high, mid, foundIdx, state, steps, target]);
+  }, [arr, state, target]);
+
+  const reset = useCallback(() => {
+    if (autoRef.current) clearInterval(autoRef.current);
+    lowRef.current = -1; highRef.current = -1; midRef.current = -1; foundIdxRef.current = -1;
+    setState('idle'); stepsRef.current = 0; setLog([]);
+    stateRef.current = { low: 0, high: arr.length - 1 };
+    setTimeout(() => draw(), 0);
+  }, [arr.length, draw]);
+
+  const doStep = useCallback((): boolean => {
+    const { low: l, high: h } = stateRef.current;
+    if (l > h) {
+      setState('notfound'); lowRef.current = -1; highRef.current = -1; midRef.current = -1;
+      setLog(lg => [...lg, `❌ Not found: search space exhausted`]);
+      setTimeout(() => draw(), 0);
+      return false;
+    }
+    const m = Math.floor((l + h) / 2);
+    lowRef.current = l; highRef.current = h; midRef.current = m; setState('searching');
+    stepsRef.current += 1;
+    setLog(lg => [...lg, `Step: low=${l}, high=${h}, mid=${m}, arr[mid]=${arr[m]}`]);
+    if (arr[m] === target) {
+      foundIdxRef.current = m; setState('found'); midRef.current = -1;
+      setLog(lg => [...lg, `✓ Found ${target} at index ${m}!`]);
+      setTimeout(() => draw(), 0);
+      return false;
+    } else if (arr[m] < target) {
+      stateRef.current = { low: m + 1, high: h };
+      setLog(lg => [...lg, `  ${arr[m]} < ${target} → search RIGHT half`]);
+    } else {
+      stateRef.current = { low: l, high: m - 1 };
+      setLog(lg => [...lg, `  ${arr[m]} > ${target} → search LEFT half`]);
+    }
+    setTimeout(() => draw(), 0);
+    return true;
+  }, [arr, target, draw]);
+
+  const handleAuto = () => {
+    reset();
+    stateRef.current = { low: 0, high: arr.length - 1 };
+    setState('searching');
+    autoRef.current = setInterval(() => {
+      const cont = doStep();
+      if (!cont && autoRef.current) { clearInterval(autoRef.current); autoRef.current = null; }
+    }, 700);
+  };
 
   useEffect(() => { draw(); }, [draw]);
 
@@ -163,7 +175,7 @@ const BinarySearchLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(245,158,11,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🔍 Binary Search Visualiser</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🔍 Binary Search Visualiser</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">O(log n) · Halves search space each step · Requires sorted array</p>
         </div>
         <button onClick={reset} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>🔄 Reset</button>
@@ -171,12 +183,12 @@ const BinarySearchLab: React.FC = () => {
       <canvas ref={canvasRef} width={560} height={220} className="w-full" style={{ display: 'block' }} />
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(245,158,11,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div className="flex items-center gap-3">
-          <label className="text-xs text-zinc-400 whitespace-nowrap">Target</label>
-          <input type="range" min={5} max={96} step={7} value={target} onChange={e => { setTarget(Number(e.target.value)); reset(); }}
+          <span className="text-xs text-zinc-400 whitespace-nowrap">Target</span>
+          <input id="binary-target-slider" type="range" min={5} max={96} step={7} value={target} onChange={e => { setTarget(Number(e.target.value)); reset(); }}
             className="flex-1 h-1.5 rounded-full accent-amber-400" />
           <span className="text-xs font-mono text-amber-400 w-8">{target}</span>
           <input type="number" value={target} onChange={e => { setTarget(Number(e.target.value)); reset(); }}
-            className="w-16 px-2 py-1 rounded-lg text-xs font-mono" style={{ background: 'rgba(255,255,255,0.06)', color: '#fbbf24', border: '1px solid rgba(245,158,11,0.2)', outline: 'none' }} />
+            className="w-16 px-2 py-1 rounded-lg text-xs font-mono" style={{ background: 'rgba(255,255,255,0.06)', color: '#fbbf24', border: '1px solid rgba(245,158,11,0.2)', outline: 'none' }} aria-label="Target Number" />
         </div>
         <div className="flex gap-2">
           <button onClick={() => { if (state !== 'searching') { reset(); stateRef.current = { low: 0, high: arr.length - 1 }; } doStep(); setState('searching'); }}
@@ -192,7 +204,7 @@ const BinarySearchLab: React.FC = () => {
         </div>
         <div className="max-h-20 overflow-y-auto flex flex-col gap-0.5">
           {log.slice(-4).map((l, i) => (
-            <div key={i} className="text-[9px] font-mono px-2 py-0.5 rounded" style={{ color: l.startsWith('✓') ? '#10b981' : l.startsWith('❌') ? '#f87171' : '#64748b', background: 'rgba(255,255,255,0.03)' }}>{l}</div>
+            <div key={`${l}-${i}`} className="text-[9px] font-mono px-2 py-0.5 rounded" style={{ color: l.startsWith('✓') ? '#10b981' : l.startsWith('❌') ? '#f87171' : '#64748b', background: 'rgba(255,255,255,0.03)' }}>{l}</div>
           ))}
         </div>
       </div>

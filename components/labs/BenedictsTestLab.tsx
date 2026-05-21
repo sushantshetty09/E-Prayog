@@ -213,7 +213,7 @@ const BenedictsTestLab: React.FC = () => {
     <div className="flex flex-col h-full gap-0" style={{ background: 'linear-gradient(160deg,#06080f,#080a14)', borderRadius: '12px', overflow: 'hidden' }}>
       <div className="flex items-center justify-between px-4 py-3 border-b" style={{ borderColor: 'rgba(251,146,60,0.2)', background: 'rgba(6,8,15,0.9)' }}>
         <div>
-          <h3 className="text-sm font-bold text-white tracking-wide">🧪 Benedict's Test — Reducing Sugars</h3>
+          <h3 className="text-sm font-semibold text-white tracking-wide">🧪 Benedict's Test: Reducing Sugars</h3>
           <p className="text-[10px] text-zinc-500 mt-0.5">Cu²⁺ → Cu⁺ (Cu₂O precipitate) · Heat in water bath 95°C</p>
         </div>
         <button onClick={reset} className="px-3 py-1.5 rounded-lg text-xs font-bold" style={{ background: 'rgba(239,68,68,0.1)', color: '#f87171', border: '1px solid rgba(239,68,68,0.2)' }}>🔄 Reset</button>
@@ -223,10 +223,10 @@ const BenedictsTestLab: React.FC = () => {
 
       <div className="px-4 py-3 flex flex-col gap-3 border-t" style={{ borderColor: 'rgba(251,146,60,0.12)', background: 'rgba(5,7,12,0.97)' }}>
         <div>
-          <label className="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 block">Select Sample</label>
+          <span className="text-[10px] text-zinc-500 uppercase tracking-widest mb-2 block font-semibold">Select Sample</span>
           <div className="grid grid-cols-3 gap-1.5">
             {SAMPLES.map((sa, i) => (
-              <button key={i} onClick={() => { setSampleIdx(i); reset(); }}
+              <button key={sa.name} onClick={() => { setSampleIdx(i); reset(); }}
                 className="py-1.5 rounded-lg text-xs font-bold transition-all"
                 style={{ background: i === sampleIdx ? (sa.reducing ? 'rgba(239,68,68,0.2)' : 'rgba(59,130,246,0.15)') : 'rgba(255,255,255,0.04)', color: i === sampleIdx ? (sa.reducing ? '#f87171' : '#60a5fa') : '#475569', border: `1px solid ${i === sampleIdx ? (sa.reducing ? 'rgba(239,68,68,0.4)' : 'rgba(59,130,246,0.3)') : 'rgba(255,255,255,0.07)'}` }}>
                 {sa.name}
