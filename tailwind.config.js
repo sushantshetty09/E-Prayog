@@ -12,29 +12,44 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
-        display: ['Poppins', 'sans-serif'],
+        sans:    ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        display: ['Sora', 'system-ui', 'sans-serif'],
+        mono:    ['JetBrains Mono', 'monospace'],
       },
       colors: {
+        canvas:  '#0D1B2A',
+        surface: '#1B2D42',
+        card:    '#243A54',
         glass: {
-          100: 'rgba(255, 255, 255, 0.05)',
-          200: 'rgba(255, 255, 255, 0.1)',
-          300: 'rgba(255, 255, 255, 0.2)',
+          100: 'rgba(27, 45, 66, 0.40)',
+          200: 'rgba(27, 45, 66, 0.65)',
+          300: 'rgba(27, 45, 66, 0.85)',
+        },
+        sky: {
+          accent: '#3A8FD4',
+          light:  '#4DA3E8',
+          muted:  '#7FA8C4',
+          dim:    '#3D5A73',
+        },
+        gold: {
+          DEFAULT: '#F5A623',
+          light:   '#FFBA40',
+          dark:    '#D4891A',
         },
         brand: {
-          50: '#f0f9ff',
-          100: '#e0f2fe',
-          200: '#bae6fd',
-          500: '#0ea5e9',
-          600: '#0284c7',
-          900: '#0c4a6e',
+          50:  '#E8F4FD',
+          100: '#C5DFF5',
+          200: '#3A8FD4',
+          500: '#2E7ABE',
+          600: '#1B5A99',
+          900: '#0D1B2A',
         },
-        neon: {
-          physics: '#0ea5e9',
-          chemistry: '#10b981',
-          biology: '#84cc16',
-          math: '#f59e0b',
-          cs: '#6366f1',
+        subject: {
+          physics:   '#5BA3D4',
+          chemistry: '#F5A623',
+          biology:   '#5BB887',
+          math:      '#A78BFA',
+          cs:        '#60C4D4',
         }
       },
       animation: {
