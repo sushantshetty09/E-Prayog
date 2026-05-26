@@ -123,7 +123,7 @@ export const acidBaseTitrationQuestions: QuizQuestion[] = [
     ],
     correctAnswer: 1,
     explanation:
-      'The equivalence point of HCl–NaOH is near pH 7, but the very steep pH jump (3–11) means both indicators work; however, phenolphthalein's transition (pH 8.2–10.0) lies on the steep part of the curve and gives a clear, sharp endpoint.',
+      'The equivalence point of HCl–NaOH is near pH 7, but the very steep pH jump (3–11) means both indicators work; however, phenolphthalein\'s transition (pH 8.2–10.0) lies on the steep part of the curve and gives a clear, sharp endpoint.',
     level: 'Reasoning',
     hint: 'Consider where the pH jump occurs near the equivalence point.',
   },
