@@ -15,6 +15,8 @@ import {
 } from 'lucide-react';
 import { m as motion } from 'framer-motion';
 import { useLang } from '../services/LanguageContext';
+import { quizData } from '../data/quizData';
+
 
 const MotionDiv = motion.div as any;
 
@@ -50,7 +52,7 @@ const LabView: React.FC = () => {
   const [shuffledViva, setShuffledViva] = useState<any[]>([]);
 
   const printRef = useRef<HTMLDivElement>(null);
-  const { user } = useAuth();
+  const { user, profileData } = useAuth();
 
   const subject = SUBJECTS.find(s => s.id === subjectId);
   const lab = subject?.labs.find(l => l.id === labId);
@@ -135,7 +137,82 @@ const LabView: React.FC = () => {
   };
 
   // Setup Quiz and Viva
-  const quizQuestions = content?.quizQuestions || [];
+  const labIdToQuizKey: Record<string, string> = {
+    // Physics
+    p1: 'vernierCalipers',
+    p2: 'simplePendulum',
+    p3: 'screwGauge',
+    p4: 'ohmsLaw',
+    p5: 'concaveMirror',
+    p6: 'convexLens',
+    p7: 'glassPrism',
+    p8: 'sonometer',
+    p9: 'metreBridge',
+    p10: 'potentiometer',
+    p11: 'zenerDiode',
+    p12: 'hookesLaw',
+    
+    // Chemistry
+    c1: 'acidBaseTitration',
+    c2: 'kmno4Titration',
+    c3: 'phOfSolutions',
+    c4: 'saltAnalysis',
+    c5: 'paperChromatography',
+    c6: 'enthalpyNeutralisation',
+    c7: 'rateOfReaction',
+    c8: 'cationAnalysis',
+    c9: 'anionAnalysis',
+    c10: 'crystallisation',
+
+    // Biology
+    b1: 'mitosis',
+    b2: 'stomata',
+    b3: 'osmosis',
+    b4: 'photosynthesis',
+    b5: 'dnaIsolation',
+    b6: 'benedictTest',
+    b7: 'bloodGroup',
+    b8: 'seedGermination',
+
+    // Math
+    m1: 'unitCircle',
+    m2: 'binomialTheorem',
+    m3: 'statistics',
+    m4: 'matrixOperations',
+    m5: 'probability',
+    m6: 'conicSections',
+
+    // CS
+    cs1: 'bubbleSort',
+    cs2: 'insertionSort',
+    cs3: 'binarySearch',
+    cs4: 'stackOperations',
+    cs5: 'queueOperations',
+    cs6: 'logicGates',
+  };
+
+  const getQuestions = () => {
+    if (!labId) return [];
+    const key = labIdToQuizKey[labId];
+    if (!key) return content?.quizQuestions || [];
+    
+    const rawQuestions = quizData[key];
+    if (!rawQuestions || rawQuestions.length === 0) {
+      return content?.quizQuestions || [];
+    }
+    
+    return rawQuestions.map((q) => ({
+      id: q.id as any,
+      question: q.question,
+      options: q.options,
+      correctIndex: q.correctAnswer,
+      explanation: q.explanation,
+      level: q.level,
+      hint: q.hint
+    }));
+  };
+
+  const quizQuestions = getQuestions();
 
   const handleQuizSubmit = async () => {
     let score = 0;
@@ -152,6 +229,36 @@ const LabView: React.FC = () => {
     
     if (user) {
       try {
+        // Calculate cognitive level breakdown for Teacher Dashboard
+        const levelBreakdown: Record<string, { correct: number; total: number }> = {};
+        quizQuestions.forEach(q => {
+          const lvl = (q as any).level || 'Cognitive';
+          if (!levelBreakdown[lvl]) {
+            levelBreakdown[lvl] = { correct: 0, total: 0 };
+          }
+          levelBreakdown[lvl].total++;
+          if (quizAnswers[q.id] === q.correctIndex) {
+            levelBreakdown[lvl].correct++;
+          }
+        });
+
+        // Write to quizAttempts for Teacher Dashboard analytics
+        const attemptId = `${user.uid}_${lab.id}_${Date.now()}`;
+        await setDoc(doc(db, 'quizAttempts', attemptId), {
+          userId: user.uid,
+          userName: profileData?.full_name || profileData?.name || user.displayName || user.email || 'Student',
+          experimentId: lab.id,
+          experimentName: lab.title,
+          subject: subject.name,
+          score: Math.round((score / quizQuestions.length) * 100),
+          totalQuestions: quizQuestions.length,
+          correctAnswers: score,
+          attemptedAt: new Date().toISOString(),
+          levelBreakdown,
+          teacherId: profileData?.teacherUid || profileData?.teacherCode || profileData?.teacher_code || ''
+        });
+
+        // Write to legacy quiz_scores collection for compatibility
         await setDoc(doc(db, 'quiz_scores', `${user.uid}_${lab.id}`), {
           user_id: user.uid,
           lab_id: lab.id,
