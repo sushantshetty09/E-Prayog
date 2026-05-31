@@ -183,6 +183,25 @@ const TeacherDashboard: React.FC = () => {
         </div>
       </GlassCard>
 
+      {/* Quiz Performance Dashboard Widget */}
+      <GlassCard className="p-6 mb-8 border-emerald-500/20 bg-emerald-500/5">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <div className="size-12 rounded-xl bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30 shrink-0">
+              <BarChart3 className="text-emerald-400" size={24} />
+            </div>
+            <div>
+              <h2 className="text-lg font-semibold text-white">Quiz Performance Dashboard</h2>
+              <p className="text-xs text-zinc-400 mt-0.5">Heatmaps, leaderboard, cognitive breakdown &amp; more.</p>
+            </div>
+          </div>
+          <Link to="/teacher-quiz-dashboard" className="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold transition-all flex items-center gap-2 text-sm">
+            Open Analytics
+          </Link>
+        </div>
+      </GlassCard>
+
+
       {/* STUDENTS LIST */}
       <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <h2 className="text-xl font-semibold text-white flex items-center gap-2">

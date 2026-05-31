@@ -25,6 +25,7 @@ const StudentDashboard = lazy(() => import('./pages/StudentDashboard'));
 const TeacherDashboard = lazy(() => import('./pages/TeacherDashboard'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const TeacherProfile = lazy(() => import('./pages/TeacherProfile'));
+const TeacherQuizDashboard = lazy(() => import('./pages/TeacherQuizDashboard'));
 
 // Activity feeds
 const TeacherActivityFeed = lazy(() => import('./pages/TeacherActivityFeed'));
@@ -97,6 +98,7 @@ const App: React.FC = () => {
                 <Route path="/teacher-dashboard" element={<ProtectedRoute allowedRoles={['Teacher']}><TeacherDashboard /></ProtectedRoute>} />
                 <Route path="/teacher-profile" element={<ProtectedRoute allowedRoles={['Teacher']}><TeacherProfile /></ProtectedRoute>} />
                 <Route path="/teacher-activity" element={<ProtectedRoute allowedRoles={['Teacher', 'Admin']}><TeacherActivityFeed /></ProtectedRoute>} />
+                <Route path="/teacher-quiz-dashboard" element={<ProtectedRoute allowedRoles={['Teacher']}><TeacherQuizDashboard /></ProtectedRoute>} />
 
                 {/* ADMIN */}
                 <Route path="/admin-dashboard" element={<ProtectedRoute allowedRoles={['Admin']}><AdminDashboard /></ProtectedRoute>} />
