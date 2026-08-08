@@ -1,0 +1,58 @@
+type User @table {
+  username: String!
+  email: String!
+  role: String!
+  createdAt: Timestamp!
+  displayName: String
+  bio: String
+  profilePictureUrl: String
+  subjectsOfInterest: [String]
+  subjectsOfExpertise: [String]
+}
+
+type Subject @table {
+  name: String!
+  createdAt: Timestamp!
+  description: String
+}
+
+type LearningResource @table {
+  title: String!
+  type: String!
+  url: String
+  createdAt: Timestamp!
+  description: String
+  content: String
+  averageRating: Float
+  creator: User
+  subject: Subject
+}
+
+type TutorSession @table {
+  title: String!
+  dateTime: Timestamp!
+  duration: Int!
+  createdAt: Timestamp!
+  description: String
+  maxParticipants: Int
+  meetingLink: String
+  tutor: User
+  subject: Subject
+}
+
+type Question @table {
+  title: String!
+  content: String!
+  createdAt: Timestamp!
+  tags: [String]
+  asker: User
+  subject: Subject
+}
+
+type Answer @table {
+  content: String!
+  createdAt: Timestamp!
+  isAcceptedAnswer: Boolean
+  answerer: User
+  question: Question
+}

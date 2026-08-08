@@ -8,6 +8,7 @@ import Footer from './components/Footer';
 import AIFloatingTutor from './components/AIFloatingTutor';
 import ProtectedRoute from './components/ProtectedRoute';
 import { ensureAdminExists } from './services/adminSetup';
+import { ReactLenis } from 'lenis/react';
 
 // Lazy-loaded pages
 const Home = lazy(() => import('./pages/Home'));
@@ -44,7 +45,7 @@ const BioDiagrams = lazy(() => import('./pages/tools/BioDiagrams'));
 const PageLoader = () => (
   <div className="min-h-screen flex items-center justify-center">
     <div className="flex flex-col items-center gap-4">
-      <div className="size-12 border-3 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
+      <div className="size-12 border-3 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin" />
       <p className="text-sm text-zinc-500 font-medium">Loading E-Prayog...</p>
     </div>
   </div>
@@ -57,11 +58,12 @@ const App: React.FC = () => {
   }, []);
 
   return (
-    <LanguageProvider>
-    <AuthProvider>
-      <MotionConfig reducedMotion="user">
-        <LazyMotion features={domAnimation}>
-          <BrowserRouter>
+    <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
+      <LanguageProvider>
+      <AuthProvider>
+        <MotionConfig reducedMotion="user">
+          <LazyMotion features={domAnimation}>
+            <BrowserRouter>
         <div className="min-h-screen flex flex-col bg-zinc-950 text-white">
           <Navbar />
           <main className="flex-1">
@@ -122,6 +124,7 @@ const App: React.FC = () => {
       </MotionConfig>
     </AuthProvider>
     </LanguageProvider>
+    </ReactLenis>
   );
 };
 

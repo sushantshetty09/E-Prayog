@@ -38,7 +38,7 @@ const Navbar: React.FC = () => {
   const navLinkClass = (path: string) => `relative text-sm font-medium transition-colors duration-300 ${
     isActive(path)
       ? 'text-white'
-      : 'text-zinc-400 hover:text-emerald-300'
+      : 'text-slate-400 hover:text-cyan-300'
   }`;
 
   useEffect(() => {
@@ -62,20 +62,20 @@ const Navbar: React.FC = () => {
   // Display info: prefer name, fallback to full_name, then Firebase displayName
   const displayName = profileData?.name || profileData?.full_name || user?.displayName || user?.email?.split('@')[0] || '';
   const avatarUrl = profileData?.photoURL || user?.photoURL || '';
-  const avatarClass = profileData?.avatar && profileData.avatar.startsWith('bg-') ? profileData.avatar : 'bg-emerald-500';
+  const avatarClass = profileData?.avatar && profileData.avatar.startsWith('bg-') ? profileData.avatar : 'bg-cyan-500';
 
   // Dashboard link: role-aware
   const dashboardPath = role === 'Admin' ? '/admin-dashboard' : role === 'Teacher' ? '/teacher-dashboard' : '/dashboard';
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-40 glass-nav h-20 px-6 md:px-12 flex items-center justify-between transition-colors duration-300 border-b border-white/5">
-      <Link to="/home" className="ep-logo-link flex items-center gap-2 group min-w-[180px]" style={{textDecoration:'none'}}>
+    <nav className="fixed top-0 left-0 right-0 z-40 glass-nav h-20 px-6 md:px-12 flex items-center justify-between transition-colors duration-300 border-b border-white/[0.04]">
+      <Link to="/home" className="ep-logo-link flex items-center gap-3 group min-w-[180px]" style={{textDecoration:'none'}}>
         {/* ── Animated Orbital Logo Mark ── */}
         <svg
-          className="ep-nav-svg"
+          className="ep-nav-svg transition-transform duration-500 group-hover:scale-105 group-hover:rotate-[15deg]"
           viewBox="0 0 80 80"
-          width="68"
-          height="68"
+          width="48"
+          height="48"
           xmlns="http://www.w3.org/2000/svg"
           xmlnsXlink="http://www.w3.org/1999/xlink"
           aria-hidden="true"
@@ -83,20 +83,20 @@ const Navbar: React.FC = () => {
         >
           <defs>
             <linearGradient id="nav-outerG" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#1A73E8" stopOpacity="0.9"/>
-              <stop offset="100%" stopColor="#00C896" stopOpacity="0.9"/>
+              <stop offset="0%" stopColor="#22D3EE" stopOpacity="0.9"/>
+              <stop offset="100%" stopColor="#06B6D4" stopOpacity="0.9"/>
             </linearGradient>
             <linearGradient id="nav-innerG" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#00C896" stopOpacity="0.9"/>
-              <stop offset="100%" stopColor="#FF8C00" stopOpacity="0.9"/>
+              <stop offset="0%" stopColor="#06B6D4" stopOpacity="0.9"/>
+              <stop offset="100%" stopColor="#F59E0B" stopOpacity="0.9"/>
             </linearGradient>
             <linearGradient id="nav-eG" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#60AAFF"/>
-              <stop offset="100%" stopColor="#1A73E8"/>
+              <stop offset="0%" stopColor="#67E8F9"/>
+              <stop offset="100%" stopColor="#06B6D4"/>
             </linearGradient>
             <radialGradient id="nav-eGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#1A73E8" stopOpacity="0.85"/>
-              <stop offset="100%" stopColor="#1A73E8" stopOpacity="0"/>
+              <stop offset="0%" stopColor="#0891B2" stopOpacity="0.6"/>
+              <stop offset="100%" stopColor="#0891B2" stopOpacity="0"/>
             </radialGradient>
             <filter id="nav-outerElecGlow" x="-100%" y="-100%" width="300%" height="300%">
               <feGaussianBlur stdDeviation="1.5" result="blur"/>
@@ -139,24 +139,24 @@ const Navbar: React.FC = () => {
           {/* Outer electrons: 2 dots 180° apart */}
           <g className="ep-outer-ring" style={{transformOrigin:'40px 40px'}}>
             <g filter="url(#nav-outerElecGlow)">
-              <circle r="2.2" fill="#1A73E8">
+              <circle r="2.2" fill="#22D3EE">
                 <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear">
                   <mpath xlinkHref="#nav-outerPath"/>
                 </animateMotion>
               </circle>
-              <circle r="1.5" fill="#1A73E8" opacity="0.45">
+              <circle r="1.5" fill="#22D3EE" opacity="0.45">
                 <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear" begin="-0.17s">
                   <mpath xlinkHref="#nav-outerPath"/>
                 </animateMotion>
               </circle>
             </g>
             <g filter="url(#nav-outerElecGlow)">
-              <circle r="2.2" fill="#00C896">
+              <circle r="2.2" fill="#06B6D4">
                 <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear" begin="-3s">
                   <mpath xlinkHref="#nav-outerPath"/>
                 </animateMotion>
               </circle>
-              <circle r="1.5" fill="#00C896" opacity="0.45">
+              <circle r="1.5" fill="#06B6D4" opacity="0.45">
                 <animateMotion dur="6s" repeatCount="indefinite" calcMode="linear" begin="-3.17s">
                   <mpath xlinkHref="#nav-outerPath"/>
                 </animateMotion>
@@ -167,12 +167,12 @@ const Navbar: React.FC = () => {
           {/* Inner electron */}
           <g className="ep-inner-ring" style={{transformOrigin:'40px 40px'}}>
             <g filter="url(#nav-innerElecGlow)">
-              <circle r="2" fill="#FF8C00">
+              <circle r="2" fill="#F59E0B">
                 <animateMotion dur="4s" repeatCount="indefinite" calcMode="linear">
                   <mpath xlinkHref="#nav-innerPath"/>
                 </animateMotion>
               </circle>
-              <circle r="1.3" fill="#FF8C00" opacity="0.4">
+              <circle r="1.3" fill="#F59E0B" opacity="0.4">
                 <animateMotion dur="4s" repeatCount="indefinite" calcMode="linear" begin="-0.14s">
                   <mpath xlinkHref="#nav-innerPath"/>
                 </animateMotion>
@@ -186,17 +186,17 @@ const Navbar: React.FC = () => {
           {/* Central E */}
           <g className="ep-eletter" style={{transformOrigin:'40px 40px'}}>
             <text x="40" y="44" textAnchor="middle" dominantBaseline="middle"
-              fontFamily="'Space Grotesk', sans-serif" fontWeight="700" fontSize="20"
+              fontFamily="'Inter', sans-serif" fontWeight="700" fontSize="20"
               fill="url(#nav-eG)" filter="url(#nav-eGlowF)"
               style={{userSelect:'none'}}
             >E</text>
           </g>
 
           {/* Sparks */}
-          <circle cx="62" cy="22" r="1"   fill="#60AAFF" className="ep-spark ep-s1"/>
-          <circle cx="18" cy="26" r="0.8" fill="#00C896" className="ep-spark ep-s2"/>
-          <circle cx="64" cy="57" r="0.9" fill="#FF8C00" className="ep-spark ep-s3"/>
-          <circle cx="16" cy="54" r="1"   fill="#60AAFF" className="ep-spark ep-s4"/>
+          <circle cx="62" cy="22" r="1"   fill="#67E8F9" className="ep-spark ep-s1"/>
+          <circle cx="18" cy="26" r="0.8" fill="#06B6D4" className="ep-spark ep-s2"/>
+          <circle cx="64" cy="57" r="0.9" fill="#F59E0B" className="ep-spark ep-s3"/>
+          <circle cx="16" cy="54" r="1"   fill="#67E8F9" className="ep-spark ep-s4"/>
         </svg>
 
         {/* ── Wordmark ── */}
@@ -207,13 +207,13 @@ const Navbar: React.FC = () => {
               initial={{ y: 8, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -8, opacity: 0 }}
-              transition={{ duration: 0.45 }}
-              className="text-lg md:text-xl font-display font-bold text-white tracking-tight leading-none"
+              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              className="text-lg md:text-xl font-display font-semibold text-white tracking-tight leading-none"
             >
               {TITLES[titleIndex].lang === 'en' ? (
-                <>E-<span style={{color:'#00C896'}}>Prayog</span></>
+                <>E-<span className="text-cyan-400">Prayog</span></>
               ) : (
-                <>ಇ-<span style={{color:'#00C896'}}>ಪ್ರಯೋಗ</span></>
+                <>ಇ-<span className="text-cyan-400">ಪ್ರಯೋಗ</span></>
               )}
             </MotionSpan>
           </AnimatePresence>
@@ -221,33 +221,33 @@ const Navbar: React.FC = () => {
       </Link>
 
       {/* Desktop Nav */}
-      <div className="hidden md:flex items-center gap-6">
+      <div className="hidden md:flex items-center gap-8">
         <Link to="/home" className={navLinkClass('/home')}>
-          {t.navHome}{isActive('/home') && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+          {t.navHome}{isActive('/home') && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-cyan-400 rounded-full" />}
         </Link>
         <Link to="/tools" className={navLinkClass('/tools')}>
-          {t.navTools}{isActive('/tools') && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+          {t.navTools}{isActive('/tools') && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-cyan-400 rounded-full" />}
         </Link>
         <Link to="/about" className={navLinkClass('/about')}>
-          {t.navAbout}{isActive('/about') && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+          {t.navAbout}{isActive('/about') && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-cyan-400 rounded-full" />}
         </Link>
         {user && (
           <>
             <Link to="/subjects" className={navLinkClass('/subjects')}>
-              {t.navExperiments}{isActive('/subjects') && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+              {t.navExperiments}{isActive('/subjects') && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-cyan-400 rounded-full" />}
             </Link>
             <Link to="/tutor" className={navLinkClass('/tutor')}>
-              {t.navTutor}{isActive('/tutor') && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+              {t.navTutor}{isActive('/tutor') && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-cyan-400 rounded-full" />}
             </Link>
             <Link to={dashboardPath} className={navLinkClass(dashboardPath)}>
-              {t.navDashboard}{isActive(dashboardPath) && <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-emerald-400 rounded-full" />}
+              {t.navDashboard}{isActive(dashboardPath) && <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 bg-cyan-400 rounded-full" />}
             </Link>
           </>
         )}
 
         {/* ── Language Switcher ── */}
-        <div className="flex items-center gap-0.5 bg-white/5 rounded-full px-1 py-1 border border-white/10" title="Change Language">
-          <Languages size={13} className="text-zinc-500 mx-1" />
+        <div className="flex items-center gap-1 bg-[#1A202C]/50 rounded-full p-1 border border-white/5" title="Change Language">
+          <Languages size={14} className="text-slate-500 mx-2" />
           {LANG_OPTIONS.map(opt => (
             <button
               key={opt.code}
@@ -255,8 +255,8 @@ const Navbar: React.FC = () => {
               title={opt.fullLabel}
               className={`px-3 py-1 rounded-full text-xs font-semibold transition-all duration-200 ${
                 lang === opt.code
-                  ? 'bg-gradient-to-r from-violet-600 to-sky-500 text-white shadow-sm'
-                  : 'text-zinc-400 hover:text-white'
+                  ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 shadow-sm'
+                  : 'text-slate-400 hover:text-white border border-transparent'
               }`}
             >
               {opt.label}
@@ -271,23 +271,23 @@ const Navbar: React.FC = () => {
           <div className="flex items-center gap-3">
             <Link to="/profile" aria-label="View Profile" className="group flex items-center gap-2 px-3 py-1.5 rounded-full hover:bg-white/5 transition-all">
               {avatarUrl ? (
-                <img src={avatarUrl} alt="Profile" className="size-8 rounded-full object-cover" />
+                <img src={avatarUrl} alt="Profile" className="size-8 rounded-full object-cover border border-white/10" />
               ) : (
-                <div className={`size-8 rounded-full ${avatarClass} flex items-center justify-center text-white text-xs font-bold`}>
+                <div className={`size-8 rounded-full ${avatarClass} flex items-center justify-center text-white text-xs font-bold border border-white/10`}>
                   {displayName?.charAt(0)?.toUpperCase() || <User size={14} />}
                 </div>
               )}
-              <span className="text-sm text-zinc-400 hidden lg:inline font-medium">
+              <span className="text-sm text-slate-300 hidden lg:inline font-medium">
                 {displayName?.split(' ')[0] || t.navProfile}
               </span>
             </Link>
-            <button onClick={handleLogout} aria-label="Logout" className="p-2 rounded-full bg-white/5 hover:bg-red-500/20 text-zinc-400 hover:text-red-400 transition-all">
+            <button onClick={handleLogout} aria-label="Logout" className="p-2 rounded-full bg-white/5 hover:bg-red-500/10 text-slate-400 hover:text-red-400 border border-transparent hover:border-red-500/20 transition-all">
               <LogOut size={16} />
             </button>
           </div>
         ) : (
           <Link to="/login">
-            <button className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-sm font-bold text-white transition-colors">
+            <button className="btn-primary py-2 px-5 text-sm">
               <LogIn size={16} /> {t.navLogin}
             </button>
           </Link>
@@ -295,58 +295,66 @@ const Navbar: React.FC = () => {
       </div>
 
       {/* Mobile hamburger */}
-      <button className="md:hidden p-2 -mr-2 text-zinc-400" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? "Close menu" : "Open menu"}>
+      <button className="md:hidden p-2 -mr-2 text-slate-400 hover:text-white transition-colors" onClick={() => setIsOpen(!isOpen)} aria-label={isOpen ? "Close menu" : "Open menu"}>
         {isOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
 
       {/* Mobile menu */}
-      {isOpen && (
-        <div className="absolute top-20 left-0 w-full glass-nav flex flex-col p-6 gap-4 md:hidden border-b border-white/5 shadow-2xl">
-          {/* Mobile Language Switcher */}
-          <div className="flex items-center gap-2">
-            <Languages size={14} className="text-zinc-500" />
-            <span className="text-xs text-zinc-500 font-semibold">Language / ಭಾಷೆ / भाषा:</span>
-          </div>
-          <div className="flex gap-2">
-            {LANG_OPTIONS.map(opt => (
-              <button
-                key={opt.code}
-                onClick={() => setLang(opt.code)}
-                className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
-                  lang === opt.code
-                    ? 'bg-gradient-to-r from-violet-600 to-sky-500 text-white shadow-sm'
-                    : 'bg-white/5 text-zinc-400 hover:text-white border border-white/10'
-                }`}
-              >
-                {opt.fullLabel}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="absolute top-20 left-0 w-full glass-nav flex flex-col p-6 gap-4 md:hidden border-b border-white/5 shadow-2xl"
+          >
+            {/* Mobile Language Switcher */}
+            <div className="flex items-center gap-2">
+              <Languages size={14} className="text-slate-500" />
+              <span className="text-xs text-slate-500 font-semibold">Language / ಭಾಷೆ / भाषा:</span>
+            </div>
+            <div className="flex gap-2">
+              {LANG_OPTIONS.map(opt => (
+                <button
+                  key={opt.code}
+                  onClick={() => setLang(opt.code)}
+                  className={`px-4 py-1.5 rounded-full text-sm font-semibold transition-all ${
+                    lang === opt.code
+                      ? 'bg-cyan-500/10 text-cyan-400 border border-cyan-500/20'
+                      : 'bg-[#1A202C]/50 text-slate-400 hover:text-white border border-white/5'
+                  }`}
+                >
+                  {opt.fullLabel}
+                </button>
+              ))}
+            </div>
+            <hr className="border-white/[0.04]" />
+            <Link to="/home" onClick={() => setIsOpen(false)} className={`text-lg font-medium transition-colors ${isActive('/home') ? 'text-cyan-400' : 'text-slate-300 hover:text-white'}`}>{t.navHome}</Link>
+            <Link to="/tools" onClick={() => setIsOpen(false)} className={`text-lg font-medium transition-colors ${isActive('/tools') ? 'text-cyan-400' : 'text-slate-300 hover:text-white'}`}>{t.navTools}</Link>
+            <Link to="/about" onClick={() => setIsOpen(false)} className={`text-lg font-medium transition-colors ${isActive('/about') ? 'text-cyan-400' : 'text-slate-300 hover:text-white'}`}>{t.navAbout}</Link>
+            {user && (
+              <>
+                <hr className="border-white/[0.04]" />
+                <Link to="/subjects" onClick={() => setIsOpen(false)} className={`text-lg font-medium transition-colors ${isActive('/subjects') ? 'text-cyan-400' : 'text-slate-300 hover:text-white'}`}>{t.navExperiments}</Link>
+                <Link to="/tutor" onClick={() => setIsOpen(false)} className={`text-lg font-medium transition-colors ${isActive('/tutor') ? 'text-cyan-400' : 'text-slate-300 hover:text-white'}`}>{t.navTutor}</Link>
+                <Link to={dashboardPath} onClick={() => setIsOpen(false)} className={`text-lg font-medium transition-colors ${isActive(dashboardPath) ? 'text-cyan-400' : 'text-slate-300 hover:text-white'}`}>{t.navDashboard}</Link>
+                <Link to="/profile" onClick={() => setIsOpen(false)} className="text-lg font-medium text-cyan-400">{t.navProfile}</Link>
+              </>
+            )}
+            <hr className="border-white/[0.04] mt-2" />
+            {user ? (
+              <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-red-500/10 text-red-400 font-bold hover:bg-red-500/20 transition-colors">
+                <LogOut size={18} /> {t.navLogout}
               </button>
-            ))}
-          </div>
-          <hr className="border-white/10" />
-          <Link to="/home" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/home') ? 'text-emerald-400' : ''}`}>{t.navHome}</Link>
-          <Link to="/tools" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/tools') ? 'text-emerald-400' : ''}`}>{t.navTools}</Link>
-          <Link to="/about" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/about') ? 'text-emerald-400' : ''}`}>{t.navAbout}</Link>
-          {user && (
-            <>
-              <hr className="border-white/10" />
-              <Link to="/subjects" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/subjects') ? 'text-emerald-400' : ''}`}>{t.navExperiments}</Link>
-              <Link to="/tutor" onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive('/tutor') ? 'text-emerald-400' : ''}`}>{t.navTutor}</Link>
-              <Link to={dashboardPath} onClick={() => setIsOpen(false)} className={`text-lg font-medium ${isActive(dashboardPath) ? 'text-emerald-400' : ''}`}>{t.navDashboard}</Link>
-              <Link to="/profile" onClick={() => setIsOpen(false)} className="text-lg font-medium text-blue-400">{t.navProfile}</Link>
-            </>
-          )}
-          <hr className="border-white/10 mt-2" />
-          {user ? (
-            <button onClick={handleLogout} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-red-500/10 text-red-400 font-bold hover:bg-red-500/20">
-              <LogOut size={18} /> {t.navLogout}
-            </button>
-          ) : (
-            <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold">
-              <LogIn size={18} /> {t.navLogin}
-            </Link>
-          )}
-        </div>
-      )}
+            ) : (
+              <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold transition-colors">
+                <LogIn size={18} /> {t.navLogin}
+              </Link>
+            )}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

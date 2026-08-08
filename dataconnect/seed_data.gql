@@ -1,0 +1,174 @@
+mutation CreateDemoData @transaction @auth(level: PUBLIC, insecureReason: "This is seed data and does not require authentication.") {
+  user_insertMany(data: [
+    {
+      id: "00000000-0000-0000-0000-000000000001",
+      username: "tutorjane",
+      email: "jane.doe@example.com",
+      role: "Tutor",
+      createdAt: "2023-10-27T10:00:00Z",
+      displayName: "Jane Doe",
+      bio: "Experienced tutor in various subjects.",
+      profilePictureUrl: "https://example.com/jane.jpg",
+      subjectsOfInterest: ["History", "Literature"],
+      subjectsOfExpertise: ["Mathematics", "Physics"]
+    },
+    {
+      id: "00000000-0000-0000-0000-000000000002",
+      username: "studentmike",
+      email: "mike.smith@example.com",
+      role: "Student",
+      createdAt: "2023-10-27T10:05:00Z",
+      displayName: "Mike Smith",
+      bio: "Eager to learn and improve my grades.",
+      profilePictureUrl: "https://example.com/mike.jpg",
+      subjectsOfInterest: ["Mathematics", "Chemistry"],
+      subjectsOfExpertise: ["English"]
+    },
+    {
+      id: "00000000-0000-0000-0000-000000000003",
+      username: "tutorbob",
+      email: "bob.johnson@example.com",
+      role: "Tutor",
+      createdAt: "2023-10-27T10:10:00Z",
+      displayName: "Bob Johnson",
+      bio: "Passionate about computer science.",
+      profilePictureUrl: "https://example.com/bob.jpg",
+      subjectsOfInterest: ["Computer Science"],
+      subjectsOfExpertise: ["Computer Science", "Algebra"]
+    }
+  ])
+  subject_insertMany(data: [
+    {
+      id: "00000000-0000-0000-0000-000000000004",
+      name: "Mathematics",
+      createdAt: "2023-10-27T10:15:00Z",
+      description: "The study of quantity, structure, space, and change."
+    },
+    {
+      id: "00000000-0000-0000-0000-000000000005",
+      name: "Physics",
+      createdAt: "2023-10-27T10:20:00Z",
+      description: "The natural science that studies matter, its fundamental constituents, its motion and behavior through space and time."
+    },
+    {
+      id: "00000000-0000-0000-0000-000000000006",
+      name: "Computer Science",
+      createdAt: "2023-10-27T10:25:00Z",
+      description: "The study of computation and information."
+    }
+  ])
+  tutorSession_insertMany(data: [
+    {
+      id: "00000000-0000-0000-0000-000000000007",
+      title: "Algebra Basics",
+      dateTime: "2023-11-01T15:00:00Z",
+      duration: 60,
+      createdAt: "2023-10-27T10:30:00Z",
+      description: "An introductory session to the fundamentals of algebra.",
+      maxParticipants: 10,
+      meetingLink: "https://meet.google.com/abc-defg-hij",
+      tutorId: "00000000-0000-0000-0000-000000000001",
+      subjectId: "00000000-0000-0000-0000-000000000004"
+    },
+    {
+      id: "00000000-0000-0000-0000-000000000008",
+      title: "Physics for Beginners",
+      dateTime: "2023-11-02T16:00:00Z",
+      duration: 90,
+      createdAt: "2023-10-27T10:35:00Z",
+      description: "Understanding core concepts in physics.",
+      maxParticipants: 8,
+      meetingLink: "https://meet.google.com/klm-nopq-rst",
+      tutorId: "00000000-0000-0000-0000-000000000001",
+      subjectId: "00000000-0000-0000-0000-000000000005"
+    },
+    {
+      id: "00000000-0000-0000-0000-000000000009",
+      title: "Intro to Python",
+      dateTime: "2023-11-03T14:00:00Z",
+      duration: 120,
+      createdAt: "2023-10-27T10:40:00Z",
+      description: "First steps into the world of Python programming.",
+      maxParticipants: 15,
+      meetingLink: "https://meet.google.com/uvw-xyza-bcde",
+      tutorId: "00000000-0000-0000-0000-000000000003",
+      subjectId: "00000000-0000-0000-0000-000000000006"
+    }
+  ])
+  learningResource_insertMany(data: [
+    {
+      id: "00000000-0000-0000-0000-000000000010",
+      title: "Algebra Study Guide",
+      type: "Document",
+      url: "https://example.com/algebra-guide.pdf",
+      createdAt: "2023-10-27T10:45:00Z",
+      description: "A comprehensive guide to algebra topics.",
+      content: "This is the content of the algebra study guide.",
+      averageRating: 4.5,
+      creatorId: "00000000-0000-0000-0000-000000000001",
+      subjectId: "00000000-0000-0000-0000-000000000004"
+    },
+    {
+      id: "00000000-0000-0000-0000-000000000011",
+      title: "Physics Video Series",
+      type: "Video",
+      url: "https://youtube.com/physics-series",
+      createdAt: "2023-10-27T10:50:00Z",
+      description: "Video lectures covering various physics concepts.",
+      content: "This video series explains physics concepts visually.",
+      averageRating: 4.8,
+      creatorId: "00000000-0000-0000-0000-000000000001",
+      subjectId: "00000000-0000-0000-0000-000000000005"
+    },
+    {
+      id: "00000000-0000-0000-0000-000000000012",
+      title: "Python Best Practices",
+      type: "Article",
+      url: "https://example.com/python-best-practices",
+      createdAt: "2023-10-27T10:55:00Z",
+      description: "Tips and tricks for writing clean Python code.",
+      content: "This article details best practices for Python development.",
+      averageRating: 4.2,
+      creatorId: "00000000-0000-0000-0000-000000000003",
+      subjectId: "00000000-0000-0000-0000-000000000006"
+    }
+  ])
+  question_insertMany(data: [
+    {
+      id: "00000000-0000-0000-0000-000000000013",
+      title: "What is a quadratic equation?",
+      content: "I'm struggling to understand quadratic equations. Can someone explain?",
+      createdAt: "2023-10-27T11:00:00Z",
+      tags: ["algebra", "mathematics"],
+      askerId: "00000000-0000-0000-0000-000000000002",
+      subjectId: "00000000-0000-0000-0000-000000000004"
+    },
+    {
+      id: "00000000-0000-0000-0000-000000000014",
+      title: "Explain Newton's Laws of Motion",
+      content: "Can someone provide a simple explanation of Newton's Laws of Motion?",
+      createdAt: "2023-10-27T11:05:00Z",
+      tags: ["physics", "mechanics"],
+      askerId: "00000000-0000-0000-0000-000000000002",
+      subjectId: "00000000-0000-0000-0000-000000000005"
+    }
+  ])
+  answer_insertMany(data: [
+    {
+      id: "00000000-0000-0000-0000-000000000015",
+      content: "A quadratic equation is a polynomial equation of the second degree. The general form is ax^2 + bx + c = 0, where a, b, and c are real numbers and a ≠ 0.",
+      createdAt: "2023-10-27T11:10:00Z",
+      isAcceptedAnswer: true,
+      answererId: "00000000-0000-0000-0000-000000000001",
+      questionId: "00000000-0000-0000-0000-000000000013"
+    },
+    {
+      id: "00000000-0000-0000-0000-000000000016",
+      content: "Newton's First Law states that an object at rest stays at rest and an object in motion stays in motion with the same speed and in the same direction unless acted upon by an unbalanced force. His Second Law states that the acceleration of an object is dependent upon two variables – the net force acting upon the object and the mass of the object. His Third Law states that for every action, there is an equal and opposite reaction.",
+      createdAt: "2023-10-27T11:15:00Z",
+      isAcceptedAnswer: true,
+      answererId: "00000000-0000-0000-0000-000000000001",
+      questionId: "00000000-0000-0000-0000-000000000014"
+    }
+  ])
+}
