@@ -3,7 +3,7 @@
 
 /* ══════════════════════════════════════════════
    E-Prayog — index.css
-   Daybreak Design System v2.0
+   Obsidian Lab Design System v3.0
    Base layer: resets, fonts, scroll reveal init
    ══════════════════════════════════════════════ */
 
@@ -17,8 +17,8 @@ body,
 
 body {
   font-family: var(--font-body, 'Plus Jakarta Sans', system-ui, sans-serif);
-  background: radial-gradient(circle at 50% 45%, #18304f 0%, #0d1b2a 55%, #050c14 100%) no-repeat fixed !important;
-  color: var(--text-primary, #E8F4FD);
+  background: #070A0F !important;
+  color: var(--text-primary, #E2E8F0);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

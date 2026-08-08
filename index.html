@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
     content="E-Prayog — An interactive virtual science laboratory for Karnataka PUC students featuring immersive 2D simulations and AI-powered tutoring." />
-  <meta name="theme-color" content="#04050f" />
+  <meta name="theme-color" content="#070A0F" />
   <title>E-Prayog | ಇ-ಪ್ರಯೋಗ — Virtual Science Lab for Karnataka PUC</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,9 +16,9 @@
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <style>
     /* ══════════════════════════════════════════
-       E-Prayog — Daybreak Design System v2.0
-       Palette: Deep Navy + Sky Blue + Sunrise Gold
-       "The moment before dawn — everything feels possible."
+       E-Prayog — Obsidian Lab Design System v3.0
+       Palette: Deep Obsidian + Lab Cyan + Tactical Amber
+       "Precision instrumentation meets luxury interface."
        ══════════════════════════════════════════ */
 
     /* ── Google Fonts: Sora + Plus Jakarta Sans ── */
@@ -26,38 +26,43 @@
 
     /* ── Design Tokens ── */
     :root {
-      /* Backgrounds — layered like the pre-dawn sky */
-      --bg-canvas:       #0D1B2A;   /* deepest navy */
-      --bg-surface:      #1B2D42;   /* nav, sidebars */
-      --bg-card:         #243A54;   /* cards, sections */
-      --bg-floating:     #2E4A6A;   /* modals, tooltips */
-      --bg-base:         #0D1B2A;   /* alias for legacy classes */
+      /* Backgrounds — layered obsidian depth */
+      --bg-canvas:       #070A0F;
+      --bg-surface:      #0D1117;
+      --bg-card:         #121824;
+      --bg-floating:     #1A2233;
+      --bg-base:         #070A0F;
 
-      /* Accents */
-      --accent-primary:  #3A8FD4;   /* sky blue — exploration */
-      --accent-second:   #F5A623;   /* sunrise gold — action */
-      --accent-glow:     rgba(58, 143, 212, 0.35);
+      /* Primary Accent: Lab Cyan */
+      --accent-primary:  #06B6D4;
+      --accent-bright:   #22D3EE;
+      --accent-muted:    #0891B2;
+      --accent-glow:     rgba(6, 182, 212, 0.25);
+
+      /* Secondary Accent: Tactical Amber (rare, intentional) */
+      --accent-second:   #F59E0B;
+      --accent-second-light: #FBBF24;
 
       /* Text */
-      --text-primary:    #E8F4FD;   /* cool soft white */
-      --text-secondary:  #7FA8C4;   /* muted blue-grey */
-      --text-muted:      #3D5A73;   /* dim, placeholders */
-      --text-color:      #E8F4FD;   /* alias for legacy */
+      --text-primary:    #E2E8F0;
+      --text-secondary:  #94A3B8;
+      --text-muted:      #475569;
+      --text-color:      #E2E8F0;
 
-      /* Borders */
-      --border-subtle:   rgba(58, 143, 212, 0.10);
-      --border-default:  rgba(58, 143, 212, 0.22);
-      --border-strong:   rgba(58, 143, 212, 0.42);
-      --glass-border:    rgba(58, 143, 212, 0.20);
-      --glass-bg:        rgba(27, 45, 66, 0.70);
-      --nav-bg:          rgba(13, 27, 42, 0.82);
+      /* Borders — hairline precision */
+      --border-subtle:   rgba(226, 232, 240, 0.06);
+      --border-default:  rgba(226, 232, 240, 0.10);
+      --border-strong:   rgba(6, 182, 212, 0.25);
+      --glass-border:    rgba(226, 232, 240, 0.08);
+      --glass-bg:        rgba(18, 24, 36, 0.70);
+      --nav-bg:          rgba(7, 10, 15, 0.80);
 
-      /* Subject accents — sky-inspired tones */
-      --subject-physics:     #5BA3D4;  /* clear noon sky */
-      --subject-chemistry:   #F5A623;  /* sunrise gold */
-      --subject-biology:     #5BB887;  /* early morning green */
-      --subject-math:        #A78BFA;  /* twilight violet */
-      --subject-cs:          #60C4D4;  /* midday ocean blue */
+      /* Subject accents — preserved */
+      --subject-physics:     #5BA3D4;
+      --subject-chemistry:   #F5A623;
+      --subject-biology:     #5BB887;
+      --subject-math:        #A78BFA;
+      --subject-cs:          #60C4D4;
 
       /* Typography */
       --font-display:    'Sora', system-ui, sans-serif;
@@ -78,19 +83,19 @@
       --radius-2xl:  32px;
       --radius-full: 999px;
 
-      /* Easing tokens */
+      /* Easing tokens — slow, physical, purposeful */
       --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
       --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
       --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .dark {
-      --bg-base:      #0D1B2A;
-      --text-color:   #E8F4FD;
-      --glass-bg:     rgba(27, 45, 66, 0.70);
-      --glass-border: rgba(58, 143, 212, 0.20);
-      --nav-bg:       rgba(13, 27, 42, 0.82);
-      --accent-glow:  rgba(58, 143, 212, 0.35);
+      --bg-base:      #070A0F;
+      --text-color:   #E2E8F0;
+      --glass-bg:     rgba(18, 24, 36, 0.70);
+      --glass-border: rgba(226, 232, 240, 0.08);
+      --nav-bg:       rgba(7, 10, 15, 0.80);
+      --accent-glow:  rgba(6, 182, 212, 0.25);
     }
 
     /* ── Reset ── */
@@ -99,8 +104,8 @@
     }
 
     ::selection {
-      background-color: rgba(58, 143, 212, 0.35);
-      color: #E8F4FD;
+      background-color: rgba(6, 182, 212, 0.30);
+      color: #E2E8F0;
     }
 
     /* ── Keyframes ── */
@@ -111,16 +116,20 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Star field slow drift */
-    @keyframes star-drift {
-      0%, 100% { opacity: 0.18; transform: translateY(0px); }
-      50%       { opacity: 0.30; transform: translateY(-6px); }
+    /* Subtle grain shimmer */
+    @keyframes grain-shift {
+      0%, 100% { transform: translate(0, 0); }
+      10% { transform: translate(-2%, -2%); }
+      30% { transform: translate(1%, -1%); }
+      50% { transform: translate(-1%, 2%); }
+      70% { transform: translate(2%, 1%); }
+      90% { transform: translate(-2%, 1%); }
     }
 
     /* Dot grid subtle pulse */
     @keyframes grid-fade {
-      0%, 100% { opacity: 0.06; }
-      50%       { opacity: 0.12; }
+      0%, 100% { opacity: 0.03; }
+      50%       { opacity: 0.06; }
     }
 
     /* Scroll reveal */
@@ -129,26 +138,20 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Shimmer for gold CTA */
-    @keyframes shimmer {
-      0%   { background-position: -200% center; }
-      100% { background-position:  200% center; }
-    }
-
-    /* Hero entry animations */
-    .hero-badge  { animation: riseUp 0.6s var(--ease-out-expo) 0.05s both; }
-    .hero-line-1 { animation: riseUp 0.6s var(--ease-out-expo) 0.15s both; }
-    .hero-line-2 { animation: riseUp 0.6s var(--ease-out-expo) 0.24s both; }
-    .hero-sub    { animation: riseUp 0.6s var(--ease-out-expo) 0.36s both; }
-    .hero-ctas   { animation: riseUp 0.6s var(--ease-out-expo) 0.48s both; }
-    .hero-stats  { animation: riseUp 0.6s var(--ease-out-expo) 0.62s both; }
+    /* Hero entry animations — slow, deliberate */
+    .hero-badge  { animation: riseUp 0.7s var(--ease-out-expo) 0.05s both; }
+    .hero-line-1 { animation: riseUp 0.7s var(--ease-out-expo) 0.18s both; }
+    .hero-line-2 { animation: riseUp 0.7s var(--ease-out-expo) 0.30s both; }
+    .hero-sub    { animation: riseUp 0.7s var(--ease-out-expo) 0.44s both; }
+    .hero-ctas   { animation: riseUp 0.7s var(--ease-out-expo) 0.58s both; }
+    .hero-stats  { animation: riseUp 0.7s var(--ease-out-expo) 0.72s both; }
 
     /* Scroll reveal utility */
     .reveal {
       opacity: 0;
       transform: translateY(22px);
-      transition: opacity 0.55s var(--ease-out-expo),
-                  transform 0.55s var(--ease-out-expo);
+      transition: opacity 0.65s var(--ease-out-expo),
+                  transform 0.65s var(--ease-out-expo);
     }
     .reveal.visible {
       opacity: 1;
@@ -156,14 +159,14 @@
     }
     /* Card stagger delays */
     .stagger-1 { transition-delay:   0ms; }
-    .stagger-2 { transition-delay:  70ms; }
-    .stagger-3 { transition-delay: 140ms; }
-    .stagger-4 { transition-delay: 210ms; }
-    .stagger-5 { transition-delay: 280ms; }
+    .stagger-2 { transition-delay:  80ms; }
+    .stagger-3 { transition-delay: 160ms; }
+    .stagger-4 { transition-delay: 240ms; }
+    .stagger-5 { transition-delay: 320ms; }
 
-    /* ── Body: deep navy canvas — the pre-dawn sky ── */
+    /* ── Body: deep obsidian canvas ── */
     body {
-      background: radial-gradient(circle at 50% 45%, #18304f 0%, #0d1b2a 55%, #050c14 100%) no-repeat fixed !important;
+      background: #070A0F !important;
       color: var(--text-primary);
       font-family: var(--font-body);
       position: relative;
@@ -177,36 +180,21 @@
       background-image: none !important;
     }
 
-
-    /* ── Star field — tiny scattered dots of starlight ── */
+    /* ── Noise texture overlay — subtle grain for depth ── */
     body::before {
       content: '';
       position: fixed;
-      inset: 0;
+      inset: -50%;
+      width: 200%;
+      height: 200%;
       z-index: 0;
       pointer-events: none;
-
-      /* Stars: several radial-gradient dots scattered naturally */
-      background-image:
-        radial-gradient(1.5px 1.5px at 8%  12%, rgba(232,244,253,0.28) 0%, transparent 100%),
-        radial-gradient(1px   1px   at 20% 8%,  rgba(245,166,35,0.22)  0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 35% 22%, rgba(232,244,253,0.20) 0%, transparent 100%),
-        radial-gradient(1px   1px   at 55% 6%,  rgba(58,143,212,0.25)  0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 72% 18%, rgba(232,244,253,0.22) 0%, transparent 100%),
-        radial-gradient(1px   1px   at 88% 9%,  rgba(245,166,35,0.18)  0%, transparent 100%),
-        radial-gradient(1.2px 1.2px at 15% 40%, rgba(58,143,212,0.20)  0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 48% 35%, rgba(232,244,253,0.16) 0%, transparent 100%),
-        radial-gradient(1px   1px   at 80% 42%, rgba(232,244,253,0.22) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 25% 60%, rgba(58,143,212,0.18)  0%, transparent 100%),
-        radial-gradient(1px   1px   at 65% 55%, rgba(245,166,35,0.15)  0%, transparent 100%),
-        radial-gradient(1.2px 1.2px at 92% 62%, rgba(232,244,253,0.20) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 5%  75%, rgba(58,143,212,0.16)  0%, transparent 100%),
-        radial-gradient(1px   1px   at 40% 78%, rgba(232,244,253,0.18) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 78% 80%, rgba(245,166,35,0.14)  0%, transparent 100%);
-      animation: star-drift 8s ease-in-out infinite;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      animation: grain-shift 8s steps(10) infinite;
     }
 
-    /* ── Dot grid overlay — structured, academic feel ── */
+    /* ── Fine dot grid overlay — structured, academic feel ── */
     body::after {
       content: '';
       position: fixed;
@@ -215,29 +203,25 @@
       pointer-events: none;
       background-image: radial-gradient(
         circle,
-        rgba(58, 143, 212, 0.09) 1px,
+        rgba(148, 163, 184, 0.07) 1px,
         transparent 1px
       );
-      background-size: 36px 36px;
-      animation: grid-fade 10s ease-in-out infinite;
+      background-size: 32px 32px;
+      animation: grid-fade 12s ease-in-out infinite;
     }
 
-    /* ── Ambient horizon glow (very subtle, bottom) ── */
+    /* ── Subtle radial vignette for depth ── */
     #root::before {
       content: '';
       position: fixed;
-      bottom: -10%;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      height: 40%;
-      background: radial-gradient(
-        ellipse 60% 40% at 50% 100%,
-        rgba(58,143,212,0.06) 0%,
-        transparent 70%
-      );
+      inset: 0;
       z-index: 0;
       pointer-events: none;
+      background: radial-gradient(
+        ellipse 70% 60% at 50% 40%,
+        rgba(6, 182, 212, 0.03) 0%,
+        transparent 60%
+      );
     }
 
     /* ══ Respect user motion preferences ══ */
@@ -255,69 +239,83 @@
     }
 
     /* ═══════════════════════════════════════════
-       GLASS COMPONENTS — Daybreak Palette
+       GLASS COMPONENTS — Obsidian Lab System
        ═══════════════════════════════════════════ */
 
     /* Base glass panel — used on cards, sections */
     .glass-panel {
-      background: rgba(27, 45, 66, 0.65);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(58, 143, 212, 0.16);
+      background: rgba(18, 24, 36, 0.60);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.07);
       box-shadow:
-        inset 0 0 0 1px rgba(232, 244, 253, 0.04),
-        0 4px 24px rgba(0, 0, 0, 0.30);
-      transition: border-color 0.22s var(--ease-in-out),
-                  transform    0.22s var(--ease-in-out);
+        inset 0 1px 0 0 rgba(226, 232, 240, 0.04),
+        0 4px 24px rgba(0, 0, 0, 0.40),
+        0 1px 2px rgba(0, 0, 0, 0.20);
+      transition: border-color 0.3s var(--ease-out-expo),
+                  box-shadow   0.3s var(--ease-out-expo),
+                  transform    0.3s var(--ease-out-expo);
     }
 
     .glass-panel:hover {
-      border-color: rgba(58, 143, 212, 0.32);
+      border-color: rgba(6, 182, 212, 0.20);
+      box-shadow:
+        inset 0 1px 0 0 rgba(226, 232, 240, 0.06),
+        0 8px 32px rgba(0, 0, 0, 0.50),
+        0 0 0 1px rgba(6, 182, 212, 0.08);
     }
 
-    /* Navbar glass — slightly darker, strong blur */
+    /* Navbar glass — floating, obsidian */
     .glass-nav {
-      background: rgba(13, 27, 42, 0.82);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      border-bottom: 1px solid rgba(58, 143, 212, 0.12);
-      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.25);
+      background: rgba(7, 10, 15, 0.60);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(226, 232, 240, 0.06);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.30);
+    }
+
+    .glass-nav--scrolled {
+      background: rgba(7, 10, 15, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-color: rgba(226, 232, 240, 0.08);
+      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.40);
     }
 
     /* ── Utility helpers ── */
     .text-glow {
-      text-shadow: 0 0 18px rgba(58, 143, 212, 0.50);
+      text-shadow: 0 0 20px rgba(6, 182, 212, 0.40);
     }
 
-    /* Gold accent text glow */
     .text-gold-glow {
-      text-shadow: 0 0 20px rgba(245, 166, 35, 0.45);
+      text-shadow: 0 0 20px rgba(245, 158, 11, 0.35);
     }
 
     .hover-lift {
-      transition: transform 0.22s var(--ease-in-out);
+      transition: transform 0.3s var(--ease-out-expo),
+                  box-shadow 0.3s var(--ease-out-expo);
     }
 
     .hover-lift:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
     }
 
     .preserve-3d {
       transform-style: preserve-3d;
     }
 
-    /* ── Buttons — Daybreak CTA system ── */
+    /* ── Buttons — Obsidian Lab CTA system ── */
 
-    /* Primary: Sunrise Gold */
+    /* Primary: Lab Cyan — precision instrument button */
     .btn-primary {
-      background: #F5A623;
-      color: #0D1B2A;
+      background: linear-gradient(135deg, #06B6D4 0%, #0891B2 100%);
+      color: #070A0F;
       font-family: var(--font-body);
       font-size: 15px;
       font-weight: 600;
       height: 50px;
       padding: 0 28px;
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-lg);
       border: none;
       cursor: pointer;
       letter-spacing: 0.01em;
@@ -325,70 +323,82 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: transform      0.18s var(--ease-in-out),
-                  background     0.18s var(--ease-in-out),
-                  box-shadow     0.18s var(--ease-in-out);
+      position: relative;
+      overflow: hidden;
+      transition: transform      0.25s var(--ease-out-expo),
+                  box-shadow     0.25s var(--ease-out-expo);
     }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #22D3EE 0%, #06B6D4 100%);
+      opacity: 0;
+      transition: opacity 0.25s var(--ease-out-expo);
+    }
+    .btn-primary:hover::before { opacity: 1; }
     .btn-primary:hover {
-      background: #FFBA40;
       transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(245, 166, 35, 0.28);
-      color: #0D1B2A;
+      box-shadow: 0 8px 32px rgba(6, 182, 212, 0.30),
+                  0 0 0 1px rgba(6, 182, 212, 0.20);
+      color: #070A0F;
     }
     .btn-primary:active {
-      background: #D4891A;
       transform: translateY(0);
       box-shadow: none;
     }
+    .btn-primary > * { position: relative; z-index: 1; }
 
-    /* Secondary: Sky Blue */
+    /* Secondary: Ghost Tactical */
     .btn-secondary {
-      background: #3A8FD4;
-      color: #E8F4FD;
-      font-family: var(--font-body);
-      font-size: 15px;
-      font-weight: 600;
-      height: 50px;
-      padding: 0 28px;
-      border-radius: var(--radius-md);
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: transform  0.18s var(--ease-in-out),
-                  background 0.18s var(--ease-in-out),
-                  box-shadow 0.18s var(--ease-in-out);
-    }
-    .btn-secondary:hover {
-      background: #4DA3E8;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 24px rgba(58, 143, 212, 0.28);
-    }
-
-    /* Ghost: transparent with sky border */
-    .btn-ghost {
       background: transparent;
-      color: #E8F4FD;
-      border: 1.5px solid rgba(58, 143, 212, 0.40);
+      color: var(--text-primary);
+      border: 1px solid rgba(226, 232, 240, 0.12);
       font-family: var(--font-body);
       font-size: 15px;
       font-weight: 500;
       height: 50px;
       padding: 0 28px;
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-lg);
       cursor: pointer;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      transition: border-color 0.18s var(--ease-in-out),
-                  background  0.18s var(--ease-in-out);
+      transition: border-color 0.25s var(--ease-out-expo),
+                  background  0.25s var(--ease-out-expo),
+                  box-shadow  0.25s var(--ease-out-expo),
+                  transform   0.25s var(--ease-out-expo);
+    }
+    .btn-secondary:hover {
+      border-color: rgba(6, 182, 212, 0.30);
+      background: rgba(6, 182, 212, 0.06);
+      box-shadow: 0 0 0 1px rgba(6, 182, 212, 0.10);
+      transform: translateY(-2px);
+    }
+
+    /* Ghost: transparent with subtle border */
+    .btn-ghost {
+      background: transparent;
+      color: #E2E8F0;
+      border: 1px solid rgba(226, 232, 240, 0.10);
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 500;
+      height: 50px;
+      padding: 0 28px;
+      border-radius: var(--radius-lg);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: border-color 0.25s var(--ease-out-expo),
+                  background  0.25s var(--ease-out-expo);
     }
     .btn-ghost:hover {
-      border-color: rgba(58, 143, 212, 0.80);
-      background: rgba(58, 143, 212, 0.08);
+      border-color: rgba(226, 232, 240, 0.20);
+      background: rgba(226, 232, 240, 0.04);
     }
 
     /* ── Hero pill badge ── */
@@ -396,9 +406,12 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: rgba(58, 143, 212, 0.10);
-      border: 1px solid rgba(58, 143, 212, 0.30);
-      color: #3A8FD4;
+      background: rgba(13, 17, 23, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(6, 182, 212, 0.25);
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.50), 0 0 12px rgba(6, 182, 212, 0.10);
+      color: #22D3EE;
       font-family: var(--font-body);
       font-size: 13px;
       font-weight: 500;
@@ -407,46 +420,47 @@
       margin-bottom: 28px;
     }
 
-    /* ── Section overline label (always gold) ── */
+    /* ── Section overline label ── */
     .overline {
       font-family: var(--font-body);
       font-size: 11px;
       font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.10em;
-      color: #F5A623;
+      letter-spacing: 0.12em;
+      color: #06B6D4;
       display: block;
       margin-bottom: 12px;
     }
 
     /* ── Subject cards ── */
     .subject-card {
-      background: rgba(27, 45, 66, 0.65);
-      border: 1px solid rgba(58, 143, 212, 0.14);
+      background: rgba(18, 24, 36, 0.60);
+      border: 1px solid rgba(226, 232, 240, 0.06);
       border-radius: var(--radius-lg);
       padding: 28px 24px;
       text-align: center;
       cursor: pointer;
-      transition: border-color 0.22s var(--ease-in-out),
-                  transform    0.22s var(--ease-in-out),
-                  box-shadow   0.22s var(--ease-in-out);
+      transition: border-color 0.3s var(--ease-out-expo),
+                  transform    0.3s var(--ease-out-expo),
+                  box-shadow   0.3s var(--ease-out-expo);
       text-decoration: none;
       display: block;
     }
     .subject-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.30);
     }
     /* Subject top accent bars */
-    .subject-card[data-subject="physics"]   { border-top: 3px solid #5BA3D4; }
-    .subject-card[data-subject="chemistry"] { border-top: 3px solid #F5A623; }
-    .subject-card[data-subject="biology"]   { border-top: 3px solid #5BB887; }
-    .subject-card[data-subject="math"]      { border-top: 3px solid #A78BFA; }
-    .subject-card[data-subject="cs"]        { border-top: 3px solid #60C4D4; }
+    .subject-card[data-subject="physics"]   { border-top: 2px solid #5BA3D4; }
+    .subject-card[data-subject="chemistry"] { border-top: 2px solid #F5A623; }
+    .subject-card[data-subject="biology"]   { border-top: 2px solid #5BB887; }
+    .subject-card[data-subject="math"]      { border-top: 2px solid #A78BFA; }
+    .subject-card[data-subject="cs"]        { border-top: 2px solid #60C4D4; }
 
     /* ── Stat cards (inline divider-separated) ── */
     .stat-item {
       padding: 0 40px;
-      border-right: 1px solid rgba(58, 143, 212, 0.15);
+      border-right: 1px solid rgba(226, 232, 240, 0.08);
       text-align: center;
     }
     .stat-item:last-child { border-right: none; }
@@ -454,37 +468,36 @@
       font-family: var(--font-display);
       font-size: 40px;
       font-weight: 700;
-      color: #E8F4FD;
+      color: var(--text-primary);
       line-height: 1.1;
     }
     .stat-label {
       font-family: var(--font-body);
       font-size: 13px;
-      color: #7FA8C4;
+      color: var(--text-secondary);
       margin-top: 4px;
     }
 
-    /* ── Scrollbar — sky blue themed ── */
+    /* ── Scrollbar — Lab Cyan themed ── */
     ::-webkit-scrollbar {
-      width: 5px;
+      width: 4px;
     }
 
     ::-webkit-scrollbar-track {
-      background: rgba(13, 27, 42, 0.8);
+      background: rgba(7, 10, 15, 0.9);
     }
 
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, #3A8FD4, #1B2D42);
+      background: linear-gradient(180deg, #06B6D4 0%, #0891B2 50%, #164E63 100%);
       border-radius: 999px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(180deg, #4DA3E8, #3A8FD4);
+      background: linear-gradient(180deg, #22D3EE, #06B6D4);
     }
 
     /* ══════════════════════════════════════════════════
          E-Prayog Navbar Orbital Logo Animations
-         Updated palette: sky blue + sunrise gold
          ══════════════════════════════════════════════════ */
 
     /* Outer ring — clockwise 6s */
@@ -499,43 +512,43 @@
       to   { transform: rotate(-360deg); }
     }
 
-    /* E glow pulse — sky blue */
+    /* E glow pulse */
     @keyframes ep-glow-pulse {
       0%, 100% { opacity: 0.40; }
-      50%       { opacity: 0.80; }
+      50%       { opacity: 0.75; }
     }
 
     /* E letter breathe */
     @keyframes ep-e-breathe {
       0%, 100% { transform: scale(1.0); }
-      50%       { transform: scale(1.04); }
+      50%       { transform: scale(1.03); }
     }
 
     /* Spark shimmer */
     @keyframes ep-spark {
-      0%, 100% { opacity: 0.12; }
-      50%       { opacity: 0.60; }
+      0%, 100% { opacity: 0.10; }
+      50%       { opacity: 0.50; }
     }
 
     .ep-outer-ring {
-      animation: ep-outer-rotate 7s linear infinite;
+      animation: ep-outer-rotate 8s linear infinite;
       will-change: transform;
       transform-origin: 40px 40px;
     }
 
     .ep-inner-ring {
-      animation: ep-inner-rotate 4.5s linear infinite;
+      animation: ep-inner-rotate 5s linear infinite;
       will-change: transform;
       transform-origin: 40px 40px;
     }
 
     .ep-eglow {
-      animation: ep-glow-pulse 4s ease-in-out infinite;
+      animation: ep-glow-pulse 5s ease-in-out infinite;
       will-change: opacity;
     }
 
     .ep-eletter {
-      animation: ep-e-breathe 4s ease-in-out infinite;
+      animation: ep-e-breathe 5s ease-in-out infinite;
       transform-origin: 40px 40px;
     }
 
@@ -543,18 +556,18 @@
       animation: ep-spark ease-in-out infinite;
     }
 
-    .ep-s1 { animation-duration: 3.2s; animation-delay: 0s; }
-    .ep-s2 { animation-duration: 4.5s; animation-delay: 0.7s; }
-    .ep-s3 { animation-duration: 3.0s; animation-delay: 1.5s; }
-    .ep-s4 { animation-duration: 3.9s; animation-delay: 0.4s; }
+    .ep-s1 { animation-duration: 3.5s; animation-delay: 0s; }
+    .ep-s2 { animation-duration: 4.8s; animation-delay: 0.8s; }
+    .ep-s3 { animation-duration: 3.2s; animation-delay: 1.6s; }
+    .ep-s4 { animation-duration: 4.2s; animation-delay: 0.4s; }
 
     /* Hover: accelerate rings */
-    .ep-logo-link:hover .ep-outer-ring { animation-duration: 2s; }
-    .ep-logo-link:hover .ep-inner-ring { animation-duration: 1.3s; }
+    .ep-logo-link:hover .ep-outer-ring { animation-duration: 2.5s; }
+    .ep-logo-link:hover .ep-inner-ring { animation-duration: 1.5s; }
     .ep-logo-link:hover .ep-eglow      { opacity: 1 !important; }
 
     /* ═══════════════════════════════════════════
-       GLOBAL TYPOGRAPHY OVERRIDES — Daybreak
+       GLOBAL TYPOGRAPHY OVERRIDES — Obsidian Lab
        ═══════════════════════════════════════════ */
 
     /* Force Sora for all display/heading elements */
@@ -576,45 +589,39 @@
     /* Link defaults */
     a {
       color: var(--accent-primary);
-      transition: color 0.15s ease;
+      transition: color 0.2s var(--ease-out-expo);
     }
-    a:hover { color: #E8F4FD; }
+    a:hover { color: #E2E8F0; }
 
-    /* Tailwind text color overrides to match Daybreak palette */
+    /* Tailwind text color overrides to match Obsidian palette */
     .text-white    { color: var(--text-primary)   !important; }
     .text-zinc-400 { color: var(--text-secondary) !important; }
     .text-zinc-500 { color: var(--text-muted)     !important; }
 
-    /* Emerald green (old accent) → sky blue (new accent) */
+    /* Emerald accent → Lab Cyan */
     .text-emerald-400,
     .text-emerald-300 {
       color: var(--accent-primary) !important;
     }
-    .text-emerald-600 { color: #2E7ABE !important; }
+    .text-emerald-600 { color: var(--accent-muted) !important; }
 
-    /* Bg emerald → navy surface */
+    /* Bg emerald → Lab Cyan */
     .bg-emerald-600,
     .bg-emerald-500 {
-      background-color: #F5A623 !important;  /* Gold for primary CTAs */
-      color: #0D1B2A !important;
+      background: linear-gradient(135deg, #06B6D4, #0891B2) !important;
+      color: #070A0F !important;
     }
     .hover\:bg-emerald-500:hover,
     .hover\:bg-emerald-600:hover {
-      background-color: #FFBA40 !important;
+      background: linear-gradient(135deg, #22D3EE, #06B6D4) !important;
     }
 
-    /* Shadow emerald → gold glow */
+    /* Shadow emerald → cyan glow */
     .shadow-emerald-600\/25 {
-      box-shadow: 0 8px 24px rgba(245, 166, 35, 0.25) !important;
+      box-shadow: 0 8px 32px rgba(6, 182, 212, 0.20) !important;
     }
     .hover\:shadow-emerald-500\/30:hover {
-      box-shadow: 0 8px 28px rgba(245, 166, 35, 0.30) !important;
-    }
-
-    /* Dark glass-panel (old purple glass → navy glass) */
-    .glass-panel {
-      background: rgba(27, 45, 66, 0.65);
-      border: 1px solid rgba(58, 143, 212, 0.16);
+      box-shadow: 0 8px 32px rgba(6, 182, 212, 0.25) !important;
     }
 
     /* Card backgrounds */
@@ -622,23 +629,23 @@
       background-color: var(--bg-card) !important;
     }
 
-    /* Purple accent removal */
+    /* Purple accent → Lab Cyan */
     .text-purple-400 { color: var(--accent-primary) !important; }
-    .from-violet-600  { --tw-gradient-from: #3A8FD4 !important; }
-    .to-sky-500       { --tw-gradient-to:   #F5A623 !important; }
+    .from-violet-600  { --tw-gradient-from: #06B6D4 !important; }
+    .to-sky-500       { --tw-gradient-to:   #0891B2 !important; }
     .bg-gradient-to-r.from-violet-600.to-sky-500 {
-      background: linear-gradient(90deg, #3A8FD4, #F5A623) !important;
+      background: linear-gradient(90deg, #06B6D4, #0891B2) !important;
     }
 
-    /* Active nav underline: gold instead of emerald */
+    /* Active nav underline: Lab Cyan */
     .bg-emerald-400 {
-      background-color: #F5A623 !important;
+      background-color: #06B6D4 !important;
     }
 
-    /* Hero gradient overlay: was emerald/blue, now sky-blue only */
+    /* Hero gradient overlay: disable, handled by body layers */
     .from-emerald-500\/\[0\.07\],
     .to-blue-500\/\[0\.07\] {
-      opacity: 0 !important; /* handled by body star field */
+      opacity: 0 !important;
     }
 
     /* ── Responsive typography scale ── */
